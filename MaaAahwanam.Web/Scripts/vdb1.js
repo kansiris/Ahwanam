@@ -870,10 +870,9 @@ $(document).on('change', '.slotcheck1', function () {
 });
 
 // Add Rental Package
-$(document).on('click', function () {
-    $('.overlay').show();
-    $('#loadermsg').text("Saving Package...");
-    var parentdiv = $(this).parent('div.pkgsave').parent('div.allpkgs');
+$(document).on('click', '.rsavepkg', function () {
+    var type = $(this).text();    
+    var parentdiv = $(this).parent('div.rpkgsave').parent('div.rallpkgs');
     var packagename = parentdiv.find('#pkgname').val();
     var peakdays = parentdiv.find('#pdays').val();
     var normaldays = parentdiv.find('#ndays').val();
@@ -881,6 +880,7 @@ $(document).on('click', function () {
     var choicedays = parentdiv.find('#cdays').val();
     var timeslot = parentdiv.find('#rpkgslots').val();
     var pkgdescription = parentdiv.find('#pkgdesc').val();
+    var pkgid = $(this).prev('input.packageid').val();
     if (packagename == '') {
         parentdiv.find('#pkgname').focus();
         alert("Enter Package Name");
@@ -905,7 +905,10 @@ $(document).on('click', function () {
         alert("Enter Choice Days Price");
     }
     else {
+        $('.overlay').show();
+        $('#loadermsg').text("Saving Package...");
         var package = {
+            PackageID: pkgid,
             PackageName: packagename,
             PackageDescription: pkgdescription,
             peakdays: peakdays,
@@ -918,152 +921,67 @@ $(document).on('click', function () {
             VendorSubType: subcategory,
             timeslot: timeslot,
         }
+        var url = "";
+        if (type == 'Save')
+            url = '/vdb/AddRentalPackage';
+        else if (type == 'Update')
+            url = '/vdb/UpdateRentalPackage';
         $.ajax({
-            url: '/vdb/AddRentalPackage',
+            url: url,
             type: 'post',
             datatype: 'json',
             data: package,
             success: function (data) {
-                alert(data);
+                if (type == 'Save') {
+                    if (data > 0) {
+                        alert("Rental Package Saved Successfully!!!");
+                    }
+                    else {
+                        alert("Failed!!!");
+                    }
+                }
+                else if (type == 'Update') {
+                    alert(data);
+                }
                 $('.overlay').hide();
             }
         });
     }
 });
 
+//Remove Rental Package
+$(document).on('click', '.rpkgremove', function () {
+    var pkgid = $(this).parent('div.rpkgsave').find('input.packageid').val();
+    var totaldiv = $(this).parent('div.rpkgsave').parent('div.rallpkgs');
+    $.ajax({
+        url: '/vdb/DeletePackage?pkgid=' + pkgid,
+        type: 'post',
+        datatype: 'json',
+        success: function (data) {
+            if (data == 'success') {
+                totaldiv.css('display', 'none');
+                alert('Package Removed Successfully!!!');
+                $('.overlay').hide();
+            }
+        }
+    });
+});
 
-//Updating Package
-//$(document).on('click', '.updatepkg', function () {
-//    var menuitems = '';
-//    var parentdiv = $(this).parent('div.pkgsave').parent('div.allpkgs');
-//    var allbuttons = parentdiv.find(".package-list button").text();
-//    var list = [];
-//    for (var i = 0; i < allbuttons.split(')').length; i++) {
-//        if (allbuttons.split(')')[i] != '' && allbuttons.split(')')[i].split('(')[1] != 0)
-//            list.push(allbuttons.split(')')[i] + ')');
-//    }
-//    var allVal = '';
-//    parentdiv.find(".package-list button").each(function () {
-//        var textvalue = $(this).text();
-//        if (textvalue != '') {
-//            if ($(this).text().split('(')[1].split(')')[0] != 0)
-//                allVal += ',' + $(this).val();
-//        }
-//    });
-//    var allbuttonsvals = allVal.substring(1, allVal.length);
-//    var newlists = parentdiv.find('.selpkgitems').val() + ',' + parentdiv.find('.pkgmenuitems').val();
-//    var dblist = parentdiv.find('.pkgmenuitems').val();
-//    var selectedlist = parentdiv.find('.availablepkgitems').val();
-//    var splitteddblist = dblist.split(',');
-//    var a = []; var b = [];
-//    for (var i = 0; i < newlists.split(',').length; i++) {
-//        var thisval = newlists.split(',')[i].split('(')[0]
-//        if (thisval != '')
-//            a.push(thisval);
-//    }
-//    var availableitems = a;
-//    for (var i = 0; i < availableitems.length; i++) {
-//        var value = $.inArray(availableitems[i].replace('/', '_'), selectedlist.split(','));
-//        if (b.indexOf(value) == -1) {
-//            if (value != -1) {
-//                b.push(value);
-//                splitteddblist[value] = newlists.split(',')[i];
-//            }
-//            else {
-//                splitteddblist.push(newlists.split(',')[i]);
-//            }
-//        }
-//    }
-//    menuitems = splitteddblist.join(',');
-//    var pkgid = $(this).prev('input.packageid').val();
-//    var packagename = parentdiv.find('#pkgname').val();
-//    var pkgcategory = parentdiv.find("input[type=radio]:checked").val();
-//    var peakdays = parentdiv.find('#pdays').val();
-//    var normaldays = parentdiv.find('#ndays').val();
-//    var holidays = parentdiv.find('#holidays').val();
-//    var choicedays = parentdiv.find('#cdays').val();
-//    var timeslot = parentdiv.find('#pkgslots').val();
-//    var pkgdescription = parentdiv.find('#pkgdesc').val();
-//    //var menuitems = $(this).parent('div').find('input.selpkgitems').val();
-//    var menu = list.join(',');//$(this).parent('div').find('input.selpkgitems').val();
-//    if (packagename == '') {
-//        $(packagename).focus();
-//        alert("Enter Package Name");
-//    }
-//    else if (pkgcategory == undefined) {
-//        alert("Select Package Category");
-//    }
-//    else if (timeslot == '') {
-//        alert("Select TimeSlots");
-//    }
-//    else if (normaldays == '') {
-//        $('#ndays').focus();
-//        alert("Enter Normal Days Price");
-//    }
-//    else if (peakdays == '') {
-//        $('#pdays').focus();
-//        alert("Enter Peak Days Price");
-//    }
-//    else if (holidays == '') {
-//        $('#holidays').focus();
-//        alert("Enter Holidays Price");
-//    }
-//    else if (choicedays == '') {
-//        $('#cdays').focus();
-//        alert("Enter Choice Days Price");
-//    }
-//    else if (menuitems == '') {
-//        alert("Select Menu Items");
-//    }
-//    else {
-//        $('.overlay').show();
-//        $('#loadermsg').text("Updating Package...");
-//        var package = {
-//            PackageID: pkgid,
-//            PackageName: packagename,
-//            Category: pkgcategory,
-//            PackageDescription: pkgdescription,
-//            peakdays: peakdays,
-//            normaldays: normaldays,
-//            holidays: holidays,
-//            choicedays: choicedays,
-//            VendorId: id,
-//            VendorSubId: subid,
-//            VendorType: category,
-//            VendorSubType: subcategory,
-//            timeslot: timeslot,
-//            menuitems: menuitems,
-//            menu: menu
-//        }
-//        //alert(menuitems);
-//        $.ajax({
-//            url: '/vdb/UpdatePackage',
-//            type: 'post',
-//            datatype: 'json',
-//            data: package,
-//            success: function (data) {
-//                alert(data);
-//                $('.overlay').hide();
-//            }
-//        });
-//    }
-//});
-
-// Cloning Package
-//$(document).on('click', '.rpkgclone', function () {
-//    $('.overlay').show();
-//    $('#loadermsg').text("Duplicating Package...");
-//    var pkgid = $(this).parent('div.pkgsave').find('input.packageid').val();
-//    $.ajax({
-//        url: '/vdb/DuplicatePackage?pkgid=' + pkgid + '&&id=' + id + '&&subid=' + subid,
-//        type: 'post',
-//        datatype: 'json',
-//        success: function (data) {
-//            alert(data);
-//            location.reload();
-//        }
-//    });
-//});
+// Cloning Rental Package
+$(document).on('click', '.rpkgclone', function () {
+    $('.overlay').show();
+    $('#loadermsg').text("Duplicating Package...");
+    var pkgid = $(this).parent('div.rpkgsave').find('input.packageid').val();
+    $.ajax({
+        url: '/vdb/DuplicateRentalPackage?pkgid=' + pkgid + '&&id=' + id + '&&subid=' + subid,
+        type: 'post',
+        datatype: 'json',
+        success: function (data) {
+            alert(data);
+            location.reload();
+        }
+    });
+});
 
 // Updating Address,Amenities details
 function updatedetails(val) {

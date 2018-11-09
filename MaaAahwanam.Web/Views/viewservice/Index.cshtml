@@ -272,30 +272,37 @@
                             {
                                 if (item1.VendorSubId == item.Id)
                                 {
-
                                     <input type="hidden" value="@item1.PackageID" name="packageid" id="packageid">
-                                    <input type="hidden" value="@item1.PackagePrice" name="PackagePrice" id="PackagePrice">
-                                    <input type="hidden" value="@item1.price1" name="PackagePrice1" id="PackagePrice1">
+                                    if (ViewBag.pkgtype == "Peak Days")
+                                    { <input type="hidden" value="@item1.peakdays" name="PackageName" id="PackageName"> }
+                                    else if (ViewBag.pkgtype == "Normal Days")
+                                    { <input type="hidden" value="@item1.normaldays" name="PackageName" id="PackageName"> }
+                                    else if (ViewBag.pkgtype == "Holidays")
+                                    { <input type="hidden" value="@item1.holidays" name="PackageName" id="PackageName"> }
+                                    else if (ViewBag.pkgtype == "Choice Days")
+                                    { <input type="hidden" value="@item1.choicedays" name="PackageName" id="PackageName"> }
                                     <input type="hidden" value="@item1.PackageName" name="PackageName" id="PackageName">
                                     <div class="row">
                                         <div class="col-md-2" style="background-color:#543791;color:white">
                                             @if (item1.PackageName != null && item1.PackageName != "")
                                             {
-                                            @item1.PackageName.Replace("_", " ")
+                                                @item1.PackageName.Replace("_", " ")
                                             }
                                             else
                                             {
-                                            @item1.PackageName
+                                                @item1.PackageName
                                             }
                                             <br /><br />
                                             <span>
                                                 ₹
-                                                @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
-                                                {<b style="font-size:18px">@item1.PackagePrice</b>}
-                                                else
-                                                {
-                                                <b style="font-size:18px">@item1.price1</b>
-                                                }
+                                                @if (ViewBag.pkgtype == "Peak Days")
+                                                { <b style="font-size:18px">@item1.peakdays</b> }
+                                                else if (ViewBag.pkgtype == "Normal Days")
+                                                { <b style="font-size:18px">@item1.normaldays</b> }
+                                                else if (ViewBag.pkgtype == "Holidays")
+                                                { <b style="font-size:18px">@item1.holidays</b> }
+                                                else if (ViewBag.pkgtype == "Choice Days")
+                                                { <b style="font-size:18px">@item1.choicedays</b> }
                                                 / Person
                                             </span>
                                             <br /><br />
@@ -309,32 +316,39 @@
                                             {
                                                 for (int i = 0; i < @item1.menu.Split(',').Length; i++)
                                                 {
-                                            <a class="btn-pill">@item1.menu.Split(',')[i]</a>
+                                                    <a class="btn-pill">@item1.menu.Split(',')[i]</a>
                                                 }
                                             }
                                             else
                                             {
-                                            <a class="btn-pill">Menu Items Not Available</a>
+                                                <a class="btn-pill">Menu Items Not Available</a>
                                             }
                                         </div>
                                         <div class="col-md-2">
-                                            <div class="row"><input type="checkbox" /><label>BreakFast</label></div>
-                                            <div class="row"><input type="checkbox" /><label>Lunch</label></div>
-                                            <div class="row"><input type="checkbox" /><label>Dinner</label></div>
+                                            @if (item1.timeslot != null)
+                                            {
+                                                if (item1.timeslot.Contains("BreakFast"))
+                                                { <div class="row"><input type="checkbox" /><label>BreakFast</label></div> }
+                                                if (item1.timeslot.Contains("Lunch"))
+                                                { <div class="row"><input type="checkbox" /><label>Lunch</label></div> }
+                                                if (item1.timeslot.Contains("Dinner"))
+                                                { <div class="row"><input type="checkbox" /><label>Dinner</label></div> }
+                                            }
                                             <div class="row">
-                                                <input type="checkbox" /><label>High Tea</label>
-                                                @*<button class="btnpkg" style="background-color:yellow">Add</button>*@
-                                                @if (@item1.PackagePrice != "" && @item1.PackagePrice != null)
+                                                @if (item1.timeslot != null)
                                                 {
-                                                <button style="background-color:yellow" value="@item1.PackageID,@item1.PackageName,@item1.PackagePrice" onclick="ks(this.value)" class="btnpkg">Add</button>
+                                                    if (item1.timeslot.Contains("High Tea"))
+                                                    { <input type="checkbox" /><label>High Tea</label> }
                                                 }
-                                                else
-                                                {
-                                                <button style="background-color:yellow" value="@item1.PackageID,@item1.PackageName,@item1.price1" onclick="ks(this.value)" class="btnpkg">Add</button>
-                                                }
+                                                @if (ViewBag.pkgtype == "Peak Days")
+                                                { <button style="background-color:yellow" value="@item1.PackageID,@item1.PackageName,@item1.peakdays" onclick="ks(this.value)" class="btnpkg">Add</button> }
+                                                else if (ViewBag.pkgtype == "Normal Days")
+                                                { <button style="background-color:yellow" value="@item1.PackageID,@item1.PackageName,@item1.normaldays" onclick="ks(this.value)" class="btnpkg">Add</button> }
+                                                else if (ViewBag.pkgtype == "Holidays")
+                                                { <button style="background-color:yellow" value="@item1.PackageID,@item1.PackageName,@item1.holidays" onclick="ks(this.value)" class="btnpkg">Add</button> }
+                                                else if (ViewBag.pkgtype == "Choice Days")
+                                                { <button style="background-color:yellow" value="@item1.PackageID,@item1.PackageName,@item1.choicedays" onclick="ks(this.value)" class="btnpkg">Add</button> }
                                             </div>
-                                            @*<input type="radio" name="btnradio" class="btnpkgcheck" style="display:none" />*@
-                                            @*<div class="row" style="float:right"><button class="btnpkg" style="background-color:yellow;border-radius:50%;"><img class="pkgimg" src="~/newdesignstyles/img/plus.png" /></button></div>*@
                                         </div>
                                     </div>
                                     <br />
@@ -343,7 +357,72 @@
                         }
                         else
                         {
-                            <span> No Packages Available </span>
+                            <span> No Food Packages Available </span>
+                        }
+
+                        <h3 class="uk-h3" style="margin-left:4px">AVAILABLE RENTAL PACKAGES</h3>
+                        @if (ViewBag.rentalpackages.Count != 0)
+                        {
+                            foreach (var item1 in ViewBag.rentalpackages)
+                            {
+                                if (item1.VendorSubId == item.Id)
+                                {
+                                    <input type="hidden" value="@item1.PackageID" name="packageid" id="packageid">
+                                    if (ViewBag.pkgtype == "Peak Days")
+                                    { <input type="hidden" value="@item1.peakdays" name="PackagePrice" id="PackagePrice"> }
+                                    else if (ViewBag.pkgtype == "Normal Days")
+                                    { <input type="hidden" value="@item1.normaldays" name="PackagePrice" id="PackagePrice"> }
+                                    else if (ViewBag.pkgtype == "Holidays")
+                                    { <input type="hidden" value="@item1.holidays" name="PackagePrice" id="PackagePrice"> }
+                                    else if (ViewBag.pkgtype == "Choice Days")
+                                    { <input type="hidden" value="@item1.choicedays" name="PackagePrice" id="PackagePrice"> }
+                                    <input type="hidden" value="@item1.PackageName" name="PackageName" id="PackageName">
+                                    <div class="row">
+                                        <div class="col-md-6" style="background-color:#543791;color:white">
+                                            @if (item1.PackageName != null && item1.PackageName != "")
+                                            { @item1.PackageName.Replace("_", " ") }
+                                            else
+                                            { @item1.PackageName }
+                                            <br /><br />
+                                            <span>
+                                                ₹
+                                                @if (ViewBag.pkgtype == "Peak Days")
+                                                { <b style="font-size:18px"> (@item1.peakdays != "") ? @item1.peakdays : Not Available </b> }
+                                                else if (ViewBag.pkgtype == "Normal Days")
+                                                { <b style="font-size:18px">(@item1.normaldays != "") ? @item1.normaldays : Not Available </b> }
+                                                else if (ViewBag.pkgtype == "Holidays")
+                                                { <b style="font-size:18px">(@item1.holidays != "") ? @item1.holidays : Not Available </b> }
+                                                else if (ViewBag.pkgtype == "Choice Days")
+                                                { <b style="font-size:18px">(@item1.choicedays != "") ? @item1.choicedays : Not Available </b> }
+                                            </span>
+                                            <text class="packageid" style="display:none">@item1.PackageID</text>
+                                        </div>
+                                        <div class="col-md-6">
+                                            @if (item1.timeslot.Contains("Morning"))
+                                            { <div class="row"><input type="checkbox" /><label>Morning</label></div> }
+                                            @if (item1.timeslot.Contains("Evening"))
+                                            { <div class="row"><input type="checkbox" /><label>Evening</label></div> }
+                                            @if (item1.timeslot.Contains("FullDay"))
+                                            { <div class="row"><input type="checkbox" /><label>FullDay</label></div> }
+                                            <div class="row">
+                                                @if (ViewBag.pkgtype == "Peak Days")
+                                                { <button style="background-color:yellow" value="@item1.PackageID,@item1.PackageName,@item1.peakdays" onclick="ks(this.value)" class="btnpkg">Add</button> }
+                                                else if (ViewBag.pkgtype == "Normal Days")
+                                                { <button style="background-color:yellow" value="@item1.PackageID,@item1.PackageName,@item1.normaldays" onclick="ks(this.value)" class="btnpkg">Add</button> }
+                                                else if (ViewBag.pkgtype == "Holidays")
+                                                { <button style="background-color:yellow" value="@item1.PackageID,@item1.PackageName,@item1.holidays" onclick="ks(this.value)" class="btnpkg">Add</button> }
+                                                else if (ViewBag.pkgtype == "Choice Days")
+                                                { <button style="background-color:yellow" value="@item1.PackageID,@item1.PackageName,@item1.choicedays" onclick="ks(this.value)" class="btnpkg">Add</button> }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <span> No Rental Packages Available </span>
                         }
                     </div>
 
@@ -403,8 +482,6 @@
                                     @if (ViewBag.amenities[servicescount].Split(',').Length != 0 && ViewBag.amenities[servicescount] != "")
                                     {
                                         var rcount = ViewBag.amenities.Count;
-
-
                                         var first = 0; var next = 0;
                                         for (int i = 0; i < ViewBag.amenities[servicescount].Split(',').Length; i++)
                                         {
@@ -425,10 +502,6 @@
                                             </tr>
                                             first = next;
                                         }
-                                        //if (servicescount <= rcount)
-                                        //{
-                                        //    servicescount = (++servicescount);
-                                        //}
                                     }
                                     else
                                     {
@@ -445,279 +518,261 @@
                     <br><br>
                     <div class="white-wrapper">
                         <h2 class="heading"><b>Policies</b></h2>
-                        @if (ViewBag.policy !=null)
+                        @if (ViewBag.policy != null)
                         {
-                            
-                                <div class="policies">
-
-                                    <div class="policies-col">
-                                        <div class="decorators">
-                                            <h4 class="sub-title"><b>Decor</b></h4>
-                                            <ul class="tab-data highlights" style="padding-left: 0px;">
-                                                <li>
-                                                    @if (ViewBag.policy.Outside_decorators_allowed == "Yes")
-                                                        {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
-                                                        else
-                                                        { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
-                                                        }
-                                                    Outside decorators allowed
-                                                </li>
-
-                                                <li>
-
-                                                    @if (ViewBag.policy.Decor_provided == "Yes")
-                                                        {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
-                                                        else
-                                                        { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
-                                                        }
-                                                    Decor provided by the venue
-                                                </li>
-
-                                                <li>
-
-                                                    @if (ViewBag.policy.Decorators_allowed_with_royalty == "Yes")
-                                                        {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
-                                                        else
-                                                        { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
-                                                        }
-                                                    Decorators allowed with royalty
-
-                                                </li>
-
-                                                @*<li>
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
-                                                        Decoration starting costs Rs  @if (ViewBag.policy.Decoration_starting_costs == "undefined")
-                                                        { }
-                                                        else
-                                                        {@ViewBag.policy.Decoration_starting_costs}
-                                                    </li>*@
-
-                                            </ul>
-
-                                        </div>
-
-                                    </div>
-
-
-                                    <div class="policies-col">
-                                        <!-- Caterers -->
-                                        <div class="caterers">
-                                            <h4 class="sub-title"><b>Food</b></h4>
-                                            <ul class="tab-data highlights" style="padding-left: 0px;">
-                                                <li>
-                                                    @if (ViewBag.policy.Food_provided == "Yes")
-                                                        {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
-                                                        else
-                                                        { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
-                                                        }
-                                                    Food provided by the venue
-                                                </li>
-                                                <li>
-                                                    @if (ViewBag.policy.Outside_food_or_caterer_allowed == "Yes")
-                                                        {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
-                                                        else
-                                                        { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">} Outside food/caterer allowed at the venue
-                                                </li>
-                                                <li>
-                                                    @if (ViewBag.policy.NonVeg_allowed == "Yes")
-                                                        {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
-                                                        else
-                                                        { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
-                                                        } Non-Veg allowed at the venue
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="policies-col alcohol">
-                                        <h4 class="sub-title"><b>Alcohol</b></h4>
+                            <div class="policies">
+                                <div class="policies-col">
+                                    <div class="decorators">
+                                        <h4 class="sub-title"><b>Decor</b></h4>
                                         <ul class="tab-data highlights" style="padding-left: 0px;">
                                             <li>
-                                                @if (ViewBag.policy.Alcohol_allowed == "Yes")
-                                                    {
+                                                @if (ViewBag.policy.Outside_decorators_allowed == "Yes")
+                                                {
                                                     <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
-                                                    else
-                                                    { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
-                                                    }Alcohol allowed at the venue
+                                                else
+                                                { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
+                                                }
+                                                Outside decorators allowed
                                             </li>
                                             <li>
-                                                @if (ViewBag.policy.Outside_Alcohol_allowed == "Yes")
-                                                    {
+                                                @if (ViewBag.policy.Decor_provided == "Yes")
+                                                {
                                                     <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
-                                                    else
-                                                    { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
-                                                    } Outside alcohol allowed at the venue
+                                                else
+                                                { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
+                                                }
+                                                Decor provided by the venue
                                             </li>
 
+                                            <li>
+                                                @if (ViewBag.policy.Decorators_allowed_with_royalty == "Yes")
+                                                {
+                                                    <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                else
+                                                { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
+                                                }
+                                                Decorators allowed with royalty
+                                            </li>
                                         </ul>
                                     </div>
+                                </div>
 
-
-                                    @*<div class="policies-col taxes" style="margin-left:288px;margin-top:-99px;">
-                                            <h4 class="sub-title"><b>Taxes</b></h4>
-                                            <ul class="tab-data" style="padding-left: 0px;">
-                                                <li>
-                                                    Taxes F&amp;B : <b>
-                                                        Decoration starting costs Rs  @if (ViewBag.policy.Tax == "undefined")
-                                                        { }
-                                                        else
-                                                        {@ViewBag.policy.Tax}%
-                                                    </b>
-                                                </li>
-                                            </ul>
-                                        </div>*@
-
-
-                                    <div class="policies-col parking" style="margin-top:41px;">
-                                        <h4 class="sub-title"><b>Parking</b></h4>
+                                <div class="policies-col">
+                                    <!-- Caterers -->
+                                    <div class="caterers">
+                                        <h4 class="sub-title"><b>Food</b></h4>
                                         <ul class="tab-data highlights" style="padding-left: 0px;">
                                             <li>
-                                                @if (ViewBag.policy.Valet_Parking == "Yes")
-                                                    {
+                                                @if (ViewBag.policy.Food_provided == "Yes")
+                                                {
                                                     <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
-                                                    else
-                                                    { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
-                                                    } Valet provided by venue
+                                                else
+                                                { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
+                                                }
+                                                Food provided by the venue
                                             </li>
-                                            @*<li>
-                                                    Parking space available for @if (ViewBag.policy.Parking_Space == "undefined")
+                                            <li>
+                                                @if (ViewBag.policy.Outside_food_or_caterer_allowed == "Yes")
+                                                {
+                                                    <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                else
+                                                { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">} Outside food/caterer allowed at the venue
+                                            </li>
+                                            <li>
+                                                @if (ViewBag.policy.NonVeg_allowed == "Yes")
+                                                {
+                                                    <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                else
+                                                { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
+                                                } Non-Veg allowed at the venue
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="policies-col alcohol">
+                                    <h4 class="sub-title"><b>Alcohol</b></h4>
+                                    <ul class="tab-data highlights" style="padding-left: 0px;">
+                                        <li>
+                                            @if (ViewBag.policy.Alcohol_allowed == "Yes")
+                                            {
+                                                <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                            else
+                                            { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
+                                            }Alcohol allowed at the venue
+                                        </li>
+                                        <li>
+                                            @if (ViewBag.policy.Outside_Alcohol_allowed == "Yes")
+                                            {
+                                                <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                            else
+                                            { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
+                                            } Outside alcohol allowed at the venue
+                                        </li>
+
+                                    </ul>
+                                </div>
+
+
+                                @*<div class="policies-col taxes" style="margin-left:288px;margin-top:-99px;">
+                                        <h4 class="sub-title"><b>Taxes</b></h4>
+                                        <ul class="tab-data" style="padding-left: 0px;">
+                                            <li>
+                                                Taxes F&amp;B : <b>
+                                                    Decoration starting costs Rs  @if (ViewBag.policy.Tax == "undefined")
                                                     { }
                                                     else
-                                                    {@ViewBag.policy.Parking_Space} vehicles
-                                                </li>*@
+                                                    {@ViewBag.policy.Tax}%
+                                                </b>
+                                            </li>
                                         </ul>
-                                    </div>
+                                    </div>*@
 
 
-                                    <div class="policies-col cancellation" style="margin-left:288px;margin-top:-99px;">
-                                        <h4 class="sub-title"><b>Cancellation</b></h4>
+                                <div class="policies-col parking" style="margin-top:41px;">
+                                    <h4 class="sub-title"><b>Parking</b></h4>
+                                    <ul class="tab-data highlights" style="padding-left: 0px;">
+                                        <li>
+                                            @if (ViewBag.policy.Valet_Parking == "Yes")
+                                            {
+                                                <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                            else
+                                            { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
+                                            } Valet provided by venue
+                                        </li>
+                                        @*<li>
+                                                Parking space available for @if (ViewBag.policy.Parking_Space == "undefined")
+                                                { }
+                                                else
+                                                {@ViewBag.policy.Parking_Space} vehicles
+                                            </li>*@
+                                    </ul>
+                                </div>
+
+
+                                <div class="policies-col cancellation" style="margin-left:288px;margin-top:-99px;">
+                                    <h4 class="sub-title"><b>Cancellation</b></h4>
+                                    <ul class="tab-data" style="padding-left: 0px;">
+
+                                        <li>
+                                            @if (ViewBag.policy.Cancellation == "Yes")
+                                            {
+                                                <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                            else
+                                            { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
+                                            } Non cancellable
+                                        </li>
+
+                                    </ul>
+                                </div>
+
+                                @*<div class="policies-col advance" style="margin-top:37px;">
+                                        <h4 class="sub-title"><b>Advance</b></h4>
                                         <ul class="tab-data" style="padding-left: 0px;">
-
                                             <li>
-                                                @if (ViewBag.policy.Cancellation == "Yes")
-                                                    {
-                                                    <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                <b>
+                                                    @if (ViewBag.policy.Advance_Amount == "undefined")
+                                                    { }
                                                     else
-                                                    { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
-                                                    } Non cancellable
+                                                    {@ViewBag.policy.Advance_Amount}  %
+                                                </b> at the time of booking
                                             </li>
-
                                         </ul>
-                                    </div>
+                                    </div>*@
+                                <!-- </div> -->
 
-                                    @*<div class="policies-col advance" style="margin-top:37px;">
-                                            <h4 class="sub-title"><b>Advance</b></h4>
-                                            <ul class="tab-data" style="padding-left: 0px;">
-                                                <li>
-                                                    <b>
-                                                        @if (ViewBag.policy.Advance_Amount == "undefined")
-                                                        { }
-                                                        else
-                                                        {@ViewBag.policy.Advance_Amount}  %
-                                                    </b> at the time of booking
-                                                </li>
-                                            </ul>
-                                        </div>*@
-                                    <!-- </div> -->
-
-                                    <div class="policies-col parking" style="margin-left:288px;margin-top:-99px;">
-                                        <h4 class="sub-title"><b>Changing Room</b></h4>
-                                        <ul class="tab-data highlights" style="padding-left: 0px;">
-                                            <li>
-                                                @if (ViewBag.policy.Available_Rooms == "Yes")
-                                                    {
-                                                    <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                <div class="policies-col parking" style="margin-left:288px;margin-top:-99px;">
+                                    <h4 class="sub-title"><b>Changing Room</b></h4>
+                                    <ul class="tab-data highlights" style="padding-left: 0px;">
+                                        <li>
+                                            @if (ViewBag.policy.Available_Rooms == "Yes")
+                                            {
+                                                <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                            else
+                                            { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
+                                            }Changing Room A/C
+                                        </li>
+                                        @*<li>
+                                                No. of complimentary changing rooms: <strong>
+                                                    @if (ViewBag.policy.Rooms_Count == "undefined")
+                                                    { }
                                                     else
-                                                    { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
-                                                    }Changing Room A/C
-                                            </li>
-                                            @*<li>
-                                                    No. of complimentary changing rooms: <strong>
-                                                        @if (ViewBag.policy.Rooms_Count == "undefined")
-                                                        { }
-                                                        else
-                                                        {@ViewBag.policy.Rooms_Count}
-                                                    </strong>
-                                                </li>*@
-                                        </ul>
-                                    </div>
+                                                    {@ViewBag.policy.Rooms_Count}
+                                                </strong>
+                                            </li>*@
+                                    </ul>
+                                </div>
 
-                                    <div class="policies-col highlights high-light">
-                                        <h4 class="sub-title"><b>Other Policies</b></h4>
-                                        <ul class="tab-data venue-highlights highlights" style="padding-left: 0px;">
-                                            <li>
-                                                @if (ViewBag.policy.Music_Allowed_Late == "Yes")
-                                                    {
-                                                    <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
-                                                    else
-                                                    { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
-                                                    }
-                                                Music allowed late
-                                            </li>
-                                            <li>
-                                                @if (ViewBag.policy.Halls_AC == "Yes")
-                                                    {
-                                                    <im<img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                <div class="policies-col highlights high-light">
+                                    <h4 class="sub-title"><b>Other Policies</b></h4>
+                                    <ul class="tab-data venue-highlights highlights" style="padding-left: 0px;">
+                                        <li>
+                                            @if (ViewBag.policy.Music_Allowed_Late == "Yes")
+                                            {
+                                                <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                            else
+                                            { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
+                                            }
+                                            Music allowed late
+                                        </li>
+                                        <li>
+                                            @if (ViewBag.policy.Halls_AC == "Yes")
+                                            {
+                                                <im<img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                             else
                                                             { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
                                                         }
                                                         Halls are air conditioned
-                                                </li>
-                                                <li>
-                                                    @if (ViewBag.policy.Ample_Parking == "Yes")
-                                                        {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
-                                                        else
-                                                        { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
-                                                        }
-                                                    Ample parking
-                                                </li>
-                                                <li>
-                                                    @if (ViewBag.policy.Baarat_Allowed == "Yes")
-                                                        {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
-                                                        else
-                                                        { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
-                                                        }
-                                                    Baarat allowed
-                                                </li>
-                                                <li style="margin-left: 193px;margin-top: -89px;">
+                                            </li>
+                                            <li>
+                                                @if (ViewBag.policy.Ample_Parking == "Yes")
+                                                {
+                                                    <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                else
+                                                { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
+                                                }
+                                                Ample parking
+                                            </li>
+                                            <li>
+                                                @if (ViewBag.policy.Baarat_Allowed == "Yes")
+                                                {
+                                                    <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                else
+                                                { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
+                                                }
+                                                Baarat allowed
+                                            </li>
+                                            <li style="margin-left: 193px;margin-top: -89px;">
 
-                                                    @if (ViewBag.policy.Fire_Crackers_Allowed == "Yes")
-                                                        {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
-                                                        else
-                                                        { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
-                                                        }
-                                                    Fire crackers allowed
-                                                </li>
-                                                <li style="margin-left: 193px;margin-top: 4px;">
-                                                    @if (ViewBag.policy.Hawan_Allowed == "Yes")
-                                                        {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
-                                                        else
-                                                        { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
-                                                        }
-                                                    Hawan allowed
-                                                </li>
-                                                <li style="margin-left: 193px;margin-top: 6px;">
-                                                    @if (ViewBag.policy.Overnight_wedding_Allowed == "Yes")
-                                                        {
-                                                        <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
-                                                        else
-                                                        { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
-                                                        }
-                                                    Overnight wedding allowed
-                                                </li>
-                                            </ul>
-                                        </div>
+                                                @if (ViewBag.policy.Fire_Crackers_Allowed == "Yes")
+                                                {
+                                                    <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                else
+                                                { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
+                                                }
+                                                Fire crackers allowed
+                                            </li>
+                                            <li style="margin-left: 193px;margin-top: 4px;">
+                                                @if (ViewBag.policy.Hawan_Allowed == "Yes")
+                                                {
+                                                    <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                else
+                                                { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
+                                                }
+                                                Hawan allowed
+                                            </li>
+                                            <li style="margin-left: 193px;margin-top: 6px;">
+                                                @if (ViewBag.policy.Overnight_wedding_Allowed == "Yes")
+                                                {
+                                                    <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
+                                                else
+                                                { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">
+                                                }
+                                                Overnight wedding allowed
+                                            </li>
+                                        </ul>
                                     </div>
-                            
+                                </div>
+
                         }
                     </div>
                     <br />
@@ -782,7 +837,7 @@
                                 <h2 class="uk-h2" style="font-size:20px;text-transform: uppercase;width:100%;font-weight:700">@item.VenueType</h2>
                             }
                         }
-                        
+
                         <input type="hidden" id="vendoravailabledates" value="" />
                         <div>
                             <div id="calendar"></div>
@@ -869,7 +924,7 @@
         $(function(){
             FetchEventAndRenderCalendar(subid);
         });
-        
+
         function FetchEventAndRenderCalendar(subid) {
             events = [];
             var date = new Date(),
@@ -883,17 +938,10 @@
                     for (var i = 0; i < data.split(',').length; i++) {
                         events.push({
                             title: 'N/A',
-                            start: moment(data.split(',')[i]).subtract(12, 'hours').subtract(30, 'minutes'),
+                            start: moment(data.split(',')[i]),
                             description:'N/A',
                         });
                     }
-                    //$.each(data, function (i, v) {
-                    //    events.push({
-                    //        title: 'N/A',
-                    //        start: moment(v.StartDate).subtract(12, 'hours').subtract(30, 'minutes')
-                    //    });
-                    //})
-
                     GenerateCalender(events);
                 },
                 error: function (error) {
@@ -906,38 +954,6 @@
             //full calendar
             $('#calendar').fullCalendar({
                 defaultDate: new Date(),
-                //events: [
-                //  {
-                //      title: 'M:1000',
-                //      start: '2018-10-01'
-                //  },
-                //  {
-                //      title: 'E:1500',
-                //      start: '2018-10-01'
-                //  },
-                //  {
-                //      title: '500',
-                //      start: '2018-02-07'
-                //  },
-                //  {
-                //      id: 999,
-                //      title: '400',
-                //      start: '2018-10-09'
-                //  },
-                //  {
-                //      id: 999,
-                //      title: '700',
-                //      start: '2018-10-16'
-                //  },
-                //  {
-                //      title: '800',
-                //      start: '2018-10-11'
-                //  },
-                //  {
-                //      title: '900',
-                //      start: '2018-10-12'
-                //  }
-                //],
                 events:events,
                 dayClick: function (date, jsEvent, view) {
                     $(".fc-state-highlight").removeClass("fc-state-highlight");
@@ -945,15 +961,22 @@
                     $('#selecteddate').val(moment(date).format('DD/MM/YYYY'));
                 },
                 eventClick: function (calEvent, jsEvent, view) {
-                    $(".fc-state-highlight").removeClass("fc-state-highlight");
-                    $(this).addClass("fc-state-highlight");
-                    $('#selecteddate').val(moment(calEvent.start).format('DD/MM/YYYY'));
-                }
+                    var type = 'Rental';
+                    if (type == 'Rental') {
+                        $(".fc-state-highlight").removeClass("fc-state-highlight");
+                        $(this).addClass("fc-state-highlight");
+                        $('#selecteddate').val(moment(calEvent.start).format('DD/MM/YYYY'));
+                    }
+                    else {
+                        alert('Not Available on this day');
+                    }
+                },
+                displayEventTime: false
             });
         }
 
 
-        
+
 
     </script>
 

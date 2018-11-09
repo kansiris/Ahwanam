@@ -511,71 +511,157 @@
                     }
                 }
             </div>
-            
+
             <br />
             <div class="row" id="rpkg">
                 <div class="col-md-6">
                     <h6>Rental Packages</h6>
                 </div>
-                
+
             </div>
             <div class="row">
-                <div class="allpkgs">
-                    <div class="package-box" style="background-color:yellowgreen">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" id="pkgname" placeholder="Package Name">
+                @if (ViewBag.rentalpkgs.Count > 0)
+                {
+                    for (int i = 0; i < ViewBag.rentalpkgs.Count; i++)
+                    {
+                        <div class="rallpkgs">
+                            <div class="package-box" style="background-color:yellowgreen">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" id="pkgname" placeholder="Package Name" value="@ViewBag.rentalpkgs[i].PackageName">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row" id="sectiontimeslot">
+                                                <input type="hidden" id="rpkgslots" />
+                                                <div class="col-md-4">
+                                                    @if (ViewBag.rentalpkgs[i].timeslot.Contains("Morning"))
+                                                    {
+                                                        <input type="checkbox" class="slotcheck1" name="slot1" id="Morning @i" value="Morning" checked/><label for="Morning @i">Morning</label>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" class="slotcheck1" name="slot1" id="Morning @i" value="Morning" /><label for="Morning @i">Morning</label>
+                                                    }
+                                                </div>
+                                                <div class="col-md-4">
+                                                    @if (ViewBag.rentalpkgs[i].timeslot.Contains("Evening"))
+                                                    {
+                                                        <input type="checkbox" class="slotcheck1" name="slot1" id="Evening @i" value="Evening" checked /><label for="Evening @i">Evening</label>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" class="slotcheck1" name="slot1" id="Evening @i" value="Evening" /><label for="Evening @i">Evening</label>
+                                                    }
+                                                </div>
+                                                <div class="col-md-4">
+                                                    @if (ViewBag.rentalpkgs[i].timeslot.Contains("FullDay"))
+                                                    {
+                                                        <input type="checkbox" class="slotcheck1" name="slot1" id="FullDay @i" value="FullDay" checked /><label for="FullDay @i">FullDay</label>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" class="slotcheck1" name="slot1" id="FullDay @i" value="FullDay" /><label for="FullDay @i">FullDay</label>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row" id="pkgpricesection">
+                                        <div class="col-md-3">
+                                            <span>Normal Days ₹</span>
+                                            <span><input type="number" id="ndays" name="ndays" placeholder="₹100" style="width:75%;color:black"  value="@ViewBag.rentalpkgs[i].normaldays"/></span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span>Peak Days ₹</span>
+                                            <span><input type="number" id="pdays" name="pdays" placeholder="₹100" style="width:75%;color:black"  value="@ViewBag.rentalpkgs[i].peakdays"/></span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span>Holidays ₹</span>
+                                            <span><input type="number" id="holidays" name="holidays" placeholder="₹100" style="width:75%;color:black"  value="@ViewBag.rentalpkgs[i].holidays"/></span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <span>Choice Days ₹</span>
+                                            <span><input type="number" id="cdays" name="cdays" placeholder="₹100" style="width:75%;color:black" value="@ViewBag.rentalpkgs[i].choicedays"/></span>
+                                        </div>
+                                    </div>
+                                    <div class="row" align="center" style="padding-top:10px">
+                                        <textarea id="pkgdesc" class="form-control" name="pkgdesc" placeholder="Enter Package Description" cols="3">@ViewBag.rentalpkgs[i].PackageDescription</textarea>
+                                    </div>
+
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="row" id="sectiontimeslot">
-                                        <input type="hidden" id="rpkgslots"/>
-                                        <div class="col-md-4">
-                                            <input type="checkbox" class="slotcheck1" name="slot1" id="Morning" value="Morning" /><label for="Morning">Morning</label>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <input type="checkbox" class="slotcheck1" name="slot1" id="Evening" value="Evening" /><label for="Evening">Evening</label>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <input type="checkbox" class="slotcheck1" name="slot1" id="FullDay" value="FullDay" /><label for="FullDay">FullDay</label>
+
+                            </div>
+                            <div class="package-list"></div>
+                            <div align="right" class="rpkgsave">
+                                <a class="rpkgclone" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Duplicate</a>
+                                <input type="hidden" class="packageid" value="@ViewBag.rentalpkgs[i].PackageID" />
+                                <a class="rsavepkg" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Update</a>
+                                <a class="rpkgremove" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Remove</a>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="rallpkgs">
+                        <div class="package-box" style="background-color:yellowgreen">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="pkgname" placeholder="Package Name">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row" id="sectiontimeslot">
+                                            <input type="hidden" id="rpkgslots" />
+                                            <div class="col-md-4">
+                                                <input type="checkbox" class="slotcheck1" name="slot1" id="Morning" value="Morning" /><label for="Morning">Morning</label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="checkbox" class="slotcheck1" name="slot1" id="Evening" value="Evening" /><label for="Evening">Evening</label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="checkbox" class="slotcheck1" name="slot1" id="FullDay" value="FullDay" /><label for="FullDay">FullDay</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <br />
-                            <div class="row" id="pkgpricesection">
-                                <div class="col-md-3">
-                                    <span>Normal Days ₹</span>
-                                    <span><input type="number" id="ndays" name="ndays" placeholder="₹100" style="width:75%;color:black"/></span>
+                                <br />
+                                <div class="row" id="pkgpricesection">
+                                    <div class="col-md-3">
+                                        <span>Normal Days ₹</span>
+                                        <span><input type="number" id="ndays" name="ndays" placeholder="₹100" style="width:75%;color:black" /></span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span>Peak Days ₹</span>
+                                        <span><input type="number" id="pdays" name="pdays" placeholder="₹100" style="width:75%;color:black" /></span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span>Holidays ₹</span>
+                                        <span><input type="number" id="holidays" name="holidays" placeholder="₹100" style="width:75%;color:black" /></span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span>Choice Days ₹</span>
+                                        <span><input type="number" id="cdays" name="cdays" placeholder="₹100" style="width:75%;color:black" /></span>
+                                    </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <span>Peak Days ₹</span>
-                                    <span><input type="number" id="pdays" name="pdays" placeholder="₹100" style="width:75%;color:black"/></span>
+                                <div class="row" align="center" style="padding-top:10px">
+                                    <textarea id="pkgdesc" class="form-control" name="pkgdesc" placeholder="Enter Package Description" cols="3"></textarea>
                                 </div>
-                                <div class="col-md-3">
-                                    <span>Holidays ₹</span>
-                                    <span><input type="number" id="holidays" name="holidays" placeholder="₹100" style="width:75%;color:black"/></span>
-                                </div>
-                                <div class="col-md-3">
-                                    <span>Choice Days ₹</span>
-                                    <span><input type="number" id="cdays" name="cdays" placeholder="₹100" style="width:75%;color:black" /></span>
-                                </div>
-                            </div>
-                            <div class="row" align="center" style="padding-top:10px">
-                                <textarea id="pkgdesc" class="form-control" name="pkgdesc" placeholder="Enter Package Description" cols="3"></textarea>
+
                             </div>
 
                         </div>
-                        
-                        </div>
-                    <div class="package-list"></div>
-                    <div align="right" class="rpkgsave">
+                        <div class="package-list"></div>
+                        <div align="right" class="rpkgsave">
                             <a class="rpkgclone" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Duplicate</a>
+                            <input type="hidden" class="packageid" />
                             <a class="rsavepkg" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Save</a>
                             <a class="rpkgremove" style="padding: 17px;margin-top: 3px; color:#dc3545;cursor:pointer">Remove</a>
+                        </div>
                     </div>
-                </div>
-
+                }
             </div>
 
             <div class="row upload-section" id="gallerysection" style="overflow-x:scroll">
