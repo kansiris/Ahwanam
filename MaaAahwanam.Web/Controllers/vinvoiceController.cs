@@ -16,6 +16,7 @@ namespace MaaAahwanam.Web.Controllers
 {
     public class vinvoiceController : Controller
     {
+        decimal ksra1;
         newmanageuser newmanageuse = new newmanageuser();
 
         VendorMasterService vendorMasterService = new VendorMasterService();
@@ -152,12 +153,14 @@ namespace MaaAahwanam.Web.Controllers
                 payments.User_Type = "VendorUser";
                 payments.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                 payments.Payment_Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
-                decimal ksra = decimal.Parse(payments.Received_Amount);
+                
                 var odis = payments.OrderDetailId.Trim(',').Split(',');
                 for (int i = 0; i < odis.Length; i++)
                 {
-                    if ( ksra >= 0)
-                    {
+                    decimal ksra = decimal.Parse(payments.Received_Amount);
+                   
+                    //if (ksra >= 0)
+                    //{
                         string str = odis[i] ;
                         str = Regex.Replace(str, @"\s", "");
                         var orderdetailid = str;
@@ -167,52 +170,35 @@ namespace MaaAahwanam.Web.Controllers
                         var ksorder = orderdetails1.Where(m => m.OrderDetailId == long.Parse(orderdetailid)).FirstOrDefault();
                         if (ksorder.SUM_AP == null || ksorder.Due == null)
                         {
-                            dueamount = ksorder.TotalPrice;
-                            var amnt = ksra;
+                        dueamount = ksorder.TotalPrice;
+                        decimal amnt;
+                        if (i == 0)
+                        {                        amnt = ksra;  }
+                        else {  amnt = ksra1; }
                             if (dueamount > amnt)
                             {
-                                ksra = dueamount - amnt;
-                                payments.Received_Amount = dueamount.ToString().Replace(".00", "");
+                                ksra1 = dueamount - amnt;                               
                                 payments.Opening_Balance = dueamount.ToString().Replace(".00", "");
-                                payments.Current_Balance = ksra.ToString();
+                                 if(amnt == dueamount){ payments.Received_Amount = dueamount.ToString().Replace(".00", "");}
+                                 else  { payments.Received_Amount = amnt.ToString().Replace(".00", "");}
+                                payments.Current_Balance = ksra1.ToString().Replace(".00", "");
                             }
                             else
                             {
-                                var balance = amnt - dueamount;
+                            ksra1 = amnt - dueamount;
                                 payments.Received_Amount = dueamount.ToString().Replace(".00", "");
                                 payments.Opening_Balance = dueamount.ToString().Replace(".00", "");
-                                if (balance > 0)
+                                if (ksra1 > 0)
                                 {
                                     payments.Current_Balance = "0";
-                                    //if (balance > dueamount)
-                                    //{
-                                    //    var bldue = balance - dueamount;
-                                    //}
-                                    //else
-                                    //{
-                                    //    var bldue1 = dueamount - balance;
-                                    //}
-
                                 }
 
                             }
                         }
-                        //else if ()
-                        //{
-
-                        //    dueamount = ksorder.TotalPrice;
-
-                        //}
+                       
                         else {
                             dueamount = (decimal)ksorder.Due;
                         }
-                    }
-                    else
-                    {
-                        var orderdetailid = payments.OrderDetailId.Trim(',').Split(',')[i].Replace(" ", "");
-                        var ksorder = orderdetails1.Where(m => m.OrderDetailId == long.Parse(orderdetailid)).FirstOrDefault();
-                    }
-
                     if (payments.Current_Balance == "0")
                     {
                         Order orders = new Order();

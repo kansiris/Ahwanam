@@ -28,14 +28,14 @@ namespace MaaAahwanam.Web.Controllers
         ProductInfoService productInfoService = new ProductInfoService();
 
         // GET: viewservice
-        public ActionResult Index(string name, string type, string id,string vid)
+        public ActionResult Index(string name, string type, string id, string vid)
         {
             type = (type == "Function" || type == "Banquet" || type == "Convention") ? type + " Hall" : type;
             type = (type == null) ? "Venue" : type;
 
             if (name != null)
                 vid = resultsPageService.GetAllVendors(type).Where(m => m.BusinessName.ToLower().Contains(name.ToLower().TrimEnd())).FirstOrDefault().Id.ToString();
-            
+
             var venues = viewservicesss.GetVendorVenue(long.Parse(id)).ToList();
             if (type == "Venue" || type == "Convention Hall" || type == "Banquet Hall" || type == "Function Hall")
             {
@@ -46,12 +46,16 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.latitude = "17.385044";
                 ViewBag.longitude = "78.486671";
                 ViewBag.allimages = allimages.Where(m => m.VendorId == long.Parse(vid)).ToList();
-                ViewBag.particularVenue = venues.Where(m=>m.Id == long.Parse(vid));
+                ViewBag.particularVenue = venues.Where(m => m.Id == long.Parse(vid));
                 ViewBag.venues = venues;
-                var packages = viewservicesss.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(vid) && p.type == "Package").ToList();
+                var allpkgs = viewservicesss.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(vid)).ToList();
+                var packages = allpkgs.Where(p => p.type == "Package").ToList();
+                var rentalpackages = allpkgs.Where(p => p.type == "Rental").ToList();
+                ViewBag.pkgtype = GetType(id, vid);
                 ViewBag.availablepackages = packages;
+                ViewBag.rentalpackages = rentalpackages;
                 ViewBag.firstpackage = packages.FirstOrDefault();
-                var allamenities = venues.Where(m=>m.Id==long.Parse(vid)).Select(m => new
+                var allamenities = venues.Where(m => m.Id == long.Parse(vid)).Select(m => new
                 {
                     #region Venue amenities
                     m.AC,
@@ -120,8 +124,17 @@ namespace MaaAahwanam.Web.Controllers
 
         public JsonResult GetDates(string id, string vid)
         {
-            var data = vendorDatesService.GetDates(long.Parse(id), long.Parse(vid));
             string orderdates = productInfoService.disabledate(long.Parse(id), long.Parse(vid), "Venue").Replace('/', '-');
+            var vendoravailabledates = filterdates(id, vid, "Availability");//String.Join(",", betweendates);
+            if (orderdates != "")
+                vendoravailabledates = vendoravailabledates + "," + String.Join(",", orderdates.TrimStart(','));
+            string availdate = vendoravailabledates;
+            return new JsonResult { Data = availdate, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        public string filterdates(string id, string vid, string type)
+        {
+            var data = vendorDatesService.GetDates(long.Parse(id), long.Parse(vid)).Where(m => m.Type == type);
             var betweendates = new List<string>();
             int recordcount = data.Count();
             foreach (var item1 in data)
@@ -140,11 +153,24 @@ namespace MaaAahwanam.Web.Controllers
                     betweendates.Add(startdate.ToString("yyyy-MM-dd"));
                 }
             }
-            var vendoravailabledates = String.Join(",", betweendates);
-            if (orderdates != "")
-                vendoravailabledates = vendoravailabledates + "," + String.Join(",", orderdates.TrimStart(','));
-            string availdate = vendoravailabledates;
-            return new JsonResult { Data = availdate, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            return String.Join(",", betweendates);
+        }
+
+        public string GetType(string id, string vid)
+        {
+            string type = "Normal Days";
+            var data = vendorDatesService.GetDates(long.Parse(id), long.Parse(vid)).Where(m => m.Type == "Package");
+            var today = DateTime.Now;
+            foreach (var item in data)
+            {
+                var startdate = Convert.ToDateTime(item.StartDate);
+                var enddate = Convert.ToDateTime(item.EndDate);
+                if (today < startdate && today > enddate)
+                {
+                    return item.Title;
+                }
+            }
+            return type;
         }
 
         public JsonResult Availabledates(string pid, string type)
@@ -247,11 +273,13 @@ namespace MaaAahwanam.Web.Controllers
             }
             return Json(JsonRequestBehavior.AllowGet);
         }
+
         //catch (Exception)
         //{
         //    return RedirectToAction("Index", "Nhomepage");
         //}
         //}
+
         //public JsonResult calender(string calender)
         //{
         //    //DateTime cdate = Convert.ToDateTime(calender);
