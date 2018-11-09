@@ -10,6 +10,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using IronPdf;
+using System.Text.RegularExpressions;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -151,32 +152,35 @@ namespace MaaAahwanam.Web.Controllers
                 payments.User_Type = "VendorUser";
                 payments.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                 payments.Payment_Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+                decimal ksra = decimal.Parse(payments.Received_Amount);
                 var odis = payments.OrderDetailId.Trim(',').Split(',');
                 for (int i = 0; i < odis.Length; i++)
                 {
-                    if (float.Parse(payments.Received_Amount) >= 0)
+                    if ( ksra >= 0)
                     {
-                        var orderdetailid = payments.OrderDetailId.Trim(',').Split(',')[i].Replace(" ", "");
+                        string str = odis[i] ;
+                        str = Regex.Replace(str, @"\s", "");
+                        var orderdetailid = str;
                         payments.OrderDetailId = orderdetailid;
                         //var datarecord = orderdetailservices.GetOrderDetailsByOrderdetailid(Convert.ToInt32(orderdetailid));
                         decimal dueamount;
                         var ksorder = orderdetails1.Where(m => m.OrderDetailId == long.Parse(orderdetailid)).FirstOrDefault();
-                        if (ksorder.SUM_AP == null)
+                        if (ksorder.SUM_AP == null || ksorder.Due == null)
                         {
                             dueamount = ksorder.TotalPrice;
-                            var amnt = decimal.Parse(payments.Received_Amount);
+                            var amnt = ksra;
                             if (dueamount > amnt)
                             {
-                                var bll = dueamount - amnt;
-                                payments.Received_Amount = dueamount.ToString();
-                                payments.Opening_Balance = dueamount.ToString();
-                                payments.Current_Balance = bll.ToString();
+                                ksra = dueamount - amnt;
+                                payments.Received_Amount = dueamount.ToString().Replace(".00", "");
+                                payments.Opening_Balance = dueamount.ToString().Replace(".00", "");
+                                payments.Current_Balance = ksra.ToString();
                             }
                             else
                             {
                                 var balance = amnt - dueamount;
-                                payments.Received_Amount = dueamount.ToString();
-                                payments.Opening_Balance = dueamount.ToString();
+                                payments.Received_Amount = dueamount.ToString().Replace(".00", "");
+                                payments.Opening_Balance = dueamount.ToString().Replace(".00", "");
                                 if (balance > 0)
                                 {
                                     payments.Current_Balance = "0";
@@ -194,9 +198,14 @@ namespace MaaAahwanam.Web.Controllers
 
                             }
                         }
-                        else
-                        {
-                        dueamount = (decimal)ksorder.Due;
+                        //else if ()
+                        //{
+
+                        //    dueamount = ksorder.TotalPrice;
+
+                        //}
+                        else {
+                            dueamount = (decimal)ksorder.Due;
                         }
                     }
                     else
