@@ -77,7 +77,7 @@ namespace MaaAahwanam.Web.Controllers
                     }
 
                     // Packages Section
-                    var pkgsks = vendorVenueSignUpService.Getpackages(id, long.Parse(vid));
+                    var pkgsks = vendorVenueSignUpService.Getpackages(id, long.Parse(vid)).Where(m => m.type == "Package").ToList();
                     ViewBag.package = pkgsks;
                     if (pkgsks.Count == 0)
                     {
@@ -203,7 +203,7 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.availability = availability.ToList();
                     //Packages Section 
                     viewservicesservice viewservicesss = new viewservicesservice();
-                    ViewBag.availablepackages = viewservicesss.getvendorpkgs(id.ToString()).ToList();
+                    ViewBag.availablepackages = viewservicesss.getvendorpkgs(id.ToString()).Where(m=>m.type == "Package").ToList();
 
                     //Orders Section
                     DateTime todatedate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE).Date;
@@ -531,6 +531,7 @@ namespace MaaAahwanam.Web.Controllers
             //Add Package Code
             package.Status = "Active";
             package.UpdatedDate = updateddate;
+            package.type = "Package";
             //package.timeslot = package.timeslot.Trim(',');
             package = vendorVenueSignUpService.addpack(package);
             //string msg = string.Empty;
@@ -544,6 +545,7 @@ namespace MaaAahwanam.Web.Controllers
             Package package = vendorVenueSignUpService.Getpackages(long.Parse(id), long.Parse(subid)).Where(m => m.PackageID == long.Parse(pkgid)).FirstOrDefault();
             DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             package.UpdatedDate = updateddate;
+            package.type = "Package";
             package = vendorVenueSignUpService.addpack(package);
             string msg = string.Empty;
             if (package.PackageID > 0) msg = package.PackageID.ToString();
@@ -556,6 +558,7 @@ namespace MaaAahwanam.Web.Controllers
             Package package = vendorVenueSignUpService.Getpackages(long.Parse(id), long.Parse(subid)).Where(m => m.PackageID == long.Parse(pkgid)).FirstOrDefault();
             DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             package.UpdatedDate = updateddate;
+            package.type = "Package";
             package.VendorSubId = long.Parse(selectedid);
             package = vendorVenueSignUpService.addpack(package);
             string msg = string.Empty;
@@ -573,6 +576,44 @@ namespace MaaAahwanam.Web.Controllers
             package.UpdatedDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow, INDIAN_ZONE);
             package = vendorVenueSignUpService.updatepack(package.PackageID.ToString(), package);
             return Json("New Course & Course Items Added", JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult AddRentalPackage(Package package)
+        {
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            //Add Package Code
+            package.Status = "Active";
+            package.UpdatedDate = updateddate;
+            package.type = "Rental";
+            package = vendorVenueSignUpService.addpack(package);
+            return Json(package.PackageID, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult DuplicateRentalPackage(string pkgid, string id, string subid)
+        {
+            Package package = vendorVenueSignUpService.Getpackages(long.Parse(id), long.Parse(subid)).Where(m => m.PackageID == long.Parse(pkgid)).FirstOrDefault();
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            package.UpdatedDate = updateddate;
+            package.type = "Rental";
+            package = vendorVenueSignUpService.addpack(package);
+            string msg = string.Empty;
+            if (package.PackageID > 0) msg = package.PackageID.ToString();
+            else msg = "Failed TO Duplicate Package";
+            return Json(msg, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult CopyRentalPackage(string pkgid, string id, string selectedid, string subid)
+        {
+            Package package = vendorVenueSignUpService.Getpackages(long.Parse(id), long.Parse(subid)).Where(m => m.PackageID == long.Parse(pkgid)).FirstOrDefault();
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            package.UpdatedDate = updateddate;
+            package.type = "Rental";
+            package.VendorSubId = long.Parse(selectedid);
+            package = vendorVenueSignUpService.addpack(package);
+            string msg = string.Empty;
+            if (package.PackageID > 0) msg = "Package Copied SuccessFully!!!";
+            else msg = "Failed TO Copy Package";
+            return Json(msg, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
@@ -741,6 +782,26 @@ namespace MaaAahwanam.Web.Controllers
             //Add Package Code
             package.Status = "Active";
             package.UpdatedDate = updateddate;
+            package.type = "Package";
+            package.timeslot = package.timeslot.Trim(',');
+            package.extramenuitems = getpackages.FirstOrDefault().extramenuitems;
+            package = vendorVenueSignUpService.updatepack(package.PackageID.ToString(), package);
+            string msg = string.Empty;
+            if (package.PackageID > 0) msg = "Package Updated SuccessFully!!!";
+            else msg = "Failed TO Update Package";
+            return Json(msg, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult UpdateRentalPackage(Package package)
+        {
+            var getpackages = vendorVenueSignUpService.Getpackages(package.VendorId, package.VendorSubId).Where(m => m.PackageID == package.PackageID);
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            package.price1 = package.PackagePrice = package.normaldays;
+            package.menuitems = package.menuitems.Trim(',');
+            //Add Package Code
+            package.Status = "Active";
+            package.UpdatedDate = updateddate;
+            package.type = "Rental";
             package.timeslot = package.timeslot.Trim(',');
             package.extramenuitems = getpackages.FirstOrDefault().extramenuitems;
             package = vendorVenueSignUpService.updatepack(package.PackageID.ToString(), package);

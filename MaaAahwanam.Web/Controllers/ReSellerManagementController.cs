@@ -81,10 +81,10 @@ namespace MaaAahwanam.Web.Controllers
         public JsonResult Index(Partner partner, string command, string partid)
         {
 
-            partner.RegisteredDate = DateTime.Now.Date;
+          
             partner.UpdatedDate = DateTime.Now.Date;
             partner.ExpiryDate = DateTime.Now.Date;
-            if (command == "save") { partner = partnerservice.AddPartner(partner); }
+            if (command == "save") { partner.RegisteredDate = DateTime.Now.Date; partner = partnerservice.AddPartner(partner); }
             else if (command == "Update") { partner = partnerservice.UpdatePartner(partner, partid); }
             else if (command == "Update1") { partner = partnerservice.UpdatePartner(partner, partid); }
             var emailid = partner.emailid;

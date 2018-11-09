@@ -217,7 +217,7 @@
 
 @*<main>*@
 <div class="bg_color_1">
-    <div class="container margin_60_35" style="padding-top:70px;padding-bottom:0px;margin-left:0">
+    <div class="container margin_60_35" style="padding-top:0px;padding-bottom:0px;margin-left:0">
         <div class="row" style="width:1340px">
             <div class="col-lg-8">
                 <div class="box_cart">
@@ -240,7 +240,7 @@
                         <div style="padding-top:10px"><a href="#map">See Address Map</a>&emsp;&emsp; <a href="#address">View Description</a></div>
                     </div>
                     <div class="uk-grid-sub">
-                        @foreach (var item in ViewBag.particularVenue)
+                        @foreach (var item in ViewBag.venues)
                         {
                             if (item.name != null && item.name != "")
                             {
@@ -253,10 +253,18 @@
                         }
                     </div>
                 </div>
-                <br><br>
+                @*<br><br>*@
                 @foreach (var item in ViewBag.particularVenue)
                 {
                     <div class="container">
+                        @if (item.name != null && item.name != "")
+                        {
+                            <h2 style="font-size:30px;font-weight:700;text-transform: uppercase">@item.name - @item.VenueType</h2>
+                        }
+                        else
+                        {
+                            <h2 style="font-size:30px;font-weight:700;text-transform: uppercase">@item.VenueType</h2>
+                        }
                         <h3 class="uk-h3" style="margin-left:4px">AVAILABLE FOOD PACKAGES</h3>
                         @if (ViewBag.availablepackages.Count != 0)
                         {
@@ -290,6 +298,8 @@
                                                 }
                                                 / Person
                                             </span>
+                                            <br /><br />
+                                            <span align="center">@item1.Category</span>
                                             <text class="packageid" style="display:none">@item1.PackageID</text>
                                         </div>
                                         <div class="col-md-8" style="background-color:white;height: 100px;overflow-x:hidden;overflow-y:auto" overflow="visible">
@@ -415,10 +425,10 @@
                                             </tr>
                                             first = next;
                                         }
-                                        if (servicescount <= rcount)
-                                        {
-                                            servicescount = (++servicescount);
-                                        }
+                                        //if (servicescount <= rcount)
+                                        //{
+                                        //    servicescount = (++servicescount);
+                                        //}
                                     }
                                     else
                                     {
@@ -437,8 +447,7 @@
                         <h2 class="heading"><b>Policies</b></h2>
                         @if (ViewBag.policy !=null)
                         {
-                            foreach (var iks in ViewBag.policy)
-                            {
+                            
                                 <div class="policies">
 
                                     <div class="policies-col">
@@ -446,7 +455,7 @@
                                             <h4 class="sub-title"><b>Decor</b></h4>
                                             <ul class="tab-data highlights" style="padding-left: 0px;">
                                                 <li>
-                                                    @if (iks.Outside_decorators_allowed == "Yes")
+                                                    @if (ViewBag.policy.Outside_decorators_allowed == "Yes")
                                                         {
                                                         <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
@@ -457,7 +466,7 @@
 
                                                 <li>
 
-                                                    @if (iks.Decor_provided == "Yes")
+                                                    @if (ViewBag.policy.Decor_provided == "Yes")
                                                         {
                                                         <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
@@ -468,7 +477,7 @@
 
                                                 <li>
 
-                                                    @if (iks.Decorators_allowed_with_royalty == "Yes")
+                                                    @if (ViewBag.policy.Decorators_allowed_with_royalty == "Yes")
                                                         {
                                                         <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
@@ -480,10 +489,10 @@
 
                                                 @*<li>
                                                         <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png">
-                                                        Decoration starting costs Rs  @if (iks.Decoration_starting_costs == "undefined")
+                                                        Decoration starting costs Rs  @if (ViewBag.policy.Decoration_starting_costs == "undefined")
                                                         { }
                                                         else
-                                                        {@iks.Decoration_starting_costs}
+                                                        {@ViewBag.policy.Decoration_starting_costs}
                                                     </li>*@
 
                                             </ul>
@@ -499,7 +508,7 @@
                                             <h4 class="sub-title"><b>Food</b></h4>
                                             <ul class="tab-data highlights" style="padding-left: 0px;">
                                                 <li>
-                                                    @if (iks.Food_provided == "Yes")
+                                                    @if (ViewBag.policy.Food_provided == "Yes")
                                                         {
                                                         <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
@@ -508,14 +517,14 @@
                                                     Food provided by the venue
                                                 </li>
                                                 <li>
-                                                    @if (iks.Outside_food_or_caterer_allowed == "Yes")
+                                                    @if (ViewBag.policy.Outside_food_or_caterer_allowed == "Yes")
                                                         {
                                                         <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
                                                         { <img src="http://design.maa-aahwanam.com/panagea/images/error1.png">} Outside food/caterer allowed at the venue
                                                 </li>
                                                 <li>
-                                                    @if (iks.NonVeg_allowed == "Yes")
+                                                    @if (ViewBag.policy.NonVeg_allowed == "Yes")
                                                         {
                                                         <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
@@ -529,7 +538,7 @@
                                         <h4 class="sub-title"><b>Alcohol</b></h4>
                                         <ul class="tab-data highlights" style="padding-left: 0px;">
                                             <li>
-                                                @if (iks.Alcohol_allowed == "Yes")
+                                                @if (ViewBag.policy.Alcohol_allowed == "Yes")
                                                     {
                                                     <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                     else
@@ -537,7 +546,7 @@
                                                     }Alcohol allowed at the venue
                                             </li>
                                             <li>
-                                                @if (iks.Outside_Alcohol_allowed == "Yes")
+                                                @if (ViewBag.policy.Outside_Alcohol_allowed == "Yes")
                                                     {
                                                     <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                     else
@@ -554,10 +563,10 @@
                                             <ul class="tab-data" style="padding-left: 0px;">
                                                 <li>
                                                     Taxes F&amp;B : <b>
-                                                        Decoration starting costs Rs  @if (iks.Tax == "undefined")
+                                                        Decoration starting costs Rs  @if (ViewBag.policy.Tax == "undefined")
                                                         { }
                                                         else
-                                                        {@iks.Tax}%
+                                                        {@ViewBag.policy.Tax}%
                                                     </b>
                                                 </li>
                                             </ul>
@@ -568,7 +577,7 @@
                                         <h4 class="sub-title"><b>Parking</b></h4>
                                         <ul class="tab-data highlights" style="padding-left: 0px;">
                                             <li>
-                                                @if (iks.Valet_Parking == "Yes")
+                                                @if (ViewBag.policy.Valet_Parking == "Yes")
                                                     {
                                                     <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                     else
@@ -576,10 +585,10 @@
                                                     } Valet provided by venue
                                             </li>
                                             @*<li>
-                                                    Parking space available for @if (iks.Parking_Space == "undefined")
+                                                    Parking space available for @if (ViewBag.policy.Parking_Space == "undefined")
                                                     { }
                                                     else
-                                                    {@iks.Parking_Space} vehicles
+                                                    {@ViewBag.policy.Parking_Space} vehicles
                                                 </li>*@
                                         </ul>
                                     </div>
@@ -590,7 +599,7 @@
                                         <ul class="tab-data" style="padding-left: 0px;">
 
                                             <li>
-                                                @if (iks.Cancellation == "Yes")
+                                                @if (ViewBag.policy.Cancellation == "Yes")
                                                     {
                                                     <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                     else
@@ -606,10 +615,10 @@
                                             <ul class="tab-data" style="padding-left: 0px;">
                                                 <li>
                                                     <b>
-                                                        @if (iks.Advance_Amount == "undefined")
+                                                        @if (ViewBag.policy.Advance_Amount == "undefined")
                                                         { }
                                                         else
-                                                        {@iks.Advance_Amount}  %
+                                                        {@ViewBag.policy.Advance_Amount}  %
                                                     </b> at the time of booking
                                                 </li>
                                             </ul>
@@ -620,7 +629,7 @@
                                         <h4 class="sub-title"><b>Changing Room</b></h4>
                                         <ul class="tab-data highlights" style="padding-left: 0px;">
                                             <li>
-                                                @if (iks.Available_Rooms == "Yes")
+                                                @if (ViewBag.policy.Available_Rooms == "Yes")
                                                     {
                                                     <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                     else
@@ -629,10 +638,10 @@
                                             </li>
                                             @*<li>
                                                     No. of complimentary changing rooms: <strong>
-                                                        @if (iks.Rooms_Count == "undefined")
+                                                        @if (ViewBag.policy.Rooms_Count == "undefined")
                                                         { }
                                                         else
-                                                        {@iks.Rooms_Count}
+                                                        {@ViewBag.policy.Rooms_Count}
                                                     </strong>
                                                 </li>*@
                                         </ul>
@@ -642,7 +651,7 @@
                                         <h4 class="sub-title"><b>Other Policies</b></h4>
                                         <ul class="tab-data venue-highlights highlights" style="padding-left: 0px;">
                                             <li>
-                                                @if (iks.Music_Allowed_Late == "Yes")
+                                                @if (ViewBag.policy.Music_Allowed_Late == "Yes")
                                                     {
                                                     <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                     else
@@ -651,7 +660,7 @@
                                                 Music allowed late
                                             </li>
                                             <li>
-                                                @if (iks.Halls_AC == "Yes")
+                                                @if (ViewBag.policy.Halls_AC == "Yes")
                                                     {
                                                     <im<img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                             else
@@ -660,7 +669,7 @@
                                                         Halls are air conditioned
                                                 </li>
                                                 <li>
-                                                    @if (iks.Ample_Parking == "Yes")
+                                                    @if (ViewBag.policy.Ample_Parking == "Yes")
                                                         {
                                                         <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
@@ -669,7 +678,7 @@
                                                     Ample parking
                                                 </li>
                                                 <li>
-                                                    @if (iks.Baarat_Allowed == "Yes")
+                                                    @if (ViewBag.policy.Baarat_Allowed == "Yes")
                                                         {
                                                         <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
@@ -679,7 +688,7 @@
                                                 </li>
                                                 <li style="margin-left: 193px;margin-top: -89px;">
 
-                                                    @if (iks.Fire_Crackers_Allowed == "Yes")
+                                                    @if (ViewBag.policy.Fire_Crackers_Allowed == "Yes")
                                                         {
                                                         <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
@@ -688,7 +697,7 @@
                                                     Fire crackers allowed
                                                 </li>
                                                 <li style="margin-left: 193px;margin-top: 4px;">
-                                                    @if (iks.Hawan_Allowed == "Yes")
+                                                    @if (ViewBag.policy.Hawan_Allowed == "Yes")
                                                         {
                                                         <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
@@ -697,7 +706,7 @@
                                                     Hawan allowed
                                                 </li>
                                                 <li style="margin-left: 193px;margin-top: 6px;">
-                                                    @if (iks.Overnight_wedding_Allowed == "Yes")
+                                                    @if (ViewBag.policy.Overnight_wedding_Allowed == "Yes")
                                                         {
                                                         <img src="http://design.maa-aahwanam.com/panagea/images/checkmark.png"> }
                                                         else
@@ -708,7 +717,7 @@
                                             </ul>
                                         </div>
                                     </div>
-                            }
+                            
                         }
                     </div>
                     <br />
@@ -762,6 +771,18 @@
             <aside class="col-lg-4" id="sidebar">
                 <div class="uk-section uk-section-large uk-section-muted" style="border: 1px lightgray solid;">
                     <div class="uk-container" style="margin-top:-25px;">
+                        @foreach (var item in ViewBag.particularVenue)
+                        {
+                            if (item.name != null && item.name != "")
+                            {
+                                <h2 class="uk-h2" style="font-size:20px;text-transform: uppercase;width:100%;font-weight:700">@item.name</h2>
+                            }
+                            else
+                            {
+                                <h2 class="uk-h2" style="font-size:20px;text-transform: uppercase;width:100%;font-weight:700">@item.VenueType</h2>
+                            }
+                        }
+                        
                         <input type="hidden" id="vendoravailabledates" value="" />
                         <div>
                             <div id="calendar"></div>
@@ -859,12 +880,19 @@
                 type: "GET",
                 url: '/viewservice/GetDates?id=' + @ViewBag.masterid + '&&vid=' + subid,
                 success: function (data) {
-                    $.each(data, function (i, v) {
+                    for (var i = 0; i < data.split(',').length; i++) {
                         events.push({
                             title: 'N/A',
-                            start: moment(v.StartDate).subtract(12, 'hours').subtract(30, 'minutes')
+                            start: moment(data.split(',')[i]).subtract(12, 'hours').subtract(30, 'minutes'),
+                            description:'N/A',
                         });
-                    })
+                    }
+                    //$.each(data, function (i, v) {
+                    //    events.push({
+                    //        title: 'N/A',
+                    //        start: moment(v.StartDate).subtract(12, 'hours').subtract(30, 'minutes')
+                    //    });
+                    //})
 
                     GenerateCalender(events);
                 },
@@ -990,18 +1018,6 @@
             //alert(total);
             $('.tp').val(total);
             $(".total b").empty().append(total);
-            var vendortype = "";
-
-            $.ajax({
-                url: '/viewservice/Availabledates?pid=' + pid + '&&type=' + vendortype,
-                type: 'POST',
-                contentType: false,
-                processData: false,
-                success: function (result) {
-                    $("#vendoravailabledates").val(result);
-                }
-            });
-
         };
         function booknow(val) {
             var timeslot = '';
@@ -1041,6 +1057,26 @@
                 }
             });
         };
+
+        $(document).ready(function () {
+            var package = $('#packageid').val();
+            var pid = $('#packageid').val();
+            var price = $('#PackagePrice').val();
+            if (price == '') { price = $('#PackagePrice1').val(); }
+            var PackagePrice = price;
+            var PackageName = $('#PackageName').val();
+            var SelectedPackage = '';
+            if (PackageName != '' && price != '' && PackageName != undefined && price != undefined) { SelectedPackage = '' + PackageName + '(₹' + PackagePrice + '/per plate)'; }
+            else { SelectedPackage = 'N/A'; }
+            var guest = window.localStorage.getItem("guests");
+            $('.price').val(SelectedPackage);
+            $('.guests1').val(guest);
+            var total = guest * PackagePrice;
+            $(".total b").empty().append(total);
+            if (PackagePrice != '' && PackagePrice != undefined) { $(".packesss b").empty().append(PackagePrice); }
+            else { $(".packesss b").empty().append('N/A'); }
+            $('.Packageselected').val(pid + ',' + PackageName + ',' + PackagePrice);
+        })
 
         function setCookie(cname, cvalue, exdays) {
             var d = new Date();

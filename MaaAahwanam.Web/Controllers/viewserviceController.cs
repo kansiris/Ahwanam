@@ -27,8 +27,6 @@ namespace MaaAahwanam.Web.Controllers
         VendorDatesService vendorDatesService = new VendorDatesService();
         ProductInfoService productInfoService = new ProductInfoService();
 
-
-
         // GET: viewservice
         public ActionResult Index(string name, string type, string id,string vid)
         {
@@ -47,9 +45,12 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.Productinfo = data;
                 ViewBag.latitude = "17.385044";
                 ViewBag.longitude = "78.486671";
-                ViewBag.allimages = allimages.Where(m => m.VendorId == long.Parse(id));
-                ViewBag.particularVenue = venues;
-                ViewBag.availablepackages = viewservicesss.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(vid)).ToList();
+                ViewBag.allimages = allimages.Where(m => m.VendorId == long.Parse(vid)).ToList();
+                ViewBag.particularVenue = venues.Where(m=>m.Id == long.Parse(vid));
+                ViewBag.venues = venues;
+                var packages = viewservicesss.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(vid) && p.type == "Package").ToList();
+                ViewBag.availablepackages = packages;
+                ViewBag.firstpackage = packages.FirstOrDefault();
                 var allamenities = venues.Where(m=>m.Id==long.Parse(vid)).Select(m => new
                 {
                     #region Venue amenities
@@ -120,7 +121,30 @@ namespace MaaAahwanam.Web.Controllers
         public JsonResult GetDates(string id, string vid)
         {
             var data = vendorDatesService.GetDates(long.Parse(id), long.Parse(vid));
-            return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            string orderdates = productInfoService.disabledate(long.Parse(id), long.Parse(vid), "Venue").Replace('/', '-');
+            var betweendates = new List<string>();
+            int recordcount = data.Count();
+            foreach (var item1 in data)
+            {
+                var startdate = Convert.ToDateTime(item1.StartDate);
+                var enddate = Convert.ToDateTime(item1.EndDate);
+                if (startdate != enddate)
+                {
+                    for (var dt = startdate; dt <= enddate; dt = dt.AddDays(1))
+                    {
+                        betweendates.Add(dt.ToString("yyyy-MM-dd"));
+                    }
+                }
+                else
+                {
+                    betweendates.Add(startdate.ToString("yyyy-MM-dd"));
+                }
+            }
+            var vendoravailabledates = String.Join(",", betweendates);
+            if (orderdates != "")
+                vendoravailabledates = vendoravailabledates + "," + String.Join(",", orderdates.TrimStart(','));
+            string availdate = vendoravailabledates;
+            return new JsonResult { Data = availdate, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         public JsonResult Availabledates(string pid, string type)
