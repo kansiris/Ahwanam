@@ -26,6 +26,7 @@ namespace MaaAahwanam.Web.Controllers
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         decimal amount;
         decimal tsprice;
+        decimal balndue;
         // GET: vinvoice
         public ActionResult Index(string oid)
         {
@@ -51,12 +52,17 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.orderdate = Convert.ToDateTime(orderdetails1.FirstOrDefault().OrderDate).ToString("MMM d,yyyy");
                         ViewBag.Servicetype = orderdetails1.FirstOrDefault().ServiceType;
                         ViewBag.serviceprice = orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity;
+                        ViewBag.orderdetailid = orderdetails1.FirstOrDefault().OrderDetailId;
                         ViewBag.orderdetails = orderdetails1;
                         foreach(var i in orderdetails1)
                         {
                             var price = i.TotalPrice;
                             tsprice = Convert.ToInt64(tsprice) + Convert.ToInt64(price);
                             ViewBag.total = tsprice;
+                            var bdue = i.Due;
+                            balndue = Convert.ToInt64(balndue) + Convert.ToInt64(bdue);
+                            ViewBag.balance = balndue;
+
                         }
                         ViewBag.totalprice = orderdetails1.FirstOrDefault().TotalPrice;
                         ViewBag.orderdetailid = orderdetails1.FirstOrDefault().OrderDetailId;
@@ -96,6 +102,16 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.totalprice = orderdetails.FirstOrDefault().TotalPrice;
                         ViewBag.orderdetailid = orderdetails.FirstOrDefault().OrderDetailId;
                         var payments = rcvpaymentservice.getPayments(oid).ToList();
+                        foreach (var i in orderdetails)
+                        {
+                            var price = i.TotalPrice;
+                            tsprice = Convert.ToInt64(tsprice) + Convert.ToInt64(price);
+                            ViewBag.total = tsprice;
+                            var bdue = i.Due;
+                            balndue = Convert.ToInt64(balndue) + Convert.ToInt64(bdue);
+                            ViewBag.balance = balndue;
+
+                        }
                         ViewBag.payment = payments;
                         foreach (var reports in payments)
                         {
@@ -130,12 +146,21 @@ namespace MaaAahwanam.Web.Controllers
             payments.User_Type = "VendorUser";
             payments.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             payments.Payment_Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            var odis = payments.OrderDetailId.TrimStart(',').Split(',');
+            for(int i=0; i<odis.Length; i++)
+            {
+                if(float.Parse(payments.Received_Amount)>= 0)
+                {
+                    var orderdetaiid = payments.OrderDetailId.TrimStart(',').Split(',')[i];
+                }
+            }
+
             if (payments.Current_Balance == "0")
             {
                 Order orders = new Order();
                 OrderDetail orderdetils = new OrderDetail();
-                orders.Status = "Payment pending";
-                orderdetils.Status = "Payment pending";
+                orders.Status = "Payment completed";
+                orderdetils.Status = "Payment completed";
                 var status = newmanageuse.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
                 payments.Status = "Payment completed";
             }
