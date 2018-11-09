@@ -77,7 +77,10 @@ namespace MaaAahwanam.Web.Controllers
                     }
 
                     // Packages Section
-                    var pkgsks = vendorVenueSignUpService.Getpackages(id, long.Parse(vid)).Where(m => m.type == "Package").ToList();
+                    var allpkgs = vendorVenueSignUpService.Getpackages(id, long.Parse(vid)).ToList();
+                    var pkgsks = allpkgs.Where(m => m.type == "Package").ToList();
+                    var rentalpkgs = allpkgs.Where(m => m.type == "Rental").ToList();
+                    ViewBag.rentalpkgs = rentalpkgs;
                     ViewBag.package = pkgsks;
                     if (pkgsks.Count == 0)
                     {
@@ -797,13 +800,13 @@ namespace MaaAahwanam.Web.Controllers
             var getpackages = vendorVenueSignUpService.Getpackages(package.VendorId, package.VendorSubId).Where(m => m.PackageID == package.PackageID);
             DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             package.price1 = package.PackagePrice = package.normaldays;
-            package.menuitems = package.menuitems.Trim(',');
+            //package.menuitems = package.menuitems.Trim(',');
             //Add Package Code
             package.Status = "Active";
             package.UpdatedDate = updateddate;
             package.type = "Rental";
             package.timeslot = package.timeslot.Trim(',');
-            package.extramenuitems = getpackages.FirstOrDefault().extramenuitems;
+            //package.extramenuitems = getpackages.FirstOrDefault().extramenuitems;
             package = vendorVenueSignUpService.updatepack(package.PackageID.ToString(), package);
             string msg = string.Empty;
             if (package.PackageID > 0) msg = "Package Updated SuccessFully!!!";
