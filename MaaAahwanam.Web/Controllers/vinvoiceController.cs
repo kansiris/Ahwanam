@@ -10,6 +10,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using IronPdf;
+using System.Text.RegularExpressions;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -26,6 +27,7 @@ namespace MaaAahwanam.Web.Controllers
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         decimal amount;
         decimal tsprice;
+        decimal balndue;
         // GET: vinvoice
         public ActionResult Index(string oid)
         {
@@ -51,12 +53,17 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.orderdate = Convert.ToDateTime(orderdetails1.FirstOrDefault().OrderDate).ToString("MMM d,yyyy");
                         ViewBag.Servicetype = orderdetails1.FirstOrDefault().ServiceType;
                         ViewBag.serviceprice = orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity;
+                        ViewBag.orderdetailid = orderdetails1.FirstOrDefault().OrderDetailId;
                         ViewBag.orderdetails = orderdetails1;
                         foreach(var i in orderdetails1)
                         {
                             var price = i.TotalPrice;
                             tsprice = Convert.ToInt64(tsprice) + Convert.ToInt64(price);
                             ViewBag.total = tsprice;
+                            var bdue = i.Due;
+                            balndue = Convert.ToInt64(balndue) + Convert.ToInt64(bdue);
+                            ViewBag.balance = balndue;
+
                         }
                         ViewBag.totalprice = orderdetails1.FirstOrDefault().TotalPrice;
                         ViewBag.orderdetailid = orderdetails1.FirstOrDefault().OrderDetailId;
@@ -96,6 +103,16 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.totalprice = orderdetails.FirstOrDefault().TotalPrice;
                         ViewBag.orderdetailid = orderdetails.FirstOrDefault().OrderDetailId;
                         var payments = rcvpaymentservice.getPayments(oid).ToList();
+                        foreach (var i in orderdetails)
+                        {
+                            var price = i.TotalPrice;
+                            tsprice = Convert.ToInt64(tsprice) + Convert.ToInt64(price);
+                            ViewBag.total = tsprice;
+                            var bdue = i.Due;
+                            balndue = Convert.ToInt64(balndue) + Convert.ToInt64(bdue);
+                            ViewBag.balance = balndue;
+
+                        }
                         ViewBag.payment = payments;
                         foreach (var reports in payments)
                         {
@@ -126,31 +143,99 @@ namespace MaaAahwanam.Web.Controllers
         public ActionResult Index(Payment payments)
 
         {
+            
             var orderdetails = newmanageuse.userOrderList().Where(m => m.OrderId == long.Parse(payments.OrderId)).ToList();
-            payments.User_Type = "VendorUser";
-            payments.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
-            payments.Payment_Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
-            if (payments.Current_Balance == "0")
+            if (orderdetails == null || orderdetails.Count == 0)
             {
-                Order orders = new Order();
-                OrderDetail orderdetils = new OrderDetail();
-                orders.Status = "Payment pending";
-                orderdetils.Status = "Payment pending";
-                var status = newmanageuse.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
-                payments.Status = "Payment completed";
-            }
-            else
-            {
-                Order orders = new Order();
-                OrderDetail orderdetils = new OrderDetail();
-                orders.Status = "Payment pending";
-                orderdetils.Status = "Payment pending";
-                var status = newmanageuse.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
+                var orderdetails1 = newmanageuse.userOrderList1().Where(m => m.OrderId == long.Parse(payments.OrderId)).ToList();
 
-                payments.Status = "Payment pending";
+                payments.User_Type = "VendorUser";
+                payments.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+                payments.Payment_Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+                decimal ksra = decimal.Parse(payments.Received_Amount);
+                var odis = payments.OrderDetailId.Trim(',').Split(',');
+                for (int i = 0; i < odis.Length; i++)
+                {
+                    if ( ksra >= 0)
+                    {
+                        string str = odis[i] ;
+                        str = Regex.Replace(str, @"\s", "");
+                        var orderdetailid = str;
+                        payments.OrderDetailId = orderdetailid;
+                        //var datarecord = orderdetailservices.GetOrderDetailsByOrderdetailid(Convert.ToInt32(orderdetailid));
+                        decimal dueamount;
+                        var ksorder = orderdetails1.Where(m => m.OrderDetailId == long.Parse(orderdetailid)).FirstOrDefault();
+                        if (ksorder.SUM_AP == null || ksorder.Due == null)
+                        {
+                            dueamount = ksorder.TotalPrice;
+                            var amnt = ksra;
+                            if (dueamount > amnt)
+                            {
+                                ksra = dueamount - amnt;
+                                payments.Received_Amount = dueamount.ToString().Replace(".00", "");
+                                payments.Opening_Balance = dueamount.ToString().Replace(".00", "");
+                                payments.Current_Balance = ksra.ToString();
+                            }
+                            else
+                            {
+                                var balance = amnt - dueamount;
+                                payments.Received_Amount = dueamount.ToString().Replace(".00", "");
+                                payments.Opening_Balance = dueamount.ToString().Replace(".00", "");
+                                if (balance > 0)
+                                {
+                                    payments.Current_Balance = "0";
+                                    //if (balance > dueamount)
+                                    //{
+                                    //    var bldue = balance - dueamount;
+                                    //}
+                                    //else
+                                    //{
+                                    //    var bldue1 = dueamount - balance;
+                                    //}
+
+
+                                }
+
+                            }
+                        }
+                        //else if ()
+                        //{
+
+                        //    dueamount = ksorder.TotalPrice;
+
+                        //}
+                        else {
+                            dueamount = (decimal)ksorder.Due;
+                        }
+                    }
+                    else
+                    {
+                        var orderdetailid = payments.OrderDetailId.Trim(',').Split(',')[i].Replace(" ", "");
+                        var ksorder = orderdetails1.Where(m => m.OrderDetailId == long.Parse(orderdetailid)).FirstOrDefault();
+                    }
+
+                    if (payments.Current_Balance == "0")
+                    {
+                        Order orders = new Order();
+                        OrderDetail orderdetils = new OrderDetail();
+                        orders.Status = "Payment completed";
+                        orderdetils.Status = "Payment completed";
+                        var status = newmanageuse.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
+                        payments.Status = "Payment completed";
+                    }
+                    else
+                    {
+                        Order orders = new Order();
+                        OrderDetail orderdetils = new OrderDetail();
+                        orders.Status = "Payment pending";
+                        orderdetils.Status = "Payment pending";
+                        var status = newmanageuse.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
+
+                        payments.Status = "Payment pending";
+                    }
+                    payments = rcvpaymentservice.SavePayments(payments);
+                }
             }
-            payments = rcvpaymentservice.SavePayments(payments);
-           
             return Json("Payment Successfull", JsonRequestBehavior.AllowGet);
             //return Content("<script language='javascript' type='text/javascript'>alert('payment Successfull');location.href='/vinvoice'</script>");
 

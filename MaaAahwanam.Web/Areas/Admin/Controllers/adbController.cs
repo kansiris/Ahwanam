@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaaAahwanam.Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,5 +14,13 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         {
             return View();
         }
+        public JsonResult AutoCompletevendor()
+        {
+            VendorMasterService allVendorsService = new VendorMasterService();
+            var Listoflocations = String.Join(",", allVendorsService.GetVendorname().Distinct());
+            //return Json(Listoflocations,JsonRequestBehavior.AllowGet);
+            return new JsonResult { Data = Listoflocations, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
     }
-}
+    }
