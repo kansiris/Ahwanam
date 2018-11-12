@@ -49,6 +49,10 @@ namespace MaaAahwanam.Service
         {
             return partnerrepo.getPartnerPackage(long.Parse(vid));
         }
+        public List<PartnerContact> getPartnercontact(string vid)
+        {
+            return partnerrepo.getPartnercontact(vid);
+        }
         public List<PartnerPackage> getallPartnerPackage()
         {
             return partnerrepo.getallPartnerPackage();

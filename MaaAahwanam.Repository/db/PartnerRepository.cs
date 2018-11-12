@@ -27,13 +27,14 @@ namespace MaaAahwanam.Repository.db
         {
             Partner partner = new Partner();
             if (email != null)
-                partner = _dbContext.Partner.SingleOrDefault(p => p.emailid == email);
+                partner = _dbContext.Partner.Where(p => p.emailid == email).FirstOrDefault();
             return partner;
            
         }
         public Partner UpdatePartner(Partner partner,long partid)
         {
             var partner1 = _dbContext.Partner.Where(m => m.PartnerID == partid).FirstOrDefault();
+            partner.PartnerID = partner1.PartnerID;
             _dbContext.Entry(partner1).CurrentValues.SetValues(partner);
             _dbContext.SaveChanges();
             return partner1;
@@ -59,6 +60,11 @@ namespace MaaAahwanam.Repository.db
         public List<PartnerPackage> getPartnerPackage(long vid)
         {
             return _dbContext.PartnerPackage.Where(p => p.VendorId == vid).ToList();
+
+        }
+        public List<PartnerContact> getPartnercontact(string vid)
+        {
+            return _dbContext.PartnerContact.Where(p => p.VendorID == vid).ToList();
 
         }
         public List<PartnerPackage> getallPartnerPackage()
