@@ -51,6 +51,7 @@ $(document).on('click', '.subcatclose', function () {
                 if (result = 'success') {
                     alert("service removed");
                     pdiv.remove();
+                    location.href = '/home';
                 }
                 else { alert(result); return location.href = '/home';}
             },
@@ -764,7 +765,12 @@ $(document).on('change', '.copypkg', function () {
         type: 'post',
         datatype: 'json',
         success: function (data) {
-            alert(data);
+            if (data > 0) {
+                alert("Package Copied Successfully!!!");
+            }
+            else {
+                alert(data);
+            }
             $('.overlay').hide();
         }
     });
@@ -780,7 +786,12 @@ $(document).on('click', '.pkgclone', function () {
         type: 'post',
         datatype: 'json',
         success: function (data) {
-            alert(data);
+            if (data > 0) {
+                alert("Package Duplicated Successfully!!!");
+            }
+            else {
+                alert(data);
+            }
             location.reload();
         }
     });
@@ -869,7 +880,7 @@ $(document).on('change', '.slotcheck1', function () {
     }
 });
 
-// Add Rental Package
+// Add Rental/Update Package
 $(document).on('click', '.rsavepkg', function () {
     var type = $(this).text();    
     var parentdiv = $(this).parent('div.rpkgsave').parent('div.rallpkgs');
@@ -932,17 +943,17 @@ $(document).on('click', '.rsavepkg', function () {
             datatype: 'json',
             data: package,
             success: function (data) {
-                if (type == 'Save') {
+                //if (type == 'Save') {
                     if (data > 0) {
-                        alert("Rental Package Saved Successfully!!!");
+                        alert("Rental Package "+type+"d Successfully!!!");
                     }
                     else {
                         alert("Failed!!!");
                     }
-                }
-                else if (type == 'Update') {
-                    alert(data);
-                }
+                //}
+                //else if (type == 'Update') {
+                //    alert(data);
+                //}
                 $('.overlay').hide();
             }
         });
@@ -977,7 +988,12 @@ $(document).on('click', '.rpkgclone', function () {
         type: 'post',
         datatype: 'json',
         success: function (data) {
-            alert(data);
+            if (data > 0) {
+                alert("Rental Package Duplicated Successfully!!!");
+            }
+            else {
+                alert(data);
+            }
             location.reload();
         }
     });

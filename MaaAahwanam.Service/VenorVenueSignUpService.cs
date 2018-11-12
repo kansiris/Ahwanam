@@ -118,6 +118,11 @@ namespace MaaAahwanam.Service
             return vendorVenueSignUpRepository.Getpackages(vid, subvid);
         }
 
+        public List<Package> GetAllPackages()
+        {
+            return vendorVenueSignUpRepository.GetAllPackages();
+        }
+
         public string deletepack(string id)
         {
             return vendorVenueSignUpRepository.deletepackage(long.Parse(id));
