@@ -9,6 +9,8 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 {
     public class adbController : Controller
     {
+        PartnerService partnerservice = new PartnerService();
+
         // GET: Admin/adb
         public ActionResult Index()
         {
@@ -22,5 +24,12 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             return new JsonResult { Data = Listoflocations, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
+        public ActionResult sidebar()
+        {
+            var allresellers = partnerservice.GetallPartners();
+            var allresellerspack = partnerservice.getallPartnerPackage();
+            ViewBag.allresellers = allresellers;
+            return View();
+        }
     }
     }
