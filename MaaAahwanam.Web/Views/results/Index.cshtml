@@ -4,10 +4,10 @@
     Layout = "~/Views/SharedWeb/UserModuleMasterPage.cshtml";
 }
 @section css{
-    <link href="~/newdesign/css/alertify.css" rel="stylesheet" />
+
 <link href="~/newdesignstyles/css/ion.rangeSlider.css" rel="stylesheet" />
 <link href="~/newdesignstyles/css/normalize.css" rel="stylesheet" />
-<link href="~/newdesign/css/jquery.datetimepicker.css" rel="stylesheet" />
+@*<link href="~/newdesign/css/jquery.datetimepicker.css" rel="stylesheet" />*@
 }
 
 <style>
@@ -141,12 +141,12 @@
                             </li>
                             <li>
                                 <label>
-                                    <input type="checkbox" class="icheck">Decorator @*<small>(25)</small>*@
+                                    @*<input type="checkbox" class="icheck">*@ Decorator @*<small>(25)</small>*@
                                 </label>
                             </li>
                             <li>
                                 <label>
-                                    <input type="checkbox" class="icheck">Photography @*<small>(56)</small>*@
+                                    @*<input type="checkbox" class="icheck">*@ Photography @*<small>(56)</small>*@
                                 </label>
                             </li>
                             <li>
@@ -229,9 +229,8 @@
 
 
 @section scripts{
-    <script src="~/newdesign/js/alertify.js"></script>
 <script src="~/newdesignstyles/Scripts/ion.rangeSlider.js"></script>
-<script src="~/newdesign/js/jquery.datetimepicker.full.js"></script>
+@*<script src="~/newdesign/js/jquery.datetimepicker.full.js"></script>*@
     <script>
         if ('@Request.QueryString["eventtype"]' != '')
             $("span.current").text('@Request.QueryString["eventtype"]');
@@ -284,7 +283,7 @@
             //}
             $.each(response, function (key, value) {
                 if (value.logo != null) { str = '/vendorimages/'+value.logo } else if (value.image != null) { str = '/vendorimages/'+value.image } else { str = '/noimages.png' }
-                $('#allrecords').append("<div class='col-md-4 isotope-item popular'><div class='box_grid'><figure><a href='/viewservice/index?id="+value.Id+'&&vid='+value.subid+"'><div class='vendorimg' style='background:url("+str+")'></div></a><small5>"+value.subtype+"</small5> </figure> <div class='wrapper'> <h5 class='uk-h5'>" + value.BusinessName + "<p class='p_0'>" + value.Landmark + ", " + value.City + "</p></h5> <div class='panel panel-default'><table><tr><td style='border:0px;width:215px'><p>Veg <span style='float:right'>&emsp;₹<strong style='font-size:16px'>"+value.cost1+"</strong></span></p></td></tr><tr><td style='border:0px;width:215px'><p>Non-Veg<span style='float:right'>&emsp;₹<strong style='font-size:16px'>"+value.cost2+"</strong></span></p></td></tr></table></div></div><ul><li> Capacity : "+value.Minimumseatingcapacity+" - "+value.Maximumcapacity+"</li><li><a href='/viewservice/index?id="+value.Id+"'>Book Now</a></li></ul></div></div>");
+                $('#allrecords').append("<div class='col-md-4 isotope-item popular'><div class='box_grid'><figure><a href='/viewservice/index?id="+value.Id+'&&vid='+value.subid+"'><div class='vendorimg' style='background:url("+str+")'></div></a><small5>"+value.subtype+"</small5> </figure> <div class='wrapper'> <h5 class='uk-h5'>" + value.BusinessName + "<p class='p_0'>" + value.Landmark + ", " + value.City + "</p></h5> <div class='panel panel-default'><table><tr><td style='border:0px;width:215px'><p>Veg <span style='float:right'>&emsp;₹<strong style='font-size:16px'>"+value.cost1+"</strong></span></p></td></tr><tr><td style='border:0px;width:215px'><p>Non-Veg<span style='float:right'>&emsp;₹<strong style='font-size:16px'>"+value.cost2+"</strong></span></p></td></tr></table></div></div><ul><li> Capacity : "+value.Minimumseatingcapacity+" - "+value.Maximumcapacity+"</li><li><a href='/viewservice/index?id="+value.Id+'&&vid='+value.subid+"'>Book Now</a></li></ul></div></div>");
             });
             $('#loadresults').empty();
         }

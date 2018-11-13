@@ -34,13 +34,15 @@ namespace MaaAahwanam.Web.Controllers
 
         public PartialViewResult Loadmore(string count, string type, string to_from)
         {
+            
             type = (type == null || type == "") ? "Venue" : type;
             var selectedservices = type.Split(',');
+            var list = allvendors(6, selectedservices, "first", 6);
             ViewBag.count = 6;
 
-            if (to_from == null) {
-                ViewBag.venues = vendorlist(6, selectedservices, "first", 6); //list; //resultsPageService.GetAllVendors(type).Take(takecount).ToList();
-
+            if (to_from == null)
+            {
+                ViewBag.venues = vendorlist(6, selectedservices, "first", 6); //allvendors(6, selectedservices, "first", 6);//vendorlist(6, selectedservices, "first", 6); 
             }
             else
             {
@@ -54,13 +56,13 @@ namespace MaaAahwanam.Web.Controllers
         }
 
 
-       
+
         public JsonResult LazyLoad(string count, string type, string slider)
         {
             var slider1 = slider.Split(';');
             var min = slider1[0];
             var max = slider1[1];
-            
+
             type = (type == null || type == "") ? "Venue" : type;
             var selectedservices = type.Split(',');
             int takecount = (count == "" || count == null) ? 6 : int.Parse(count) * 6;
@@ -94,7 +96,103 @@ namespace MaaAahwanam.Web.Controllers
             return list;
         }
 
-        public void SendEmail(string type,string count, string loc, string eventtype, string date)
+        public List<searchresults> allvendors(int count, string[] selectedservices, string command, int takecount)
+        {
+            VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
+            PartnerService partnerService = new PartnerService();
+            List<searchresults> list = new List<searchresults>();
+            int recordcount = 0;
+            recordcount = count / selectedservices.Count();
+            takecount = takecount / selectedservices.Count();
+            //var data = resultsPageService.GetAllVendors(selectedservices[i]);
+            var partnerpackages = partnerService.getallPartnerPackage();
+            var allpkgs = vendorVenueSignUpService.GetAllPackages();
+            for (int i = 0; i < selectedservices.Count(); i++)
+            {
+                selectedservices[i] = (selectedservices[i] == "Convention" || selectedservices[i] == "Banquet" || selectedservices[i] == "Function") ? selectedservices[i] + " Hall" : selectedservices[i];
+                var getrecords = resultsPageService.GetAllVendors(selectedservices[i]);//.Take(recordcount).ToList();
+                if (command == "next")
+                    getrecords = getrecords.Skip(takecount).Take(recordcount).ToList();
+                else if (command == "first")
+                    getrecords = getrecords.Take(recordcount).ToList();
+                for (int j = 0; j < getrecords.Count; j++)
+                {
+                    string pkgtype = "Normal Days";//GetType(getrecords[j].Id.ToString(), getrecords[j].subid.ToString());
+                    var cpkgs = allpkgs.Where(m => m.VendorId == getrecords[j].Id && m.VendorSubId == getrecords[j].subid).ToList();
+                    searchresults search = new searchresults();
+                    search.ID = getrecords[j].Id;
+                    search.SubID = getrecords[j].subid;
+                    search.BusinessName = getrecords[j].BusinessName;
+                    search.SubType = getrecords[j].subtype;
+                    search.SubTypeName = getrecords[j].subtypename;
+                    search.Landmark = getrecords[j].Landmark;
+                    search.City = getrecords[j].City;
+                    search.State = getrecords[j].State;
+                    string id = "";//string category = "";
+                    if (pkgtype == "Normal Days")
+                    { search.VegPkgPrice = long.Parse(cpkgs.Select(m => m.normaldays).Min()); id = cpkgs.Select(m=>m.PackageID & m.normaldays.Min()).ToString();  }
+                    //else if (pkgtype == "Peak Days")
+                    //{ search.VegPkgPrice = cpkgs.Select(m => m.peakdays).Min(); }
+                    //else if (pkgtype == "Holidays")
+                    //{ search.VegPkgPrice = cpkgs.Select(m => m.holidays).Min(); }
+                    //else if (pkgtype == "Choice Days")
+                    //{ search.VegPkgPrice = cpkgs.Select(m => m.choicedays).Min(); }
+                    search.PackageID = id;
+                    var particularpackage = partnerpackages.Where(m => m.packageid == id).FirstOrDefault();
+                    if (pkgtype == "Normal Days")
+                    { search.SVegPkgPrice = long.Parse(particularpackage.Anormaldays); }
+                    //else if (pkgtype == "Peak Days")
+                    //{ search.SVegPkgPrice = particularpackage.Apeakdays; }
+                    //else if (pkgtype == "Holidays")
+                    //{ search.SVegPkgPrice = particularpackage.Aholidays; }
+                    //else if (pkgtype == "Choice Days")
+                    //{ search.SVegPkgPrice = particularpackage.Achoicedays; }
+                    list.Add(search);
+                }
+
+
+            }
+            return list;
+        }
+
+        public class searchresults
+        {
+            public long ID { get; set; }
+            public long SubID { get; set; }
+            public string BusinessName { get; set; }
+            public string SubType { get; set; }
+            public string SubTypeName { get; set; }
+            public string Landmark { get; set; }
+            public string City { get; set; }
+            public string State { get; set; }
+            public long VegPkgPrice { get; set; }
+            public long NonVegPkgPrice { get; set; }
+            public long SVegPkgPrice { get; set; }
+            public long SNonVegPkgPrice { get; set; }
+            public string MinSeating { get; set; }
+            public string MaxSeating { get; set; }
+            public string PackageID { get; set; }
+        }
+
+        public string GetType(string id, string vid)
+        {
+            VendorDatesService vendorDatesService = new VendorDatesService();
+            string type = "Normal Days";
+            var data = vendorDatesService.GetDates(long.Parse(id), long.Parse(vid)).Where(m => m.Type == "Package");
+            var today = DateTime.Now;
+            foreach (var item in data)
+            {
+                var startdate = Convert.ToDateTime(item.StartDate);
+                var enddate = Convert.ToDateTime(item.EndDate);
+                if (today < startdate && today > enddate)
+                {
+                    return item.Title;
+                }
+            }
+            return type;
+        }
+
+        public void SendEmail(string type, string count, string loc, string eventtype, string date)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {

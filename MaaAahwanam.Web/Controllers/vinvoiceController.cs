@@ -56,12 +56,15 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.serviceprice = orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity;
                         ViewBag.orderdetailid = orderdetails1.FirstOrDefault().OrderDetailId;
                         ViewBag.orderdetails = orderdetails1;
-                        foreach(var i in orderdetails1)
+                        string odid = string.Empty;
+                        foreach (var item in orderdetails1)
                         {
-                            var price = i.TotalPrice;
+                            odid = odid + item.OrderDetailId + ",";
+                            ViewBag.orderdetailid5 = odid;
+                            var price = item.TotalPrice;
                             tsprice = Convert.ToInt64(tsprice) + Convert.ToInt64(price);
                             ViewBag.total = tsprice;
-                            var bdue = i.Due;
+                            var bdue = item.Due;
                             balndue = Convert.ToInt64(balndue) + Convert.ToInt64(bdue);
                             ViewBag.balance = balndue;
 
@@ -158,7 +161,6 @@ namespace MaaAahwanam.Web.Controllers
                 for (int i = 0; i < odis.Length; i++)
                 {
                     decimal ksra = decimal.Parse(payments.Received_Amount);
-                   
                     //if (ksra >= 0)
                     //{
                         string str = odis[i] ;
@@ -168,24 +170,37 @@ namespace MaaAahwanam.Web.Controllers
                         //var datarecord = orderdetailservices.GetOrderDetailsByOrderdetailid(Convert.ToInt32(orderdetailid));
                         decimal dueamount;
                         var ksorder = orderdetails1.Where(m => m.OrderDetailId == long.Parse(orderdetailid)).FirstOrDefault();
-                        if (ksorder.SUM_AP == null || ksorder.Due == null)
+                    dueamount = Convert.ToDecimal(ksorder.Due);
+                    decimal amnt;
+                    if (i == 0)
+                    { amnt = ksra; }
+                    else
+                    {
+                        if(dueamount == 0)
                         {
-                        dueamount = ksorder.TotalPrice;
-                        decimal amnt;
-                        if (i == 0)
-                        {                        amnt = ksra;  }
-                        else {  amnt = ksra1; }
+                            amnt = ksra + ksra1;
+                        }
+                        else if (ksra < dueamount)
+                        {
+                            amnt = ksra - ksra1;
+                        }
+                        else { amnt = ksra1; }
+                    }
+                    if (amnt > 0)
+                    {
+                        if (ksorder.SUM_AP == null || ksorder.Due != null)
+                        {
                             if (dueamount > amnt)
                             {
-                                ksra1 = dueamount - amnt;                               
+                                ksra1 = dueamount - amnt;
                                 payments.Opening_Balance = dueamount.ToString().Replace(".00", "");
-                                 if(amnt == dueamount){ payments.Received_Amount = dueamount.ToString().Replace(".00", "");}
-                                 else  { payments.Received_Amount = amnt.ToString().Replace(".00", "");}
+                                if (amnt == dueamount) { payments.Received_Amount = dueamount.ToString().Replace(".00", ""); }
+                                else { payments.Received_Amount = amnt.ToString().Replace(".00", ""); }
                                 payments.Current_Balance = ksra1.ToString().Replace(".00", "");
                             }
                             else
                             {
-                            ksra1 = amnt - dueamount;
+                                ksra1 = amnt - dueamount;
                                 payments.Received_Amount = dueamount.ToString().Replace(".00", "");
                                 payments.Opening_Balance = dueamount.ToString().Replace(".00", "");
                                 if (ksra1 > 0)
@@ -195,30 +210,31 @@ namespace MaaAahwanam.Web.Controllers
 
                             }
                         }
-                       
-                        else {
+                        else
+                        {
                             dueamount = (decimal)ksorder.Due;
                         }
-                    if (payments.Current_Balance == "0")
-                    {
-                        Order orders = new Order();
-                        OrderDetail orderdetils = new OrderDetail();
-                        orders.Status = "Payment completed";
-                        orderdetils.Status = "Payment completed";
-                        var status = newmanageuse.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
-                        payments.Status = "Payment completed";
-                    }
-                    else
-                    {
-                        Order orders = new Order();
-                        OrderDetail orderdetils = new OrderDetail();
-                        orders.Status = "Payment pending";
-                        orderdetils.Status = "Payment pending";
-                        var status = newmanageuse.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
+                        if (payments.Current_Balance == "0")
+                        {
+                            Order orders = new Order();
+                            OrderDetail orderdetils = new OrderDetail();
+                            orders.Status = "Payment completed";
+                            orderdetils.Status = "Payment completed";
+                            var status = newmanageuse.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
+                            payments.Status = "Payment completed";
+                        }
+                        else
+                        {
+                            Order orders = new Order();
+                            OrderDetail orderdetils = new OrderDetail();
+                            orders.Status = "Payment pending";
+                            orderdetils.Status = "Payment pending";
+                            var status = newmanageuse.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
 
-                        payments.Status = "Payment pending";
+                            payments.Status = "Payment pending";
+                        }
+                        payments = rcvpaymentservice.SavePayments(payments);
                     }
-                    payments = rcvpaymentservice.SavePayments(payments);
                 }
             }
             return Json("Payment Successfull", JsonRequestBehavior.AllowGet);

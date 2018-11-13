@@ -478,9 +478,8 @@ namespace MaaAahwanam.Web.Controllers
             string ip = HttpContext.Request.UserHostAddress;
             string msg = "Name: " + name + ", Mobile Number : " + number + ",City : " + city + ",Event Type:" + eventtype + ",Event date:" + datepicker2 + ",Description:"+Description+",IP:" + ip;
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-            emailSendingUtility.Email_maaaahwanam("rameshsai@xsilica.com", msg.Replace(",", "<br/>"), "Mail From Ahwanam");
-            emailSendingUtility.Email_maaaahwanam("seema@xsilica.com", msg.Replace(",", "<br/>"), "Mail From Ahwanam");
-            emailSendingUtility.Email_maaaahwanam("amit.saxena@ahwanam.com", msg.Replace(",", "<br/>"), "Mail From Ahwanam");
+            string txtto = "rameshsai@xsilica.com,seema@xsilica.com,amit.saxena@ahwanam.com";
+            emailSendingUtility.Email_maaaahwanam(txtto, msg.Replace(",", "<br/>"), "Request From Ahwanam Personalized assistance");
             return Content("<script language='javascript' type='text/javascript'>alert('Details Sent Successfully!!!Click OK and Explore Ahwanam.com');location.href='" + @Url.Action("Index", "Home") + "'</script>");
         }
     }
