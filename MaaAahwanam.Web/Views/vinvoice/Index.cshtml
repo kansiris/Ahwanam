@@ -653,7 +653,6 @@
 
     }*@
 
-
     // This code is collected but useful, click below to jsfiddle link.
 
     function email(val) {
@@ -674,16 +673,13 @@
     };
     $(document).ready(function () {
         var now = new Date();
-        var openamnt = $('#paidamount').val();
-        $('#Current_Balance').val(openamnt);
-
+        //var openamnt = $('#paidamount').val();
+        //$('#Current_Balance').val(openamnt);
         var day = ("0" + now.getDate()).slice(-2);
         var month = ("0" + (now.getMonth() + 1)).slice(-2);
-
         //var today = now.getFullYear() + "-" + (month) + "-" + (day);
         var today = (day) + "-" + (month) + "-" + now.getFullYear();
         $('.datepicker').val(today);
-
 
         $('input:radio[name="Payment_Type"]').change(function () {
             if ($(this).val() == "Cash") {
@@ -722,10 +718,6 @@
                 $('#walletdetails').show();
             }
         });
-        @*if(@ViewBag.payment != 0)
-        {
-            $('#Current_Balance').val(@ViewBag.balance);
-        }*@
     });
     $("#btnrcvpmnt").on('click', function () {
         $('#Paymentmode').css('display', 'block');
@@ -737,6 +729,8 @@
         //$('#Current_Balance').val(totalmnt);
        var cntdue= $('#Current_Balance1').val();
         //var ctbalncedue1 = $('#Current_Balance').val();
+       var id = $("#OrderDetailid1").val();
+       $("#OrderDetailId").val(id);
        var pymnt = parseFloat(cntdue);
        $('#Current_Balance').val(cntdue);
         var pmnt = 0
@@ -744,10 +738,14 @@
             if ($(this).find('td:eq(0)').find('input.chcktblservice').is(':not(:checked)')) {
                 var rid1;
                 var oDid1 = $("#OrderDetailid1").val();
-                var odid1 = $(this).find('td:eq(1)').text();
-                var id1 = odid1.trim();
-                rid1 = oDid1.replace(id1, "");
-                $("#OrderDetailId").val(rid1);
+                $(this).find('td:eq(1)').each(function () {
+                    var odid1 = $(this).text();
+                    var id1 = odid1.trim();
+                    rid1 = oDid1.replace(id1, "");
+                    $("#OrderDetailId").val(rid1);
+                    $("#OrderDetailid1").val(rid1);
+                });
+                
                 $(this).find('.tsamnt').each(function () {
                     var bal = $(this).text();
                     var baldue1 = bal.replace('Rs ', '');
@@ -775,9 +773,6 @@
                     var nt1 = nt.replace('Rs ', '');
                     var tnt = nt1.replace(/,/g, '');
                     finalpaying += parseFloat(tnt);
-                    //$('#Current_Balance').val(finalpaying);
-                    //$('#Current_Balance1').val(finalpaying);
-                    
                 });
                 $(this).find('.sbaldue').each(function () {
                     var cntbal2 = $(this).text();
@@ -793,12 +788,8 @@
     });
 
     $('#Received_Amount').on('input', function () {
-        //var openamnt = $('#paidamount').val();
-        //var openingamnt = $('#Opening_Balance').val();
         var openingamnt1 = $('#Current_Balance1').val();
         var rcvamnt = $('#Received_Amount').val();
-        //if (rcvamnt > openamnt) { alert("Enter valid amount"); }
-        //else
         var result=''
         if (rcvamnt == null || rcvamnt == "") {
             alert("Enter Some Amount");
@@ -818,7 +809,6 @@
     $("#SavePayment").click(function () {
         //var paymenttype = $('#Payment_Type').val();
         //var orderid =@Request.QueryString["Oid"];
-
         var payments = {
             OrderId: $("#OrderId").val(),
             User_Id: $("#User_Id").val(),
@@ -844,7 +834,6 @@
             Current_Balance: $('#Current_Balance').val(),
             Opening_Balance: $('#Opening_Balance').val(),
             Remarks: $("#Remarks").val()
-
         }
         $.ajax({
             url: '/vinvoice/Index',
@@ -876,7 +865,6 @@
                 rid = oid + ',' + odid;
                 $("#OrderDetailId").val(rid);
                 $(this).find('.tsamnt').each(function () {
-
                     var opnamnt = $(this).text();
                     var totamnt = opnamnt.replace('Rs ', '');
                     var tt = totamnt.replace(/,/g, '');
@@ -892,7 +880,6 @@
                 });              
                 $('#Opening_Balance').attr("value", sum);
                 $('#Paymentmode').css('display', 'block');
-           
             }
             else {
                 var oid = $("#OrderDetailId").val();

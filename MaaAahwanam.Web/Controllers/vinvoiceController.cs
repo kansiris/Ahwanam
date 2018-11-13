@@ -176,7 +176,11 @@ namespace MaaAahwanam.Web.Controllers
                     { amnt = ksra; }
                     else
                     {
-                        if (ksra < dueamount)
+                        if(dueamount == 0)
+                        {
+                            amnt = ksra + ksra1;
+                        }
+                        else if (ksra < dueamount)
                         {
                             amnt = ksra - ksra1;
                         }
@@ -186,8 +190,6 @@ namespace MaaAahwanam.Web.Controllers
                     {
                         if (ksorder.SUM_AP == null || ksorder.Due != null)
                         {
-                            
-
                             if (dueamount > amnt)
                             {
                                 ksra1 = dueamount - amnt;
