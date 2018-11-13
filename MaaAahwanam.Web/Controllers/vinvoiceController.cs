@@ -176,7 +176,7 @@ namespace MaaAahwanam.Web.Controllers
                     { amnt = ksra; }
                     else
                     {
-                        if(dueamount == 0)
+                        if(dueamount != 0)
                         {
                             amnt = ksra + ksra1;
                         }
