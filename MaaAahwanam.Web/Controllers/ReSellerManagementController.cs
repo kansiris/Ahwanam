@@ -42,8 +42,9 @@ namespace MaaAahwanam.Web.Controllers
                 List<string> pppl = new List<string>();
                 List<PartnerPackage> p = new List<PartnerPackage>();
                 List<SPGETNpkg_Result> p1 = new List<SPGETNpkg_Result>();
-                if (partid != "" && partid != null)
+                if (partid != "" && partid != null) 
                 {
+                    var partnercontact = partnerservice.getPartnerPackage(VendorId).Where(m=>m.packageid==partid).ToList();
                     var resellerspacklist = resellerspack.Where(m => m.PartnerID == long.Parse(partid)).ToList();
                     var pkglist = resellerspacklist.Select(m => m.packageid).ToList();
                     foreach (var item in pkgs)
@@ -53,7 +54,8 @@ namespace MaaAahwanam.Web.Controllers
                         else
                             p1.AddRange(pkgs.Where(m=>m.PackageID == item.PackageID));
                     }
-                    ViewBag.resellerpkg = p;
+                    ViewBag.contact = partnercontact;
+                  ViewBag.resellerpkg = p;
                     ViewBag.pkg = p1;
                     ViewBag.resellers = resellers.Where(m => m.PartnerID == long.Parse(partid)).FirstOrDefault();
                     ViewBag.resellersfiles = partnerservice.GetFiles(vid, partid);
@@ -70,6 +72,7 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.decorators = decorators;
                 ViewBag.others = others;
                 ViewBag.partid = partid;
+              
                 return View();
             }
             else
@@ -81,16 +84,31 @@ namespace MaaAahwanam.Web.Controllers
         public JsonResult Index(Partner partner, string command, string partid)
         {
 
-          
-            partner.UpdatedDate = DateTime.Now.Date;
-            partner.ExpiryDate = DateTime.Now.Date;
-            if (command == "save") { partner.RegisteredDate = DateTime.Now.Date; partner = partnerservice.AddPartner(partner); }
-            else if (command == "Update") { partner = partnerservice.UpdatePartner(partner, partid); }
+            var emailid1 = partner.emailid;
+            var getpartner1 = partnerservice.getPartner(emailid1);
+             if (command == "Update") { partner = partnerservice.UpdatePartner(partner, partid); }
             else if (command == "Update1") { partner = partnerservice.UpdatePartner(partner, partid); }
+            else if (command == "save")
+            {
+                if (getpartner1 == null)
+                {
+                    partner.UpdatedDate = DateTime.Now.Date;
+                    partner.ExpiryDate = DateTime.Now.Date;
+                    partner.RegisteredDate = DateTime.Now.Date; partner = partnerservice.AddPartner(partner);
+                    
             var emailid = partner.emailid;
-            var getpartner = partnerservice.getPartner(emailid);
-            return Json(getpartner, JsonRequestBehavior.AllowGet);
-        }
+                    var getpartner = partnerservice.getPartner(emailid);
+                    return Json(getpartner, JsonRequestBehavior.AllowGet);
+                }
+                else { return Json("", JsonRequestBehavior.AllowGet); }
+
+            }
+
+
+                        return Json(getpartner1, JsonRequestBehavior.AllowGet);
+
+    }
+
 
         [HttpPost]
         public JsonResult PartnerPackage(PartnerPackage partnerPackage, string command, string partid)
@@ -107,11 +125,16 @@ namespace MaaAahwanam.Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult Contacts(PartnerContact Partnercontact, string command, string partid)
+        public JsonResult Contacts(PartnerContact Partnercontact, PartnerContact Partnercontact1, string command, string partid)
         {
             Partnercontact.RegisteredDate = DateTime.Now;
             Partnercontact.UpdatedDate = DateTime.Now;
-            if (command == "Update") { Partnercontact = partnerservice.UpdatePartnercontact(Partnercontact); }
+            Partnercontact1.RegisteredDate = DateTime.Now;
+            Partnercontact1.UpdatedDate = DateTime.Now;
+            // Partnercontact.PartnerID = partid;
+            if (command == "Update") { Partnercontact = partnerservice.UpdatePartnercontact(Partnercontact);
+                Partnercontact = partnerservice.UpdatePartnercontact(Partnercontact1);
+            }
             //else if (command == "Update") { partnerPackage = partnerservice.UpdatepartnerPackage(partnerPackage, partid); }
 
             //var emailid = partner.emailid;

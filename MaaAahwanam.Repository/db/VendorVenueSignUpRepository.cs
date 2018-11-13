@@ -102,6 +102,11 @@ namespace MaaAahwanam.Repository.db
           return  _dbContext.Package.Where(m=>m.VendorId == vid && m.VendorSubId == subvid).ToList();
         }
 
+        public List<Package> GetAllPackages()
+        {
+            return _dbContext.Package.ToList();
+        }
+
         public string deletedeal(long id)
         {
             var list = _dbContext.NDeal.FirstOrDefault(m => m.DealID == id);

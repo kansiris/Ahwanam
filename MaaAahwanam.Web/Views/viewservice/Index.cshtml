@@ -378,7 +378,7 @@
                                     { <input type="hidden" value="@item1.choicedays" name="PackagePrice" id="PackagePrice"> }
                                     <input type="hidden" value="@item1.PackageName" name="PackageName" id="PackageName">
                                     <div class="row">
-                                        <div class="col-md-6" style="background-color:#543791;color:white">
+                                        <div class="col-md-2" style="background-color:#543791;color:white">
                                             @if (item1.PackageName != null && item1.PackageName != "")
                                             { @item1.PackageName.Replace("_", " ") }
                                             else
@@ -387,35 +387,38 @@
                                             <span>
                                                 ₹
                                                 @if (ViewBag.pkgtype == "Peak Days")
-                                                { <b style="font-size:18px"> (@item1.peakdays != "") ? @item1.peakdays : Not Available </b> }
+                                                { <b style="font-size:18px"> @item1.peakdays </b> }
                                                 else if (ViewBag.pkgtype == "Normal Days")
-                                                { <b style="font-size:18px">(@item1.normaldays != "") ? @item1.normaldays : Not Available </b> }
+                                                { <b style="font-size:18px">@item1.normaldays </b> }
                                                 else if (ViewBag.pkgtype == "Holidays")
-                                                { <b style="font-size:18px">(@item1.holidays != "") ? @item1.holidays : Not Available </b> }
+                                                { <b style="font-size:18px">@item1.holidays </b> }
                                                 else if (ViewBag.pkgtype == "Choice Days")
-                                                { <b style="font-size:18px">(@item1.choicedays != "") ? @item1.choicedays : Not Available </b> }
+                                                { <b style="font-size:18px">@item1.choicedays </b> }
                                             </span>
                                             <text class="packageid" style="display:none">@item1.PackageID</text>
                                         </div>
-                                        <div class="col-md-6">
-                                            @if (item1.timeslot.Contains("Morning"))
-                                            { <div class="row"><input type="checkbox" /><label>Morning</label></div> }
-                                            @if (item1.timeslot.Contains("Evening"))
-                                            { <div class="row"><input type="checkbox" /><label>Evening</label></div> }
-                                            @if (item1.timeslot.Contains("FullDay"))
-                                            { <div class="row"><input type="checkbox" /><label>FullDay</label></div> }
-                                            <div class="row">
-                                                @if (ViewBag.pkgtype == "Peak Days")
-                                                { <button style="background-color:yellow" value="@item1.PackageID,@item1.PackageName,@item1.peakdays" onclick="ks(this.value)" class="btnpkg">Add</button> }
-                                                else if (ViewBag.pkgtype == "Normal Days")
-                                                { <button style="background-color:yellow" value="@item1.PackageID,@item1.PackageName,@item1.normaldays" onclick="ks(this.value)" class="btnpkg">Add</button> }
-                                                else if (ViewBag.pkgtype == "Holidays")
-                                                { <button style="background-color:yellow" value="@item1.PackageID,@item1.PackageName,@item1.holidays" onclick="ks(this.value)" class="btnpkg">Add</button> }
-                                                else if (ViewBag.pkgtype == "Choice Days")
-                                                { <button style="background-color:yellow" value="@item1.PackageID,@item1.PackageName,@item1.choicedays" onclick="ks(this.value)" class="btnpkg">Add</button> }
+                                        <div class="col-md-8" style="background-color:white;height: 100px;overflow-x:hidden;overflow-y:auto" overflow="visible">
+                                            @item1.PackageDescription
+                                        </div>
+                                            <div class="col-md-2">
+                                                @if (item1.timeslot.Contains("Morning"))
+                                                { <div class="row"><input type="checkbox" /><label>Morning</label></div> }
+                                                @if (item1.timeslot.Contains("Evening"))
+                                                { <div class="row"><input type="checkbox" /><label>Evening</label></div> }
+                                                @if (item1.timeslot.Contains("FullDay"))
+                                                { <div class="row"><input type="checkbox" /><label>FullDay</label></div> }
+                                                <div class="row">
+                                                    @if (ViewBag.pkgtype == "Peak Days")
+                                                    { <button style="background-color:yellow" value="@item1.PackageID,@item1.PackageName,@item1.peakdays" onclick="ks(this.value)" class="btnpkg">Add</button> }
+                                                    else if (ViewBag.pkgtype == "Normal Days")
+                                                    { <button style="background-color:yellow" value="@item1.PackageID,@item1.PackageName,@item1.normaldays" onclick="ks(this.value)" class="btnpkg">Add</button> }
+                                                    else if (ViewBag.pkgtype == "Holidays")
+                                                    { <button style="background-color:yellow" value="@item1.PackageID,@item1.PackageName,@item1.holidays" onclick="ks(this.value)" class="btnpkg">Add</button> }
+                                                    else if (ViewBag.pkgtype == "Choice Days")
+                                                    { <button style="background-color:yellow" value="@item1.PackageID,@item1.PackageName,@item1.choicedays" onclick="ks(this.value)" class="btnpkg">Add</button> }
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
                                     <br />
                                 }
                             }

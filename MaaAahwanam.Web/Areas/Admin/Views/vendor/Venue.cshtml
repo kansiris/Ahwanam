@@ -1,0 +1,729 @@
+﻿@model Tuple<MaaAahwanam.Models.Vendormaster, MaaAahwanam.Models.VendorVenue, MaaAahwanam.Models.Deal>
+
+@{
+    ViewBag.Title = "Venue";
+    Layout = "~/Areas/Admin/Views/Shared/NmasterPage.cshtml";
+}
+
+<style>
+    #imgbox {
+        vertical-align: middle;
+        position: absolute;
+        border: 1px solid #999;
+        background-color: rgba(0,0,0,0.8);
+        filter: Alpha(Opacity=100);
+        visibility: hidden;
+        height: 300px;
+        width: 300px;
+        z-index: 50;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    .overlay {
+        background: no-repeat scroll center center #FFF;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 9999999;
+        background-color: rgba(0,0,0,0.8);
+        /* END EXTERNAL S */
+    }
+</style>
+
+@if (ViewData["error"] != null)
+{
+    <script>
+        alert("You have crossed images limit");
+    </script>
+}
+
+@*Loader*@
+<div class="overlay" style="display: block;">
+    <div style="left: 50%; top: 50%; position: fixed; transform: translate(-50%, -50%); text-align: center;">
+        <img src="~/CSSWeb/images/Loader.gif" /><br>
+        <p style="color: white; font-style: italic; font-family:serif;">&nbsp; Just a second...</p>
+    </div>
+</div>
+
+@*HTML Design*@
+
+<div id="content">
+    <div class="inner">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 style="text-align:center"> Venue </h2>
+                <input type="hidden" id="type" value="Venue" />
+            </div>
+        </div>
+        <hr />
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="tab-content" id="images">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div id="collapse2" class="body collapse in">
+                                        <form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1">
+                                            @*----------common---------*@
+                                            <div class="input-field col">
+                                                @Html.TextBoxFor(model => this.Model.Item1.BusinessName, new { @class = "validate", id = "list-title", placeholder = "Enter Business Name" })
+
+                                                <input id="list-title" type="text" class="validate">
+                                                <label for="list-title" class="">Vendor Name</label>
+                                            </div>
+                                            @*<div class="form-group">
+            <label class="control-label col-lg-4">Vendor Name</label>
+            <div class="col-lg-4">
+                @*<input type="text" id="businame" name="name" placeholder="Business Name" class="form-control">
+
+                @Html.TextBoxFor(model => this.Model.Item1.BusinessName, new { @class = "form-control", placeholder = "Enter Business Name" })
+            </div>
+        </div>*@
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Vendor Description</label>
+                                                <div class="col-lg-4">
+                                                    @*<textarea rows="4" id="busidesc" name="name" cols="30" class="form-control"></textarea>*@
+                                                    @*<input type="text" id="busidesc" name="name" placeholder="Description">*@
+                                                    @Html.TextAreaFor(model => this.Model.Item1.Description, new { @class = "form-control", placeholder = "Enter Description", @rows = "3" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Address</label>
+                                                <div class="col-lg-4">
+                                                    @*<textarea rows="4" id="addr" name="name" cols="30" class="form-control"></textarea>*@
+                                                    @*<input type="text" id="addr" name="name"  placeholder="Address">*@
+                                                    @Html.TextAreaFor(model => this.Model.Item1.Address, new { @class = "form-control", placeholder = "Enter Address", @rows = "3" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Location</label>
+                                                <div class="col-lg-4">
+                                                    @*<input type="text" id="loc" name="name" placeholder="Location" class="form-control">*@
+                                                    @Html.TextBoxFor(model => this.Model.Item1.Landmark, new { @class = "form-control", placeholder = "Enter Location" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">City</label>
+                                                <div class="col-lg-4">
+                                                    @*<input type="text" id="city" name="name" placeholder="City" class="form-control">*@
+                                                    @Html.TextBoxFor(model => this.Model.Item1.City, new { @class = "form-control", placeholder = "Enter City" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">State</label>
+                                                <div class="col-lg-4">
+                                                    @*<select class="form-control" id="state" name="name">
+                    <option>Select State</option>
+                    <option>Telangana</option>
+                    <option>Andhra Pradesh</option>
+                </select>*@
+                                                    @Html.DropDownListFor(model => this.Model.Item1.State, new SelectList(new[] { "Select State", "Telangana", "Andhra Pradesh" }), new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">ZIP Code</label>
+                                                <div class="col-lg-4">
+                                                    @*<input type="text" id="zipcode" name="name" placeholder="Zip Code" class="form-control">*@
+                                                    @Html.TextBoxFor(model => this.Model.Item1.ZipCode, new { @class = "form-control", placeholder = "Enter Zip Code" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style="align-items:center">
+                                                <label class="control-label col-lg-4">Quotation</label>
+                                                <div class="col-lg-4">
+                                                    @*<input type="checkbox" id="Quotation" name="name" value="Quotation" class="uniform" />*@
+                                                    @Html.CheckBoxFor(model => this.Model.Item1.Quotation, new { @style = "height : 25px ;width: 25px", @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Bidding</label>
+                                                <div class="col-lg-4">
+                                                    @*<input type="checkbox" id="Bidding" name="name" value="Bidding" class="uniform" />*@
+                                                    @Html.CheckBoxFor(model => this.Model.Item1.Bidding, new { @style = "height : 25px ;width: 25px", @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Reverse Bidding</label>
+                                                <div class="col-lg-4">
+                                                    @*<input type="checkbox" id="ReverseBidding" name="name" value="ReverseBidding" class="uniform" />*@
+                                                    @Html.CheckBoxFor(model => this.Model.Item1.ReverseBidding, new { @style = "height : 25px ;width: 25px", @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Contact Person</label>
+                                                <div class="col-lg-4">
+                                                    @*<input type="text" id="contperson" name="name" placeholder="Contact Person" class="form-control">*@
+                                                    @Html.TextBoxFor(model => this.Model.Item1.ContactPerson, new { @class = "form-control", placeholder = "Enter Contact Person" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Contact Number</label>
+                                                <div class="col-lg-4">
+                                                    @*<input type="text" id="contno." name="name" placeholder="Contact Number" class="form-control">*@
+                                                    @Html.TextBoxFor(model => this.Model.Item1.ContactNumber, new { @class = "form-control", placeholder = "Enter Contact Number" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Landline Number</label>
+                                                <div class="col-lg-4">
+                                                    @*<input type="text" id="llno." name="name" placeholder="Landline Number" class="form-control">*@
+                                                    @Html.TextBoxFor(model => this.Model.Item1.LandlineNumber, new { @class = "form-control", placeholder = "Enter Landline Number" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">E-mail</label>
+                                                <div class="col-lg-4">
+                                                    @*<input type="text" id="email" name="name" placeholder="Email" class="form-control">*@
+                                                    @Html.TextBoxFor(model => this.Model.Item1.EmailId, new { @class = "form-control", placeholder = "Enter Email ID", @onchange = "check()" })   <strong><span id="label" style="font-size:medium"></span></strong>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Url</label>
+                                                <div class="col-lg-4">
+                                                    @*<input type="text" id="url" name="name" placeholder="Url" class="form-control">*@
+                                                    @Html.TextBoxFor(model => this.Model.Item1.Url, new { @class = "form-control", placeholder = "Enter Url" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4" for="dp2">Date of Establishment</label>
+                                                <div class="col-lg-4">
+                                                    @*<input type="text" id="estdate" name="name" placeholder="Date of Establishment" class="form-control">*@
+                                                    @Html.TextBoxFor(model => this.Model.Item1.EstablishedYear, new { @class = "form-control", placeholder = "Enter Date of Establishment" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Experience</label>
+                                                <div class="col-lg-4">
+                                                    @*<input type="text" id="exp" name="name" placeholder="Experience" class="form-control">*@
+                                                    @Html.TextBoxFor(model => this.Model.Item1.Experience, new { @class = "form-control", placeholder = "Enter Experience" })
+                                                </div>
+                                            </div>
+
+
+                                            @*-------common----------*@
+
+
+
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Venue Type</label>
+                                                <div class="col-lg-4">
+                                                    <select class="form-control" id="Item2_VenueType" name="Item2.VenueType" required onchange="return itemsdisable();">
+                                                        <option value="" disabled>Select Venue Type</option>
+                                                        <option value="Hotel">Hotel</option>
+                                                        <option value="Resort">Resort</option>
+                                                        <option value="Banquet Hall">Banquet Hall</option>
+                                                        <option value="Function Hall">Function Hall</option>
+                                                        <option value="Convention Hall">Convention Hall</option>
+                                                        <option value="Meeting Room">Meeting Room</option>
+                                                        <option value="Open Lawn">Open Lawn</option>
+                                                        <option value="Roof Top">Roof Top</option>
+                                                    </select>
+                                                    @*<input type="text" name="name" value="" class="validate[required] form-control" placeholder="Eg:Banquet Hall,Function Hall,..">*@
+                                                    @*@Html.TextBoxFor(model => this.Model.Item2.VenueType, new { @class = "form-control", placeholder = "Eg:Banquet Hall,Function Hall,.." })*@
+                                                    @*@Html.DropDownListFor(model => this.Model.Item2.VenueType, new SelectList(new[] { "Select Venue Type", "Hotel", "Resort", "Banquet Hall", "Function Hall", "Convention Hall", "Meeting Room", "Open Lawn", "Roof Top", "Others" }), new { @class = "form-control", @onchange = "return itemsdisable();" })*@
+                                                    @*<p>Use Ctlr + for mutliple selection</p>*@
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Food</label>
+                                                <div class="col-lg-4">
+                                                    <select class="form-control" id="Item2_Food" name="Item2.Food">
+                                                        <option value="" disabled>Select Type</option>
+                                                        <option value="Veg">Veg</option>
+                                                        <option value="Non-Veg">Non-Veg</option>
+                                                    </select>
+                                                    @*@Html.DropDownListFor(model => this.Model.Item2.Food, new SelectList(new[] { "Select Type", "Veg", "Non-Veg" }), new { @class = "form-control" })*@ @*,@onchange= "itemsdisable1()"*@
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">CockTails </label>
+                                                <div class="col-lg-4">
+                                                    <select class="form-control" id="Item2_CockTails" name="Item2.CockTails">
+                                                        <option value="" disabled>Select Your Choice</option>
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option>
+                                                    </select>
+                                                    @*@Html.DropDownListFor(model => this.Model.Item2.CockTails, new SelectList(new[] { "Select Your Choice", "Yes", "No" }), new { @class = "form-control" })*@
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Rooms </label>
+
+                                                <div class="col-lg-4">
+                                                    <select class="form-control" id="Item2_Rooms" name="Item2.Rooms">
+                                                        <option value="" disabled>Select Choice</option>
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option>
+                                                    </select>
+                                                    @*@Html.DropDownListFor(model => this.Model.Item2.Rooms, new SelectList(new[] { "Select Choice", "Yes", "No" }), new { @class = "form-control" })*@
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Seating Capacity</label>
+
+                                                <div class="col-lg-4">
+                                                    @*<input type="text" name="name" value="" class="validate[required] form-control" placeholder="Enter Seating Capacity">*@
+                                                    @Html.TextBoxFor(model => this.Model.Item2.SeatingCapacity, new { @class = "form-control", placeholder = "Enter Seating Capacity" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Dining Capacity</label>
+
+                                                <div class="col-lg-4">
+                                                    @*<input type="text" name="name" value="" class="validate[required] form-control" placeholder="Enter Dining Capacity">*@
+                                                    @Html.TextBoxFor(model => this.Model.Item2.DiningCapacity, new { @class = "form-control", placeholder = "Enter Dining Capacity" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Minimum seating capacity</label>
+
+                                                <div class="col-lg-4">
+                                                    @*<input type="text" name="name" value="" class="validate[required] form-control" placeholder="Enter Minimum seating Capacity">*@
+                                                    @Html.TextBoxFor(model => this.Model.Item2.Minimumseatingcapacity, new { @class = "form-control", placeholder = "Enter Minimum seating capacity" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Maximum capacity</label>
+
+                                                <div class="col-lg-4">
+                                                    @*<input type="text" name="name" value="" class="validate[required] form-control" placeholder="Enter Maximum Capacity">*@
+                                                    @Html.TextBoxFor(model => this.Model.Item2.Maximumcapacity, new { @class = "form-control", placeholder = "Enter Maximum capacity" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" id="veglunch">
+                                                <label class="control-label col-lg-4">Veg Lunch Price Per Plate</label>
+
+                                                <div class="col-lg-4">
+                                                    @*<input type="text" name="name" value="" class="validate[required] form-control" placeholder="Enter Price">*@
+                                                    @Html.TextBoxFor(model => this.Model.Item2.VegLunchCost, new { @class = "form-control", placeholder = "Enter Price" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" id="nonveglunch">
+                                                <label class="control-label col-lg-4">Non-Veg Lunch Price Per Plate</label>
+                                                <div class="col-lg-4">
+                                                    @*<input type="text" id="exp" name="name" class="form-control" placeholder="Enter Price">*@
+                                                    @Html.TextBoxFor(model => this.Model.Item2.NonVegLunchCost, new { @class = "form-control", placeholder = "Enter Price" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" id="vegdinner">
+                                                <label class="control-label col-lg-4">Veg Dinner Price Per Plate</label>
+
+                                                <div class="col-lg-4">
+                                                    @*<input type="text" name="name" value="" class="validate[required] form-control" placeholder="Enter Price">*@
+                                                    @Html.TextBoxFor(model => this.Model.Item2.VegDinnerCost, new { @class = "form-control", placeholder = "Enter Price" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" id="nonvegdinner">
+                                                <label class="control-label col-lg-4">Non-Veg Dinner Price Per Plate</label>
+                                                <div class="col-lg-4">
+                                                    @*<input type="text" id="exp" name="name" class="form-control" placeholder="Enter Price">*@
+                                                    @Html.TextBoxFor(model => this.Model.Item2.NonVegDinnerCost, new { @class = "form-control", placeholder = "Enter Price" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Minimum Order</label>
+
+                                                <div class="col-lg-4">
+                                                    @*<input type="text" name="name" value="" class="validate[required] form-control" placeholder="Enter Minimum Order">*@
+                                                    @Html.TextBoxFor(model => this.Model.Item2.MinOrder, new { @class = "form-control", placeholder = "Enter Minimum Order" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Maximum Order</label>
+                                                <div class="col-lg-4">
+                                                    @*<input type="text" name="name" value="" class="validate[required] form-control" placeholder="Enter Maximum Order" />*@
+                                                    @Html.TextBoxFor(model => this.Model.Item2.MaxOrder, new { @class = "form-control", placeholder = "Enter Maximum Order" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Decoration Allowed </label>
+                                                <div class="col-lg-4">
+                                                    <select class="form-control" id="Item2_DecorationAllowed" name="Item2.DecorationAllowed">
+                                                        <option value="" disabled>Select Your Choice</option>
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option>
+                                                    </select>
+                                                    @*@Html.DropDownListFor(model => this.Model.Item2.DecorationAllowed, new SelectList(new[] { "Select Your Choice", "Yes", "No" }), new { @class = "form-control" })*@
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Hall Type </label>
+                                                <div class="col-lg-4">
+                                                    <select class="form-control" id="Item2_HallType" name="Item2.HallType">
+                                                        <option value="" disabled>Select Choice</option>
+                                                        <option value="AC">AC</option>
+                                                        <option value="Non-AC">Non-AC</option>
+                                                    </select>
+                                                    @*@Html.DropDownListFor(model => this.Model.Item2.HallType, new SelectList(new[] { "Select Choice", "AC", "Non_AC" }), new { @class = "form-control" })*@
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Wi-Fi</label>
+
+                                                <div class="col-lg-4">
+                                                    <select class="form-control" id="Item2_Wifi" name="Item2.Wifi">
+                                                        <option value="" disabled>Select Availability</option>
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option>
+                                                    </select>
+                                                    @*@Html.DropDownListFor(model => this.Model.Item2.Wifi, new SelectList(new[] { "Select Availability", "Yes", "No" }), new { @class = "form-control" })*@
+                                                </div>
+                                            </div>
+                                            <div class="form-group" id="menuitem">
+                                                <label class="control-label col-lg-4">Menu with the no. of items</label>
+
+                                                <div class="col-lg-4">
+                                                    @*<input type="text" name="name" value="" class="validate[required] form-control" placeholder="Enter Menu Items Count">*@
+                                                    @Html.TextBoxFor(model => this.Model.Item2.Menuwiththenoofitems, new { @class = "form-control", placeholder = "Enter Menu Items Count" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Distance from main places like</label>
+
+                                                <div class="col-lg-4">
+                                                    @*<input type="text" name="name" value="" class="validate[required] form-control" placeholder="Enter Distance">*@
+                                                    @Html.TextBoxFor(model => this.Model.Item2.Distancefrommainplaceslike, new { @class = "form-control", placeholder = "Enter Distance" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Live Cooking Station</label>
+
+                                                <div class="col-lg-4">
+                                                    <select class="form-control" id="Item2_LiveCookingStation" name="Item2.LiveCookingStation">
+                                                        <option value="" disabled>Select Availability</option>
+                                                        <option value="Yes">Yes</option>
+                                                        <option value="No">No</option>
+                                                    </select>
+                                                    @*@Html.DropDownListFor(model => this.Model.Item2.LiveCookingStation, new SelectList(new[] { "Select Availability", "Yes", "No" }), new { @class = "form-control" })*@
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-lg-4">Service Cost</label>
+
+                                                <div class="col-lg-4">
+                                                    @*<input type="text" name="name" value="" class="validate[required] form-control" placeholder="Enter Service Cost">*@
+                                                    @Html.TextBoxFor(model => this.Model.Item2.ServiceCost, new { @class = "form-control", placeholder = "Enter Service Cost" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group" id="dealdisplay">
+                                                <label class="control-label col-lg-4">Deal</label>
+
+                                                <div class="col-lg-4">
+                                                    <input type="checkbox" id="dealcheck" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div style="border-style:double;display:none;" id="dealdata">
+                                                <br />
+                                                <div class="form-group" style="display:none">
+                                                    <label class="control-label col-lg-4">Venue Type</label>
+                                                    <div class="col-lg-4">
+                                                        @Html.TextBoxFor(model => this.Model.Item3.VendorCategory, new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                                @*<label class="control-label col-lg-4">Food</label>
+            <div class="col-lg-4">
+                @Html.DropDownListFor(model => this.Model.Item2.Food, new SelectList(new[] { "Select Type", "Veg", "Non-Veg" }), new { @class = "form-control", @onchange = "itemsdisable1()" })
+            </div>*@
+                                                <div id="dealprice">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-4">Veg Lunch Price Per Plate</label>
+
+                                                        <div class="col-lg-4">
+                                                            @Html.TextBoxFor(model => this.Model.Item3.DealVegLunchCost, new { @class = "form-control", placeholder = "Enter Price" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-4">Non-Veg Lunch Price Per Plate</label>
+
+                                                        <div class="col-lg-4">
+                                                            @Html.TextBoxFor(model => this.Model.Item3.DealNonVegLunchCost, new { @class = "form-control", placeholder = "Enter Price" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-4">Veg Dinner Price Per Plate</label>
+
+                                                        <div class="col-lg-4">
+                                                            @Html.TextBoxFor(model => this.Model.Item3.DealVegDinnerCost, new { @class = "form-control", placeholder = "Enter Price" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-lg-4">Non-Veg Dinner Price Per Plate</label>
+
+                                                        <div class="col-lg-4">
+                                                            @Html.TextBoxFor(model => this.Model.Item3.DealNonVegDinnerCost, new { @class = "form-control", placeholder = "Enter Price" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" id="dealservicecost">
+                                                    <label class="control-label col-lg-4">Deal Service Cost</label>
+
+                                                    <div class="col-lg-4">
+                                                        @Html.TextBoxFor(model => this.Model.Item3.DealServicePrice, new { @class = "form-control", placeholder = "Enter Service Cost" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4">Deal Start Date</label>
+
+                                                    <div class="col-lg-4">
+                                                        @Html.TextBoxFor(model => this.Model.Item3.DealStartDate, new { @class = "form-control", placeholder = "Enter Start Date" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4">Deal End Date</label>
+
+                                                    <div class="col-lg-4">
+                                                        @Html.TextBoxFor(model => this.Model.Item3.DealEndDate, new { @class = "form-control", placeholder = "Enter End Date" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-4">Terms & Conditions</label>
+
+                                                    <div class="col-lg-4">
+                                                        @Html.TextAreaFor(model => this.Model.Item3.TermsConditions, new { @class = "form-control", placeholder = "Enter Terms & Conditions", @rows = "3" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br />
+                                            <div class="form-group">
+                                                <label for="tags" class="control-label col-lg-4">Multiple Uploads</label>
+                                                <div class="col-lg-4">
+                                                    <input type='file' multiple="multiple" accept="image/*" id='fileUpload' name="file" />
+                                                    <br />
+                                                    @if (@ViewBag.imagescount != 0)
+                                                    {<p id="msg" style="color:green;font-size:large"><strong>You can Upload images upto @ViewBag.imagescount Only </strong></p>}
+                                                    @if (@ViewBag.imagescount == 0)
+                                                    {<p id="msg" style="color:red;font-size:large"><strong>You Have Reached Image Limit </strong></p>}
+                                                </div>
+                                                <br />
+                                                <div id="imgbox"></div><br /><br /><br />
+                                                <div align="center">
+                                                    @if (@ViewBag.images != null)
+                                                    {
+                                                        foreach (var item in ViewBag.images)
+                                                        {
+                                                            <img id="img" class="getSrc" data-toggle="modal" data-target="#myModal" src="~/vendorimages/@item" style="height:100px;width:150px;border:double" onclick="imagepopup(this)" /> //onmouseover='Large(this)'
+                                                            @Html.ActionLink("X", "venue", new { src = @item }, new { @class = "deletelink", style = "height : 150px ; width:50px; max-height:75px; border: 2px solid; margin: 10px 10px 0 0; padding: 1px;" })
+                                                        }
+                                                        if (@ViewBag.images.Count == 0)
+                                                        {
+                                                            <img src="~/noimages.png" />
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div id="editimage" style="min-height: 10px;min-width: 10px; "></div>
+
+                                            <div id="dvPreview" align="center" style="padding:10px">
+                                            </div>
+
+
+
+
+
+
+                                            <div style="text-align:center" class="form-actions no-margin-bottom">
+                                                @if (ViewBag.confirm == 1)
+                                                {
+                                                    @*<input type="submit" name="Command" class="btn text-muted text-center btn-success" value="Active"/>*@
+                                                    <button type="submit" name="Command" class="btn text-muted text-center btn-success" value="Active">Activate vendor</button>
+                                                    <button type="button" data-toggle="modal" data-target="#querymodal" class="btn text-muted text-center btn-rect" value="Query">Request More Info</button>
+                                                    <button type="submit" name="Command" class="btn text-muted text-center btn-danger" value="InActive">Decline vendor</button>
+                                                }
+
+
+
+
+
+                                                @if (ViewBag.operation != null)
+                                                {
+                                                    <input type="submit" id="btn" value="Save" class="btn text-muted text-center btn-success" name="Command" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="submit" id="btn" value="update" class="btn text-muted text-center btn-success" name="Command" />
+                                                }
+                                                @*<button type="submit" class="btn btn-success" id="btnadd" name="Command" value="add"> Add New </button>*@
+                                                <input type="submit" id="btnadd" value="Add New" class="btn text-muted text-center btn-success" name="Command" />
+                                                <a href="~/Admin/dashboard/dashboard" class="btn btn-danger" id="btncancel">Cancel</a>
+                                                @*<input type="submit" id="btncancel" value="Cancel" class="btn btn-danger" formaction="~/Admin/dashboard/dashboard">*@
+                                                @*<button type="submit" formaction="~/Admin/Vendors/AllVendors">Back</button>
+            <input  type="submit" formaction="~/Admin/Vendors/AllVendors" class="btn btn-success" id="btnback" value="Back To List"/>*@
+                                                @if (ViewBag.dealslist != null)
+                                                {
+                                                    <a href="~/Admin/Deals/AllDeals" class="btn btn-success" id="btnback">Back To List</a>
+                                                }
+                                                else
+                                                {
+                                                    <a href="~/Admin/Vendors/AllVendors" class="btn btn-success" id="btnback">Back To List</a>
+                                                }
+                                            </div>
+                                            <div align="center"><label id="lblshow" style="color:red;display:none">You can save ur details only when you provide valid E-Mail ID</label></div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Modal POPUP*@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>*@
+            <div class="modal-body">
+                <img class="ms-nav-next ms-ctrl-hide" src="#" id="imagepreview" style="width: 100%;" alt="slider-1">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+@*Query POPUP*@
+<div class="modal fade" id="querymodal" tabindex="-1" role="dialog" aria-labelledby="querymodalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        @*@using (Html.BeginForm("submitquery", "createvendor", FormMethod.Post))
+            {*@
+        <div class="modal-content">
+            @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>*@
+            <div class="modal-body">
+                @*<input id="Text1" type="text" name="txtOne"rows="5"  placeholder="Query.....?" style="width:100%;background-color:#eeeeee" />*@
+                <textarea rows="5" name="txtOne" id="txtone" type="text" placeholder="Query.....?" style="width:100%;background-color:#eeeeee"></textarea>
+            </div>
+            <div class="modal-footer" align="center">
+
+                <button type="submit" id="btnSubmitquery" class="btn text-muted text-center btn-success" value="submit">Submit Query</button>
+
+                <button type="button" name="Command" class="btn text-muted text-center btn-danger" id="cancelquery" value="cancel">Cancel</button>
+            </div>
+        </div>
+        @*}*@
+    </div>
+</div>
+
+@section Bottom{
+    <script src="~/Assets/plugins/jquery-2.0.3.min.js"></script>
+    <script src="~/Assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Assets/plugins/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+
+    <script src="~/Assets/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="~/Assets/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script src="~/Assets/js/image_gallery.js"></script>
+    <script>
+        //hide modal popup
+        $('#cancelquery').click(function () {
+
+            $('#querymodal').css('display', 'none').css('aria-hidden', 'true');
+        });
+
+        //Submit Query Script
+        $('#btnSubmitquery').click(function () {
+
+            //$('#form1').submit();
+
+
+            var txtone = $("#txtone").val();
+            var emailId = $("#Item1_EmailId").val();
+
+            $.ajax({
+                url: '/CreateVendor/submitquery',
+                type: "post",
+                data: JSON.stringify({ emailid: emailId, txtone: txtone }),
+                cache: false,
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (data) {
+                    //if (data == "exists") {
+                    alert("E-Mail  Sent!!!");
+                    //}
+                },
+                //failure: function (data) {
+                //    alert("E-Mail ID not sent!!! Try Another");
+                //},
+                error: function (data) { alert("E-Mail not sent!!! Try again"); }
+            });
+
+        });
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#dataTables-example').dataTable();
+        });
+    </script>
+    <script type="text/javascript">
+        function ValidateEmail(email) {
+            var expr = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
+            return expr.test(email);
+        };
+    </script>
+    @*Deal Enable/Disable*@
+    <script>
+        $('#dealcheck').click(function () {
+            if (this.checked) {
+
+                $("#dealdata").css({ "display": "block" });
+            }
+            else {
+                $("#dealdata").css({ "display": "none" });
+            }
+        });
+    </script>
+
+    @*E-Mail ID check*@
+    <script>
+
+        function check() {
+            var emailId = $("#Item1_EmailId").val();
+            var label = $("#label");
+            if (!ValidateEmail(emailId)) {
+                $("#btn").prop("disabled", true);
+                $("#lblshow").show();
+                label.html("Invalid email address.");
+            }
+            else {
+                $.ajax({
+                    url: window.location.href.split("/")[0] + '//' + window.location.href.split("/")[2] + '/' + window.location.href.split("/")[3] + '/CreateVendor/checkemail',
+                    type: 'POST',
+                    data: JSON.stringify({ emailid: emailId }),
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        if (data == "exists") {
+                            $("#Item1_EmailId").focus();
+                            $("#btn").prop("disabled", true);
+                            $("#lblshow").show();
+                            label.html("E-Mail ID Already Taken!!! Try Another");
+                        }
+                        else {
+                            $("#btn").prop("disabled", false);
+                            $("#lblshow").hide();
+                            label.html("");
+                        }
+                    },
+                    error: function (data) { alert("Failed!!!"); }
+                });
+            }
+
+        }
+    </script>
+}
+
+
