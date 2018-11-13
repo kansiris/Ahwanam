@@ -145,12 +145,12 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     for (var dt = startdate; dt <= enddate; dt = dt.AddDays(1))
                     {
-                        betweendates.Add(dt.ToString("yyyy-MM-dd"));
+                        betweendates.Add(dt.ToString("yyyy-MM-dd")+'!'+ ((item1.IsFullDay != null) ? item1.IsFullDay[0] : 'M'));
                     }
                 }
                 else
                 {
-                    betweendates.Add(startdate.ToString("yyyy-MM-dd"));
+                    betweendates.Add(startdate.ToString("yyyy-MM-dd") + '!' + ((item1.IsFullDay != null) ? item1.IsFullDay[0] : 'M'));
                 }
             }
             return String.Join(",", betweendates);

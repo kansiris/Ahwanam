@@ -656,7 +656,14 @@ $(document).on('click', '.updatepkg', function () {
         }
     });
     var allbuttonsvals = allVal.substring(1, allVal.length);
-    var newlists = parentdiv.find('.selpkgitems').val() + ',' + parentdiv.find('.pkgmenuitems').val();
+    var newlists = '';
+    if (parentdiv.find('.selpkgitems').val() != '') {
+        newlists = parentdiv.find('.selpkgitems').val() + ',' + parentdiv.find('.pkgmenuitems').val();
+    }
+    else {
+        newlists = parentdiv.find('.pkgmenuitems').val();
+    }
+    //var newlists = parentdiv.find('.selpkgitems').val() + ',' + parentdiv.find('.pkgmenuitems').val();
     var dblist = parentdiv.find('.pkgmenuitems').val();
     var selectedlist = parentdiv.find('.availablepkgitems').val();
     var splitteddblist = dblist.split(',');

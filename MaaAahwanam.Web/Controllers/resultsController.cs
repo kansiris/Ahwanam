@@ -37,7 +37,7 @@ namespace MaaAahwanam.Web.Controllers
             
             type = (type == null || type == "") ? "Venue" : type;
             var selectedservices = type.Split(',');
-            var list = allvendors(6, selectedservices, "first", 6);
+            //var list = allvendors(6, selectedservices, "first", 6);
             ViewBag.count = 6;
 
             if (to_from == null)
@@ -130,7 +130,7 @@ namespace MaaAahwanam.Web.Controllers
                     search.State = getrecords[j].State;
                     string id = "";//string category = "";
                     if (pkgtype == "Normal Days")
-                    { search.VegPkgPrice = long.Parse(cpkgs.Select(m => m.normaldays).Min()); id = cpkgs.Select(m=>m.PackageID & m.normaldays.Min()).ToString();  }
+                    { search.VegPkgPrice = long.Parse(cpkgs.Select(m => m.normaldays).Min()) ; id = cpkgs.Select(m=>m.PackageID & m.normaldays.Min()).ToString();  }
                     //else if (pkgtype == "Peak Days")
                     //{ search.VegPkgPrice = cpkgs.Select(m => m.peakdays).Min(); }
                     //else if (pkgtype == "Holidays")
