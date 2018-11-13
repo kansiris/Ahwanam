@@ -56,12 +56,14 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.serviceprice = orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity;
                         ViewBag.orderdetailid = orderdetails1.FirstOrDefault().OrderDetailId;
                         ViewBag.orderdetails = orderdetails1;
-                        foreach(var i in orderdetails1)
+                        string odid = string.Empty;
+                        foreach (var item in orderdetails1)
                         {
-                            var price = i.TotalPrice;
+                            odid = odid + item.OrderDetailId + ",";
+                            var price = item.TotalPrice;
                             tsprice = Convert.ToInt64(tsprice) + Convert.ToInt64(price);
                             ViewBag.total = tsprice;
-                            var bdue = i.Due;
+                            var bdue = item.Due;
                             balndue = Convert.ToInt64(balndue) + Convert.ToInt64(bdue);
                             ViewBag.balance = balndue;
 
@@ -158,7 +160,7 @@ namespace MaaAahwanam.Web.Controllers
                 for (int i = 0; i < odis.Length; i++)
                 {
                     decimal ksra = decimal.Parse(payments.Received_Amount);
-                   
+                    decimal ksra1;
                     //if (ksra >= 0)
                     //{
                         string str = odis[i] ;
@@ -173,7 +175,7 @@ namespace MaaAahwanam.Web.Controllers
                         dueamount = ksorder.TotalPrice;
                         decimal amnt;
                         if (i == 0)
-                        {                        amnt = ksra;  }
+                        {  amnt = ksra;  }
                         else {  amnt = ksra1; }
                             if (dueamount > amnt)
                             {

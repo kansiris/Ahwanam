@@ -726,12 +726,78 @@
             $('#Current_Balance').val(@ViewBag.balance);
         }*@
     });
-    $("#btnrcvpmnt").on('click',function () {
+    $("#btnrcvpmnt").on('click', function () {
         $('#Paymentmode').css('display', 'block');
         $('.chcktblservice').prop('checked', true);
         $('#btnrcvpmnt').css('display', 'none');
+        var totalmnt = $('#Opening_Balance').val();
+        var mnt = parseFloat(totalmnt);
+        $('#Current_Balance').val(totalmnt);
+        $('#Current_Balance1').val(totalmnt);
+        var balnce1 = $('#Current_Balance').val();
+        var finalpaying = parseFloat(balnce1);
+        var pymnt = 0
+        var pmnt = 0
+        var pmnt1 = 0
+        $("#orderdetails tr").click(function () {
+            if ($(this).find('td:eq(0)').find('input.chcktblservice').is(':not(:checked)')) {
+                var rid1;
+                var oDid1 = $("#OrderDetailId").val();
+                var odid1 = $(this).find('td:eq(1)').text();
+                rid1 = oDid1.replace(odid1, '');
+                $(this).find('.tsamnt').each(function () {
+                    var bal = $(this).text();
+                    var baldue1 = bal.replace('Rs ', '');
+                    var tbalcurrentdue1 = baldue1.replace(/,/g, '');
+                    finalpaying -= parseFloat(tbalcurrentdue1);
+                    $('#Current_Balance').val(finalpaying);
+                    $('#Current_Balance1').val(finalpaying);
+                    $('#Opening_Balance').val(finalpaying);
+                });
+                $(this).find('.sbaldue').each(function () {
+                    var cntbal1 = $(this).text();
+                    var baldue1 = cntbal1.replace('Rs ', '');
+                    var tbaldue1 = baldue1.replace(/,/g, '');
+                    pmnt -= parseFloat(tbaldue1);
+                    if (tbaldue1 == '0') {
+                        $('#Current_Balance').val(finalpaying);
+                        $('#Current_Balance1').val(finalpaying);
+                    } else {
+                        $('#Current_Balance').val(pmnt);
+                        $('#Current_Balance1').val(pmnt);
+                    }
+                });
 
-
+            }
+            else {
+                var oDid1 = $("#OrderDetailId").val();
+                var odid1 = $(this).find('td:eq(1)').text();
+                rid1 = oDid1 + ',' + odid1;
+                $("#OrderDetailId").val(rid1);
+                $(this).find('.tsamnt').each(function () {
+                    var nt = $(this).text();
+                    var nt1 = nt.replace('Rs ', '');
+                    var tnt = nt1.replace(/,/g, '');
+                    pymnt += parseFloat(tnt);
+                    $('#Current_Balance').val(pymnt);
+                    $('#Current_Balance1').val(pymnt);
+                    $('#Opening_Balance').val(pymnt);
+                });
+                $(this).find('.sbaldue').each(function () {
+                    var cntbal2 = $(this).text();
+                    var baldue2 = cntbal2.replace('Rs ', '');
+                    var tbaldue2 = baldue2.replace(/,/g, '');
+                    pmnt1 += parseFloat(tbaldue2);
+                    if (tbaldue2 == '0') {
+                        $('#Current_Balance').val(pymnt);
+                        $('#Current_Balance1').val(pymnt);
+                    } else {
+                        $('#Current_Balance').val(pmnt2);
+                        $('#Current_Balance1').val(pmnt2);
+                    }
+                });
+            }
+        });
     });
 
     $('#Received_Amount').on('input', function () {
