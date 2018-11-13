@@ -46,6 +46,7 @@
                 <input type="hidden" id="OrderId" name="OrderId" value="@ViewBag.orderid" />
                 <input type="hidden" id="paidamount" name="paidamount" value="@ViewBag.paidamount" />
                 <input type="hidden" id="OrderDetailId" name="OrderDetailId" value="" />
+                <input type="hidden" id="OrderDetailid1" name="OrderDetailid1" value="@ViewBag.orderdetailid5" />
                 <div class="col-md-10">
 
                     <div id="print-content">
@@ -417,10 +418,10 @@
                                             <div class="row">
                                                 <div class="col-md-5" style="padding: 14px;">Balance Due</div>
                                                 <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                                    <input type="hidden" class="form-control" id="Current_Balance1" name="Current_Balance1" value="@ViewBag.total" style="padding: 5px;" readonly>
+                                                    <input type="hidden" class="form-control" id="Current_Balance1" name="Current_Balance1" value="@ViewBag.balance" style="padding: 5px;" readonly>
 
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="Current_Balance" name="Current_Balance" value="@ViewBag.total" style="padding: 5px;" readonly>
+                                                        <input type="text" class="form-control" id="Current_Balance" name="Current_Balance" value="@ViewBag.balance" style="padding: 5px;" readonly>
                                                     </div>
                                                 </div>
                                             </div>
@@ -731,43 +732,38 @@
         $('.chcktblservice').prop('checked', true);
         $('#btnrcvpmnt').css('display', 'none');
         var totalmnt = $('#Opening_Balance').val();
-        var mnt = parseFloat(totalmnt);
-        $('#Current_Balance').val(totalmnt);
-        $('#Current_Balance1').val(totalmnt);
-        var balnce1 = $('#Current_Balance').val();
-        var finalpaying = parseFloat(balnce1);
-        var pymnt = 0
+        var finalpaying = parseFloat(totalmnt);
+        $('#Opening_Balance').val(totalmnt);
+        //$('#Current_Balance').val(totalmnt);
+       var cntdue= $('#Current_Balance1').val();
+        //var ctbalncedue1 = $('#Current_Balance').val();
+       var pymnt = parseFloat(cntdue);
+       $('#Current_Balance').val(cntdue);
         var pmnt = 0
-        var pmnt1 = 0
         $("#orderdetails tr").click(function () {
             if ($(this).find('td:eq(0)').find('input.chcktblservice').is(':not(:checked)')) {
                 var rid1;
-                var oDid1 = $("#OrderDetailId").val();
+                var oDid1 = $("#OrderDetailid1").val();
                 var odid1 = $(this).find('td:eq(1)').text();
-                rid1 = oDid1.replace(odid1, '');
+                var id1 = odid1.trim();
+                rid1 = oDid1.replace(id1, "");
+                $("#OrderDetailId").val(rid1);
                 $(this).find('.tsamnt').each(function () {
                     var bal = $(this).text();
                     var baldue1 = bal.replace('Rs ', '');
                     var tbalcurrentdue1 = baldue1.replace(/,/g, '');
                     finalpaying -= parseFloat(tbalcurrentdue1);
-                    $('#Current_Balance').val(finalpaying);
-                    $('#Current_Balance1').val(finalpaying);
                     $('#Opening_Balance').val(finalpaying);
                 });
                 $(this).find('.sbaldue').each(function () {
                     var cntbal1 = $(this).text();
                     var baldue1 = cntbal1.replace('Rs ', '');
                     var tbaldue1 = baldue1.replace(/,/g, '');
-                    pmnt -= parseFloat(tbaldue1);
-                    if (tbaldue1 == '0') {
-                        $('#Current_Balance').val(finalpaying);
-                        $('#Current_Balance1').val(finalpaying);
-                    } else {
-                        $('#Current_Balance').val(pmnt);
-                        $('#Current_Balance1').val(pmnt);
-                    }
+                    pymnt -= parseFloat(tbaldue1);
+                    $('#Current_Balance').val(pymnt);
+                    $('#Current_Balance1').val(pymnt);
                 });
-
+              
             }
             else {
                 var oDid1 = $("#OrderDetailId").val();
@@ -778,24 +774,20 @@
                     var nt = $(this).text();
                     var nt1 = nt.replace('Rs ', '');
                     var tnt = nt1.replace(/,/g, '');
-                    pymnt += parseFloat(tnt);
-                    $('#Current_Balance').val(pymnt);
-                    $('#Current_Balance1').val(pymnt);
-                    $('#Opening_Balance').val(pymnt);
+                    finalpaying += parseFloat(tnt);
+                    //$('#Current_Balance').val(finalpaying);
+                    //$('#Current_Balance1').val(finalpaying);
+                    
                 });
                 $(this).find('.sbaldue').each(function () {
                     var cntbal2 = $(this).text();
                     var baldue2 = cntbal2.replace('Rs ', '');
                     var tbaldue2 = baldue2.replace(/,/g, '');
-                    pmnt1 += parseFloat(tbaldue2);
-                    if (tbaldue2 == '0') {
-                        $('#Current_Balance').val(pymnt);
-                        $('#Current_Balance1').val(pymnt);
-                    } else {
-                        $('#Current_Balance').val(pmnt2);
-                        $('#Current_Balance1').val(pmnt2);
-                    }
+                    pymnt += parseFloat(tbaldue2);
+                    $('#Current_Balance').val(pymnt);
+                    $('#Current_Balance1').val(pymnt);
                 });
+                $('#Opening_Balance').val(finalpaying);
             }
         });
     });
@@ -873,60 +865,6 @@
 
     });
 
-    //function  addamnttotal()
-    //{
-    //    $('#Paymentmode').css('display', 'block');
-    //    var sum = 0;
-
-    //    var poid1 = $("input:checkbox:checked").map(function () { return this.value.split(',')[0]; }).toArray();
-    //    var poid12 = $("input:checkbox:checked").map(function () { return this.value.split(',')[1]; }).toArray()
-    //    alert(poid1); alert(poid12);
-    //    var lent = poid1.length;
-    //    for(var i=0;i < lent; i++)
-    //    {
-    //        sum = sum + parseFloat(poid1[i]);
-    //        alert(sum);
-    //    }
-    //}
-
-
-    //$(document).on('click', ' .chcktblservice', function () {
-    ////$("#orderdetails tr .chcktblservice").click(function () {
-    //    if($(this).is(':checked'))
-    //    {
-    //        $('input.chcktblservice').not(this).prop('checked', false);
-    //        $('#Paymentmode').css('display', 'block');
-    //        var odid = $(this).val();
-    //        $("#OrderDetailId").val(odid);
-    //     //   $.ajax({
-    //     //       url: '/vinvoice/GetoderdetailsbyOrderdetailId?odid=' + odid,
-    //     //       type: 'POST',
-    //     //       contentType: 'application/json',
-    //     //       success: function (result) {
-    //     //           $('#Opening_Balance').val(result.PerunitPrice * result.Quantity);
-
-    //     //       },
-    //     //       error: function (result) {
-    //     //       alert("failed");
-    //     //   }
-    //        //});
-
-           
-    //        $("#orderdetails tr").click(function () {
-    //            var opnamnt = $(this).find('td:eq(5)').text();
-    //            var totamnt = opnamnt.replace('Rs ', '');
-    //            var balnce = $(this).find('td:eq(6)').text();
-    //            var baldue = balnce.replace('Rs ', '');
-    //            $('#Current_Balance').val(baldue);
-    //            $('#Opening_Balance').attr("value", totamnt);
-
-    //        });
-           
-    //    }
-    //    else {
-    //        $('#Paymentmode').css('display', 'none');
-    //    }
-    //})  
     $(document).ready(function () {
         var sum = 0
         var sum1 = 0
@@ -949,13 +887,8 @@
                     var baldue = cntbal.replace('Rs ', '');
                     var tbaldue = baldue.replace(/,/g, '');
                     sum1 += parseFloat(tbaldue);
-                    if (tbaldue == '0') {
-                        $('#Current_Balance').val(sum);
-                        $('#Current_Balance1').val(sum);
-                    } else {
                         $('#Current_Balance').val(sum1);
                         $('#Current_Balance1').val(sum1);
-                    }
                 });              
                 $('#Opening_Balance').attr("value", sum);
                 $('#Paymentmode').css('display', 'block');
@@ -978,13 +911,8 @@
                     var baldue = cntbal.replace('Rs ', '');
                     var tbaldue = baldue.replace(/,/g, '');
                     sum1 -= parseFloat(tbaldue);
-                    if (tbaldue == '0') {
-                        $('#Current_Balance').val(sum);
-                        $('#Current_Balance1').val(sum);
-                    } else {
                         $('#Current_Balance').val(sum1);
                         $('#Current_Balance1').val(sum1);
-                    }
                 });
                 $('#Opening_Balance').attr("value", sum);
                 $('#Paymentmode').css('display', 'block');
