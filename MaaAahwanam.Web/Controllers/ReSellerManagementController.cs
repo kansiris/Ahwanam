@@ -44,7 +44,7 @@ namespace MaaAahwanam.Web.Controllers
                 List<SPGETNpkg_Result> p1 = new List<SPGETNpkg_Result>();
                 if (partid != "" && partid != null) 
                 {
-                    var partnercontact = partnerservice.getPartnerPackage(VendorId).Where(m=>m.packageid==partid).ToList();
+                    var partnercontact = partnerservice.getPartnercontact(VendorId).Where(m=>m.PartnerID==partid).ToList();
                     var resellerspacklist = resellerspack.Where(m => m.PartnerID == long.Parse(partid)).ToList();
                     var pkglist = resellerspacklist.Select(m => m.packageid).ToList();
                     foreach (var item in pkgs)
