@@ -160,7 +160,6 @@ namespace MaaAahwanam.Web.Controllers
                 for (int i = 0; i < odis.Length; i++)
                 {
                     decimal ksra = decimal.Parse(payments.Received_Amount);
-                    decimal ksra1;
                     //if (ksra >= 0)
                     //{
                         string str = odis[i] ;
