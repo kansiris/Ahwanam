@@ -163,6 +163,7 @@ namespace MaaAahwanam.Web.Controllers
                     decimal amnt;
                     decimal amnt1;
                     decimal ksra = decimal.Parse(Received_Amount);
+                   if(payments.Current_Balance == "null" || payments.Current_Balance != "0") { 
                     if (ksra >= ksra1)
                     {
 
@@ -244,6 +245,7 @@ namespace MaaAahwanam.Web.Controllers
                                 payments = rcvpaymentservice.SavePayments(payments);
                             }
                         }
+                    }
                     }
                 }
             }
