@@ -41,8 +41,8 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.id = ks;
                         ViewBag.Vendor = vendorMasterService.GetVendor(long.Parse(id));
                         var orders = orderService.userOrderList().Where(m => m.vid == int.Parse(id));
-                        ViewBag.currentorders = orders.Where(p => p.Status == "Pending").Count();
-                        ViewBag.ordershistory = orders.Where(m => m.Status != "Removed").Count();
+                        ViewBag.currentorders = orders.Where(p => p.orderstatus == "Pending").Count();
+                        ViewBag.ordershistory = orders.Where(m => m.orderstatus != "Removed").Count();
                         ViewBag.profilepic = userLoginDetailsService.GetUser(int.Parse(user.UserId.ToString())).UserImgName;
                     }
                 
