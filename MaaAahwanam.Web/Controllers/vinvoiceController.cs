@@ -176,15 +176,6 @@ namespace MaaAahwanam.Web.Controllers
                     { amnt = ksra; }
                     else
                     {
-                        //if(dueamount != 0)
-                        //{
-                        //    amnt = ksra + ksra1;
-                        //}
-                        //else if (ksra < dueamount)
-                        // {
-                        //     amnt = ksra - ksra1;
-                        // }
-                        // else { amnt = ksra1; }
                         if(payments.Current_Balance =="0")
                         {
                             amnt = ksra1;
