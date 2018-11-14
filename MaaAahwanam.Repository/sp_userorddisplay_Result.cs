@@ -35,6 +35,10 @@ namespace MaaAahwanam.Repository
         public long PackageID { get; set; }
         public long userid { get; set; }
         public long OrderDetailId { get; set; }
+        public string ordertype { get; set; }
+        public string orderdetailtype { get; set; }
+        public string orderbooktype { get; set; }
+        public string orderdetailbooktype { get; set; }
         public Nullable<int> SUM_AP { get; set; }
         public string invoice { get; set; }
         public Nullable<decimal> Due { get; set; }
