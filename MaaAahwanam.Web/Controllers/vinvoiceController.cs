@@ -156,15 +156,16 @@ namespace MaaAahwanam.Web.Controllers
                 payments.User_Type = "VendorUser";
                 payments.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                 payments.Payment_Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
-                
+
                 var odis = OrderDetailId.Trim(',').Split(',');
                 decimal amnt;
-                decimal amnt1; 
+                decimal amnt1;
                 decimal ksra = decimal.Parse(Received_Amount);
                 Order orders = new Order();
                 OrderDetail orderdetils = new OrderDetail();
                 for (int i = 0; i < odis.Length; i++)
                 {
+                   
                     if (ksra >= ksra1)
                     {
                         string str = odis[i];
@@ -179,7 +180,8 @@ namespace MaaAahwanam.Web.Controllers
                         {
                             if (i == 0)
                             { amnt = ksra; amnt1 = ksra; }
-                            else { if (ksra2 == 0) { amnt = ksra1; amnt1 = ksra1; } else { amnt = ksra2; amnt1 = ksra2; } }
+                            else { if (ks
+                                    ra2 == 0) { amnt = ksra1; amnt1 = ksra1; } else { amnt = ksra2; amnt1 = ksra2; } }
                             if (ksra2 < ksra)
                             {
                                 if (amnt > 0)
@@ -222,40 +224,42 @@ namespace MaaAahwanam.Web.Controllers
                                                 payments.Current_Balance = amnt.ToString().Replace(".00", "");
                                             }
 
+                                        }
                                     }
-                                }
-                                else
-                                {
-                                    dueamount = (decimal)ksorder.Due;
-                                }
-                                if (payments.Current_Balance == "0")
-                                {
-                                    Order orders = new Order();
-                                    OrderDetail orderdetils = new OrderDetail();
-                                    orders.Status = "Payment completed";
-                                    orderdetils.Status = "Payment completed";
-                                    var status = newmanageuse.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
-                                    payments.Status = "Payment completed";
-                                }
-                                else
-                                {
-                                    Order orders = new Order();
-                                    OrderDetail orderdetils = new OrderDetail();
-                                    orders.Status = "Payment pending";
-                                    orderdetils.Status = "Payment pending";
-                                    var status = newmanageuse.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
+                                    else
+                                    {
+                                        dueamount = (decimal)ksorder.Due;
+                                    }
+                                    if (payments.Current_Balance == "0")
+                                    {
+                                        //Order orders = new Order();
+                                        //OrderDetail orderdetils = new OrderDetail();
+                                        orders.Status = "Payment completed";
+                                        orderdetils.Status = "Payment completed";
+                                        var status = newmanageuse.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
+                                        payments.Status = "Payment completed";
+                                    }
+                                    else
+                                    {
+                                        //Order orders = new Order();
+                                        //OrderDetail orderdetils1 = new OrderDetail();
+                                        orders.Status = "Payment pending";
+                                        orderdetils.Status = "Payment pending";
+                                        var status = newmanageuse.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
 
-                                    payments.Status = "Payment pending";
+                                        payments.Status = "Payment pending";
+                                    }
+                                    payments = rcvpaymentservice.SavePayments(payments);
                                 }
-                                payments = rcvpaymentservice.SavePayments(payments);
                             }
                         }
                     }
+                 
                 }
             }
             return Json("Payment Successfull", JsonRequestBehavior.AllowGet);
-            //return Content("<script language='javascript' type='text/javascript'>alert('payment Successfull');location.href='/vinvoice'</script>");
-
+                //return Content("<script language='javascript' type='text/javascript'>alert('payment Successfull');location.href='/vinvoice'</script>");
+          
         }
 
         public ActionResult Email(string oid)
