@@ -74,11 +74,14 @@
     <div class="container-fluid">
         <div class="ksc">
             @{Html.RenderAction("orderdetails", "ManageUser"); }
-        </div>
+            
+        </div><div class="content1"  id="userslist1" style="padding:10px;">
+    @{Html.RenderAction("customerdetails", "ManageUser"); }
+</div>
         <div class="content" id="userslist" style="padding:10px;">
             @{Html.RenderAction("mnguserdetails", "ManageUser"); }
         </div>
-        
+
         <div class="ui addcutomerpopup coupled modal" id="addcustomermodel">
             <div align="center" class="header" style="text-transform:uppercase">Add/Edit Customer</div>
             <input type="hidden" id="usedid" name="usedid" value="" />
@@ -219,9 +222,10 @@
             <div class="actions">
                 <div class="row" align="center">
                     <div class="col-md-4">
-                        <button id="booknow" type="submit" name="command" value="Save" class="btn btn-success" style="float:right"> Book Now</button>
-                        @*<button id="booknowss" type="submit" name="command" value="Save" class="btn btn-success" style="float:right">Save and Book Now</button>*@
-                        <button id="booknowss" type="submit" name="command" value="Save" class="btn btn-success" style="float:right">save and Book Now</button>
+                        @*<button id="booknow" type="submit" name="command" value="Save" class="btn btn-success" style="float:right"> Book Now</button>
+        @*<button id="booknowss" type="submit" name="command" value="Save" class="btn btn-success" style="float:right">Save and Book Now</button>
+        <button id="booknowss" type="submit" name="command" value="Save" class="btn btn-success" style="float:right">save and Book Now</button>*@
+                        <button  id="select" type="submit" name="command" value="select" class="btn btn-success" style="float:right">select</button>
 
                     </div>
                     <div class="col-md-4">
@@ -239,6 +243,183 @@
 
 @section scripts{
     <script src="~/Scripts/mnguser.js"></script>
+    <script>
+        //$('.discamount').on('input', function () {
+        //                alert("ks")
+        //});
+
+        $(document).on('input', '.discamount', function () {
+            var disc = $(this).val();
+            var total = $(this).parents("div#pack").find('.total').text();
+            var disctype = $(this).parents("div#pack").find('select[name = disctype]').val();
+            var total1 = total.split('₹')[1];
+            if (disc == "" || disc == undefined) {
+                $(this).parents("div#pack").find('.finaltotal').empty().append(total1);
+            } else {
+                
+                var final;
+                if (disctype == 'percent') { final = (parseInt(total1) - (parseInt(disc) * 0.01)); } else if (disctype == 'flat') { final = (parseInt(total1) - parseInt(disc)); } else if (disctype == 'Select option') { alert('select discount type'); }
+                $(this).parents("div#pack").find('.finaltotal').empty().append(parseInt(final));
+
+                //var str = $('.total').text();
+                var str = [];
+                $('label.total').each(function () {
+                    str.push($(this).text().split('₹')[1]);
+                    //str = parseInt(str) + parseInt($(this).text().split('₹')[1]);
+                    // alert(str);
+                })
+                var str1 = [];
+                $('label.finaltotal').each(function () {
+                    str1.push($(this).text());
+                    //str = parseInt(str1) + parseInt($(this).text().split('₹')[1]);
+                    // alert(str);
+                })
+                var grandtotal = 0;
+                for (var i = 0; i < str.length; i++) {
+                    if (str1[i] != '') grandtotal = parseFloat(grandtotal) + parseFloat(str1[i]);
+                    else grandtotal = parseFloat(grandtotal) + parseFloat(str[i]);
+                    alert(grandtotal);
+                }
+                $('.ftotal').empty().text(grandtotal);
+                //alert(grandtotal);
+                var gf = parseFloat(grandtotal) + (parseFloat(grandtotal) * 0.18)
+                $('.grandtotal').empty().text(parseInt(gf));
+            }
+        });
+
+        $("#select").click(function () {
+            alert('button clicked');
+            var userid = $("#usedid").val();
+            $.ajax({
+                url: '/ManageUser/customerdetails?id=' + userid,
+                type: 'POST',
+                contentType: 'application/json',
+                success: function (result) {
+                    $('.content1').html(result);
+                    $('#addcustomermodel').modal('hide');
+                },
+                error: function (result) {
+                    alert("failed");
+                }
+            })
+        }
+        );
+
+        $(document).on('click', '.booknow', function () {
+        //$('.booknow').click(function () {
+    var vid = $("#vendorId").val();
+    var userid = $("#usedid").val();
+    var packageid = window.localStorage.getItem("vpbookpid");
+    var vpbook = window.localStorage.getItem("vpbook");
+    var date = window.localStorage.getItem("vpbookdate");
+    var timeslot = window.localStorage.getItem("vpbooktimeslot");
+    var packid = packageid;
+    //  alert(vpbook);
+    var vpbook1 = vpbook.split(',');
+    var loc = vpbook1[0];
+    var eventtype = vpbook1[2];
+    var guests = vpbook1[1];
+    var date = date;
+    var timeslot = timeslot;
+    var booktype = $(this).val();
+    if (packid == '') {
+        var selectedp = window.localStorage.getItem("vpbook");
+    }
+    // alert(eventtype);
+    $('.overlay').show();
+    $('#loadermsg').text('Booking in process....');
+    var type = $("input[name='type']:checked").val();
+    if (type == 'Corporate') {
+        var Businessname = $('#Businessname').val();
+        if (Businessname == '') { alert('Enter Customer Business Name'); $('#Businessname').focus(); }
+    }
+    
+    else {
+        $.ajax({
+            url: '/ManageUser/booknow?uid=' + userid + '&&loc=' + loc + '&&eventtype=' + eventtype + '&&guest=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&timeslot=' + timeslot + '&&booktype=' + booktype,
+            type: 'POST',
+            contentType: 'application/json',
+            success: function (result) {
+                if (result == "please active the user") {
+                    alert(result);
+                }
+                else if (result != "") {
+                    alert("Order placed Successfully");
+                    window.localStorage.removeItem("vpbook");
+                    window.localStorage.removeItem("vpbookdate");
+                    window.localStorage.removeItem("vpbooktimeslot");
+                    window.localStorage.removeItem("vpbookpid");
+                    window.location.href = "/vinvoice/Index?oid=" + result;
+                } else {
+                    alert("Error Occurred in placing order");
+                }
+            }
+        });
+    }
+});
+
+          
+        @*$(document).on('change', '.chcktbl', function () {
+            if ($(this).is(':checked')) {
+                $('input.chcktbl').not(this).prop('checked', false);
+                $(this).attr("checked", "checked");
+                $(this).closest('tr').find('#btnBook').removeAttr('disabled');
+                $('#saverecord').css('display', 'block');
+                $('#SaveUser').css('display', 'none');
+                $('#EditUser').css('display', 'block');
+                var vpbook = window.localStorage.getItem("vpbook");
+                $('#booknowss').css('display', 'none');
+                $('#addcustomermodel').modal('show');
+                var radataid = $(this).val();
+                $('#id').val(radataid);
+                //alert(radataid);
+                $.ajax({
+                    url: '/ManageUser/GetUserDetails?id=' + radataid,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    success: function (result) {
+                        if (result.type == "Corporate") {
+                            $("input[name=type][value='Corporate']").prop('checked', true);
+                        }
+                        else {
+                            $("input[name=type][value='Individual']").prop('checked', true);
+                        }
+                        $("#usedid").val(result.id);
+                        $("#Businessname").val(result.Businessname);
+                        $("#firstname").val(result.firstname);
+                        $("#lastname").val(result.lastname);
+                        $("#email").val(result.email);
+                        $("#phoneno").val(result.phoneno);
+                        $("#adress1").val(result.adress1);
+                        $("#adress2").val(result.adress2);
+                        $("#city").val(result.city);
+                        $("#state").val(result.state);
+                        $("#country").val(result.country);
+                        $("#pincode").val(result.pincode);
+                        $("#Status").val(result.Status);
+                        if (result.Status == "Active") {
+                            $("input[name=Status][value='Active']").prop('checked', true);
+                            if (vpbook == '' || vpbook == null)
+                                $('#booknow').css('display', 'none');
+                            else
+                                $('#booknow').css('display', 'block');
+                        }
+                        else {
+                            $("input[name=Status][value='InActive']").prop('checked', true);
+                            $('#booknow').css("display", "none");
+                        }
+                    },
+                    error: function (result) {
+                        alert("failed");
+                    }
+                })
+            }
+            else {
+                $(this).closest('tr').find('#btnBook').attr('disabled', 'disabled');
+                $('#saverecord').css('display', 'none');
+            }
+        });*@
+    </script>
     @*<script>
 
             window.onload = function () {
