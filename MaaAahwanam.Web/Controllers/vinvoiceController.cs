@@ -180,15 +180,16 @@ namespace MaaAahwanam.Web.Controllers
                             if (i == 0)
                             { amnt = ksra; amnt1 = ksra; }
                             else { if (ksra2 == 0) { amnt = ksra1; amnt1 = ksra1; } else { amnt = ksra2; amnt1 = ksra2; } }
-                            if (ksra2 < ksra)
+                            if (ksra2 < ksra )
                             {
                                 if (amnt > 0)
                                 {
                                     if (ksorder.SUM_AP == null || ksorder.Due != null)
                                     {
-                                        if (dueamount > amnt)
-                                        {
-                                            amnt = dueamount - amnt;
+                                        //if (dueamount > amnt)
+                                        //{
+                                        amnt = amnt - dueamount;
+                                        //amnt = dueamount - amnt;
                                             ksra1 = amnt;
                                             payments.Opening_Balance = dueamount.ToString().Replace(".00", "");
                                             if (amnt == 0)
@@ -198,31 +199,36 @@ namespace MaaAahwanam.Web.Controllers
                                             }
                                             else
                                             {
-                                                payments.Received_Amount = amnt1.ToString().Replace(".00", "");
-                                                payments.Current_Balance = amnt.ToString().Replace(".00", "");
-                                            }
-                                        }
-                                        else
-                                        {
-                                            amnt = amnt - dueamount;
-                                            if (amnt > ksra)
-                                            {
-                                                ksra2 = amnt;
-                                            }
-                                            else { ksra1 = amnt; }
-                                            payments.Opening_Balance = dueamount.ToString().Replace(".00", "");
-                                            if (amnt != 0)
-                                            {
                                                 payments.Received_Amount = dueamount.ToString().Replace(".00", "");
-                                                payments.Current_Balance = "0";
-                                            }
-                                            else
+                                            if (amnt < 0)
                                             {
-                                                payments.Received_Amount = amnt1.ToString().Replace(".00", "");
-                                                payments.Current_Balance = amnt.ToString().Replace(".00", "");
+                                                payments.Current_Balance = (amnt * -1 ).ToString().Replace(".00", "");
                                             }
+                                            else { payments.Current_Balance = "0"; }
+                                            }
+                                        //}
+                                        //else
+                                        //{
+                                        //    amnt = amnt - dueamount;
+                                        //    if (amnt > ksra)
+                                        //    {
+                                        //        ksra2 = amnt;
+                                               
+                                        //    }
+                                        //    else { ksra1 = amnt; }
+                                        //    payments.Opening_Balance = dueamount.ToString().Replace(".00", "");
+                                        //    if (amnt != 0)
+                                        //    {
+                                        //        payments.Received_Amount = dueamount.ToString().Replace(".00", "");
+                                        //        payments.Current_Balance = "0";
+                                        //    }
+                                        //    else
+                                        //    {
+                                        //        payments.Received_Amount = amnt1.ToString().Replace(".00", "");
+                                        //        payments.Current_Balance = amnt.ToString().Replace(".00", "");
+                                        //    }
 
-                                        }
+                                        //}
                                     }
                                     else
                                     {
