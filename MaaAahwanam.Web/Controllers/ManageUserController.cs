@@ -122,6 +122,16 @@ namespace MaaAahwanam.Web.Controllers
             return Json(data);
         }
 
+        public ActionResult customerdetails(string id)
+        {
+            if (id != null)
+            {
+                var data = mnguserservice.getuserbyid(int.Parse(id));
+                ViewBag.customer = data;
+            }
+            else { ViewBag.customer = null; }
+            return View();
+        }
         public ActionResult mnguserdetails()
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -323,7 +333,7 @@ namespace MaaAahwanam.Web.Controllers
     //        return Json(msg, JsonRequestBehavior.AllowGet);
     //}
     [HttpPost]
-    public JsonResult booknow(string uid, string loc, string eventtype, string guest, string date, string pid, string vid, string timeslot)
+    public JsonResult booknow(string uid, string loc, string eventtype, string guest, string date, string pid, string vid, string timeslot,string booktype)
     {
         int userid = Convert.ToInt32(uid);
         int price;
@@ -370,7 +380,11 @@ namespace MaaAahwanam.Web.Controllers
             order.UpdatedBy = long.Parse(vid);
             order.OrderedBy = long.Parse(vid);
             order.UpdatedDate = Convert.ToDateTime(updateddate);
-            order.Status = "Pending";
+            if (booktype == "Quote") { order.Status = "Quote"; }
+            else
+            {
+                order.Status = "Pending";
+            }
             order = newmanageuse.SaveOrder(order);
 
             //Saving Order Details
@@ -418,7 +432,13 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.Quantity = Convert.ToInt32(guest);
                 orderDetail.OrderId = order.OrderId;
                 orderDetail.VendorId = long.Parse(vid);
-                orderDetail.Status = "Pending";
+
+                if (booktype == "Quote") { orderDetail.Status = "Quote"; }
+                else
+                {
+                    orderDetail.Status = "Pending";
+                }
+               
                 orderDetail.UpdatedDate = Convert.ToDateTime(updateddate);
                 orderDetail.UpdatedBy = userid;
                 orderDetail.subid = data.VendorSubId;

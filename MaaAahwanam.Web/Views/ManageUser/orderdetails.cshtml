@@ -1,162 +1,61 @@
-﻿
+﻿@*<style>
+        #pkgmodal, #Querymodel, #viewmenuitems {
+            position: relative;
+        }
 
-@*<style>
-    #pkgmodal, #Querymodel, #viewmenuitems {
-        position: relative;
-    }
-
-    #selected {
-        border: 1px solid;
-    }
-</style>*@
+        #selected {
+            border: 1px solid;
+        }
+    </style>*@
 
 @if (ViewBag.package != null)
 {
-   
 
-<div class="row">
-    @foreach (var item in ViewBag.package)
-    {
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-header" style="background: #5829bb!important;font-weight: 700; color: white;text-transform: uppercase;border: 1px purple solid;">@item.PackageName</div>
-                <div class="card-body" style="background-color:whitesmoke">
-                    <p style="font-size:13px">
-                        Location: @ViewBag.loc
-                    </p>
-                    <p style="font-size:13px">
 
-                        Event Date :  @item.UpdatedDate <input type="date" value="" />
-                    </p>
+    <div class="row">
+        @foreach (var item in ViewBag.package)
+        {
+            <div class="col-md-3">
+                <div class="card" id="pack">
+                    <div class="card-header" style="background: #5829bb!important;font-weight: 700; color: white;text-transform: uppercase;border: 1px purple solid;">@item.PackageName</div>
+                    <div class="card-body" style="background-color:whitesmoke">
+                         Package Type: Veg <br />
+                        Location: @ViewBag.loc<br />
+                        Event Type : Wedding <br />
+                        Event Date :  @item.UpdatedDate.ToString("dd/MM/yyyy") <br />
+                        Guest Count : @ViewBag.guests<br />
+                        Timeslot : @item.timeslot <br />
+                        
+                            Price : @if (item.PackagePrice == null || item.PackagePrice == "")
+                            {@item.price1}
+                        else
+                        { @item.PackagePrice}
+                        <br />
+                        <label class="total">Total Price : ₹@( (Convert.ToInt64(@item.price1) * Convert.ToInt64(@ViewBag.guests))) </label><br />
+                        <label>Discount: <select name="disctype" class="disctype"><option> Select option </option><option value="percent"> Percentage </option><option value="flat"> Flat Rate </option></select> </label><br />
+                        <label>Discount Price:<input type="number" name="discount" class="discamount" style="width:40%" min="0"></label><br />
+                        Final Package Total: ₹ <label class="finaltotal"></label>
+                        </div >
 
-                    <p style="font-size:13px">
-                        Guest Count :
-                        <input type="number" value="@ViewBag.guests" style="width:30%" />
-                    </p>
-                    <p style="font-size:13px">
-                        Timeslot : @item.timeslot
-                    </p>
-                    <p class="price" style="font-size:13px">
-                        Price :
-                        @if (item.PackagePrice == null || item.PackagePrice == "")
-                        {@item.price1}
-                    else
-                    { @item.PackagePrice}
-                    </p>
 
-                </div>
 
-            </div>
-        </div>
-    }
-</div>
-<p> Total Amount : <label class="total"> @ViewBag.tprice</label></p>
 
+                        </div >
+
+
+
+
+                        </div >
+                    }
+                    </div>
+    <p> Total Amount : <label class="ftotal"> @ViewBag.tprice</label></p>
+    <p>GST : 18%</p>
+    <p>Grand Total : <label class="grandtotal"></label></p>
+    <p>Referred By: <select><option>Select option</option><option>Ahwanam</option><option>Partner Name</option></select></p>
 }
 
 
 
 
-@*@if (ViewBag.loc != null)
-            {
-                <div align="center">
-                    @*<table id="selected">
-
-                        <tr>
-                            <td>Location</td>
-                            <td>: @ViewBag.loc </td>
-                            <td>Event Date</td>
-                            <td>: @ViewBag.date </td>
-                        </tr>
-                        @*<tr><tb>Venue Name:
-                            @if (ViewBag.service.name != null && ViewBag.service.name != "")
-                            {
-                                <tb>@ViewBag.service.name</tb>
-                            }
-                            else
-                            {
-                                <tb>@ViewBag.service.VenueType</tb>
-                            }
-                        </tr>
-                        <tr>
-                            <td>Event Type</td>
-                            <td>: @ViewBag.eventtype </td>
-                            <td>Price</td>
-                            <td>: @ViewBag.price </td>
-                        </tr>
-                        <tr>
-                            <td>Guests Count</td>
-                            <td>: @ViewBag.guest </td>
-                            <td>Total Amount</td>
-                            <td>: @ViewBag.total</td>
-                        </tr>
-                        <tr>
-                            <td>Package Name</td>
-                            <td>: <a class="viewpkg" style="color:#dc3545;cursor:pointer">@ViewBag.pname</a></td>
-                            <td>Discount</td>
-                            <td><input type="text" class="form-control" placeholder="Discount % or ₹" /></td>
-                        </tr>
-                    </table>
-        </div>
-        @*<div>
-                <div>
-                    <label> location :</label>
-                    <label class="kscfont">@ViewBag.loc ,</label>
-
-                    <label>eventdate : </label>
-                    <label class="kscfont">@ViewBag.date ,</label>
-
-                    <label>eventtype : </label><label class="kscfont">@ViewBag.eventtype ,</label>
-
-                    <label> price : </label><label class="kscfont">@ViewBag.price ,</label>
-
-                    <label> guest :</label><label class="kscfont">@ViewBag.guest ,</label>
-
-                    <label> total :</label><label class="kscfont">@ViewBag.total ,</label>
-                    <label> Package name :</label> <a class="viewpkg" style="color:#dc3545;cursor:pointer">@ViewBag.pname</a>
-                </div>
-            </div>
-    }*@
 
 
-@*<div id="viewpkgitems" class="ui long writemsg modal">
-        <div class="header" style="background-color:#573791;color:white">
-            <text class="pkgname"></text> @*- <text class="pkgtype"></text>
-            <button style="background-color:black;color:white;border:none;font-size:14px;height:30px;width:60px;float:right" onclick="$('#viewpkgitems').modal('hide')">Close</button>
-        </div>
-        <div class="scrolling content" id="pkgitems">
-        </div>
-    </div>
-
-    <script src="~/newdesignstyles/Scripts/jquery-2.2.4.min.js"></script>
-    <script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.js"></script>
-    <script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.min.js"></script>
-    <script>
-        $('.viewpkg').click(function () {
-            var pkgid = '@ViewBag.pid';
-            var maindiv = '';
-            $.ajax({
-                url: '/ManageUser/GetParticularPackage?pid=' + pkgid,
-                type: 'post',
-                datatype: 'json',
-                data: pkgid,
-                success: function (data) {
-                    $('#viewpkgitems .pkgname').text(data.PackageName);
-                    if (data.menuitems != '' && data.menuitems != null) {
-                        var count = data.menuitems.split(',').length;
-                        for (var i = 0; i < count; i++) {
-                            var totalitem = data.menuitems.split(',')[i];
-                            var heading = totalitem.split('(')[0];
-                            var items = totalitem.split('(')[1].split(')')[0].split('!');
-                            maindiv += '<div class="heading">' + heading + '</div><div class="items">' + items + '</div><br/>';
-                        }
-                    }
-                    else {
-                        maindiv = "No Menu Items";
-                    }
-                    $('#viewpkgitems #pkgitems').empty().append(maindiv);
-                    $('#viewpkgitems').modal('show');
-                }
-            });
-        });
-    </script>*@
