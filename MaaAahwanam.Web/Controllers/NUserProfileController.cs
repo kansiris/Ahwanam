@@ -50,8 +50,8 @@ namespace MaaAahwanam.Web.Controllers
                         var userdata1 = userLoginDetailsService.GetUserId((int)user.UserId);
                         ViewBag.emailid = userdata1.UserName;
                         var orders = orderService.userOrderList().Where(m => m.UserLoginId == (int)user.UserId);
-                        ViewBag.order = orders.OrderByDescending(m => m.OrderId).Where(m => m.Status == "Pending" || m.Status == "Vendor Declined" || m.Status == "Active").ToList();
-                        ViewBag.orderhistory = orders.OrderByDescending(m => m.OrderId).Where(m => m.Status == "InActive" || m.Status == "Cancelled").ToList();
+                        ViewBag.order = orders.OrderByDescending(m => m.OrderId).Where(m => m.orderstatus == "Pending" || m.orderstatus == "Vendor Declined" || m.orderstatus == "Active").ToList();
+                        ViewBag.orderhistory = orders.OrderByDescending(m => m.OrderId).Where(m => m.orderstatus == "InActive" || m.orderstatus == "Cancelled").ToList();
                         WhishListService whishListService = new WhishListService();
                         ViewBag.whishlists = whishListService.GetWhishList(user.UserId.ToString());
                         ViewBag.quotations = quotationListsService.GetAllQuotations().Where(m => m.EmailId == userdata1.UserName).ToList();

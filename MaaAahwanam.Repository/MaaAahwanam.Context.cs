@@ -656,16 +656,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<packagevendordates_Result>("packagevendordates");
         }
     
-        public virtual ObjectResult<sp_vendoruserorddisplay_Result> sp_vendoruserorddisplay()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_vendoruserorddisplay_Result>("sp_vendoruserorddisplay");
-        }
-    
-        public virtual ObjectResult<sp_userorddisplay_Result> sp_userorddisplay()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_userorddisplay_Result>("sp_userorddisplay");
-        }
-    
         public virtual ObjectResult<SPGETpartpkg_Result> SPGETpartpkg(Nullable<long> id)
         {
             var idParameter = id.HasValue ?
@@ -682,6 +672,16 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("Id", typeof(long));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SPGETNpkg_Result>("SPGETNpkg", idParameter);
+        }
+    
+        public virtual ObjectResult<sp_userorddisplay_Result> sp_userorddisplay()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_userorddisplay_Result>("sp_userorddisplay");
+        }
+    
+        public virtual ObjectResult<sp_vendoruserorddisplay_Result> sp_vendoruserorddisplay()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_vendoruserorddisplay_Result>("sp_vendoruserorddisplay");
         }
     }
 }

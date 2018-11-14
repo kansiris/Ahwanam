@@ -213,8 +213,8 @@ namespace MaaAahwanam.Web.Controllers
                     DateTime tommarowdate = todatedate.AddDays(1).Date;
                     var orders = orderService.userOrderList().Where(m => m.vid == Convert.ToInt64(vendorMaster.Id)).ToList();
                     var orders1 = orderService.userOrderList1().Where(m => m.vid == Convert.ToInt64(vendorMaster.Id)).ToList();
-                    ViewBag.currentorders = orders.Where(p => p.Status == "Pending").Count();
-                    ViewBag.ordershistory = orders.Where(m => m.Status != "Removed").Count();
+                    ViewBag.currentorders = orders.Where(p => p.orderstatus == "Pending").Count();
+                    ViewBag.ordershistory = orders.Where(m => m.orderstatus != "Removed").Count();
                     ViewBag.order = orders.OrderByDescending(m => m.OrderId);
                     ViewBag.order1 = orders1.OrderByDescending(m => m.OrderId);
                     ViewBag.todaysorder = orders.Where(p => p.BookedDate == todatedate).ToList();

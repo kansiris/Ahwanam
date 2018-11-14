@@ -15,7 +15,8 @@ namespace MaaAahwanam.Repository
     {
         public long OrderId { get; set; }
         public Nullable<System.DateTime> OrderDate { get; set; }
-        public string Status { get; set; }
+        public string orderdetailstatus { get; set; }
+        public string orderstatus { get; set; }
         public decimal TotalPrice { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
