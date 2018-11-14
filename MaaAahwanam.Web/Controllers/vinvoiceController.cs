@@ -144,7 +144,7 @@ namespace MaaAahwanam.Web.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Index(Payment payments)
+        public ActionResult Index(Payment payments,string Received_Amount,string OrderDetailId)
 
         {
             
@@ -157,10 +157,10 @@ namespace MaaAahwanam.Web.Controllers
                 payments.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                 payments.Payment_Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                 
-                var odis = payments.OrderDetailId.Trim(',').Split(',');
+                var odis = OrderDetailId.Trim(',').Split(',');
                 for (int i = 0; i < odis.Length; i++)
                 {
-                    decimal ksra = decimal.Parse(payments.Received_Amount);
+                    decimal ksra = decimal.Parse(Received_Amount);
                     //if (ksra >= 0)
                     //{
                         string str = odis[i] ;
@@ -171,78 +171,68 @@ namespace MaaAahwanam.Web.Controllers
                         decimal dueamount;
                         var ksorder = orderdetails1.Where(m => m.OrderDetailId == long.Parse(orderdetailid)).FirstOrDefault();
                     dueamount = Convert.ToDecimal(ksorder.Due);
-                    decimal amnt;
-                    if (i == 0)
-                    { amnt = ksra; }
-                    else
+                    if (dueamount != 0)
                     {
-                        //if(dueamount != 0)
-                        //{
-                        //    amnt = ksra + ksra1;
-                        //}
-                        //else if (ksra < dueamount)
-                        // {
-                        //     amnt = ksra - ksra1;
-                        // }
-                        // else { amnt = ksra1; }
-                        if(payments.Current_Balance =="0")
+                        decimal amnt;
+                        amnt = ksra;
+                        if (ksra > 0)
                         {
-                            amnt = ksra1;
-                        }
-                        else
-                        {
-                            amnt = ksra1- ksra;
-                        }
-                    }
-                    if (amnt > 0)
-                    {
-                        if (ksorder.SUM_AP == null || ksorder.Due != null)
-                        {
-                            if (dueamount > amnt)
+                            if (ksorder.SUM_AP == null || ksorder.Due != null)
                             {
-                                ksra1 = dueamount - amnt;
-                                payments.Opening_Balance = dueamount.ToString().Replace(".00", "");
-                                if (amnt == dueamount) { payments.Received_Amount = dueamount.ToString().Replace(".00", ""); }
-                                else { payments.Received_Amount = amnt.ToString().Replace(".00", ""); }
-                               payments.Current_Balance = ksra1.ToString().Replace(".00", "");
-                        }
+                                if (dueamount > ksra)
+                                {
+                                    ksra = dueamount - ksra;
+                                    
+                                    payments.Opening_Balance = dueamount.ToString().Replace(".00", "");
+                                    if (ksra == 0) { payments.Received_Amount = dueamount.ToString().Replace(".00", "");
+                                        payments.Current_Balance = "0";
+                                    }
+                                    else { payments.Received_Amount = amnt.ToString().Replace(".00", "");
+                                        payments.Current_Balance = ksra.ToString().Replace(".00", "");
+                                    }
+                                }
+                                else
+                                {
+                                    ksra = ksra - dueamount;
+                                    payments.Opening_Balance = dueamount.ToString().Replace(".00", "");
+                                    if (ksra == 0)
+                                    {
+                                        payments.Received_Amount = dueamount.ToString().Replace(".00", "");
+                                        payments.Current_Balance = "0";
+                                    }
+                                    else
+                                    {
+                                        payments.Received_Amount = amnt.ToString().Replace(".00", "");
+                                        payments.Current_Balance = ksra.ToString().Replace(".00", "");
+                                    }
+
+                                }
+                            }
                             else
                             {
-                                ksra1 = amnt - dueamount;
-                                payments.Received_Amount = dueamount.ToString().Replace(".00", "");
-                                payments.Opening_Balance = dueamount.ToString().Replace(".00", "");
-                                //payments.Current_Balance = ksra1.ToString().Replace(".00", "");
-                            if (ksra1 > 0)
-                                {
-                                    payments.Current_Balance = "0";
-                                }
-
+                                dueamount = (decimal)ksorder.Due;
                             }
-                        }
-                        else
-                        {
-                            dueamount = (decimal)ksorder.Due;
-                        }
-                        if (payments.Current_Balance == "0")
-                        {
-                            Order orders = new Order();
-                            OrderDetail orderdetils = new OrderDetail();
-                            orders.Status = "Payment completed";
-                            orderdetils.Status = "Payment completed";
-                            var status = newmanageuse.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
-                            payments.Status = "Payment completed";
-                        }
-                        else
-                        {
-                            Order orders = new Order();
-                            OrderDetail orderdetils = new OrderDetail();
-                            orders.Status = "Payment pending";
-                            orderdetils.Status = "Payment pending";
-                            var status = newmanageuse.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
+                            if (payments.Current_Balance == "0")
+                            {
+                                Order orders = new Order();
+                                OrderDetail orderdetils = new OrderDetail();
+                                orders.Status = "Payment completed";
+                                orderdetils.Status = "Payment completed";
+                                var status = newmanageuse.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
+                                payments.Status = "Payment completed";
+                            }
+                            else
+                            {
+                                Order orders = new Order();
+                                OrderDetail orderdetils = new OrderDetail();
+                                orders.Status = "Payment pending";
+                                orderdetils.Status = "Payment pending";
+                                var status = newmanageuse.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
 
-                            payments.Status = "Payment pending";
+                                payments.Status = "Payment pending";
+                            }
+                            payments = rcvpaymentservice.SavePayments(payments);
                         }
-                        payments = rcvpaymentservice.SavePayments(payments);
                     }
                 }
             }
