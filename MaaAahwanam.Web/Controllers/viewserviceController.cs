@@ -173,6 +173,11 @@ namespace MaaAahwanam.Web.Controllers
             return type;
         }
 
+        //public JsonResult GetPackage(string pkgid)
+        //{
+        //    var pkg = viewservicesss.getvendorpkgs
+        //}
+
         public JsonResult Availabledates(string pid, string type)
         {
             var msg = "";

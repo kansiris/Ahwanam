@@ -283,7 +283,7 @@
                                     { <input type="hidden" value="@item1.choicedays" name="PackageName" id="PackageName"> }
                                     <input type="hidden" value="@item1.PackageName" name="PackageName" id="PackageName">
                                     <div class="row">
-                                        <div class="col-md-2" style="background-color:#543791;color:white">
+                                        <div class="col-md-2 pkgsection" style="background-color:#543791;color:white">
                                             @if (item1.PackageName != null && item1.PackageName != "")
                                             {
                                                 @item1.PackageName.Replace("_", " ")
@@ -309,7 +309,7 @@
                                             <span align="center">@item1.Category</span>
                                             <text class="packageid" style="display:none">@item1.PackageID</text>
                                         </div>
-                                        <div class="col-md-8" style="background-color:white;height: 100px;overflow-x:hidden;overflow-y:auto" overflow="visible">
+                                        <div class="col-md-8 choosemenu" style="background-color:white;height: 100px;overflow-x:hidden;overflow-y:auto" overflow="visible">
                                             <span>What You Get</span>
                                             <br />
                                             @if (item1.menu != null && item1.menu != "")
@@ -892,9 +892,21 @@
     </div>
     <!-- /container -->
     <!-- /bg_color_1 -->
+    
 </div>
 @*</main>*@
 
+<div id="modal-example1" uk-modal>
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <div class="uk-modal-header">
+            <h3 class="uk-modal-title" style="font-size:22px"></h3>
+        </div>
+        <div class="uk-modal-body">
+            <p>Modal Body</p>
+        </div>
+    </div>
+</div>
 
 <!--/main-->
 <!-- COMMON SCRIPTS -->
@@ -968,7 +980,7 @@
                         $('#selecteddate').val(moment(calEvent.start).format('DD/MM/YYYY'));
                     }
                     else {
-                        alert('Not Available on this day');
+                        alert('Not Available');
                     }
                 },
                 displayEventTime: false
@@ -978,6 +990,14 @@
 
 
 
+    </script>
+
+    <script>
+        $(document).on('click','.choosemenu',function(){
+            var pkgid = $(this).parent('div.row').find('.packageid').text();
+            alert(pkgid);
+            UIkit.modal("#modal-example1").show();
+        });
     </script>
 
     <script>
