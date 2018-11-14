@@ -327,7 +327,7 @@
                                         <div class="col-md-2">
                                             @if (item1.timeslot != null)
                                             {
-                                                if (item1.timeslot.Contains("BreakFast"))
+                                                if (item1.timeslot.Contains("Break Fast"))
                                                 { <div class="row"><input type="checkbox" /><label>BreakFast</label></div> }
                                                 if (item1.timeslot.Contains("Lunch"))
                                                 { <div class="row"><input type="checkbox" /><label>Lunch</label></div> }
@@ -360,9 +360,10 @@
                             <span> No Food Packages Available </span>
                         }
 
-                        <h3 class="uk-h3" style="margin-left:4px">AVAILABLE RENTAL PACKAGES</h3>
+                        
                         @if (ViewBag.rentalpackages.Count != 0)
                         {
+                            <h3 class="uk-h3" style="margin-left:4px">AVAILABLE RENTAL PACKAGES</h3>
                             foreach (var item1 in ViewBag.rentalpackages)
                             {
                                 if (item1.VendorSubId == item.Id)
@@ -422,10 +423,6 @@
                                     <br />
                                 }
                             }
-                        }
-                        else
-                        {
-                            <span> No Rental Packages Available </span>
                         }
                     </div>
 
@@ -940,8 +937,8 @@
                 success: function (data) {
                     for (var i = 0; i < data.split(',').length; i++) {
                         events.push({
-                            title: 'N/A',
-                            start: moment(data.split(',')[i]),
+                            title: ''+data.split(',')[i].split('!')[1]+': N/A',
+                            start: moment(data.split(',')[i].split('!')[0]),
                             description:'N/A',
                         });
                     }
@@ -964,7 +961,7 @@
                     $('#selecteddate').val(moment(date).format('DD/MM/YYYY'));
                 },
                 eventClick: function (calEvent, jsEvent, view) {
-                    var type = 'Rental';
+                    var type = '';
                     if (type == 'Rental') {
                         $(".fc-state-highlight").removeClass("fc-state-highlight");
                         $(this).addClass("fc-state-highlight");

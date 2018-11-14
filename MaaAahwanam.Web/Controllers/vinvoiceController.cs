@@ -176,15 +176,23 @@ namespace MaaAahwanam.Web.Controllers
                     { amnt = ksra; }
                     else
                     {
-                        if(dueamount == 0)
+                        //if(dueamount != 0)
+                        //{
+                        //    amnt = ksra + ksra1;
+                        //}
+                        //else if (ksra < dueamount)
+                        // {
+                        //     amnt = ksra - ksra1;
+                        // }
+                        // else { amnt = ksra1; }
+                        if(payments.Current_Balance =="0")
                         {
-                            amnt = ksra + ksra1;
+                            amnt = ksra1;
                         }
-                        else if (ksra < dueamount)
+                        else
                         {
-                            amnt = ksra - ksra1;
+                            amnt = ksra1- ksra;
                         }
-                        else { amnt = ksra1; }
                     }
                     if (amnt > 0)
                     {
@@ -196,14 +204,15 @@ namespace MaaAahwanam.Web.Controllers
                                 payments.Opening_Balance = dueamount.ToString().Replace(".00", "");
                                 if (amnt == dueamount) { payments.Received_Amount = dueamount.ToString().Replace(".00", ""); }
                                 else { payments.Received_Amount = amnt.ToString().Replace(".00", ""); }
-                                payments.Current_Balance = ksra1.ToString().Replace(".00", "");
-                            }
+                               payments.Current_Balance = ksra1.ToString().Replace(".00", "");
+                        }
                             else
                             {
                                 ksra1 = amnt - dueamount;
                                 payments.Received_Amount = dueamount.ToString().Replace(".00", "");
                                 payments.Opening_Balance = dueamount.ToString().Replace(".00", "");
-                                if (ksra1 > 0)
+                                //payments.Current_Balance = ksra1.ToString().Replace(".00", "");
+                            if (ksra1 > 0)
                                 {
                                     payments.Current_Balance = "0";
                                 }

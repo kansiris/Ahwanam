@@ -93,6 +93,27 @@ function GenerateCalender(events) {
             $('#calendar').fullCalendar('unselect');
         },
         editable: true,
+        droppable: true, // this allows things to be dropped onto the calendar
+        drop: function (date) {
+            var type = $(this).text();
+            var color = ''; var category = ''; var timeslot = '';
+            if (type == 'Morning Availability') { color = 'Red'; category = 'Availability'; timeslot = 'Morning'; }
+            else if (type == 'Evening Availability') { color = 'Green'; category = 'Availability'; timeslot = 'Evening'; }
+            
+            var data = {
+                Id: $('#hdEventID').val(),
+                Title: type,
+                StartDate: moment(date).format('DD/MM/YYYY hh:mm:ss'),
+                EndDate: moment(date).format('DD/MM/YYYY hh:mm:ss'),
+                Description: type,
+                Color: color,
+                IsFullDay: timeslot,
+                Type: category,
+                VendorId: $('#vid').val(),
+                Servicetype: 'Venue',
+            }           
+            SaveEvent(data);
+        },
         eventDrop: function (event) {
             var data = {
                 Id: event.eventID,
