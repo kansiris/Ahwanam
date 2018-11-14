@@ -156,15 +156,16 @@ namespace MaaAahwanam.Web.Controllers
                 payments.User_Type = "VendorUser";
                 payments.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                 payments.Payment_Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
-                
+
                 var odis = OrderDetailId.Trim(',').Split(',');
                 decimal amnt;
-                decimal amnt1; 
+                decimal amnt1;
                 decimal ksra = decimal.Parse(Received_Amount);
                 Order orders = new Order();
                 OrderDetail orderdetils = new OrderDetail();
                 for (int i = 0; i < odis.Length; i++)
                 {
+                   
                     if (ksra >= ksra1)
                     {
                         string str = odis[i];
@@ -257,8 +258,8 @@ namespace MaaAahwanam.Web.Controllers
                 }
             }
             return Json("Payment Successfull", JsonRequestBehavior.AllowGet);
-            //return Content("<script language='javascript' type='text/javascript'>alert('payment Successfull');location.href='/vinvoice'</script>");
-
+                //return Content("<script language='javascript' type='text/javascript'>alert('payment Successfull');location.href='/vinvoice'</script>");
+          
         }
 
         public ActionResult Email(string oid)
