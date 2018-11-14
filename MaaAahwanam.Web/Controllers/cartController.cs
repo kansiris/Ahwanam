@@ -407,10 +407,11 @@ namespace MaaAahwanam.Web.Controllers
         //    return Json(JsonRequestBehavior.AllowGet);
         //}
 
-        public ActionResult booknow(string selcartid, string searchedcontent,string total)
+        public ActionResult booknow(string selcartid, string searchedcontent,string total,string booktype)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
+                var msg = "";
                 var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
                 if (user.UserType == "User")
                 {
@@ -432,6 +433,12 @@ namespace MaaAahwanam.Web.Controllers
                     order.OrderedBy = (Int64)user.UserId;
                     order.UpdatedDate = Convert.ToDateTime(updateddate);
                     order.Status = "Pending";
+                    if (booktype == "Quote") { order.type = "Quote"; }
+                    else
+                    {
+                        order.type = "Order";
+                    }
+                    order.bookingtype = "User";
                     order = orderService.SaveOrder(order);
 
                     //Payment Section
@@ -488,7 +495,12 @@ namespace MaaAahwanam.Web.Controllers
                         orderDetail.ExtraDate1 = cartdetails.c1date;
                         orderDetail.ExtraDate2 = cartdetails.c2date;
                         orderDetail.ExtraDate3 = cartdetails.c3date;
-
+                        if (booktype == "Quote") { orderDetail.type = "Quote"; }
+                        else
+                        {
+                            orderDetail.type = "Order";
+                        }
+                        orderDetail.bookingtype = "User";
                         orderdetailsServices.SaveOrderDetail(orderDetail);
 
                         var userlogdetails = userLoginDetailsService.GetUserId(userid);
@@ -529,7 +541,9 @@ namespace MaaAahwanam.Web.Controllers
                         var message = cartService.Deletecartitem(long.Parse(cartno2));
                     }
                 }
-                return Json("Success", JsonRequestBehavior.AllowGet);
+                if (booktype == "Quote") { msg = "Quotation sent"; }
+                else if (booktype == "booknow") { msg = "Order Successfully placed"; }
+                return Json("msg", JsonRequestBehavior.AllowGet);
             }
             return Json(JsonRequestBehavior.AllowGet);
         }

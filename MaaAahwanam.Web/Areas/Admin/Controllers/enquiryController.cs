@@ -1,19 +1,18 @@
-﻿using System;
+﻿using MaaAahwanam.Models;
+using MaaAahwanam.Repository;
+using MaaAahwanam.Service;
+using MaaAahwanam.Utility;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using MaaAahwanam.Service;
-using MaaAahwanam.Repository;
-using MaaAahwanam.Utility;
-using System.IO;
-using MaaAahwanam.Models;
 
 namespace MaaAahwanam.Web.Areas.Admin.Controllers
 {
-    public class QuotationsController : Controller
+    public class enquiryController : Controller
     {
-
         ProductInfoService productInfoService = new ProductInfoService();
         QuotationListsService quotationListsService = new QuotationListsService();
         VendorDatesService vendorDatesService = new VendorDatesService();
@@ -148,6 +147,5 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             else
                 return Json("Failed");
         }
-    
-}
+    }
 }

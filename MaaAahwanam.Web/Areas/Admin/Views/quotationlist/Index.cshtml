@@ -1,4 +1,4 @@
-﻿
+﻿@using System.Globalization
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/NmasterPage.cshtml";
@@ -17,46 +17,44 @@
                         <thead>
                             <tr>
                                 <th>Quotation ID</th>
-                                <th>Quotation Date</th>
-                                <th>Requested User</th>
-                                <th>Occasion Date</th>
-                                <th>Guests</th>
-                                <th>Requirements</th>
+                                <th>Event Type</th>
+                                <th>Event Date</th>
+                                <th>Package Name</th>
+                                <th>Total Amount</th>
+                                <th>Balance Due</th>
                                 <th>Status</th>
-                                <th>Actions</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in ViewBag.quotations)
+                            @foreach (var orders in ViewBag.order)
                             {
                                 <tr class="even gradeX">
+                                    <td> @orders.OrderId </td>
+                                    <td> @orders.EventType </td>
+                                    <td> @orders.BookedDate.ToString("dd-MM-yyyy") </td>
+                                    <td> @orders.PackageName </td>
+                                    <td>  @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@orders.PerunitPrice * @orders.Quantity)).Replace(".00", "") </td>
+                                    <td> @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@orders.Due)).Replace(".00", "") </td>
+                                    <td> @orders.orderstatus </td>
                                     <td>
-                                        @item.Id
+                                        <a href="/Admin/quotationlist/QuoteReply?id=@orders.OrderId" class="btn btn-default btn-xs"> Reply Quote </a>
+                                        @*<a href="#" class="btn btn-default btn-xs">Delete</a>*@
                                     </td>
+                                </tr>
+                            }
+                            @foreach (var orders1 in ViewBag.order1)
+                            {
+                                <tr class="even gradeX">
+                                    <td> @orders1.OrderId </td>
+                                    <td> @orders1.EventType </td>
+                                    <td> @orders1.BookedDate.ToString("dd-MM-yyyy") </td>
+                                    <td> @orders1.PackageName </td>
+                                    <td>  @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@orders1.PerunitPrice * @orders1.Quantity)).Replace(".00", "") </td>
+                                    <td> @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@orders1.Due)).Replace(".00", "") </td>
+                                    <td> @orders1.orderstatus </td>
                                     <td>
-                                        <h5>@item.UpdatedTime</h5>
-                                    </td>
-                                    <td>
-                                        <h5>
-                                            <p>User Name :  @item.Name</p>
-                                            <p>Email ID  :  @item.EmailId</p>
-                                            <p>Phone No  :  @item.PhoneNo</p>
-                                        </h5>
-                                    </td>
-                                    <td>
-                                        <h5>@item.EventStartDate</h5>
-                                    </td>
-                                    <td>
-                                        @item.Persons
-                                    </td>
-                                    <td>
-                                        @item.Description
-                                    </td>
-                                    <td>
-                                        @item.Status
-                                    </td>
-                                    <td>
-                                        <a href="/Admin/quotationlist/QuoteReply?id=@item.Id" class="btn btn-default btn-xs"> Reply Quote </a>
+                                        <a href="/Admin/quotationlist/QuoteReply?id=@orders1.OrderId" class="btn btn-default btn-xs"> Reply Quote </a>
                                         @*<a href="#" class="btn btn-default btn-xs">Delete</a>*@
                                     </td>
                                 </tr>

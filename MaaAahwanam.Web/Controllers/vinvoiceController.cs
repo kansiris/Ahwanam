@@ -69,6 +69,8 @@ namespace MaaAahwanam.Web.Controllers
                             ViewBag.balance = balndue;
 
                         }
+                        var tt = Convert.ToDouble(ViewBag.total);
+                        ViewBag.grandtotal = tt + (tt * 0.18);
                         ViewBag.totalprice = orderdetails1.FirstOrDefault().TotalPrice;
                         ViewBag.orderdetailid = orderdetails1.FirstOrDefault().OrderDetailId;
                         var payments = rcvpaymentservice.getPayments(oid).ToList();

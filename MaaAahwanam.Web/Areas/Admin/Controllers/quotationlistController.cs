@@ -6,145 +6,110 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using MaaAahwanam.Utility;
+
 
 namespace MaaAahwanam.Web.Areas.Admin.Controllers
 {
 
     public class quotationlistController : Controller
     {
-        ProductInfoService productInfoService = new ProductInfoService();
-        QuotationListsService quotationListsService = new QuotationListsService();
-        VendorDatesService vendorDatesService = new VendorDatesService();
+        OrderService orderService = new OrderService();
+        VendorDashBoardService mnguserservice = new VendorDashBoardService();
+
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         // GET: Admin/quotationlist
         public ActionResult Index()
         {
-            ViewBag.quotations = quotationListsService.GetAllQuotations().ToList(); //.Where(m => m.Status == "Active")
+            var orders = orderService.userOrderList().Where(m => m.ordertype == "Quote").ToList();
+            var orders1 = orderService.userOrderList1().Where(m => m.ordertype == "Quote").ToList();
+            ViewBag.order = orders.OrderByDescending(m => m.OrderId);
+            ViewBag.order1 = orders1.OrderByDescending(m => m.OrderId);
+
+
             return View();
         }
         public ActionResult QuoteReply(string id)
         {
-            ViewBag.quotations = quotationListsService.GetAllQuotations().Where(m => m.Id == long.Parse(id)).FirstOrDefault();
+            var orders = orderService.userOrderList().Where(m => m.ordertype == "Quote").ToList();
+            var orders1 = orderService.userOrderList1().Where(m => m.ordertype == "Quote").ToList();
+            ViewBag.orderdetails = orders.Where(m => m.OrderId == long.Parse(id));
+            ViewBag.orderdetails1 = orders1.Where(m => m.OrderId == long.Parse(id));
             return View();
         }
-        [HttpGet]
+
         public ActionResult FilteredVendors(string type, string date, string id)
         {
-            if (type != null && date != null)
-            {
-                ViewBag.id = id;
-                var data = vendorDatesService.GetVendorsByService().Where(m => m.ServiceType == type).ToList();
-                ViewBag.display = "1";
-                ViewBag.records = seperatedates(data, date, type);
-            }
-            else if (type == null && date == null)
-            {
-                ViewBag.novendor = "Select Service Type & Date To View Vendors";//"No Vendors Available On This Date";
-            }
+            
             return PartialView("FilteredVendors", "Quotations");
         }
 
-        public List<string[]> seperatedates(List<filtervendordates_Result> data, string date, string type)
+        public string Capitalise(string str)
         {
-            List<string[]> betweendates = new List<string[]>();
-            string dates = "";
-            //var Gettotaldates = vendorDatesService.GetDates(long.Parse(id), long.Parse(vid));
-            int recordcount = data.Count();
-            foreach (var item in data)
-            {
-                var startdate = Convert.ToDateTime(item.StartDate);
-                var enddate = Convert.ToDateTime(item.EndDate);
-                if (startdate != enddate)
-                {
-                    string orderdates = productInfoService.disabledate(item.masterid, item.subid, type);
-                    for (var dt = startdate; dt <= enddate; dt = dt.AddDays(1))
-                    {
-                        dates = (dates != "") ? dates + "," + dt.ToString("dd-MM-yyyy") : dt.ToString("dd-MM-yyyy");
-                    }
-                    if (dates.Split(',').Contains(date))
-                    {
-                        if (orderdates != "")
-                            dates = String.Join(",", dates.Split(',').Where(i => !orderdates.Split(',').Any(e => i.Contains(e))));
-                        string[] da = { item.masterid.ToString(), item.subid.ToString(), dates, item.BusinessName, item.ServiceType, item.VenueType, item.Type };
-                        betweendates.Add(da);
-                    }
-                    dates = "";
-                }
-                else
-                {
-                    if (dates.Contains(date))
-                    {
-                        string[] da = { item.masterid.ToString(), item.subid.ToString(), startdate.ToString("dd-MM-yyyy"), item.BusinessName, item.ServiceType, item.VenueType, item.Type };
-                        betweendates.Add(da);
-                    }
-                    dates = "";
-                }
-            }
-            return betweendates;
+            if (String.IsNullOrEmpty(str))
+                return String.Empty;
+            return Char.ToUpper(str[0]) + str.Substring(1).ToLower();
+        }
+        public ActionResult FilteredVendors1(string id)
+        {
+            var orders = orderService.userOrderList().Where(m => m.ordertype == "Quote").ToList();
+            var orders1 = orderService.userOrderList1().Where(m => m.ordertype == "Quote").ToList();
+           var s1= ViewBag.orderdetails = orders.Where(m => m.OrderId == long.Parse(id)).FirstOrDefault();
+            var s2 = ViewBag.orderdetails1 = orders1.Where(m => m.OrderId == long.Parse(id)).FirstOrDefault();
+            var userlogdetails = mnguserservice.getuserbyid(Convert.ToInt32(s1.userid));
+            string txtto = userlogdetails.email;
+            string name = userlogdetails.firstname;
+            name = Capitalise(name);
+            string OrderId = Convert.ToString(s1.OrderId);
+            StringBuilder cds = new StringBuilder();
+            cds.Append("<table style='border:1px black solid;'><tbody>");
+            cds.Append("<tr><td>Order Id</td><td>Order Date</td><td> Event Type </td><td> Quantity</td><td>Perunit Price</td><td>Total Price</td></tr>");
+            cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + s1.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + s1.BookedDate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + s1.EventType + " </td><td style = 'width: 50px;border: 1px black solid;'> " + s1.Quantity + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + s1.PerunitPrice + " </td><td style = 'width: 50px;border: 1px black solid;'> " + s1.TotalPrice + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+            cds.Append("</tbody></table>");
+            string url = Request.Url.Scheme + "://" + Request.Url.Authority;
+            //FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
+            //string readFile = File.OpenText().ReadToEnd();
+            //readFile = readFile.Replace("[ActivationLink]", url);
+            //readFile = readFile.Replace("[name]", name);
+            //readFile = readFile.Replace("[orderid]", OrderId);
+            //readFile = readFile.Replace("[table]", cds.ToString());
+            ViewBag.url = url;
+            ViewBag.name = name;
+            ViewBag.OrderId = OrderId;
+            ViewBag.table = cds.ToString();
+            return View();
         }
 
-
-        public JsonResult ParticularQuoteReply(string QuoteID, string id)
+        public ActionResult email(string id)
         {
-            DateTime indianTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
-            var particularquote = quotationListsService.GetAllQuotations().FirstOrDefault(m => m.Id == long.Parse(QuoteID));
-            if (particularquote.FirstTime == null && particularquote.FirstTimeQuoteDate == null)
-            {
-                particularquote.FirstTime = id;
-                particularquote.FirstTimeQuoteDate = indianTime.ToString("dd-MM-yyyy hh:mm:ss");
-            }
-            //else if (particularquote.FirstTime != null && particularquote.FirstTimeQuoteDate != null && particularquote.SecondTime == null && particularquote.SecondTimeQuoteDate == null)
-            //{
-            //    particularquote.SecondTime = id;
-            //    particularquote.SecondTimeQuoteDate = indianTime.ToString("dd-MM-yyyy");
-            //}
-            //else if (particularquote.FirstTime != null && particularquote.FirstTimeQuoteDate != null && particularquote.SecondTime != null && particularquote.SecondTimeQuoteDate != null && particularquote.ThirdTime == null && particularquote.ThirdTimeQuoteDate == null)
-            //{
-            //    particularquote.ThirdTime = id;
-            //    particularquote.ThirdTimeQuoteDate = indianTime.ToString("dd-MM-yyyy");
-            //}
-
-            FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/QuoteReply.html"));
+            var orders = orderService.userOrderList().Where(m => m.ordertype == "Quote").ToList();
+            var orders1 = orderService.userOrderList1().Where(m => m.ordertype == "Quote").ToList();
+            var s1 = ViewBag.orderdetails = orders.Where(m => m.OrderId == long.Parse(id)).FirstOrDefault();
+            var s2 = ViewBag.orderdetails1 = orders1.Where(m => m.OrderId == long.Parse(id)).FirstOrDefault();
+            var userlogdetails = mnguserservice.getuserbyid(Convert.ToInt32(s1.userid));
+            string txtto = userlogdetails.email;
+            string name = userlogdetails.firstname;
+            name = Capitalise(name);
+            string OrderId = Convert.ToString(s1.OrderId);
+            StringBuilder cds = new StringBuilder();
+            cds.Append("<table style='border:1px black solid;'><tbody>");
+            cds.Append("<tr><td>Order Id</td><td>Order Date</td><td> Event Type </td><td> Quantity</td><td>Perunit Price</td><td>Total Price</td></tr>");
+            cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + s1.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + s1.BookedDate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + s1.EventType + " </td><td style = 'width: 50px;border: 1px black solid;'> " + s1.Quantity + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + s1.PerunitPrice + " </td><td style = 'width: 50px;border: 1px black solid;'> " + s1.TotalPrice + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+            cds.Append("</tbody></table>");
+            string url = Request.Url.Scheme + "://" + Request.Url.Authority;
+            FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
             string readFile = File.OpenText().ReadToEnd();
-            readFile = readFile.Replace("[name]", particularquote.Name);
-            readFile = readFile.Replace("[Email]", particularquote.EmailId);
-            string txtto = particularquote.EmailId;
-            string txtmessage = readFile;
-            string subj = "Response to your Quote #" + particularquote.Id + "";
-            int count = quotationListsService.UpdateQuote(particularquote);
-            EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-            emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
-            return Json("sucess");
-        }
-
-        public JsonResult SaveInstallments(QuoteResponse quoteResponse)
-        {
-            DateTime indianTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
-            quoteResponse.UpdatedDate = indianTime;
-            quoteResponse.Status = "Active";
-            if (quoteResponse.SecondInstallment == ",")
-            {
-                quoteResponse.SecondInstallment = "0,0";
-            }
-            if (quoteResponse.ThirdInstallment == ",")
-            {
-                quoteResponse.ThirdInstallment = "0,0";
-            }
-            if (quoteResponse.FourthInstallment == ",")
-            {
-                quoteResponse.FourthInstallment = "0,0";
-            }
-            if (quoteResponse.FifthInstallment == ",")
-            {
-                quoteResponse.FifthInstallment = "0,0";
-            }
-            int count = quotationListsService.AddInstallments(quoteResponse);
-            if (count > 0)
-                return Json("Success");
-            else
-                return Json("Failed");
+            readFile = readFile.Replace("[ActivationLink]", url);
+            readFile = readFile.Replace("[name]", name);
+            readFile = readFile.Replace("[orderid]", OrderId);
+            readFile = readFile.Replace("[table]", cds.ToString());
+            string txtmessage1 = readFile;
+            string subj1 = "order has been placed";
+          //  emailSendingUtility.Email_maaaahwanam(txtto1, txtmessage1, subj1);
+            return View();
         }
     }
 }
