@@ -20,6 +20,7 @@ namespace MaaAahwanam.Web.Controllers
 
         newmanageuser newmanageuse = new newmanageuser();
         Vendormaster vendorMaster = new Vendormaster();
+        PartnerService partnerservice = new PartnerService();
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         VendorDashBoardService mnguserservice = new VendorDashBoardService();
 
@@ -888,64 +889,72 @@ namespace MaaAahwanam.Web.Controllers
         {
             if (select != null && select != "null" && select != "")
             {
-                List<string> sdate = new List<string>();
-                List<string> stimeslot = new List<string>();
-                List<SPGETpartpkg_Result> package = new List<SPGETpartpkg_Result>();
-               
-                var select1 = select.Split(',');
-
-                ViewBag.loc = select1[0];
-              var guest =  ViewBag.guests = select1[1];
-                ViewBag.eventtype = select1[2];
-                var pkgs = packageid.Split(',');
-                var date1 = date.Trim(',').Split(',');
-                var timeslot1 = timeslot.Split(',');
-                for (int i = 0; i < pkgs.Count(); i++)
+                if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                 {
-                    
-                    var data = newmanageuse.getpartpkgs(pkgs[i]).FirstOrDefault();
-                    int price;
-                    if (data.PackagePrice == null)
-                    { price = Convert.ToInt16(data.price1); }
-                    else { price = Convert.ToInt16(data.PackagePrice); }
-                    tprice = tprice + price;
-                    for (int j = 0; j < date1.Count(); j++)
+                    var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                    string uid = user.UserId.ToString();
+                    string vemail = newmanageuse.Getusername(long.Parse(uid));
+                    vendorMaster = newmanageuse.GetVendorByEmail(vemail);
+                   var VendorId = vendorMaster.Id.ToString();
+
+                    List<string> sdate = new List<string>();
+                    List<string> stimeslot = new List<string>();
+                    List<SPGETpartpkg_Result> package = new List<SPGETpartpkg_Result>();
+
+                    var select1 = select.Split(',');
+                    ViewBag.resellername = partnerservice.GetPartners(Convert.ToString(VendorId));
+                    ViewBag.loc = select1[0];
+                    var guest = ViewBag.guests = select1[1];
+                    ViewBag.eventtype = select1[2];
+                    var pkgs = packageid.Split(',');
+                    var date1 = date.Trim(',').Split(',');
+                    var timeslot1 = timeslot.Split(',');
+                    for (int i = 0; i < pkgs.Count(); i++)
                     {
-                        if (date1[j].Split('~')[1] == data.VendorSubId.ToString())
+
+                        var data = newmanageuse.getpartpkgs(pkgs[i]).FirstOrDefault();
+                        int price;
+                        if (data.PackagePrice == null)
+                        { price = Convert.ToInt16(data.price1); }
+                        else { price = Convert.ToInt16(data.PackagePrice); }
+                        tprice = tprice + price;
+                        for (int j = 0; j < date1.Count(); j++)
                         {
-                            data.UpdatedDate = Convert.ToDateTime(date1[j].Split('~')[0]);
-                            data.timeslot = timeslot1[j].Split('~')[0];
+                            if (date1[j].Split('~')[1] == data.VendorSubId.ToString())
+                            {
+                                data.UpdatedDate = Convert.ToDateTime(date1[j].Split('~')[0]);
+                                data.timeslot = timeslot1[j].Split('~')[0];
+                            }
                         }
+                        package.Add(data);
                     }
-                    package.Add(data);
+                    var tot = tprice * Convert.ToInt32(guest);
+                    ViewBag.package = package;
+                    ViewBag.tprice = tot;
+
+                    //DateTime date = Convert.ToDateTime(select1[2]);
+                    //string date1 = date.ToString("dd-MM-yyyy");
+                    // ViewBag.date = date1;
+
+                    // //  var pid = select1[4];
+                    // //    
+                    // //     var vsid = pkgs.VendorSubId;
+                    // //var vid = pkgs.VendorId;
+                    // ViewBag.service = "non";//vendorVenueService.GetVendorVenue(vid, vsid);
+                    // string price = "";
+                    // //if (pkgs.PackagePrice == null)
+                    // //{
+                    // //    price = Convert.ToString(pkgs.price1);
+                    // //}
+                    // //else { price = Convert.ToString(pkgs.PackagePrice); }
+
+                    //// var total = Convert.ToInt64(guests) * Convert.ToInt64(price);
+                    // ViewBag.guest = guests;
+                    // ViewBag.total = "non";// total;
+                    // ViewBag.price = "non"; // price;
+                    // ViewBag.pid = "non";//pid;
+                    // ViewBag.pname = "non";//pkgs.PackageName;
                 }
-                var tot = tprice * Convert.ToInt32(guest);
-                ViewBag.package = package;
-                ViewBag.tprice = tot;
-
-                //DateTime date = Convert.ToDateTime(select1[2]);
-                //string date1 = date.ToString("dd-MM-yyyy");
-                // ViewBag.date = date1;
-
-                // //  var pid = select1[4];
-                // //    
-                // //     var vsid = pkgs.VendorSubId;
-                // //var vid = pkgs.VendorId;
-                // ViewBag.service = "non";//vendorVenueService.GetVendorVenue(vid, vsid);
-                // string price = "";
-                // //if (pkgs.PackagePrice == null)
-                // //{
-                // //    price = Convert.ToString(pkgs.price1);
-                // //}
-                // //else { price = Convert.ToString(pkgs.PackagePrice); }
-
-                //// var total = Convert.ToInt64(guests) * Convert.ToInt64(price);
-                // ViewBag.guest = guests;
-                // ViewBag.total = "non";// total;
-                // ViewBag.price = "non"; // price;
-                // ViewBag.pid = "non";//pid;
-                // ViewBag.pname = "non";//pkgs.PackageName;
-
             }
             return View("orderdetails");
         }
