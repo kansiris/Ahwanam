@@ -346,6 +346,7 @@ $('#booknow').click(function () {
     var guests = vpbook1[1];
     var date = date;
     var timeslot = timeslot;
+    var booktype = $(this).val();
     if (packid == '') {
         var selectedp = window.localStorage.getItem("vpbook");
     }
@@ -400,7 +401,7 @@ $('#booknow').click(function () {
     else if (!lnamepattren.test(lastname)) { alert("Enter only alphabates"); $("#lastname").focus(); }
     else {
         $.ajax({
-            url: '/ManageUser/booknow?uid=' + userid + '&&loc=' + loc + '&&eventtype=' + eventtype + '&&guest=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&timeslot=' + timeslot,
+            url: '/ManageUser/booknow?uid=' + userid + '&&loc=' + loc + '&&eventtype=' + eventtype + '&&guest=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&timeslot=' + timeslot + '&&booktype=' + booktype,
             type: 'POST',
             contentType: 'application/json',
             success: function (result) {

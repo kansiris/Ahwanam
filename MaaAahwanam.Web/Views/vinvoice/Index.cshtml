@@ -131,7 +131,7 @@
                                                     <td class="no-line"></td>
                                                     <td class="no-line"></td>
                                                     <td class="no-line text-center"><strong>GST</strong></td>
-                                                    <td class="no-line text-right">Rs 0</td>
+                                                    <td class="no-line text-right">18%</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="no-line"></td>
@@ -809,10 +809,12 @@
     $("#SavePayment").click(function () {
         //var paymenttype = $('#Payment_Type').val();
         //var orderid =@Request.QueryString["Oid"];
+        var OrderDetailId = $("#OrderDetailId").val();
+        var Received_Amount = $("#Received_Amount").val();
         var payments = {
             OrderId: $("#OrderId").val(),
             User_Id: $("#User_Id").val(),
-            OrderDetailId: $("#OrderDetailId").val(),
+          
             Payment_Type: $("input[name='Payment_Type']:checked").val(),
             PaymentBy:$('#PaymentBy').val(),
             Cash_Date: $("#Cash_Date").val(),
@@ -830,7 +832,7 @@
             Bank_Transfer_Branchname: $("#Bank_Transfer_Branchname").val(),
             Wallet_Date: $("#Wallet_Date").val(),
             Wallet_Number: $("#Wallet_Number").val(),
-            Received_Amount: $("#Received_Amount").val(),
+           
             Current_Balance: $('#Current_Balance').val(),
             Opening_Balance: $('#Opening_Balance').val(),
             Remarks: $("#Remarks").val()
@@ -839,7 +841,7 @@
             url: '/vinvoice/Index',
             type: 'Post',
             contentType: 'application/json',
-            data: JSON.stringify({ payments: payments }),
+            data: JSON.stringify({ payments: payments, OrderDetailId: OrderDetailId, Received_Amount: Received_Amount }),
             success: function (data) {
                 alert(data);
                 location.reload();
