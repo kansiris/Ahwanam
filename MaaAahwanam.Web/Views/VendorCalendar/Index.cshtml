@@ -17,6 +17,54 @@
     <link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
     @*<link href="~/newdesign/css/jquery.datetimepicker.css" rel="stylesheet" />*@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <style>
+        body {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 14px;
+            font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+        }
+
+        #wrap {
+            width: 1100px;
+            margin: 0 auto;
+        }
+
+        #external-events {
+            float: left;
+            width: 150px;
+            padding: 0 10px;
+            border: 1px solid #ccc;
+            background: #eee;
+        }
+
+            #external-events h4 {
+                font-size: 16px;
+                margin-top: 0;
+                padding-top: 1em;
+            }
+
+            #external-events .fc-event {
+                margin: 10px 0;
+                cursor: pointer;
+            }
+
+            #external-events p {
+                margin: 1.5em 0;
+                font-size: 11px;
+                color: #666;
+            }
+
+                #external-events p input {
+                    margin: 0;
+                    vertical-align: middle;
+                }
+
+        #calendar {
+            float: right;
+            width: 900px;
+        }
+    </style>
 </head>
 @using MaaAahwanam.Web.Custom
 @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -26,10 +74,13 @@
         <input type="hidden" id="vsid" value="@ViewBag.vid" />
         <div class="container">
             <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 logo">
-                    @*<a href="/Home"><img src="~/newdesignstyles/img/logo.png" alt="Logo" width="70" height="60"></a>*@
+                <div class="col-md-4">
+                    <div><a href="/vdb?c=first&&vid=@ViewBag.vid" class="btn btn-animate btn-primary" style="margin-bottom:20px">Go Back</a></div>
                 </div>
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 top-right-menu">
+                <div class="col-md-4">
+                    <div><button id="refresh" class="btn btn-success">Refresh Calendar</button></div>
+                </div>
+                <div class="col-md-4 top-right-menu">
                     <ul class="dropdown" style="display:block;top:0;">
                         <li onclick="window.location.href = '/Home/SignOut';"><i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>Sign out</li>
                     </ul>
@@ -38,19 +89,22 @@
         </div>
         <div class="clearfix margin-top-30"></div>
         <div class="container body-content">
-            @*Load Sub Categories*@
-            @*<div class="col-xs-12 col-sm-12 col-md-12">
-                    <label class="col-xs-12 col-sm-6 col-md-6">Select Sub category</label>
-                    @Html.DropDownList("vendorsubcatids", ViewBag.vendorsubcatids as SelectList, "Select Sub category", new { @class = "form-control",@style="width:50%" })
-                </div>*@
-
-            <div>
-                <div><a href="/vdb?c=first&&vid=@ViewBag.vid" class="btn btn-animate btn-primary" style="margin-bottom:20px">Go Back</a></div>
-                <div><button style="margin-top: -96px;margin-left: 100px;" id="refresh" class="btn btn-success">Refresh Calendar</button></div>
+            <div class="row">
+                <div class="col-md-2">
+                    <div id="external-events">
+                        <div class="fc-event ui-draggable ui-draggable-handle">Peak Days</div>
+                        <div class="fc-event ui-draggable ui-draggable-handle">Normal Days</div>
+                        <div class="fc-event ui-draggable ui-draggable-handle">Choice Days</div>
+                        <div class="fc-event ui-draggable ui-draggable-handle">Holidays</div>
+                        <div class="fc-event ui-draggable ui-draggable-handle" style="background-color:red">Morning Availability</div>
+                        <div class="fc-event ui-draggable ui-draggable-handle" style="background-color:green">Evening Availability</div>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    @*Load Calendar*@
+                    <div id='calendar'></div>
+                </div>
             </div>
-
-            @*Load Calendar*@
-            <div id='calendar'></div>
 
             @*Details Display Modal*@
             <div id="myModal" class="modal fade" role="dialog">
@@ -202,6 +256,32 @@
                 if (selected == 'Packages') $('#pkgdays').css('display', 'block'); else $('#pkgdays').css('display', 'none');
             });
         </script>
+        <script>
+
+            $(document).ready(function() {
+
+
+                /* initialize the external events
+                -----------------------------------------------------------------*/
+
+                $('#external-events .fc-event').each(function() {
+
+                    // store data so the calendar knows to render an event upon drop
+                    $(this).data('event', {
+                        title: $.trim($(this).text()), // use the element's text as the event title
+                        stick: true // maintain when user navigates (see docs on the renderEvent method)
+                    });
+
+                    // make the event draggable using jQuery UI
+                    $(this).draggable({
+                        zIndex: 999,
+                        revert: true,      // will cause the event to go back to its
+                        revertDuration: 0  //  original position after the drag
+                    });
+
+                });
+            });
+</script>
     </body>
 }
 else
