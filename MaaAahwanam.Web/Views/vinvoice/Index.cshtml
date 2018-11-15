@@ -417,7 +417,7 @@
                                             <div class="row">
                                                 <div class="col-md-5" style="padding: 14px;">Total Amount</div>
                                                 <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                                    <input type="hidden" class="form-control" id="Opening_Balance1" name="Opening_Balance1" value="@ViewBag.total" style="padding: 5px;" readonly>
+                                                    @*<input type="hidden" class="form-control" id="Opening_Balance1" name="Opening_Balance1" value="@ViewBag.total" style="padding: 5px;" readonly>*@
                                                     <div class="form-group">
                                                         <input type="text" class="form-control" id="Opening_Balance" name="Opening_Balance" value="@ViewBag.total" style="padding: 5px;" readonly>
                                                     </div>
@@ -441,7 +441,6 @@
                                                           <option value="select">Select Discount Type</option>
                                                           <option value="Discpercentage">Percentage %</option>
                                                           <option value="flaterate">Flat Rate ₹</option>
-                                                          <option value="Discountrupees">Rupees ₹</option>
                                                       </select>
                                                     </div>
                                                 </div>
@@ -459,6 +458,15 @@
                                                 <div class="col-md-7" style="padding:1px;margin-left: -19px;">
                                                     <div class="form-group">
                                                        <label id="lblgst" name="lblgst" value="18%" style="padding-left: 70px;">18%</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-5" style="padding: 14px;">Final Amount</div>
+                                                <div class="col-md-7" style="padding:1px;margin-left: -19px;">
+                                                    <input type="hidden" class="form-control" id="finalamount1" name="finalamount1" value="@ViewBag.total" style="padding: 5px;">
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" id="finalamount" name="finalamount" value="@ViewBag.total" style="padding: 5px;">
                                                     </div>
                                                 </div>
                                             </div>
@@ -809,6 +817,7 @@
                     var nt1 = nt.replace('Rs ', '');
                     var tnt = nt1.replace(/,/g, '');
                     finalpaying += parseFloat(tnt);
+                    $('#Opening_Balance').val(finalpaying);
                 });
                 $(this).find('.sbaldue').each(function () {
                     var cntbal2 = $(this).text();
@@ -817,8 +826,7 @@
                     pymnt += parseFloat(tbaldue2);
                     $('#Current_Balance').val(pymnt);
                     $('#Current_Balance1').val(pymnt);
-                });
-                $('#Opening_Balance').val(finalpaying);
+                });           
             }
         });
     });
@@ -846,37 +854,28 @@
         discounttype = $(this).children("option:selected").text();  
     });
     $('#Discount').on('input', function () {
-        var ttamnt = $('#Opening_Balance1').val();
-        var discamnt = $('#Discount').val();       
-        if(discounttype =='Percentage %')
-        {
-            if (discamnt > 100)
-            {
+        var ttamnt = $('#finalamount1').val();
+        var discamnt = $('#Discount').val();
+        if (discamnt == null || discamnt == "") {
+            alert("Enter Some Amount");
+            $('#finalamount').val(ttamnt);
+        }
+    else{
+        if (discounttype == 'Percentage %') {
+            if (discamnt > 100) {
                 alert('Percentage should not be greater than 100');
             }
-            else{
+            else {
                 var discountinpercent = ttamnt - (ttamnt * discamnt / 100);
                 var finalamnt = discountinpercent + (discountinpercent * 18 / 100);
-                $('#Opening_Balance').val(finalamnt);
+                $('#finalamount').val(finalamnt);
             }
         }
-        else if(discounttype =='Flat Rate ₹')
-        {
-            var finalamnt1 = ttamnt + (ttamnt * 18 / 100);
-            $('#Opening_Balance').val(finalamnt1
-                );
-        }
-        else if(discounttype == 'Rupees ₹')
-        {
-            if(discamnt >= ttamnt)
-            {
-                alert('Discount Should not be grater than total amount');
-            }
-            else {
+        else if (discounttype == 'Flat Rate ₹') {
                 var discountrupees = ttamnt - discamnt;
                 var finalamnt2 = discamnt + (discamnt * 18 / 100);
-                $('#Opening_Balance').val(finalamnt2);
-            }
+                $('#finalamount').val(finalamnt2);         
+          }
         }
     });
 
@@ -945,6 +944,7 @@
                     var totamnt = opnamnt.replace('Rs ', '');
                     var tt = totamnt.replace(/,/g, '');
                     sum += parseFloat(tt);
+                    $('#Opening_Balance').attr("value", sum);
                 });
                 $(this).find('.sbaldue').each(function () {
                     var cntbal = $(this).text();
@@ -954,7 +954,6 @@
                         $('#Current_Balance').val(sum1);
                         $('#Current_Balance1').val(sum1);
                 });              
-                $('#Opening_Balance').attr("value", sum);
                 $('#Paymentmode').css('display', 'block');
             }
             else {
@@ -967,6 +966,7 @@
                     var totamnt = opnamnt.replace('Rs ', '');
                     var tt = totamnt.replace(/,/g, '');
                     sum -= parseFloat(tt);
+                    $('#Opening_Balance').attr("value", sum);
                 });
                 $(this).find('.sbaldue').each(function () {
                     var cntbal = $(this).text();
@@ -975,8 +975,7 @@
                     sum1 -= parseFloat(tbaldue);
                         $('#Current_Balance').val(sum1);
                         $('#Current_Balance1').val(sum1);
-                });
-                $('#Opening_Balance').attr("value", sum);
+                });   
                 $('#Paymentmode').css('display', 'block');
             }
         });
