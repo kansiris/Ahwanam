@@ -164,23 +164,25 @@
                         <div class="room_type first">
 
                             <div class="row">
+
+                                @item.BusinessName -@item.ServicType
                                 <div class="col-md-4">
                                     @if (item.logo != null)
                                     {
-                                        <li>
-                                        <img src="../vendorimages/@item.logo" class="img-fluid" alt=""/>
 
-                                            </li>
+                                        <img src="../vendorimages/@item.logo" class="img-fluid" alt="" style="height: 88px;width: 255px;" />
+
+
                                     }
                                     else
-                                    {<li>
-                                        <img src="~/noimages.png" class="img-fluid" alt="">
-                                    </li>
+                                    {
+                                        <img src="~/noimages.png" class="img-fluid" alt="" style="height: 88px;width: 255px;" />
+
                                     }
                                 </div>
-                                <div class="col-md-8-1" style="background-color: #fff;">
+                                <div class="col-md-8" style="background-color: #fff;">
                                     <input type="hidden" id="cartid" name="cartid[]" value="@item.OrderId" />
-                                    <h3 style="text-transform:uppercase;font-weight:700">@item.BusinessName&emsp;<a class="ui violet label" style="padding: 2px 7px 2px 7px;font-size: 13px;font-weight: 100;">@item.ServicType</a><span><br></span></h3>
+                                    @item.PackageName
 
                                     <p style="margin-top:-10px">@item.PerunitPrice for @item.Quantity guests</p>
                                     <text id="itemsselected" style="display:none"></text>
@@ -188,9 +190,9 @@
 
                                         <tr>
                                             <td style="width:30%;border:none;padding-left: 1px;">
-                                                <text style="font-size:16px;font-weight:700">
-                                                    Event Date:@item.OrderDate.ToString("dd-MM-yyyy")
-                                                    Book date: @item.BookedDate.ToString("dd-MM-yyyy")
+                                                <text style="font-size:16px;font-weight:100">
+                                                    <p> Event Date:@item.OrderDate.ToString("dd-MM-yyyy")</p>
+                                                    <p>Book date: @item.BookedDate.ToString("dd-MM-yyyy")</p>
 
                                                 </text>
                                             </td>
@@ -268,7 +270,7 @@
     <div>
         <button id="email" name="email" class="btn">Add Packages</button>
 
-        <button id="email" name="email" class="btn">Email</button>
+        <button id="email" name="email"onclick="email()" class="btn">Email</button>
         <button id="view" onclick="view()" name="view" class="btn">View</button>
 
     </div>
@@ -295,6 +297,13 @@
             var date = $('#dp1').val();
             var id = '@Request.QueryString["id"]';
             window.location.href = '/Admin/quotationlist/FilteredVendors1?id=' + id;
+           // $('#sortvendors').empty().load(url);
+        }
+        function email() {
+            var type = $('#selectedservice').val();
+            var date = $('#dp1').val();
+            var id = '@Request.QueryString["id"]';
+            window.location.href = '/Admin/quotationlist/email?id=' + id;
            // $('#sortvendors').empty().load(url);
         }
     </script>

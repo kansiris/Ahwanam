@@ -18,8 +18,8 @@
                             <tr>
                                 <th>Quotation ID</th>
                                 <th>Event Type</th>
-                                <th>Event Date</th>
-                                <th>Package Name</th>
+                                <th>Order Date</th>
+                                @*<th>Package Name</th>*@
                                 <th>Total Amount</th>
                                 <th>Balance Due</th>
                                 <th>Status</th>
@@ -32,9 +32,9 @@
                                 <tr class="even gradeX">
                                     <td> @orders.OrderId </td>
                                     <td> @orders.EventType </td>
-                                    <td> @orders.BookedDate.ToString("dd-MM-yyyy") </td>
-                                    <td> @orders.PackageName </td>
-                                    <td>  @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@orders.PerunitPrice * @orders.Quantity)).Replace(".00", "") </td>
+                                    <td> @orders.OrderDate.ToString("dd-MM-yyyy") </td>
+                                    @*<td> @orders.PackageName </td>*@
+                                    <td>  @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@orders.TotalPrice)).Replace(".00", "") </td>
                                     <td> @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@orders.Due)).Replace(".00", "") </td>
                                     <td> @orders.orderstatus </td>
                                     <td>
@@ -43,7 +43,7 @@
                                     </td>
                                 </tr>
                             }
-                            @foreach (var orders1 in ViewBag.order1)
+                            @*@foreach (var orders1 in ViewBag.order1)
                             {
                                 <tr class="even gradeX">
                                     <td> @orders1.OrderId </td>
@@ -55,10 +55,10 @@
                                     <td> @orders1.orderstatus </td>
                                     <td>
                                         <a href="/Admin/quotationlist/QuoteReply?id=@orders1.OrderId" class="btn btn-default btn-xs"> Reply Quote </a>
-                                        @*<a href="#" class="btn btn-default btn-xs">Delete</a>*@
+                                        @*<a href="#" class="btn btn-default btn-xs">Delete</a>
                                     </td>
                                 </tr>
-                            }
+                            }*@
                         </tbody>
                     </table>
                 </div>
