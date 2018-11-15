@@ -33,8 +33,7 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.s = S;
                 
                  ViewBag.SupplierServicesLst = mngvendorservice.getsupplierservices(VendorId); 
-                
-               
+                               
                 
             }
             return View();
