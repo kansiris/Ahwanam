@@ -432,7 +432,8 @@
                 });
             }
         }
-        function booknow() {
+        function booknow(val) {
+            var booktype = val;
             var guests = window.localStorage.getItem("guests");
             var location = window.localStorage.getItem("location");
             var eventtype = window.localStorage.getItem("eventtype");
@@ -448,23 +449,23 @@
                 $.ajax({
                     url: '/cart/booknow',//?CustomerPhoneNumber=' + CustomerPhoneNumber + '&CustomerName=' + CustomerName + '&Password=' + Password + '&Address=' + Address + '&Email=' + Email,
                     type: 'POST',
-                    data: JSON.stringify({ selcartid: selcartid, searchedcontent: searchedcontent, total: total }),
+                    data: JSON.stringify({ selcartid: selcartid, searchedcontent: searchedcontent, total: total, booktype: booktype }),
                     //data: JSON.stringify({ CustomerPhoneNumber, CustomerName, Password, Address, Email }),
                     dataType: 'json',
                     contentType: 'application/json',
                     success: function (data) {
-                        if (data == "success" || data == "unique" || data == "Success") {
+                       // if (data == "success" || data == "unique" || data == "Success") {
                             //alertify.alert("Order is sucessfully placed");
-                            alert("Order Placed");
+                        alert(data);
                             //alertify.confirm('Order Placed', 'Order is sucessfully placed', function () { window.location = "/home/index"; });
                             window.location = "/home/index";
-                        }
-                        else if (data == "Failed") {
-                            alertify.alert("Something Went Wrong!!! Try Again Later");
-                        }
-                        else {
-                            alertify.alertmsg("error");
-                        }
+                        //}
+                        //else if (data == "Failed") {
+                        //    alertify.alert("Something Went Wrong!!! Try Again Later");
+                        //}
+                        //else {
+                        //    alertify.alertmsg("error");
+                        //}
                     }
                 });
             }
