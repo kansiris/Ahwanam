@@ -215,6 +215,7 @@
     }
 </style>
 
+
 @*<main>*@
 <div class="bg_color_1">
     <div class="container margin_60_35" style="padding-top:0px;padding-bottom:0px;margin-left:0">
@@ -896,14 +897,37 @@
 </div>
 @*</main>*@
 
-<div id="modal-example1" uk-modal>
+@*<div id="pkgselect" uk-modal>
     <div class="uk-modal-dialog">
         <button class="uk-modal-close-default" type="button" uk-close></button>
         <div class="uk-modal-header">
             <h3 class="uk-modal-title" style="font-size:22px"></h3>
         </div>
         <div class="uk-modal-body">
-            <p>Modal Body</p>
+            <div class="mitems"></div>
+        </div>
+    </div>
+</div>*@
+
+<div id="pkgselect" uk-modal>
+    <div class="uk-modal-dialog-large">
+
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+
+        <div class="uk-modal-header">
+           <h2 class="uk-modal-title" style="text-transform:uppercase"></h2>
+        </div>
+
+        <div class="uk-modal-body" style="background-color:white"> @**@
+            <div class="row" uk-overflow-auto>
+                <div class="col-md-9 mitems"></div>
+                <div class="col-md-3">
+                    <strong>Selected Items</strong>
+                    <div class="spkgitems">
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -995,8 +1019,41 @@
     <script>
         $(document).on('click','.choosemenu',function(){
             var pkgid = $(this).parent('div.row').find('.packageid').text();
-            alert(pkgid);
-            UIkit.modal("#modal-example1").show();
+            //alert(pkgid);
+            $.get( "/viewservice/GetPackage?pkgid="+pkgid, function( data ) {
+                $('#pkgselect .uk-modal-title').text(data.PackageName);
+                var div = '<div class="row">'; var count=data.menuitems.split(',').length;
+                var seldiv = '<div style="overflow:scroll;overflow-x:hidden;overflow-y:scroll;min-height: 200px;height:50%">'
+                for (var i = 0; i < count; i++) {
+                    var citem = data.menuitems.split(',')[i];
+                    var course = data.menu.split(',')[i];
+                    var heading = citem.split('(')[0];
+                    var mitems = citem.split('(')[1].split(')')[0];
+                    var menuitems = '<div class="col-md-3">';
+                    menuitems+= '<strong>'+course+'</strong></td></tr>';
+                    for (var j = 0; j < mitems.split('!').length; j++) {
+                        menuitems+= '<div><input class="selitem" type="checkbox" id='+mitems.split('!')[j]+' value='+heading+' /> <label for='+mitems.split('!')[j]+'>'+mitems.split('!')[j]+'</label></div>';
+                    }
+                    div+= menuitems+'</div>';
+                    seldiv+= '<div class="row" style="margin:0" id='+heading+'><strong>'+course+'</strong></div>';
+                }
+                div+='</div>';
+                $('#pkgselect .uk-modal-body div.mitems').html(div);
+                $('#pkgselect .uk-modal-body div.spkgitems').html(seldiv);
+                UIkit.modal("#pkgselect").show();    
+            });
+            
+        });
+
+        $(document).on('change','.selitem',function(){
+            var menu = $(this).val();
+            var selected = $(this).next('label').text();
+            //alert(selected);
+            var course = $(this).parents('.col-md-3').find('strong').text();
+            //alert(course);
+            var seldiv = $('#pkgselect .uk-modal-body div.spkgitems');
+            seldiv.find('div#'+menu+'').append('<br/>'+selected);
+
         });
     </script>
 

@@ -173,10 +173,12 @@ namespace MaaAahwanam.Web.Controllers
             return type;
         }
 
-        //public JsonResult GetPackage(string pkgid)
-        //{
-        //    var pkg = viewservicesss.getvendorpkgs
-        //}
+        public JsonResult GetPackage(string pkgid)
+        {
+            VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
+            var pkg = vendorVenueSignUpService.GetAllPackages().Where(m => m.PackageID == long.Parse(pkgid)).FirstOrDefault();
+            return Json(pkg,JsonRequestBehavior.AllowGet);
+        }
 
         public JsonResult Availabledates(string pid, string type)
         {

@@ -29,6 +29,7 @@ namespace MaaAahwanam.Web.Controllers
         decimal amount;
         decimal tsprice;
         decimal balndue;
+        double gtotal;
         // GET: vinvoice
         public ActionResult Index(string oid)
         {
