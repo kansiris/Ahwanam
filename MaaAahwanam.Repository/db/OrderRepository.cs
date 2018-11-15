@@ -16,10 +16,21 @@ namespace MaaAahwanam.Repository.db
        {
             return maaAahwanamEntities.sp_ordersdisplay().ToList();
        }
+        public List<Order> getorder()
+        {
+            //Order list = new Order();
+
+            return _dbContext.Order.ToList();
+           
+        }
 
         public List<sp_userorddisplay_Result> userOrderList()
         {
             return maaAahwanamEntities.sp_userorddisplay().ToList();
+        }
+        public List<sp_userordlist_Result> allorderslist()
+        {
+            return maaAahwanamEntities.sp_userordlist().ToList();
         }
         public List<sp_vendoruserorddisplay_Result> userOrderList1()
         {

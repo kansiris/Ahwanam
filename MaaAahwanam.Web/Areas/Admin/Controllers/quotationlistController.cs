@@ -24,10 +24,12 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         // GET: Admin/quotationlist
         public ActionResult Index()
         {
-            var orders = orderService.userOrderList().Where(m => m.ordertype == "Quote").ToList();
-            var orders1 = orderService.userOrderList1().Where(m => m.ordertype == "Quote").ToList();
-            ViewBag.order = orders.OrderByDescending(m => m.OrderId);
-            ViewBag.order1 = orders1.OrderByDescending(m => m.OrderId);
+            var orderss = orderService.allorderslist().Where(m => m.ordertype == "Quote").ToList();
+           // var orders = orderService.userOrderList().Where(m => m.ordertype == "Quote").ToList();
+            //orders.RemoveRange(orders.Where(c => c.OrderId == OrderId));
+           // var orders1 = orderService.userOrderList1().Where(m => m.ordertype == "Quote").ToList();
+            ViewBag.order = orderss.OrderByDescending(m => m.OrderId);
+           // ViewBag.order1 = orders1.OrderByDescending(m => m.OrderId);
 
 
             return View();
@@ -87,8 +89,13 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         {
             var orders = orderService.userOrderList().Where(m => m.ordertype == "Quote").ToList();
             var orders1 = orderService.userOrderList1().Where(m => m.ordertype == "Quote").ToList();
+            var s3 = new List<sp_vendoruserorddisplay_Result>();
+            var s12 = ViewBag.orderdetails = orders.Where(m => m.OrderId == long.Parse(id));
             var s1 = ViewBag.orderdetails = orders.Where(m => m.OrderId == long.Parse(id)).FirstOrDefault();
+            var s22 = ViewBag.orderdetails1 = orders1.Where(m => m.OrderId == long.Parse(id));
             var s2 = ViewBag.orderdetails1 = orders1.Where(m => m.OrderId == long.Parse(id)).FirstOrDefault();
+
+            if(s1 == null) { s3 = s22; } else { s3 = s12; }
             var userlogdetails = mnguserservice.getuserbyid(Convert.ToInt32(s1.userid));
             string txtto = userlogdetails.email;
             string name = userlogdetails.firstname;
@@ -97,7 +104,10 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             StringBuilder cds = new StringBuilder();
             cds.Append("<table style='border:1px black solid;'><tbody>");
             cds.Append("<tr><td>Order Id</td><td>Order Date</td><td> Event Type </td><td> Quantity</td><td>Perunit Price</td><td>Total Price</td></tr>");
-            cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + s1.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + s1.BookedDate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + s1.EventType + " </td><td style = 'width: 50px;border: 1px black solid;'> " + s1.Quantity + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + s1.PerunitPrice + " </td><td style = 'width: 50px;border: 1px black solid;'> " + s1.TotalPrice + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+            foreach (var item in s3)
+            {
+                cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + item.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + item.BookedDate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + item.EventType + " </td><td style = 'width: 50px;border: 1px black solid;'> " + item.Quantity + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + item.PerunitPrice + " </td><td style = 'width: 50px;border: 1px black solid;'> " + item.TotalPrice + " </td></tr>");
+            }//<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
             cds.Append("</tbody></table>");
             string url = Request.Url.Scheme + "://" + Request.Url.Authority;
             FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
@@ -108,7 +118,9 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             readFile = readFile.Replace("[table]", cds.ToString());
             string txtmessage1 = readFile;
             string subj1 = "order has been placed";
-          //  emailSendingUtility.Email_maaaahwanam(txtto1, txtmessage1, subj1);
+                        string txtto1 = s1.username;
+            EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+            emailSendingUtility.Email_maaaahwanam(txtto1, txtmessage1, subj1);
             return View();
         }
     }
