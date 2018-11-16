@@ -439,7 +439,7 @@
                                                 <div class="col-md-5" style="padding: 14px;">Discount Type</div>
                                                 <div class="col-md-7" style="padding:1px;margin-left: -19px;">
                                                     <div class="form-group">
-                                                      <select name="DiscountType" id="DiscountType"class="selectdiscount" style="padding: 5px; width:210px;font-size:12px;">
+                                                      <select name="DiscountType" id="DiscountType" class="selectdiscount" style="padding: 5px; width:210px;font-size:12px;">
                                                           <option value="select">Select Discount Type</option>
                                                           <option value="Discpercentage">Percentage %</option>
                                                           <option value="flaterate">Flat Rate ₹</option>
@@ -451,7 +451,7 @@
                                                 <div class="col-md-5" style="padding: 14px;">Discount</div>
                                                 <div class="col-md-7" style="padding:1px;margin-left: -19px;">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="Discount" name="Discount" value="0" style="padding:5px;">
+                                                        <input type="text" class="form-control" id="Discount" name="Discount" value="" style="padding:5px;">
                                                     </div>
                                                 </div>
                                             </div>
@@ -466,9 +466,9 @@
                                             <div class="row">
                                                 <div class="col-md-5" style="padding: 14px;">Final Amount</div>
                                                 <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                                    <input type="hidden" class="form-control" id="FinalAmount1" name="FinalAmount1" value="@ViewBag.balance" style="padding: 5px;">
+                                                    <input type="hidden" class="form-control" id="FinalAmount1" name="FinalAmount1" value="@ViewBag.Gstplustotal" style="padding: 5px;">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="FinalAmount" name="FinalAmount" value="" style="padding: 5px;">
+                                                        <input type="text" class="form-control" id="FinalAmount" name="FinalAmount" value="@ViewBag.Gstplustotal" style="padding: 5px;">
                                                     </div>
                                                 </div>
                                             </div>
@@ -499,7 +499,7 @@
                         </div>
                     </div>
                     <div align="right">
-                        <a href="/VDashboard?c=orders" class="btn btn-danger">Go Back</a>
+                        <a href="/vdb?c=orders" class="btn btn-danger">Go Back</a>
                         @*<button type="button" class="btn btn-primary"><i class="icon-download"></i>Save</button>*@
                         <button type="button" onclick="email(@ViewBag.orderid)" class="btn btn-primary"><i class="icon-direction-1"></i>Email</button>
                         @*<button type="button" class="btn btn-primary" onclick="window.location.href='/Payments?Oid=' + @ViewBag.orderid">Receive Payment Now</button>*@
@@ -851,32 +851,34 @@
             $('#Current_Balance').val(result);
         }
     });
- 
-        $('#Discount').on('input', function () {
-              var ttamnt = $('#FinalAmount1').val();
-              BalAmount = $('#Current_Balance').val();
-              var discamnt = $('#Discount').val();
-              if (discamnt == null || discamnt == "") {
-                  alert("Enter Some Amount");
-                  $('#FinalAmount').val(BalAmount);
-              }
-              else {
-                  if (discounttype == 'Percentage %') {
+    var discounttype = '';
+    $('#DiscountType').change(function () {
+        discounttype = $('#DiscountType option:selected').text();
+    });
+    
+    $('#Discount').on('input', function () {        
+        if (discounttype == 'Percentage %') {
+            var ttamnt = $('#Opening_Balance').val();
+            var discamnt = $('#Discount').val();
                       if (discamnt > 100) {
                           alert('Percentage should not be greater than 100');
                       }
                       else {
-                          var discountinpercent = ttamnt - (ttamnt * discamnt / 100);
-                          var finalamnt = discountinpercent + (discountinpercent * 18 / 100);
+                         var discountinpercent = ttamnt - (ttamnt * discamnt / 100);
+                          finalamnt = discountinpercent + (discountinpercent * 18 / 100);
                           $('#FinalAmount').val(finalamnt);
+                          $('#FinalAmount1').val(finalamnt);
                       }
-                  }
-                  else if (discounttype == 'Flat Rate ₹') {
-                      var discountrupees = ttamnt - discamnt;
-                      var finalamnt2 = discamnt + (discamnt * 18 / 100);
-                      $('#FinalAmount').val(finalamnt2);
-                  }
+              }   
+        else if (discounttype == 'Flat Rate ₹') {
+            var ttamnt1 = $('#Opening_Balance').val();
+            var discamnt1 = $('#Discount').val();
+                 var discountrupees = ttamnt1 - discamnt1;
+                  finalamnt1 = discountrupees + (discountrupees * 18 / 100);
+                      $('#FinalAmount1').val(finalamnt1);
+                      $('#FinalAmount').val(finalamnt1);
               }
+             
         });
 
    
@@ -923,9 +925,6 @@
             success: function (data) {
                 alert(data);
                 location.reload();
-
-                //window.location.href = "/VDashboard?c=orders";
-                // window.location.href = "@Url.Action("Index", "Payments")";
             },
             error: function (data) {
                 alert("failed");
@@ -937,6 +936,7 @@
     $(document).ready(function () {
         var sum = 0
         var sum1 = 0
+        var gstsum =0
         $("#orderdetails tr").click(function () {
             if ($(this).find('td:eq(0)').find('input.chcktblservice').is(':checked')) {
                 var rid;
@@ -958,8 +958,32 @@
                     sum1 += parseFloat(tbaldue);
                         $('#Current_Balance').val(sum1);
                         $('#Current_Balance1').val(sum1);
-                });              
+                        var bl = $('#Current_Balance').val();
+                        $('#FinalAmount1').val(bl);
+                        $('#FinalAmount').val(bl);
+                });
                 $('#Paymentmode').css('display', 'block');
+                var ttotal;
+                var initialbal;
+                $(this).find('.tsamnt').each(function () {
+                    var opnamnt = $(this).text();
+                    var totamnt = opnamnt.replace('Rs ', '');
+                    ttotal = totamnt.replace(/,/g, '');
+                })
+                    $(this).find('.sbaldue').each(function () {
+                    var cntbal = $(this).text();
+                    var baldue = cntbal.replace('Rs ', '');
+                    initialbal = baldue.replace(/,/g, '');
+                    })
+                    if (ttotal == initialbal || ttotal != 0 && Intlbal != 0)
+                    {
+                        var gstplusttamnt = parseFloat(initialbal);
+                        var gstplusfinal = gstplusttamnt + (gstplusttamnt * 18 / 100);
+                        gstsum += gstplusfinal
+                        alert(gstsum);
+                        $('#FinalAmount1').val(gstsum);
+                        $('#FinalAmount').val(gstsum);
+                    }
             }
             else {
                 var oid = $("#OrderDetailId").val();
@@ -980,7 +1004,10 @@
                     sum1 -= parseFloat(tbaldue);
                         $('#Current_Balance').val(sum1);
                         $('#Current_Balance1').val(sum1);
-                });   
+                        var bl = $('#Current_Balance').val();
+                        $('#FinalAmount1').val(bl);
+                        $('#FinalAmount').val(bl);
+                });
                 $('#Paymentmode').css('display', 'block');
             }
         });
