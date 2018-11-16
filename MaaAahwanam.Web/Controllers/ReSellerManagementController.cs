@@ -86,8 +86,17 @@ namespace MaaAahwanam.Web.Controllers
 
             var emailid1 = partner.emailid;
             var getpartner1 = partnerservice.getPartner(emailid1);
-             if (command == "Update") { partner = partnerservice.UpdatePartner(partner, partid); }
-            else if (command == "Update1") { partner = partnerservice.UpdatePartner(partner, partid); }
+             if (command == "Update") {
+                partner.UpdatedDate = DateTime.Now.Date;
+                partner.ExpiryDate = DateTime.Now.Date;
+
+                partner = partnerservice.UpdatePartner(partner, partid); }
+            else if (command == "Update1") {
+
+                partner.UpdatedDate = DateTime.Now.Date;
+                partner.ExpiryDate = DateTime.Now.Date;
+
+                partner = partnerservice.UpdatePartner(partner, partid); }
             else if (command == "save")
             {
                 if (getpartner1 == null)
