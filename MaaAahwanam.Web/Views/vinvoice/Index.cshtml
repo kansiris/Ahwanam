@@ -100,7 +100,7 @@
                                                     <td class="text-center"><strong>Quantity</strong></td>                                                   
                                                     <td class="text-right"><strong>Due Amount</strong></td>
                                                     <td class="text-right"><strong>Total Amount</strong></td>
-                                                    <td class="text-right"><strong>Grand Total(Total Amount + GST)</strong></td>
+                                                    <td class="text-right"><strong>Grand Total (Total Amount + GST)</strong></td>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -108,7 +108,7 @@
                                                 {
                                                     <tr>
                                                         <td>@item.EventType</td>
-                                                        <td class="text-center">Rs @item.PerunitPrice</td>
+                                                        <td class="text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.PerunitPrice)).Replace(".00", "")</td>
                                                         <td class="text-center">@item.Quantity</td>                                                      
                                                         <td class="text-right">
                                                             Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.Due)).Replace(".00", "")
@@ -166,7 +166,8 @@
                                                                 <td class="text-center"><strong>Quantity</strong></td>                                                            
                                                                 <td class="text-center"><strong>Due Amount</strong></td>
                                                                 <td class="text-center"><strong>Total Amount</strong></td>
-                                                                <td class="text-right"><strong>Grand Total(Total Amount + GST)</strong></td>
+                                                                <td class="text-center"><strong>Discount</strong></td>
+                                                                <td class="text-right"><strong>Grand Total (Total Amount + GST)</strong></td>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -176,10 +177,11 @@
                                                                  <td><input type="checkbox" class="chcktblservice"  value="@item.OrderDetailId" /></td>
                                                                     <td> @item.OrderDetailId </td>
                                                                     <td class="text-center">@item.ServiceType</td>
-                                                                    <td class="text-center">Rs @item.PerunitPrice</td>
+                                                                    <td class="text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.PerunitPrice)).Replace(".00", "")</td>
                                                                     <td class="text-center">@item.Quantity</td>          
                                                                     <td class="sbaldue text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.Due)).Replace(".00", "")</td>
                                                                     <td class="tsamnt text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "")</td>
+                                                                    <td class="text-center">NaN</td>
                                                                     <td class="text-right">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)+(Convert.ToDouble(@item.TotalPrice)*0.18)).Replace(".00", "")</td>
                                                                 </tr>  
                                                             }
@@ -449,7 +451,7 @@
                                                 <div class="col-md-5" style="padding: 14px;">Discount</div>
                                                 <div class="col-md-7" style="padding:1px;margin-left: -19px;">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="Discount" name="Discount" value="" style="padding:5px;">
+                                                        <input type="text" class="form-control" id="Discount" name="Discount" value="0" style="padding:5px;">
                                                     </div>
                                                 </div>
                                             </div>
@@ -464,9 +466,9 @@
                                             <div class="row">
                                                 <div class="col-md-5" style="padding: 14px;">Final Amount</div>
                                                 <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                                    <input type="hidden" class="form-control" id="finalamount1" name="finalamount1" value="@ViewBag.total" style="padding: 5px;">
+                                                    <input type="hidden" class="form-control" id="FinalAmount1" name="FinalAmount1" value="@ViewBag.balance" style="padding: 5px;">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="finalamount" name="finalamount" value="@ViewBag.total" style="padding: 5px;">
+                                                        <input type="text" class="form-control" id="FinalAmount" name="FinalAmount" value="" style="padding: 5px;">
                                                     </div>
                                                 </div>
                                             </div>
@@ -853,28 +855,30 @@
     $("select.selectdiscount").change(function () {
         discounttype = $(this).children("option:selected").text();  
     });
+   
     $('#Discount').on('input', function () {
-        var ttamnt = $('#finalamount1').val();
+        var ttamnt = $('#FinalAmount1').val();
+        BalAmount = $('#Current_Balance').val();
         var discamnt = $('#Discount').val();
         if (discamnt == null || discamnt == "") {
             alert("Enter Some Amount");
-            $('#finalamount').val(ttamnt);
+            $('#FinalAmount').val(BalAmount);
         }
-    else{
-        if (discounttype == 'Percentage %') {
+        else{
+           if (discounttype == 'Percentage %') {
             if (discamnt > 100) {
                 alert('Percentage should not be greater than 100');
             }
             else {
                 var discountinpercent = ttamnt - (ttamnt * discamnt / 100);
                 var finalamnt = discountinpercent + (discountinpercent * 18 / 100);
-                $('#finalamount').val(finalamnt);
+                $('#FinalAmount').val(finalamnt);
             }
         }
         else if (discounttype == 'Flat Rate ₹') {
                 var discountrupees = ttamnt - discamnt;
                 var finalamnt2 = discamnt + (discamnt * 18 / 100);
-                $('#finalamount').val(finalamnt2);         
+                $('#FinalAmount').val(finalamnt2);
           }
         }
     });
