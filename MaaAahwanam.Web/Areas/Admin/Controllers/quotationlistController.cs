@@ -59,24 +59,25 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             
             StringBuilder cds = new StringBuilder();
 
-            cds.Append("<table style=''><tbody>");
-            //cds.Append("<tr><td>Order Id</td><td>Order Date</td><td> Event Type </td><td> Quantity</td><td>Perunit Price</td><td>Total Price</td></tr>");
-            foreach (var item in s12)
-            {
-                string image;
-                if (item.logo != null)
-                {
-                    image = "/vendorimages/" + item.logo.Trim(',') + "";
-                }
-                else { image = "/noimages.png"; }
-                cds.Append("<tr><td style = ''>  <img src = " + image + " style='height: 36px; width: 83px;'/></td><td style = '' > <p>" + item.BookedDate.ToString("dd-MMM-yyyy") + "</p><p>" + item.BusinessName + "</p><p>" + item.ServicType + "</p><p>" + item.PackageName + "</p><p>" + item.PerunitPrice + "</p><p>" + item.Quantity + "</p> </td><td > " + item.EventType + " </td><td style = ''><p>" + item.TotalPrice.ToString().Replace(".00", "") + "</p> </td> </tr>");
-            }
-            cds.Append("</tbody></table>");
+           // cds.Append("<table style='width:70%;'><tbody>");
+           //cds.Append("<tr><td style = 'width:20%;'></td><td><strong> Details</strong> </td><td> <strong>Event Type</strong> </td><td><strong>Total Amount</strong></td></tr>");
+           // foreach (var item in s12)
+            //{
+            //    string image;
+            //    if (item.logo != null)
+            //    {
+            //        image = "/vendorimages/" + item.logo.Trim(',') + "";
+            //    }
+            //    else { image = "/noimages.png"; }
+            //    cds.Append("<tr><td style = 'width:20%;'>  <img src = " + image + " style='height: 182px;width: 132px;'/></td><td style = '' > <p>" + "<strong>Business Name: </strong>" + item.BusinessName + "</p><p>" + "<strong>Packgename: </strong>" + item.PackageName + "</p><p>" + "<strong>Price/person:</strong> " + '₹'  + item.PerunitPrice.ToString().Replace(".00", "") + "</p><p>" + "<strong>No. of Guests:</strong> " + item.Quantity + "</p> </td><td > "  + item.EventType + " </td><td style = ''><p>" +'₹'+ item.TotalPrice.ToString().Replace(".00", "") + "</p> </td> </tr>");
+            //}
+            //cds.Append("</tbody></table>");
 
 
 
             
             string url = Request.Url.Scheme + "://" + Request.Url.Authority;
+            ViewBag.ser = s12;
             ViewBag.url = url;
             ViewBag.name = name;
             ViewBag.OrderId = OrderId;
@@ -96,8 +97,8 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             name = Capitalise(name);
             string OrderId = Convert.ToString(s1.OrderId);
             StringBuilder cds = new StringBuilder();
-            cds.Append("<table style='border:1px black solid;'><tbody>");
-            cds.Append("<tr><td>OrderDetail Id</td><td>Order Date</td><td> Event Type </td><td> Quantity</td><td>Perunit Price</td><td>Total Price</td></tr>");
+            cds.Append("<table style='width:70%;'><tbody>");
+            cds.Append("<tr><td style = 'width:20%;'></td><td><strong> Details</strong> </td><td> <strong>Event Type</strong> </td><td><strong>Total Amount</strong></td></tr>");
             foreach (var item in s12)
             {
                 string image;
@@ -106,11 +107,12 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     image = "/vendorimages/" + item.logo.Trim(',') + "";
                 }
                 else { image = "/noimages.png"; }
-                cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'>  <img src = " + image + " style='height: 36px; width: 83px;'/>" + item.OrderDetailId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + item.BookedDate.ToString("dd/MMM/yyyy") + " </td><td style = 'width: 75px;border: 1px black solid;'> " + item.EventType + " </td><td style = 'width: 50px;border: 1px black solid;'> " + item.Quantity + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + item.PerunitPrice.ToString().Replace(".00", "") + " </td><td style = 'width: 50px;border: 1px black solid;'> " + item.TotalPrice.ToString().Replace(".00", "") + " </td></tr>");
+                cds.Append("<tr><td style = 'width:20%;'>  <img src = " + image + " style='height: 182px;width: 132px;'/></td><td style = '' > <p>" + "<strong>Business Name: </strong>" + item.BusinessName + "</p><p>" + "<strong>Packgename: </strong>" + item.PackageName + "</p><p>" + "<strong>Price/person:</strong> " + '₹' + item.PerunitPrice.ToString().Replace(".00", "") + "</p><p>" + "<strong>No. of Guests:</strong> " + item.Quantity + "</p> </td><td > " + item.EventType + " </td><td style = ''><p>" + '₹' + item.TotalPrice.ToString().Replace(".00", "") + "</p> </td> </tr>");
             }
             cds.Append("</tbody></table>");
             string url = Request.Url.Scheme + "://" + Request.Url.Authority;
-            FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
+            //FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
+            FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/kansiris.html"));
             string readFile = File.OpenText().ReadToEnd();
             readFile = readFile.Replace("[ActivationLink]", url);
             readFile = readFile.Replace("[name]", name);
@@ -121,7 +123,8 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                         string txtto1 = s1.username;
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
             emailSendingUtility.Email_maaaahwanam(txtto1, txtmessage1, subj1);
-            return View();
+            var msg = "email sent";
+            return Json( msg,JsonRequestBehavior.AllowGet);
         }
     }
 }
