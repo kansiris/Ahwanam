@@ -18,7 +18,7 @@ namespace MaaAahwanam.Web.Controllers
 
         // GET: ManageVendor
         [HttpGet]
-        public ActionResult Index(string VendorId)
+        public ActionResult Index()
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
@@ -26,7 +26,7 @@ namespace MaaAahwanam.Web.Controllers
                 string uid = user.UserId.ToString();
                 string vemail = newmanageuse.Getusername(long.Parse(uid));
                 vendorMaster = newmanageuse.GetVendorByEmail(vemail);
-                VendorId = vendorMaster.Id.ToString();
+               string VendorId = vendorMaster.Id.ToString();
                 ViewBag.masterid = VendorId;
                 ViewBag.vendorlist = mngvendorservice.getvendor(VendorId);
                 string S = "Services";
