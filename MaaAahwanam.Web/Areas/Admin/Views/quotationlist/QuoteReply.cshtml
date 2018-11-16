@@ -14,10 +14,7 @@
             font-family: "Lato", sans-serif;
         }
 
-        form {
-            display: none;
-        }
-
+        
         .tablink {
             background-color: #fff;
             color: #212529;
@@ -52,96 +49,21 @@
         }
 
 
-        #Food Packages {
-            background-color: white;
-        }
-
-        #Hall Details {
-            background-color: white;
-        }
-
-        #Description {
-            background-color: white;
-        }
-
-        #Gallery {
-            background-color: white;
-        }
-
-        #Check Availability {
-            background-color: white;
-        }
-
-        #Policies {
-            background-color: white;
-        }
+     
 
 
-        .zInputWrapper {
-            background-color: #f30712;
-            padding: 1px;
-            margin: 2px;
-            /*border-radius: 12px;*/
-            display: inline-block;
-        }
-
-        .zInput {
-            display: inline-block;
-            width: 50px;
-            height: 25px;
-            background-color: #f30712;
-            margin: 4px;
-            padding: 2px;
-            text-align: center;
-            cursor: default;
-            color: #fff;
-            border: #f30712 1px solid;
-            /*border-radius: 10px;*/
-            font-size: 16px;
-            overflow: hidden;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            /*-khtml-user-select: none;*/
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-
-        .zCheckbox {
-            color: #ffffff;
-            border: #f30712 1px solid;
-        }
-
-        .zSelected {
-            color: #f30712;
-            background-color: #f30712;
-        }
-
-            .zSelected.zCheckbox {
-                background-color: #f30712;
-            }
+       
 
         .first .col-md-4 img {
             height: 130px;
             width: 300px;
         }
  
-        .overlay {
-            background: no-repeat scroll center center #FFF;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 9999999;
-            background-color: rgba(0,0,0,0.8);
-            /* END EXTERNAL S */
-        }
+        
     </style>
 }
 
-<div id="content">
+<div id="content" style="background-color: #fff;">
     <div class="inner">
         @*<div class="row">
                 <div class="col-lg-12">
@@ -150,22 +72,22 @@
                 </div>
             </div>
             <hr />*@
-        <div class="row">
+        <div class="row" >
             <div class="col-lg-12">
 
 
-                <h2 class="uk-h3">Quotation Details</h2>
+               <center> <h3 >Quotation Details</h3></center>
                 @if (ViewBag.orderdetails1 != null)
                 {
                     @*<p style="text-transform:capitalize;font-weight:bold"> Quotation requested for</p>*@
 
                     foreach (var item in ViewBag.orderdetails1)
                     {
-                        <div class="room_type first">
+                        <div class="room_type first" >
 
                             <div class="row">
+                                <input type="hidden" name="otype" id ="otype" class="otype" value="@item.orderbooktype">
 
-                                @item.BusinessName -@item.ServicType
                                 <div class="col-md-4">
                                     @if (item.logo != null)
                                     {
@@ -180,23 +102,30 @@
 
                                     }
                                 </div>
-                                <div class="col-md-8" style="background-color: #fff;">
-                                    <input type="hidden" id="cartid" name="cartid[]" value="@item.OrderId" />
-                                    @item.PackageName
+                                <div class="col-md-8">
 
-                                    <p style="margin-top:-10px">@item.PerunitPrice for @item.Quantity guests</p>
-                                    <text id="itemsselected" style="display:none"></text>
-                                    <table style="width:500px;border-collapse: collapse;margin-top:-25px">
+
+
+                                    <table>
 
                                         <tr>
-                                            <td style="width:30%;border:none;padding-left: 1px;">
-                                                <text style="font-size:16px;font-weight:100">
-                                                    <p> Event Date:@item.OrderDate.ToString("dd-MM-yyyy")</p>
-                                                    <p>Book date: @item.BookedDate.ToString("dd-MM-yyyy")</p>
-
-                                                </text>
+                                            <td>
+                                                <p>Businessname: @item.BusinessName </p>
+                                                <p> Service type:@item.ServicType</p>
                                             </td>
-                                            <td style="width:40%;border:none;"><b style="font-size: 14px;color: #573791;float:right;">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "")</b><text style="float:right;font-size: 14px;">₹</text></td>
+                                            <td>
+                                                <p>Orderdetailid: @item.OrderDetailId</p>
+                                                <p>Packagename: @item.PackageName</p>
+                                                <p>price/plate: @item.PerunitPrice </p>
+                                                <p>Guest: @item.Quantity</p>
+                                            </td>
+                                            <td>
+
+                                                <p> Event Date:@item.OrderDate.ToString("dd-MM-yyyy")</p>
+                                                <p>Book date: @item.BookedDate.ToString("dd-MM-yyyy")</p>
+
+                                            </td>
+                                            <td>₹@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "")</td>
                                         </tr>
                                     </table>
 
@@ -204,61 +133,63 @@
                             </div>
                             <!-- /row -->
                         </div>
-                        <!-- /rom_type -->
-                        <input type="hidden" id="selectedcart" name="selectedcart" class="selectedcart" value="">
-                        <hr style="margin-top:0">
 
                     }
                 }
                 @if (ViewBag.orderdetails != null)
                 {
-                    @*<p style="text-transform:capitalize;font-weight:bold"> Quotation requested for</p>*@
 
                     foreach (var item in ViewBag.orderdetails)
                     {
-                        <div class="room_type first">
+                        <div class="room_type first" style="background-color: #fff;">
 
                             <div class="row">
+                                <input type="hidden" name="otype" id ="otype" class="otype" value="@item.orderbooktype">
+
                                 <div class="col-md-4">
                                     @if (item.logo != null)
                                     {
-                                        <li>
-                                            <img src="../vendorimages/@item.logo" class="img-fluid" alt="" />
 
-                                        </li>
+                                        <img src="../vendorimages/@item.logo" class="img-fluid" alt="" style="height: 88px;width: 255px;" />
+
+
                                     }
                                     else
-                                    {<li>
-                                            <img src="~/noimages.png" class="img-fluid" alt="">
-                                        </li>
+                                    {
+                                        <img src="~/noimages.png" class="img-fluid" alt="" style="height: 88px;width: 255px;" />
+
                                     }
                                 </div>
-                                <div class="col-md-8-1" style="background-color: #fff;">
-                                    <input type="hidden" id="cartid" name="cartid[]" value="@item.OrderId" />
-                                    <h3 style="text-transform:uppercase;font-weight:700">@item.BusinessName&emsp;<a class="ui violet label" style="padding: 2px 7px 2px 7px;font-size: 13px;font-weight: 100;">@item.ServicType</a><span><br></span></h3>
+                                <div class="col-md-8">
 
-                                    <p style="margin-top:-10px">@item.PerunitPrice for @item.Quantity guests</p>
-                                    <text id="itemsselected" style="display:none"></text>
-                                    <table style="width:500px;border-collapse: collapse;margin-top:-25px">
+
+
+                                    <table>
 
                                         <tr>
-                                            <td style="width:30%;border:none;padding-left: 1px;">
-                                                <text style="font-size:16px;font-weight:700">
-                                                    Event Date:@item.OrderDate.ToString("dd-MM-yyyy")
-                                                    Book date: @item.BookedDate.ToString("dd-MM-yyyy")
-
-                                                </text>
+                                            <td>
+                                                <p> @item.BusinessName </p><p>@item.ServicType</p>
                                             </td>
-                                            <td style="width:40%;border:none;"><b style="font-size: 14px;color: #573791;float:right;">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "")</b><text style="float:right;font-size: 14px;">₹</text></td>
+                                            <td>
+                                                <p>Orderdetailid: @item.OrderDetailId</p>
+                                                <p>Packagename: @item.PackageName</p>
+                                                <p>price/plate: @item.PerunitPrice </p>
+                                                <p>Guest: @item.Quantity</p>
+                                            </td>
+                                            <td>
+
+                                                <p> Event Date:@item.OrderDate.ToString("dd-MM-yyyy")</p>
+                                                <p>Book date: @item.BookedDate.ToString("dd-MM-yyyy")</p>
+
+                                            </td>
+                                            <td>₹@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "")</td>
                                         </tr>
                                     </table>
+
                                 </div>
                             </div>
                             <!-- /row -->
                         </div>
-                        <!-- /rom_type -->
-                        <input type="hidden" id="selectedcart" name="selectedcart" class="selectedcart" value="">
-                        <hr style="margin-top:0">
 
                     }
                 }
@@ -268,12 +199,13 @@
         </div>
     </div>
     <div>
-        <button id="email" name="email" class="btn">Add Packages</button>
+        <center>
+            <button id="email" name="email" class="btn">Add Packages</button>
 
-        <button id="email" name="email"onclick="email()" class="btn">Email</button>
-        <button id="view" onclick="view()" name="view" class="btn">View</button>
-
-    </div>
+            <button id="email" name="email" onclick="email()" class="btn">Email</button>
+            <button id="view" onclick="view()" name="view" class="btn">View</button>
+            </center>
+</div>
 </div>
 
 
@@ -293,17 +225,17 @@
         });
 
         function view() {
-            var type = $('#selectedservice').val();
+            var type = $('#otype').val();
             var date = $('#dp1').val();
             var id = '@Request.QueryString["id"]';
-            window.location.href = '/Admin/quotationlist/FilteredVendors1?id=' + id;
+            window.location.href = '/Admin/quotationlist/FilteredVendors1?id=' + id + "&&type=" + type;
            // $('#sortvendors').empty().load(url);
         }
         function email() {
-            var type = $('#selectedservice').val();
+            var type = $('#otype').val();
             var date = $('#dp1').val();
             var id = '@Request.QueryString["id"]';
-            window.location.href = '/Admin/quotationlist/email?id=' + id;
+            window.location.href = '/Admin/quotationlist/email?id=' + id + "&&type=" + type;
            // $('#sortvendors').empty().load(url);
         }
     </script>
