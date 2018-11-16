@@ -576,6 +576,8 @@ namespace MaaAahwanam.Web.Controllers
             package = vendorVenueSignUpService.Getpackages(package.VendorId, package.VendorSubId).Where(m => m.PackageID == package.PackageID).FirstOrDefault();//vendorDashBoardService.(packageMenu.Category, packageMenu.VendorMasterID, packageMenu.VendorID).FirstOrDefault();
             if (package.extramenuitems != null)
                 package.extramenuitems = package.extramenuitems + "," + extramenuitems;
+            else
+                package.extramenuitems = extramenuitems;
             package.UpdatedDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow, INDIAN_ZONE);
             package = vendorVenueSignUpService.updatepack(package.PackageID.ToString(), package);
             return Json("New Course & Course Items Added", JsonRequestBehavior.AllowGet);

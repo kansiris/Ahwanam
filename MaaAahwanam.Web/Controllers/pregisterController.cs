@@ -10,14 +10,14 @@ using System.Web.Mvc;
 
 namespace MaaAahwanam.Web.Controllers
 {
-    public class partnerresgisterController : Controller
+    public class pregisterController : Controller
     {
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
         VendorVenueService vendorVenueService = new VendorVenueService();
         VenorVenueSignUpService venorVenueSignUpService = new VenorVenueSignUpService();
         VendorMasterService vendorMasterService = new VendorMasterService();
 
-        // GET: partnerresgister
+        // GET: pregister
         public ActionResult Index()
         {
             return View();
