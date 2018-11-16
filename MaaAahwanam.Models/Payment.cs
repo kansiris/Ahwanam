@@ -44,6 +44,10 @@ namespace MaaAahwanam.Models
         public string Cash_Date { get; set; }
         public string Cash_Card_Holdername { get; set; }
 
+        public string GST { get; set; }
+        public string DiscountType { get; set; }
+        public string Discount { get; set; }
+
         public string Invoiced_Amount { get; set; }
         public string Received_Amount { get; set; }
         public string Opening_Balance { get; set; }

@@ -237,7 +237,7 @@
                     <!--End step -->
                     <div class="uk-grid">
                         <h2 class="uk-h2" style="font-size:20px;text-transform: uppercase;margin: 0px 10px -1px 0px;max-width: 55%;width:100%;font-weight:700">@ViewBag.Productinfo.BusinessName <span style="font-size:16px;font-weight:400;text-transform: capitalize"><br>@ViewBag.Productinfo.City,@ViewBag.Productinfo.State</span></h2>
-                        <img src="http://design.maa-aahwanam.com/panagea/images/heart.png" style="margin-left:200px;width: 10%;height: 50%;max-width: 45%;" />
+                        <img src="http://design.maa-aahwanam.com/panagea/images/heart.png" style="margin-left:200px;width: 10%;height: 50%;max-width: 45%;display:none"/>
                         <div style="padding-top:10px"><a href="#map">See Address Map</a>&emsp;&emsp; <a href="#address">View Description</a></div>
                     </div>
                     <div class="uk-grid-sub">
@@ -914,15 +914,16 @@
 
         <button class="uk-modal-close-default" type="button" uk-close></button>
 
-        <div class="uk-modal-header">
+        <div class="uk-modal-header" style="border-bottom:1px solid black;">
            <h2 class="uk-modal-title" style="text-transform:uppercase"></h2>
         </div>
 
         <div class="uk-modal-body" style="background-color:white"> @**@
             <div class="row" uk-overflow-auto>
                 <div class="col-md-9 mitems"></div>
-                <div class="col-md-3">
-                    <strong>Selected Items</strong>
+                <div class="col-md-3" style="border-left: 1px solid black;">
+                    <strong style="text-transform:uppercase">Selected Items</strong>
+                    <hr style="margin:0;border-bottom:1px solid"/>
                     <div class="spkgitems">
 
                     </div>
@@ -1019,23 +1020,22 @@
     <script>
         $(document).on('click','.choosemenu',function(){
             var pkgid = $(this).parent('div.row').find('.packageid').text();
-            //alert(pkgid);
             $.get( "/viewservice/GetPackage?pkgid="+pkgid, function( data ) {
                 $('#pkgselect .uk-modal-title').text(data.PackageName);
                 var div = '<div class="row">'; var count=data.menuitems.split(',').length;
-                var seldiv = '<div style="overflow:scroll;overflow-x:hidden;overflow-y:scroll;min-height: 200px;height:50%">'
+                var seldiv = '<div>'
                 for (var i = 0; i < count; i++) {
                     var citem = data.menuitems.split(',')[i];
                     var course = data.menu.split(',')[i];
                     var heading = citem.split('(')[0];
                     var mitems = citem.split('(')[1].split(')')[0];
                     var menuitems = '<div class="col-md-3">';
-                    menuitems+= '<strong>'+course+'</strong></td></tr>';
+                    menuitems+= '<strong>'+course+'</strong>';
                     for (var j = 0; j < mitems.split('!').length; j++) {
-                        menuitems+= '<div><input class="selitem" type="checkbox" id='+mitems.split('!')[j]+' value='+heading+' /> <label for='+mitems.split('!')[j]+'>'+mitems.split('!')[j]+'</label></div>';
+                        menuitems+= '<div><input class="selitem" type="checkbox" id='+mitems.split('!')[j].replace(' ','_')+' value='+heading+' /> <label for='+mitems.split('!')[j].replace(' ','_')+'>'+mitems.split('!')[j]+'</label></div>';
                     }
                     div+= menuitems+'</div>';
-                    seldiv+= '<div class="row" style="margin:0" id='+heading+'><strong>'+course+'</strong></div>';
+                    seldiv+= '<div style="margin:0" id='+heading+'><strong>'+course+'</strong><div class= '+heading+'></div></div>';
                 }
                 div+='</div>';
                 $('#pkgselect .uk-modal-body div.mitems').html(div);
@@ -1048,12 +1048,28 @@
         $(document).on('change','.selitem',function(){
             var menu = $(this).val();
             var selected = $(this).next('label').text();
-            //alert(selected);
             var course = $(this).parents('.col-md-3').find('strong').text();
-            //alert(course);
             var seldiv = $('#pkgselect .uk-modal-body div.spkgitems');
-            seldiv.find('div#'+menu+'').append('<br/>'+selected);
-
+            var div = seldiv.find('div#'+menu+'').find('div.'+menu+'').find('div').length;
+            var maxcount = course.split('(')[1].split(')')[0];
+            if ($(this).is(':checked')) {
+                seldiv.find('div#'+menu+'').find('div.'+menu+'').append('<div id='+selected.replace(' ','_')+'>-'+selected+'</div>');
+                if (div == maxcount) {
+                    //alert('Extra charges for '+course.split('(')[0]+'');
+                    var cdiv = $(this).parents('.col-md-3');//.find('input').append('(₹50)');
+                    var lcount = cdiv.find('label').length;
+                    for (var i = 0; i < lcount; i++) {
+                        var checked = cdiv.find('input')[i].checked;
+                        if(checked == false) cdiv.find('label')[i].append('₹50 extra');//('<text style="color:red">₹50 extra</text>');
+                    }
+                    $(this).next('label').append('<text style="color:red">₹50 extra</text>');
+                }
+            }
+            else {
+                seldiv.find('div#'+menu+' div#'+selected.replace(' ','_')+'').remove();
+                $(this).parents('.col-md-3').find('text').remove();
+                $(this).parents('.col-md-3').find('label').replace('--₹50 extra','');
+            }
         });
     </script>
 

@@ -75,6 +75,7 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.totalprice = orderdetails1.FirstOrDefault().TotalPrice;
                         ViewBag.orderdetailid = orderdetails1.FirstOrDefault().OrderDetailId;
                         var payments = rcvpaymentservice.getPayments(oid).ToList();
+
                         ViewBag.payment = payments;
                         foreach (var reports in payments)
                         {
