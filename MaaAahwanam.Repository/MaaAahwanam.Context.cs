@@ -688,5 +688,14 @@ namespace MaaAahwanam.Repository
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_userordlist_Result>("sp_userordlist");
         }
+    
+        public virtual ObjectResult<sp_allorddetail_Result> sp_allorddetail(string type)
+        {
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_allorddetail_Result>("sp_allorddetail", typeParameter);
+        }
     }
 }

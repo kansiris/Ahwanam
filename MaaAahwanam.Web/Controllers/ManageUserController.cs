@@ -579,28 +579,7 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.package = package;
                     ViewBag.tprice = tot;
 
-                    //DateTime date = Convert.ToDateTime(select1[2]);
-                    //string date1 = date.ToString("dd-MM-yyyy");
-                    // ViewBag.date = date1;
-
-                    // //  var pid = select1[4];
-                    // //    
-                    // //     var vsid = pkgs.VendorSubId;
-                    // //var vid = pkgs.VendorId;
-                    // ViewBag.service = "non";//vendorVenueService.GetVendorVenue(vid, vsid);
-                    // string price = "";
-                    // //if (pkgs.PackagePrice == null)
-                    // //{
-                    // //    price = Convert.ToString(pkgs.price1);
-                    // //}
-                    // //else { price = Convert.ToString(pkgs.PackagePrice); }
-
-                    //// var total = Convert.ToInt64(guests) * Convert.ToInt64(price);
-                    // ViewBag.guest = guests;
-                    // ViewBag.total = "non";// total;
-                    // ViewBag.price = "non"; // price;
-                    // ViewBag.pid = "non";//pid;
-                    // ViewBag.pname = "non";//pkgs.PackageName;
+                   
                 }
             }
             return View("orderdetails");

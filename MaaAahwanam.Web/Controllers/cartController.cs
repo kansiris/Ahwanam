@@ -538,7 +538,9 @@ namespace MaaAahwanam.Web.Controllers
                         string txtmessage1 = readfile1;
                         string subj1 = "order has been placed";
                         emailSendingUtility.Email_maaaahwanam(txtto1, txtmessage1, subj1);
-                        var message = cartService.Deletecartitem(long.Parse(cartno2));
+                        if (booktype == "Quote") {  }
+                        else if (booktype == "booknow") { var message = cartService.Deletecartitem(long.Parse(cartno2)); }
+                       
                     }
                 }
                 if (booktype == "Quote") { msg = "Quotation sent"; }

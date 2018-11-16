@@ -28,6 +28,10 @@ namespace MaaAahwanam.Repository.db
         {
             return maaAahwanamEntities.sp_userorddisplay().ToList();
         }
+        public List<sp_allorddetail_Result> alluserOrderList(string type)
+        {
+            return maaAahwanamEntities.sp_allorddetail(type).ToList();
+        }
         public List<sp_userordlist_Result> allorderslist()
         {
             return maaAahwanamEntities.sp_userordlist().ToList();
