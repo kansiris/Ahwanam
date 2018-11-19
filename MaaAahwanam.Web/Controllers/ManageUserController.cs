@@ -161,7 +161,7 @@ namespace MaaAahwanam.Web.Controllers
 
       
     [HttpPost]
-    public JsonResult booknow(string uid, string loc, string eventtype, string guest, string date, string pid, string vid, string timeslot,string booktype)
+    public JsonResult booknow(string uid, string loc, string eventtype, string guest, string date, string pid, string vid, string timeslot,string booktype, string alltprice, string alldiscounttype, string discountprice, string fpkgprice)
     {
         int userid = Convert.ToInt32(uid);
         int price;
@@ -175,6 +175,10 @@ namespace MaaAahwanam.Web.Controllers
         List<string> sdate = new List<string>();
         List<string> stimeslot = new List<string>();
         List<SPGETpartpkg_Result> package = new List<SPGETpartpkg_Result>();
+            var alltprice1 = alltprice.Split(',');
+            var alldiscounttype1 = alldiscounttype.Split(',');
+            var discountprice1 = discountprice.Split(',');
+            var fpkgprice1 = fpkgprice.Split(',');
 
         var pkgs = pid.Split(',');
         var date1 = date.Trim(',').Split(',');
@@ -243,6 +247,10 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     if (date1[j].Split('~')[1] == data.VendorSubId.ToString())
                     {
+                        data.price1 = alltprice1[j].Split('~')[0].Trim(':')[1].ToString();
+                        data.price2 = alldiscounttype1[j].Split('~')[0];
+                        data.price3 = discountprice1[j].Split('~')[0];
+                        data.price4 = fpkgprice1[j].Split('~')[0];
                         data.UpdatedDate = Convert.ToDateTime(date1[j].Split('~')[0]);
                         data.timeslot = timeslot1[j].Split('~')[0];
                     }
@@ -268,6 +276,10 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     orderDetail.type = "Order";
                 }
+                //orderDetail.Discount = Convert.ToDecimal(data.price2);
+                //orderDetail.DiscountPrice = Convert.ToDecimal(data.price2);
+                //orderDetail.Discount = Convert.ToDecimal(data.price2);
+
                 orderDetail.Status = "Pending";
                 orderDetail.bookingtype = "Vendor";
                 orderDetail.UpdatedDate = Convert.ToDateTime(updateddate);
