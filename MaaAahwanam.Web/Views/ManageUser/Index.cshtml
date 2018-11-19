@@ -313,7 +313,42 @@
     var vpbook = window.localStorage.getItem("vpbook");
     var date = window.localStorage.getItem("vpbookdate");
     var timeslot = window.localStorage.getItem("vpbooktimeslot");
-    var packid = packageid;
+            var packid = packageid;
+            //$('form input, form select').each(
+            //    function (index) {
+            //        var input = $(this);
+            //        alert('Type: ' + input.attr('type') + 'Name: ' + input.attr('name') + 'Value: ' + input.val());
+            //    }
+            //);
+            var alltprice = ""; var alldiscounttype = ""; var discountprice = ""; var fpkgprice = ""; var alltprice = "";
+            var chkArray = [];
+            $('.col-md-3').each(function () {
+                var cardbody = $(this).find('div.card-body');
+                var pkgid = cardbody.find('input#packageid').val();
+                var tprice = cardbody.find('label.total').text() + "~" + pkgid;
+                var discount = cardbody.find('select.disctype').val() + "~" + pkgid;
+                var discountprice = cardbody.find('input.discamount').val() + "~" + pkgid;
+                var fpkgprice = cardbody.find('label.finaltotal').text() + "~" + pkgid;
+                var selected = tprice;
+                var selected1 = discount;
+                var selected2 = discountprice;
+                var selected3 = fpkgprice;
+                //alert(selected);
+                //var selected1;
+                //selected = chkArray.join(',');
+                if (selected != undefined) {
+                    //  alert("You have selected " + selected);
+                    alltprice = alltprice + ',' + selected;
+                    alldiscounttype = alldiscounttype + ',' + selected1;
+                    discountprice = discountprice + ',' + selected2;
+                    fpkgprice = fpkgprice + ',' + selected2;
+                } else {
+                    alert("Please at least check one of the checkbox");
+                }
+               
+                //alert('Package ID:' + pkgid + 'Total Price:' + tprice + 'Discount Type:' + discount + 'Discount Price:' + discountprice + 'Final Price:' + fpkgprice);
+            });
+           // alert(alltprice + alldiscounttype + discountprice + fpkgprice);
     //  alert(vpbook);
     var vpbook1 = vpbook.split(',');
     var loc = vpbook1[0];
@@ -326,8 +361,8 @@
         var selectedp = window.localStorage.getItem("vpbook");
     }
     // alert(eventtype);
-    $('.overlay').show();
-    $('#loadermsg').text('Booking in process....');
+    //$('.overlay').show();
+    //$('#loadermsg').text('Booking in process....');
     var type = $("input[name='type']:checked").val();
     if (type == 'Corporate') {
         var Businessname = $('#Businessname').val();
@@ -336,7 +371,7 @@
     
     else {
         $.ajax({
-            url: '/ManageUser/booknow?uid=' + userid + '&&loc=' + loc + '&&eventtype=' + eventtype + '&&guest=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&timeslot=' + timeslot + '&&booktype=' + booktype,
+            url: '/ManageUser/booknow?uid=' + userid + '&&loc=' + loc + '&&eventtype=' + eventtype + '&&guest=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&timeslot=' + timeslot + '&&booktype=' + booktype + '&&alltprice=' + alltprice + '&&alldiscounttype=' + alldiscounttype + '&&discountprice=' + discountprice + '&&fpkgprice=' + fpkgprice,
             type: 'POST',
             contentType: 'application/json',
             success: function (result) {
@@ -359,96 +394,7 @@
 });
 
           
-        @*$(document).on('change', '.chcktbl', function () {
-            if ($(this).is(':checked')) {
-                $('input.chcktbl').not(this).prop('checked', false);
-                $(this).attr("checked", "checked");
-                $(this).closest('tr').find('#btnBook').removeAttr('disabled');
-                $('#saverecord').css('display', 'block');
-                $('#SaveUser').css('display', 'none');
-                $('#EditUser').css('display', 'block');
-                var vpbook = window.localStorage.getItem("vpbook");
-                $('#booknowss').css('display', 'none');
-                $('#addcustomermodel').modal('show');
-                var radataid = $(this).val();
-                $('#id').val(radataid);
-                //alert(radataid);
-                $.ajax({
-                    url: '/ManageUser/GetUserDetails?id=' + radataid,
-                    type: 'POST',
-                    contentType: 'application/json',
-                    success: function (result) {
-                        if (result.type == "Corporate") {
-                            $("input[name=type][value='Corporate']").prop('checked', true);
-                        }
-                        else {
-                            $("input[name=type][value='Individual']").prop('checked', true);
-                        }
-                        $("#usedid").val(result.id);
-                        $("#Businessname").val(result.Businessname);
-                        $("#firstname").val(result.firstname);
-                        $("#lastname").val(result.lastname);
-                        $("#email").val(result.email);
-                        $("#phoneno").val(result.phoneno);
-                        $("#adress1").val(result.adress1);
-                        $("#adress2").val(result.adress2);
-                        $("#city").val(result.city);
-                        $("#state").val(result.state);
-                        $("#country").val(result.country);
-                        $("#pincode").val(result.pincode);
-                        $("#Status").val(result.Status);
-                        if (result.Status == "Active") {
-                            $("input[name=Status][value='Active']").prop('checked', true);
-                            if (vpbook == '' || vpbook == null)
-                                $('#booknow').css('display', 'none');
-                            else
-                                $('#booknow').css('display', 'block');
-                        }
-                        else {
-                            $("input[name=Status][value='InActive']").prop('checked', true);
-                            $('#booknow').css("display", "none");
-                        }
-                    },
-                    error: function (result) {
-                        alert("failed");
-                    }
-                })
-            }
-            else {
-                $(this).closest('tr').find('#btnBook').attr('disabled', 'disabled');
-                $('#saverecord').css('display', 'none');
-            }
-        });*@
+    
     </script>
-    @*<script>
-
-            window.onload = function () {
-            $('#addservices').css("display", "none");
-            var vpbook = window.localStorage.getItem("vpbook");
-            var date = window.localStorage.getItem("vpbookdate");
-            var timeslot = window.localStorage.getItem("vpbooktimeslot");
-            var packageid = window.localStorage.getItem("vpbookpid");
-            if (vpbook == "" || vpbook == null) {
-                $('#booknow').css('display', 'none');
-                $('#booknowss').css('display', 'none');
-            }
-            else {
-                $('#booknow').css('display', 'block');
-                $('#booknowss').css('display', 'block');
-            }
-
-            $.ajax({
-                url: '/ManageUser/orderdetails?select=' + vpbook + '&date=' + date + '&timeslot=' + timeslot + '&packageid=' + packageid,
-                type: 'POST',
-                contentType: false,
-                processData: false,
-                success: function (result) {
-                    $('.center').html(result);
-                }
-            });
-
-
-        }
-
-        </script>*@
+   
 }
