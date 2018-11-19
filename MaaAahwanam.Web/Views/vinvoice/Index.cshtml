@@ -111,7 +111,7 @@
                                                         <td class="text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.PerunitPrice)).Replace(".00", "")</td>
                                                         <td class="text-center">@item.Quantity</td>                                                      
                                                         <td class="text-right">
-                                                            Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.Due)).Replace(".00", "")
+                                                     Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.Due)).Replace(".00", "")
                                                         </td>
                                                         <td class="text-right">
                                                             Rs  @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "")
@@ -168,7 +168,7 @@
                                                                 <td class="text-center"><strong>Total Amount</strong></td>
                                                                 <td class="text-center"><strong>Discount</strong></td>
                                                                 <td class="text-center"><strong>GST</strong></td>
-                                                                <td class="text-right"><strong>Grand Total (Total Amount + GST)</strong></td>
+                                                                <td class="text-right"><strong>Grand Total</strong></td>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -188,11 +188,11 @@
                                                                       <option value="Discpercentage">Percentage %</option>
                                                                       <option value="flaterate">Flat Rate ₹</option>
                                                                      </select>
-                                                                        <div class="form-group" style="padding-left:5px;padding-top:8px;">
+                                                                        <div class="form-group" style="padding-left:20px;padding-top:8px;">
                                                                             <input type="text" class="form-control disctxt" id="Discount" name="Discount" value="" placeholder="Enter Discount" style="font-size: 12px; width:128px;padding:0px;">
                                                                         </div>
                                                                     </td>
-                                                                    <td class="text-center">18%</td>
+                                                                    <td class="text-right">18%</td>
                                                                     <td class="text-right gndttl">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)+(Convert.ToDouble(@item.TotalPrice)*0.18)).Replace(".00", "")</td>
                                                                 </tr>  
                                                             }
@@ -999,8 +999,9 @@
         var sum1 = 0
         var gstsum = 0
         var gstsum5 = $('#FinalAmount').val();
-        $("#orderdetails tr").click(function () {
-            if ($(this).find('td:eq(0)').find('input.chcktblservice').is(':checked')) {
+       $("#orderdetails tr").click(function () {
+             if ($(this).find('td:eq(0)').find('input.chcktblservice').is(':checked')) {
+        //if($("#orderdetails tr").find('input.chcktblservice').is(':checked')){
                 var rid;
                 var oid = $("#OrderDetailId").val();
                 var odid = $(this).find('td:eq(1)').text();
@@ -1025,7 +1026,7 @@
                         $('#FinalAmount1').val(bl);
                         $('#FinalAmount').val(bl);
                 });
-                $('#Paymentmode').css('display', 'block');
+              
                 var ttotal;
                 var initialbal;
                 $(this).find('.tsamnt').each(function () {
@@ -1046,6 +1047,7 @@
                         $('#FinalAmount1').val(gstsum);
                         $('#FinalAmount').val(gstsum);
                     }
+                    $('#Paymentmode').css('display', 'block');
             }
             else {
                 var oid = $("#OrderDetailId").val();
@@ -1094,6 +1096,6 @@
             }
         });
       
-    });
+   });
  
 </script>
