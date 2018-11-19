@@ -509,6 +509,7 @@ $(document).on('click','.saveall1',function(){
         Category: pkgcategory,
         extramenuitems: totalitems,
     }
+    //alert(Package.extramenuitems);
     $.ajax({
         url:'/vdb/NewCourse',
         type: 'POST',
@@ -674,19 +675,24 @@ $(document).on('click', '.updatepkg', function () {
             a.push(thisval);
     }
     var availableitems = a;
-    for (var i = 0; i < availableitems.length; i++) {
-        var value = $.inArray(availableitems[i].replace('/','_'),selectedlist.split(','));
-        if (b.indexOf(value) == -1) {
-            if (value != -1) {
-                b.push(value);
-                splitteddblist[value] = newlists.split(',')[i];
-            }
-            else {
-                splitteddblist.push(newlists.split(',')[i]);
+    if (selectedlist != undefined) {
+        for (var i = 0; i < availableitems.length; i++) {
+            var value = $.inArray(availableitems[i].replace('/', '_'), selectedlist.split(','));
+            if (b.indexOf(value) == -1) {
+                if (value != -1) {
+                    b.push(value);
+                    splitteddblist[value] = newlists.split(',')[i];
+                }
+                else {
+                    splitteddblist.push(newlists.split(',')[i]);
+                }
             }
         }
+        menuitems = splitteddblist.join(',');
     }
-    menuitems =splitteddblist.join(',');
+    else {
+        menuitems = newlists;
+    }
     var pkgid = $(this).prev('input.packageid').val();
     var packagename = parentdiv.find('#pkgname').val();
     var pkgcategory = parentdiv.find("input[type=radio]:checked").val();

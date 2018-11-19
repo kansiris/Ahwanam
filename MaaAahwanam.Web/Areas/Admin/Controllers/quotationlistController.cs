@@ -17,7 +17,8 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
     {
         OrderService orderService = new OrderService();
         VendorDashBoardService mnguserservice = new VendorDashBoardService();
-
+        UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+        string name;
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         // GET: Admin/quotationlist
         public ActionResult Index()
@@ -46,15 +47,34 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             return String.Empty;
             return Char.ToUpper(str[0]) + str.Substring(1).ToLower();
         }
-        public ActionResult FilteredVendors1(string id,string type)
+        public ActionResult FilteredVendors1(string id, string type)
         {
             var orders = orderService.alluserOrderList(type).Where(m => m.ordertype == "Quote").ToList();
             var s12 = ViewBag.orderdetails = orders.Where(m => m.OrderId == long.Parse(id)).ToList();
+
             var s1 = ViewBag.orderdetails = orders.Where(m => m.OrderId == long.Parse(id)).FirstOrDefault();
-            var userlogdetails = mnguserservice.getuserbyid(Convert.ToInt32(s1.userid));
-            string txtto = userlogdetails.email;
-            string name = userlogdetails.firstname;
-            name = Capitalise(name);
+            string txtto; 
+            if (type == "Vendor")
+            {
+                var userlogdetails = mnguserservice.getuserbyid(Convert.ToInt32(s1.userid));
+                string txtto1 = userlogdetails.email;
+                string name1 = userlogdetails.firstname;
+                txtto = txtto1;
+                name = name1;
+                name = Capitalise(name);
+
+            }
+            else if (type == "User")
+            {
+                var userdata = userLoginDetailsService.GetUserId((int)s1.userid);
+                var userdata1 = userLoginDetailsService.GetUser((int)s1.userid);
+                string txtto2 = userdata.UserName;
+                string name2 = userdata1.FirstName;
+                txtto = txtto2;
+                name = name2;
+                name = Capitalise(name);
+
+            }
             string OrderId = Convert.ToString(s1.OrderId);
             
             StringBuilder cds = new StringBuilder();
@@ -91,9 +111,29 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             var orders = orderService.alluserOrderList(type).Where(m => m.ordertype == "Quote").ToList();
             var s12 = ViewBag.orderdetails = orders.Where(m => m.OrderId == long.Parse(id)).ToList();
             var s1 = ViewBag.orderdetails = orders.Where(m => m.OrderId == long.Parse(id)).FirstOrDefault();
-            var userlogdetails = mnguserservice.getuserbyid(Convert.ToInt32(s1.userid));
-            string txtto = userlogdetails.email;
-            string name = userlogdetails.firstname;
+            string txtto;
+            if (type == "Vendor")
+            {
+                var userlogdetails = mnguserservice.getuserbyid(Convert.ToInt32(s1.userid));
+                string txtt1 = userlogdetails.email;
+                string name1 = userlogdetails.firstname;
+                txtto = txtt1;
+                name = name1;
+                name = Capitalise(name);
+
+            }
+            else if (type == "User")
+            {
+                var userdata = userLoginDetailsService.GetUserId((int)s1.userid);
+                var userdata1 = userLoginDetailsService.GetUser((int)s1.userid);
+                string txtto2 = userdata.UserName;
+                string name2 = userdata1.FirstName;
+                txtto = txtto2;
+                name = name2;
+                name = Capitalise(name);
+
+            }
+           
             name = Capitalise(name);
             string OrderId = Convert.ToString(s1.OrderId);
             StringBuilder cds = new StringBuilder();
