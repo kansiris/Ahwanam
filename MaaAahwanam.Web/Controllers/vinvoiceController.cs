@@ -31,6 +31,7 @@ namespace MaaAahwanam.Web.Controllers
         decimal balndue;
         double gtotal;
         double Gstplustotal;
+        double GstplustotalAmount; string Discount;
 
         // GET: vinvoice
         public ActionResult Index(string oid)
@@ -58,12 +59,19 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.Servicetype = orderdetails1.FirstOrDefault().ServiceType;
                         ViewBag.serviceprice = orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity;
                         ViewBag.orderdetailid = orderdetails1.FirstOrDefault().OrderDetailId;
-                        ViewBag.orderdetails = orderdetails1;
-                        var tt = Convert.ToDouble(ViewBag.total);
-                        ViewBag.grandtotal = tt + (tt * 0.18);
+                        ViewBag.orderdetails = orderdetails1;                     
                         ViewBag.totalprice = orderdetails1.FirstOrDefault().TotalPrice;
                         ViewBag.orderdetailid = orderdetails1.FirstOrDefault().OrderDetailId;
                         var payments = rcvpaymentservice.getPayments(oid).ToList();
+                        if (payments.Count != 0)
+                        {
+                            var disc = payments.FirstOrDefault().Discount;
+                            ViewBag.discount = Convert.ToDouble(disc);
+                        }
+                        else
+                        {
+                            ViewBag.discount = Convert.ToDouble(Discount);
+                        }
                         string odid = string.Empty;
                         foreach (var item in orderdetails1)
                         {
@@ -80,10 +88,13 @@ namespace MaaAahwanam.Web.Controllers
                             {
                                 var gsttotl = Convert.ToDouble(price);
                                 Gstplustotal = gsttotl + (gsttotl * 0.18);
+                                GstplustotalAmount = Convert.ToDouble(GstplustotalAmount) + Convert.ToDouble(Gstplustotal);
+                                ViewBag.gstplustotalAmount = GstplustotalAmount;
                             }
 
                         }
-
+                        //var tt = Convert.ToDouble(ViewBag.total);
+                        //ViewBag.grandtotal = tt + (tt * 0.18);
                         ViewBag.payment = payments;
                         foreach (var reports in payments)
                         {

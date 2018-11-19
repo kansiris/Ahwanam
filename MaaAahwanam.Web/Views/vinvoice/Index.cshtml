@@ -144,7 +144,7 @@
                                                     <td class="no-line"></td>
                                                     <td class="no-line text-center"><strong> Grand Total</strong></td>
                                                     <td class="no-line text-right">
-                                                        Rs  @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@ViewBag.grandtotal)).Replace(".00", "")
+                                                        Rs  @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@ViewBag.gstplustotalAmount)).Replace(".00", "")
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -167,6 +167,7 @@
                                                                 <td class="text-center"><strong>Due Amount</strong></td>
                                                                 <td class="text-center"><strong>Total Amount</strong></td>
                                                                 <td class="text-center"><strong>Discount</strong></td>
+                                                                <td class="text-center"><strong>GST</strong></td>
                                                                 <td class="text-right"><strong>Grand Total (Total Amount + GST)</strong></td>
                                                             </tr>
                                                         </thead>
@@ -181,8 +182,18 @@
                                                                     <td class="text-center">@item.Quantity</td>          
                                                                     <td class="sbaldue text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.Due)).Replace(".00", "")</td>
                                                                     <td class="tsamnt text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "")</td>
-                                                                    <td class="text-center">NaN</td>
-                                                                    <td class="text-right">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)+(Convert.ToDouble(@item.TotalPrice)*0.18)).Replace(".00", "")</td>
+                                                                    <td class="text-center">
+                                                                     <select name="DiscountType" id="DiscountType" class="selectdiscount" style="font-size: 11px;">
+                                                                      <option value="select">Select Discount Type</option>
+                                                                      <option value="Discpercentage">Percentage %</option>
+                                                                      <option value="flaterate">Flat Rate ₹</option>
+                                                                     </select>
+                                                                        <div class="form-group" style="padding-left:5px;padding-top:8px;">
+                                                                            <input type="text" class="form-control disctxt" id="Discount" name="Discount" value="" placeholder="Enter Discount" style="font-size: 12px; width:128px;padding:0px;">
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="text-center">18%</td>
+                                                                    <td class="text-right gndttl">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)+(Convert.ToDouble(@item.TotalPrice)*0.18)).Replace(".00", "")</td>
                                                                 </tr>  
                                                             }
                                                         </tbody>                           
@@ -435,7 +446,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            @*<div class="row">
                                                 <div class="col-md-5" style="padding: 14px;">Discount Type</div>
                                                 <div class="col-md-7" style="padding:1px;margin-left: -19px;">
                                                     <div class="form-group">
@@ -446,29 +457,29 @@
                                                       </select>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
+                                            </div>*@
+                                            @*<div class="row">
                                                 <div class="col-md-5" style="padding: 14px;">Discount</div>
                                                 <div class="col-md-7" style="padding:1px;margin-left: -19px;">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="Discount" name="Discount" value="" style="padding:5px;">
+                                                        <input type="text" class="form-control" id="Discount" name="Discount" value="@ViewBag.discount" style="padding:5px;">
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
+                                            </div>*@
+                                            @*<div class="row">
                                                 <div class="col-md-5" style="padding: 14px;">GST</div>
                                                 <div class="col-md-7" style="padding:1px;margin-left: -19px;">
                                                     <div class="form-group">
                                                        <label id="lblgst" name="lblgst" value="18%" style="padding-left: 70px;">18%</label>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>*@
                                             <div class="row">
                                                 <div class="col-md-5" style="padding: 14px;">Final Amount</div>
                                                 <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                                    <input type="hidden" class="form-control" id="FinalAmount1" name="FinalAmount1" value="@ViewBag.Gstplustotal" style="padding: 5px;">
+                                                    <input type="hidden" class="form-control" id="FinalAmount1" name="FinalAmount1" value="@ViewBag.gstplustotalAmount" style="padding: 5px;">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="FinalAmount" name="FinalAmount" value="@ViewBag.Gstplustotal" style="padding: 5px;">
+                                                        <input type="text" class="form-control" id="FinalAmount" name="FinalAmount" value="@ViewBag.gstplustotalAmount" style="padding: 5px;">
                                                     </div>
                                                 </div>
                                             </div>
@@ -780,11 +791,14 @@
        $("#OrderDetailId").val(id);
        var pymnt = parseFloat(cntdue);
        $('#Current_Balance').val(cntdue);
-        var pmnt = 0
+       var pmnt = 0
+       var gstsum2 = 0
+       var gstsum5 = $('#FinalAmount').val();
         $("#orderdetails tr").click(function () {
             if ($(this).find('td:eq(0)').find('input.chcktblservice').is(':not(:checked)')) {
                 var rid1;
                 var oDid1 = $("#OrderDetailid1").val();
+                $("#Discount").val('');
                 $(this).find('td:eq(1)').each(function () {
                     var odid1 = $(this).text();
                     var id1 = odid1.trim();
@@ -807,13 +821,37 @@
                     pymnt -= parseFloat(tbaldue1);
                     $('#Current_Balance').val(pymnt);
                     $('#Current_Balance1').val(pymnt);
+                    var bldue = $('#Current_Balance').val();
+                    $('#FinalAmount1').val(bldue);
+                    $('#FinalAmount').val(bldue);
                 });
+                var ttotal2;
+                var initialbal2;
+                $(this).find('.tsamnt').each(function () {
+                    var opnamnt2 = $(this).text();
+                    var totamnt2 = opnamnt2.replace('Rs ', '');
+                    ttotal2 = totamnt2.replace(/,/g, '');
+                })
+                $(this).find('.sbaldue').each(function () {
+                    var cntbal2 = $(this).text();
+                    var baldue2 = cntbal2.replace('Rs ', '');
+                    initialbal2 = baldue2.replace(/,/g, '');
+                })
+                if (ttotal2 == initialbal2 || ttotal2 != 0 && Intlbal2 != 0) {
+                    var gstplusttamnt2 = parseFloat(initialbal2);
+                    var gstplusfinal2 = gstplusttamnt2 + (gstplusttamnt2 * 18 / 100);      
+                  gstsum5 -= gstplusfinal2;
+                  $('#FinalAmount1').val(gstsum5);
+                  $('#FinalAmount').val(gstsum5);
+                }
+             
             }
             else {
                 var oDid1 = $("#OrderDetailId").val();
                 var odid1 = $(this).find('td:eq(1)').text();
                 rid1 = oDid1 + ',' + odid1;
                 $("#OrderDetailId").val(rid1);
+                $("#Discount").val('');
                 $(this).find('.tsamnt').each(function () {
                     var nt = $(this).text();
                     var nt1 = nt.replace('Rs ', '');
@@ -828,7 +866,29 @@
                     pymnt += parseFloat(tbaldue2);
                     $('#Current_Balance').val(pymnt);
                     $('#Current_Balance1').val(pymnt);
-                });           
+                    var bldue = $('#Current_Balance').val();
+                    $('#FinalAmount1').val(bldue);
+                    $('#FinalAmount').val(bldue);
+                });
+                var ttotal2;
+                var initialbal2;
+                $(this).find('.tsamnt').each(function () {
+                    var opnamnt2 = $(this).text();
+                    var totamnt2 = opnamnt2.replace('Rs ', '');
+                    ttotal2 = totamnt2.replace(/,/g, '');
+                })
+                $(this).find('.sbaldue').each(function () {
+                    var cntbal2 = $(this).text();
+                    var baldue2 = cntbal2.replace('Rs ', '');
+                    initialbal2 = baldue2.replace(/,/g, '');
+                })
+                if (ttotal2 == initialbal2 || ttotal2 != 0 && Intlbal2 != 0) {
+                    var gstplusttamnt2 = parseFloat(initialbal2);
+                    var gstplusfinal2 = gstplusttamnt2 + (gstplusttamnt2 * 18 / 100);
+                    gstsum2 += gstplusfinal2;
+                    $('#FinalAmount1').val(gstsum2);
+                    $('#FinalAmount').val(gstsum2);
+                }
             }
         });
     });
@@ -852,11 +912,12 @@
         }
     });
     var discounttype = '';
-    $('#DiscountType').change(function () {
-        discounttype = $('#DiscountType option:selected').text();
+    $('.selectdiscount').change(function () {
+        discounttype = $('.selectdiscount option:selected').text();
+        $('#Discount').focus();
     });
     
-    $('#Discount').on('input', function () {        
+    $('#Discount').on('input', function () {
         if (discounttype == 'Percentage %') {
             var ttamnt = $('#Opening_Balance').val();
             var discamnt = $('#Discount').val();
@@ -936,7 +997,8 @@
     $(document).ready(function () {
         var sum = 0
         var sum1 = 0
-        var gstsum =0
+        var gstsum = 0
+        var gstsum5 = $('#FinalAmount').val();
         $("#orderdetails tr").click(function () {
             if ($(this).find('td:eq(0)').find('input.chcktblservice').is(':checked')) {
                 var rid;
@@ -944,6 +1006,7 @@
                 var odid = $(this).find('td:eq(1)').text();
                 rid = oid + ',' + odid;
                 $("#OrderDetailId").val(rid);
+                $("#Discount").val('');
                 $(this).find('.tsamnt').each(function () {
                     var opnamnt = $(this).text();
                     var totamnt = opnamnt.replace('Rs ', '');
@@ -980,7 +1043,6 @@
                         var gstplusttamnt = parseFloat(initialbal);
                         var gstplusfinal = gstplusttamnt + (gstplusttamnt * 18 / 100);
                         gstsum += gstplusfinal
-                        alert(gstsum);
                         $('#FinalAmount1').val(gstsum);
                         $('#FinalAmount').val(gstsum);
                     }
@@ -989,6 +1051,7 @@
                 var oid = $("#OrderDetailId").val();
                 var odid = $(this).find('td:eq(1)').text();
                 ksid = oid.replace(odid, '');
+                $("#Discount").val('');
                 $("#OrderDetailId").val(ksid);
                 $(this).find('.tsamnt').each(function () {
                     var opnamnt = $(this).text();
@@ -1008,6 +1071,25 @@
                         $('#FinalAmount1').val(bl);
                         $('#FinalAmount').val(bl);
                 });
+                var ttotal2;
+                var initialbal2;
+                $(this).find('.tsamnt').each(function () {
+                    var opnamnt2 = $(this).text();
+                    var totamnt2 = opnamnt2.replace('Rs ', '');
+                    ttotal2 = totamnt2.replace(/,/g, '');
+                })
+                $(this).find('.sbaldue').each(function () {
+                    var cntbal2 = $(this).text();
+                    var baldue2 = cntbal2.replace('Rs ', '');
+                    initialbal2 = baldue2.replace(/,/g, '');
+                })
+                if (ttotal2 == initialbal2 || ttotal2 != 0 && Intlbal2 != 0) {
+                    var gstplusttamnt2 = parseFloat(initialbal2);
+                    var gstplusfinal2 = gstplusttamnt2 + (gstplusttamnt2 * 18 / 100);
+                    gstsum5 -= gstplusfinal2;
+                    $('#FinalAmount1').val(gstsum5);
+                    $('#FinalAmount').val(gstsum5);
+                }
                 $('#Paymentmode').css('display', 'block');
             }
         });
