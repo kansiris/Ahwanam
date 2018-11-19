@@ -545,7 +545,7 @@ namespace MaaAahwanam.Web.Controllers
                 }
                 if (booktype == "Quote") { msg = "Quotation sent"; }
                 else if (booktype == "booknow") { msg = "Order Successfully placed"; }
-                return Json("msg", JsonRequestBehavior.AllowGet);
+                return Json(msg, JsonRequestBehavior.AllowGet);
             }
             return Json(JsonRequestBehavior.AllowGet);
         }
