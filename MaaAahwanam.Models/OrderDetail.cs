@@ -41,5 +41,7 @@ namespace MaaAahwanam.Models
         public string ExtraDate6 { get; set; }
         public string type { get; set; }
         public string bookingtype { get; set; }
+        public string DiscountType { get; set; }
+        public string OrderType { get; set; }
     }
 }
