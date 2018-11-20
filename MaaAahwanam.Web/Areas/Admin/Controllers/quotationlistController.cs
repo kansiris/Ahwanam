@@ -41,7 +41,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             return View();
         }
 
-        public ActionResult FilteredVendors(string type, string date, string id,string type1)
+        public ActionResult FilteredVendors(string type, string date, string id,string type1,string id1)
         {
           //  var orders = orderService.userOrderList();
           //  var orders1 = orderService.userOrderList1();
@@ -87,7 +87,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             {
                 
                
-                ViewBag.id = id;
+                ViewBag.id = id1;
                 string select = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
 
 
