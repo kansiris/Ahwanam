@@ -303,15 +303,36 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         public JsonResult ParticularQuoteReply(string QuoteID, string id)
         {
             DateTime indianTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
-            var orderss = orderService.allorderslist1().Where(m => m.ordertype == "Quote").ToList();
-            var particularquote1 = quotationListsService.GetAllQuotations().FirstOrDefault(m => m.Id == long.Parse(QuoteID));
+            var s1 = orderService.allorderslist1().ToList().Where(m => m.orderid == long.Parse(QuoteID)).FirstOrDefault(); 
+           //. var s1 = orderss
+
+            QuotationsList quotationsList = new QuotationsList();
+            quotationsList.Name = s1.fname;
+            quotationsList.EmailId = s1.username;
+            quotationsList.ServiceType = s1.servicetype;
+            quotationsList.PhoneNo = s1.customerphoneno;
+            quotationsList.EventStartDate = Convert.ToDateTime(s1.bookdate);
+            quotationsList.EventStartTime = DateTime.UtcNow;
+            quotationsList.EventEnddate = DateTime.UtcNow;
+            quotationsList.EventEndtime = DateTime.UtcNow;
+            quotationsList.VendorId = "";
+            quotationsList.VendorMasterId = s1.vid.ToString();
+            quotationsList.Persons = s1.guestno.ToString();
+            string ip = HttpContext.Request.UserHostAddress;
+            //string hostName = Dns.GetHostName();
+            quotationsList.IPaddress = ip;//Dns.GetHostByName(Dns.GetHostName()).AddressList[0].ToString();
+            quotationsList.UpdatedTime = DateTime.UtcNow;
+            quotationsList.Status = "Active";
+            quotationsList.OrderID = s1.orderid.ToString();
+            quotationListsService.AddQuotationList(quotationsList);
+            //var particularquote1 = quotationListsService.GetAllQuotations().FirstOrDefault(m => m.Id == long.Parse(QuoteID));
             // var particularquote = orderss.Where(m => m.orderid == long.Parse(id));
-            var particularquote = orderss.FirstOrDefault(m => m.orderid == long.Parse(QuoteID));
-            if (particularquote1.FirstTime == null && particularquote1.FirstTimeQuoteDate == null)
-            {
-                particularquote1.FirstTime = id;
-                particularquote1.FirstTimeQuoteDate = indianTime.ToString("dd-MM-yyyy hh:mm:ss");
-            }
+            //var particularquote = orderss.FirstOrDefault(m => m.orderid == long.Parse(QuoteID));
+            //if (particularquote1.FirstTime == null && particularquote1.FirstTimeQuoteDate == null)
+            //{
+            //    particularquote1.FirstTime = id;
+            //    particularquote1.FirstTimeQuoteDate = indianTime.ToString("dd-MM-yyyy hh:mm:ss");
+            //}
             //else if (particularquote.FirstTime != null && particularquote.FirstTimeQuoteDate != null && particularquote.SecondTime == null && particularquote.SecondTimeQuoteDate == null)
             //{
             //    particularquote.SecondTime = id;
@@ -325,12 +346,12 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
             FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/QuoteReply.html"));
             string readFile = File.OpenText().ReadToEnd();
-            readFile = readFile.Replace("[name]", particularquote1.Name);
-            readFile = readFile.Replace("[Email]", particularquote1.EmailId);
-            string txtto = particularquote1.EmailId;
+            readFile = readFile.Replace("[name]", s1.fname);
+            readFile = readFile.Replace("[Email]", s1.username);
+            string txtto = s1.username;
             string txtmessage = readFile;
-            string subj = "Response to your Quote #" + particularquote1.Id + "";
-            int count = quotationListsService.UpdateQuote(particularquote1);
+            string subj = "Response to your Quote #" + s1.orderid + "";
+           // int count = quotationListsService.UpdateQuote(particularquote1);
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
             emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
             return Json("sucess");

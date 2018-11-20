@@ -168,4 +168,165 @@ else if (ViewBag.novendor != null)
 </div>
 
 
-    
+
+<script src="~/Assets/plugins/jquery-2.0.3.min.js"></script>
+<script src="~/Assets/jquery.dataTables.js"></script>
+@*<script>
+    //$(document).ready(function () {
+    //    $('#dataTables-example').DataTable({
+    //        "order": [[0, "desc"]]
+    //    });*@
+
+<script>
+        $('#replyquote').click(function () {
+            var oTable = $('#dataTables-example').dataTable();
+            var ids = '';
+            var rowcollection = oTable.$(".filled-in:checked", { "page": "all" });
+            rowcollection.each(function (index, elem) {
+                var checkbox_value = $(elem).val();
+                if (ids != '')
+                { ids = ids + "," + checkbox_value; }
+                else { ids = checkbox_value; }
+            });
+            //alert(ids);
+            //$('#selectedids').val(ids);
+
+            var QuoteID = '@ViewBag.id';
+            var id = ids;
+
+            $.ajax({
+                url: '/Admin/quotationlist/ParticularQuoteReply',//?QuoteID=' + QuoteID + '&&id=' + ids,
+                dataType: 'json',
+                type: 'post',
+                data: { QuoteID: QuoteID, id: ids },
+                success: function (data) {
+                    alert("Quote Replied Sucessfully!!!")
+                },
+                error: function (data) {
+                    alert("Something Went Wrong Try Again Later!!!")
+                }
+            });
+        });
+
+
+            function popup(qid, bname, cat, subcat, id, subid) {
+                $('#stype').val(cat);
+                $('#substype').val(subcat);
+                $('#vid').val(id);
+                $('#subvid').val(subid);
+                $('#bname').empty().text(bname);
+                $('#qid').val(qid);
+                $('#myModal').css('display', 'block');
+            }
+
+            //function close() {
+            //    $('#myModal').css('display', 'none');
+            //}
+
+            $('.close').click(function () {
+                $('#myModal').css('display', 'none');
+                resetAllValues();
+            });
+
+            function resetAllValues() {
+                $('#myModal').find('input:text').val('');
+                $('#myModal').find('input:hidden').val('');
+            }
+
+            function SaveDetails() {
+                var quoteResponse = {
+                    QuoteID: $('#qid').val(),
+                    BusinessName: $('#bname').text(),
+                    ServiceType: $('#stype').val(),
+                    SubServiceType: $('#substype').val(),
+                    VendorID: $('#vid').val(),
+                    VendorSubID: $('#subvid').val(),
+                    Installments: $('#addinstallments').val(),
+                    FirstInstallment: $('#firstamount').val() + "," + $('#firstdays').val(),
+                    SecondInstallment: $('#secondamount').val() + "," + $('#seconddays').val(),
+                    ThirdInstallment: $('#thirdamount').val() + "," + $('#thirddays').val(),
+                    FourthInstallment: $('#fourthamount').val() + "," + $('#fourthdays').val(),
+                    TokenAmount: $('#TokenAmount').val(),
+                    TotalAmount: $('#TotalAmount').val()
+                }
+                //alert(quoteResponse.QuoteID);
+                $.ajax({
+                    url: '/Admin/quotationlist/SaveInstallments',
+                    type: 'post',
+                    datatype: 'json',
+                    data: quoteResponse,
+                    success: function (data) {
+                        if (data == "Success") {
+                            alert("Installments Added");
+                            $('#myModal').css('display', 'none');
+                            resetAllValues();
+                        }
+                        else if (data == "Failed") {
+                            alert("Failed to Add Installments!!! Try Again");
+                        }
+                    },
+                    error: function (data) {
+                        alert("Something Went Wrong!!! Try Again Later");
+                    }
+                });
+    }
+
+
+          $('#replyquote').click(function () {
+            var oTable = $('#dataTables-example').dataTable();
+            var ids = '';
+            var rowcollection = oTable.$(".call-checkbox:checked", { "page": "all" });
+            rowcollection.each(function (index, elem) {
+                var checkbox_value = $(elem).val();
+                if (ids != '')
+                { ids = ids + "," + checkbox_value; }
+                else { ids = checkbox_value; }
+            });
+            //alert(ids);
+            //$('#selectedids').val(ids);
+
+            var QuoteID = '@ViewBag.id';
+            var id = ids;
+
+            $.ajax({
+                url: '/Admin/Quotations/ParticularQuoteReply',//?QuoteID=' + QuoteID + '&&id=' + ids,
+                dataType: 'json',
+                type: 'post',
+                data: { QuoteID: QuoteID, id: ids },
+                success: function (data) {
+                    alert("Quote Replied Sucessfully!!!")
+                },
+                error: function (data) {
+                    alert("Something Went Wrong Try Again Later!!!")
+                }
+            });
+        });
+
+
+
+        $(function () {
+            $('#addinstallments').change(function () {
+                $('.instoption').hide();
+                //$('#' + $(this).val()).show();
+                var number = $(this).val();
+                if (number == '1') {
+                    $('#1').show();
+                }
+                else if (number == '2') {
+                    $('#1').show();
+                    $('#2').show();
+                }
+                else if (number == '3') {
+                    $('#1').show();
+                    $('#2').show();
+                    $('#3').show();
+                }
+                else if (number == '4') {
+                    $('#1').show();
+                    $('#2').show();
+                    $('#3').show();
+                    $('#4').show();
+                }
+            });
+        });
+</script>
