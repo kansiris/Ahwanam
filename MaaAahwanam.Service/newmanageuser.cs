@@ -62,6 +62,10 @@ namespace MaaAahwanam.Service
         {
             return newusermanager.userOrderList();
         }
+        public List<sp_allvendoruserorddisplay_Result> allOrderList()
+        {
+            return newusermanager.allOrderList();
+        }
         public List<sp_vendoruserorddisplay_Result> userOrderList1()
         {
             return newusermanager.userOrderList1();

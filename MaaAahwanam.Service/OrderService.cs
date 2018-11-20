@@ -29,6 +29,10 @@ namespace MaaAahwanam.Service
         {
             return orderRepository.allorderslist();
         }
+        public List<sp_allvendoruserorddisplay_Result> allorderslist1()
+        {
+            return orderRepository.allorderslist1();
+        }
         public List<Order> getorder()
         {
             return orderRepository.getorder();

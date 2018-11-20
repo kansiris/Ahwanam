@@ -113,18 +113,18 @@
                                                 <p> Service type:@item.ServicType</p>
                                             </td>
                                             <td>
-                                                <p>Orderdetailid: @item.OrderDetailId</p>
-                                                <p>Packagename: @item.PackageName</p>
-                                                <p>price/plate: @item.PerunitPrice </p>
-                                                <p>Guest: @item.Quantity</p>
+                                                <p>Orderdetailid: @item.orderdetailedid</p>
+                                                <p>Packagename: @item.packagename</p>
+                                                <p>price/plate: @item.perunitprice </p>
+                                                <p>Guest: @item.guestno</p>
                                             </td>
                                             <td>
 
-                                                <p> Event Date:@item.OrderDate.ToString("dd-MM-yyyy")</p>
-                                                <p>Book date: @item.BookedDate.ToString("dd-MM-yyyy")</p>
+                                                <p> Event Date:@item.orderdate.ToString("dd-MM-yyyy")</p>
+                                                <p>Book date: @item.bookdate.ToString("dd-MM-yyyy")</p>
 
                                             </td>
-                                            <td>₹@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "")</td>
+                                            <td>₹@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalprice)).Replace(".00", "")</td>
                                         </tr>
                                     </table>
 
@@ -170,18 +170,18 @@
                                                 <p> @item.BusinessName </p><p>@item.ServicType</p>
                                             </td>
                                             <td>
-                                                <p>Orderdetailid: @item.OrderDetailId</p>
-                                                <p>Packagename: @item.PackageName</p>
-                                                <p>price/plate: @item.PerunitPrice </p>
-                                                <p>Guest: @item.Quantity</p>
+                                                <p>Orderdetailid: @item.orderdetailedid</p>
+                                                <p>Packagename: @item.packagename</p>
+                                                <p>price/plate: @item.perunitprice </p>
+                                                <p>Guest: @item.guestno</p>
                                             </td>
                                             <td>
 
-                                                <p> Event Date:@item.OrderDate.ToString("dd-MM-yyyy")</p>
-                                                <p>Book date: @item.BookedDate.ToString("dd-MM-yyyy")</p>
+                                                <p> Event Date:@item.orderdate.ToString("dd-MM-yyyy")</p>
+                                                <p>Book date: @item.bookdate.ToString("dd-MM-yyyy")</p>
 
                                             </td>
-                                            <td>₹@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "")</td>
+                                            <td>₹@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalprice)).Replace(".00", "")</td>
                                         </tr>
                                     </table>
 
@@ -268,9 +268,10 @@
         function sortvendors() {
             var type = $('#selectedservice').val();
             var date = $('#dp1').val();
+            var type1 = $('#otype').val();
             var id1 = $('#vid').val();
             var id = '@Request.QueryString["id"]';
-            var url = '/Admin/quotationlist/FilteredVendors?type=' + type + '&&date=' + date+ '&&id='+id1;
+            var url = '/Admin/quotationlist/FilteredVendors?type=' + type + '&&date=' + date + '&&id1=' + id1 + '&&type1=' + type1 + '&&id=' + id;
             $('#sortvendors').empty().load(url);
         }
 
@@ -291,7 +292,43 @@
                     alert(data);
                 }
             })
-
+        }
+        function SaveDetails() {
+            var quoteResponse = {
+                QuoteID: $('#qid').val(),
+                BusinessName: $('#bname').text(),
+                ServiceType: $('#stype').val(),
+                SubServiceType: $('#substype').val(),
+                VendorID: $('#vid').val(),
+                VendorSubID: $('#subvid').val(),
+                Installments: $('#addinstallments').val(),
+                FirstInstallment: $('#firstamount').val() + "," + $('#firstdays').val(),
+                SecondInstallment: $('#secondamount').val() + "," + $('#seconddays').val(),
+                ThirdInstallment: $('#thirdamount').val() + "," + $('#thirddays').val(),
+                FourthInstallment: $('#fourthamount').val() + "," + $('#fourthdays').val(),
+                TokenAmount: $('#TokenAmount').val(),
+                TotalAmount: $('#TotalAmount').val()
+            }
+            //alert(quoteResponse.QuoteID);
+            $.ajax({
+                url: '/Admin/quotationlist/SaveInstallments',
+                type: 'post',
+                datatype: 'json',
+                data: quoteResponse,
+                success: function (data) {
+                    if (data == "Success") {
+                        alert("Installments Added");
+                        $('#myModal').css('display', 'none');
+                        resetAllValues();
+                    }
+                    else if (data == "Failed") {
+                        alert("Failed to Add Installments!!! Try Again");
+                    }
+                },
+                error: function (data) {
+                    alert("Something Went Wrong!!! Try Again Later");
+                }
+            });
         }
     </script>
 

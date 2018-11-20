@@ -16,6 +16,7 @@ namespace MaaAahwanam.Web.Controllers
     {
         VendorMasterService vendorMasterService = new VendorMasterService();
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
+        newmanageuser newmanageuse = new newmanageuser();
         OrderService orderService = new OrderService();
         OrderdetailsServices orderdetailService = new OrderdetailsServices();
         VendorDashBoardService mnguserservice = new VendorDashBoardService();
@@ -39,21 +40,22 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     var OrderDetailsbyOid = orderdetailService.GetOrderDetails(Oid).ToList();
                     ViewBag.OrderDetailsbyOid = OrderDetailsbyOid;
-                    var orderdetails = orderService.userOrderList().Where(m => m.OrderId == long.Parse(Oid)).ToList();
-                    if (orderdetails == null || orderdetails.Count == 0)
-                    {
-                        var orderdetails1 = orderService.userOrderList1().Where(m => m.OrderId == long.Parse(Oid)).ToList();
-                        ViewBag.UserID = orderdetails1.FirstOrDefault().id;
-                        ViewBag.username = orderdetails1.FirstOrDefault().firstname + " " + orderdetails1.FirstOrDefault().lastname;
+                    //var orderdetails = orderService.userOrderList().Where(m => m.OrderId == long.Parse(Oid)).ToList();
+                    //if (orderdetails == null || orderdetails.Count == 0)
+                    //{
+                    //    var orderdetails1 = orderService.userOrderList1().Where(m => m.OrderId == long.Parse(Oid)).ToList();
+                    var orderdetails1 = newmanageuse.allOrderList().Where(m => m.orderid == long.Parse(Oid)).ToList();
+                    ViewBag.UserID = orderdetails1.FirstOrDefault().cutomerid;
+                        ViewBag.username = orderdetails1.FirstOrDefault().fname + " " + orderdetails1.FirstOrDefault().lname;
                         ViewBag.vendorname = orderdetails1.FirstOrDefault().BusinessName;
                         ViewBag.vendoraddress = orderdetails1.FirstOrDefault().Address + "," + orderdetails1.FirstOrDefault().Landmark + "," + orderdetails1.FirstOrDefault().City;
                         ViewBag.vendorcontact = orderdetails1.FirstOrDefault().ContactNumber;
-                        ViewBag.bookeddate = Convert.ToDateTime(orderdetails1.FirstOrDefault().BookedDate).ToString("MMM d,yyyy");
-                        ViewBag.orderdate = Convert.ToDateTime(orderdetails1.FirstOrDefault().OrderDate).ToString("MMM d,yyyy");
+                        ViewBag.bookeddate = Convert.ToDateTime(orderdetails1.FirstOrDefault().bookdate).ToString("MMM d,yyyy");
+                        ViewBag.orderdate = Convert.ToDateTime(orderdetails1.FirstOrDefault().orderdate).ToString("MMM d,yyyy");
                         ViewBag.orderdetails = orderdetails1;
                         ViewBag.receivedTrnsDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE).ToString("dd - MMM - yyyy");
-                        ViewBag.totalprice = orderdetails1.FirstOrDefault().TotalPrice;
-                        ViewBag.orderdetailid = orderdetails1.FirstOrDefault().OrderDetailId;
+                        ViewBag.totalprice = orderdetails1.FirstOrDefault().totalpric1;
+                        ViewBag.orderdetailid = orderdetails1.FirstOrDefault().orderdetailedid;
                         var payments = rcvpmntservice.getPayments(Oid).ToList();
                         ViewBag.payment = payments;
                         foreach (var reports in payments)
@@ -66,43 +68,43 @@ namespace MaaAahwanam.Web.Controllers
                         decimal paidamount;
                         if (amount == '0')
                         {
-                             paidamount = orderdetails1.FirstOrDefault().TotalPrice;
+                             paidamount = orderdetails1.FirstOrDefault().totalpric1;
                         }
-                        else {  paidamount = orderdetails1.FirstOrDefault().TotalPrice - amount; }
+                        else {  paidamount = orderdetails1.FirstOrDefault().totalpric1 - amount; }
                         ViewBag.paidamount = paidamount;
                     }
-                    else
-                    {
-                        ViewBag.username = orderdetails.FirstOrDefault().FirstName + " " + orderdetails.FirstOrDefault().LastName;
-                        ViewBag.vendorname = orderdetails.FirstOrDefault().BusinessName;
-                        ViewBag.vendoraddress = orderdetails.FirstOrDefault().Address + "," + orderdetails.FirstOrDefault().Landmark + "," + orderdetails.FirstOrDefault().City;
-                        ViewBag.vendorcontact = orderdetails.FirstOrDefault().ContactNumber;
-                        ViewBag.bookeddate = Convert.ToDateTime(orderdetails.FirstOrDefault().BookedDate).ToString("MMM d,yyyy");
-                        ViewBag.orderdate = Convert.ToDateTime(orderdetails.FirstOrDefault().OrderDate).ToString("MMM d,yyyy");
-                        ViewBag.orderdetails = orderdetails;
-                        ViewBag.totalprice = orderdetails.FirstOrDefault().TotalPrice;
-                        ViewBag.orderdetailid = orderdetails.FirstOrDefault().OrderDetailId;
-                        var payments = rcvpmntservice.getPayments(Oid).ToList();
-                        ViewBag.payment = payments;
-                        foreach (var reports in payments)
-                        {
+                //    else
+                //    {
+                //        ViewBag.username = orderdetails.FirstOrDefault().FirstName + " " + orderdetails.FirstOrDefault().LastName;
+                //        ViewBag.vendorname = orderdetails.FirstOrDefault().BusinessName;
+                //        ViewBag.vendoraddress = orderdetails.FirstOrDefault().Address + "," + orderdetails.FirstOrDefault().Landmark + "," + orderdetails.FirstOrDefault().City;
+                //        ViewBag.vendorcontact = orderdetails.FirstOrDefault().ContactNumber;
+                //        ViewBag.bookeddate = Convert.ToDateTime(orderdetails.FirstOrDefault().BookedDate).ToString("MMM d,yyyy");
+                //        ViewBag.orderdate = Convert.ToDateTime(orderdetails.FirstOrDefault().OrderDate).ToString("MMM d,yyyy");
+                //        ViewBag.orderdetails = orderdetails;
+                //        ViewBag.totalprice = orderdetails.FirstOrDefault().TotalPrice;
+                //        ViewBag.orderdetailid = orderdetails.FirstOrDefault().OrderDetailId;
+                //        var payments = rcvpmntservice.getPayments(Oid).ToList();
+                //        ViewBag.payment = payments;
+                //        foreach (var reports in payments)
+                //        {
                             
-                            string amount1 = reports.Received_Amount;
+                //            string amount1 = reports.Received_Amount;
 
-                            amount = Convert.ToInt64(amount) + Convert.ToInt64(amount1);
+                //            amount = Convert.ToInt64(amount) + Convert.ToInt64(amount1);
 
-                        }
-                        decimal paidamount;
-                        if (amount == '0')
-                        {
-                            paidamount = orderdetails.FirstOrDefault().TotalPrice;
-                        }
-                        else { paidamount = orderdetails.FirstOrDefault().TotalPrice - amount; }
-                        ViewBag.paidamount = paidamount;
+                //        }
+                //        decimal paidamount;
+                //        if (amount == '0')
+                //        {
+                //            paidamount = orderdetails.FirstOrDefault().TotalPrice;
+                //        }
+                //        else { paidamount = orderdetails.FirstOrDefault().TotalPrice - amount; }
+                //        ViewBag.paidamount = paidamount;
 
-                    }
-                    ViewBag.orderid = Oid;
-                }
+                //    }
+                //    ViewBag.orderid = Oid;
+                //}
             }
             return View();
         }
@@ -116,8 +118,8 @@ namespace MaaAahwanam.Web.Controllers
             {
                 Order orders = new Order();
                 OrderDetail orderdetils = new OrderDetail();
-                orders.Status = "Payment pending";
-                orderdetils.Status = "Payment pending";
+                orders.Status = "Payment completed";
+                orderdetils.Status = "Payment completed";
                 var status = orderService.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
                 payments.Status = "Payment completed";
             }
@@ -152,22 +154,23 @@ namespace MaaAahwanam.Web.Controllers
                 List<Payment> payment = rcvpmntservice.getPayments(Oid);
                 //long userid = 0;
                 string txtto = "";string name = "";
-                var orderdetails1 = orderService.userOrderList1().Where(m => m.OrderId == long.Parse(Oid)).ToList();
-                if (orderdetails1.Count == 0)
-                {
-                    var orderdetails = orderService.userOrderList().FirstOrDefault(m => m.OrderId == long.Parse(Oid));
-                    txtto = orderdetails.username;
-                    name = home.Capitalise(orderdetails.FirstName + " " + orderdetails.LastName);
-                }
-                else
-                {
-                    txtto = orderdetails1.FirstOrDefault().username;
-                    name = home.Capitalise(orderdetails1.FirstOrDefault().firstname + " " + orderdetails1.FirstOrDefault().lastname);
-                }
+                //var orderdetails1 = orderService.userOrderList1().Where(m => m.OrderId == long.Parse(Oid)).ToList();
+                //if (orderdetails1.Count == 0)
+                //{
+                //    var orderdetails = orderService.userOrderList().FirstOrDefault(m => m.OrderId == long.Parse(Oid));
+                //    txtto = orderdetails.username;
+                //    name = home.Capitalise(orderdetails.FirstName + " " + orderdetails.LastName);
+                //}
+                //else
+                //{
+                //    txtto = orderdetails1.FirstOrDefault().username;
+                //    name = home.Capitalise(orderdetails1.FirstOrDefault().firstname + " " + orderdetails1.FirstOrDefault().lastname);
+                //}
+                var orderdetails1 = newmanageuse.allOrderList().Where(m => m.orderid == long.Parse(Oid)).ToList();
                 StringBuilder cds = new StringBuilder();
                 cds.Append("<table style='border:1px black solid;'><tbody>");
                 cds.Append("<tr><td>Order Id</td><td>Order Date</td><td> Event Type </td><td>Guest Count</td><td>Perunit Price</td><td>Total Price</td></tr>");
-                cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + orderdetails1.FirstOrDefault().OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + orderdetails1.FirstOrDefault().BookedDate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + orderdetails1.FirstOrDefault().EventType + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderdetails1.FirstOrDefault().Quantity + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + orderdetails1.FirstOrDefault().PerunitPrice + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderdetails1.FirstOrDefault().TotalPrice + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+                cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + orderdetails1.FirstOrDefault().orderid + "</td><td style = 'width: 75px;border: 1px black solid;' > " + orderdetails1.FirstOrDefault().bookdate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + orderdetails1.FirstOrDefault().eventtype + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderdetails1.FirstOrDefault().guestno + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + orderdetails1.FirstOrDefault().perunitprice + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderdetails1.FirstOrDefault().totalprice + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
                 cds.Append("</tbody></table>");
                 if (payment.Count != 0)
                 {

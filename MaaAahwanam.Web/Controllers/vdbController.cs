@@ -211,27 +211,30 @@ namespace MaaAahwanam.Web.Controllers
                     //Orders Section
                     DateTime todatedate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE).Date;
                     DateTime tommarowdate = todatedate.AddDays(1).Date;
-                    var orders = orderService.userOrderList().Where(m => m.vid == Convert.ToInt64(vendorMaster.Id)).ToList();
-                    var orders1 = orderService.userOrderList1().Where(m => m.vid == Convert.ToInt64(vendorMaster.Id)).ToList();
+                    //var orders = orderService.userOrderList().Where(m => m.vid == Convert.ToInt64(vendorMaster.Id)).ToList();
+                    //var orders1 = orderService.userOrderList1().Where(m => m.vid == Convert.ToInt64(vendorMaster.Id)).ToList();
+                    var orders = orderService.allorderslist1().Where(m => m.vid == id).ToList();
+
                     ViewBag.currentorders = orders.Where(p => p.orderstatus == "Pending").Count();
                     ViewBag.ordershistory = orders.Where(m => m.orderstatus != "Removed").Count();
-                    ViewBag.order = orders.OrderByDescending(m => m.OrderId);
-                    ViewBag.order1 = orders1.OrderByDescending(m => m.OrderId);
-                    ViewBag.todaysorder = orders.Where(p => p.BookedDate == todatedate).ToList();
-                    ViewBag.todaysorder1 = orders1.Where(p => p.BookedDate == todatedate).ToList();
-                    ViewBag.tommaroworder1 = orders1.Where(p => p.BookedDate == tommarowdate).ToList();
-                    ViewBag.upcominforder1 = orders1.Where(p => p.BookedDate >= tommarowdate).ToList();
-                    ViewBag.tommaroworder = orders.Where(p => p.BookedDate == tommarowdate).ToList();
-                    ViewBag.upcominforder = orders.Where(p => p.BookedDate >= tommarowdate).ToList();
+                    ViewBag.order = orders.OrderByDescending(m => m.orderid);
+                    //ViewBag.order1 = orders1.OrderByDescending(m => m.OrderId);
+                    ViewBag.todaysorder = orders.Where(p => p.bookdate == todatedate).ToList();
+                   // ViewBag.todaysorder1 = orders1.Where(p => p.BookedDate == todatedate).ToList();
+                   // ViewBag.tommaroworder1 = orders1.Where(p => p.BookedDate == tommarowdate).ToList();
+                    //ViewBag.upcominforder1 = orders1.Where(p => p.BookedDate >= tommarowdate).ToList();
+                    ViewBag.tommaroworder = orders.Where(p => p.bookdate == tommarowdate).ToList();
+                    ViewBag.upcominforder = orders.Where(p => p.bookdate >= tommarowdate).ToList();
                 }
                 #endregion
 
                 if (c == "orders")
                 {
-                    var orders = orderService.userOrderList().Where(m => m.vid == id).ToList();
-                    var orders1 = orderService.userOrderList1().Where(m => m.vid == id).ToList();
-                    ViewBag.order = orders.OrderByDescending(m => m.OrderId);
-                    ViewBag.order1 = orders1.OrderByDescending(m => m.OrderId);
+                    var orders = orderService.allorderslist1().Where(m => m.vid == id).ToList();
+                   // var orders = orderService.userOrderList().Where(m => m.vid == id).ToList();
+                  //  var orders1 = orderService.userOrderList1().Where(m => m.vid == id).ToList();
+                    ViewBag.order = orders.OrderByDescending(m => m.orderid);
+                   // ViewBag.order1 = orders1.OrderByDescending(m => m.OrderId);
                 }
                 ViewBag.enable = c; // Type
                 ViewBag.id = id;   // Assigning Vendor Master ID to viewbag

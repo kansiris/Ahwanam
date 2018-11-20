@@ -107,16 +107,16 @@
                                                 @foreach (var item in ViewBag.orderdetails)
                                                 {
                                                     <tr>
-                                                        <td>@item.EventType</td>
-                                                        <td class="text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.PerunitPrice)).Replace(".00", "")</td>
-                                                        <td class="text-center">@item.Quantity</td>
+                                                        <td>@item.eventtype</td>
+                                                        <td class="text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.perunitprice)).Replace(".00", "")</td>
+                                                        <td class="text-center">@item.guestno</td>
                                                         <td class="text-right">
                                                      Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.Due)).Replace(".00", "")
                                                         </td>
                                                         <td class="text-right">
-                                                            Rs  @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "")
+                                                            Rs  @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalpric1)).Replace(".00", "")
                                                         </td>
-                                                        <td class="text-right">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice) + (Convert.ToDouble(@item.TotalPrice) * 0.18)).Replace(".00", "")</td>
+                                                        <td class="text-right">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalpric1) + (Convert.ToDouble(@item.totalpric1) * 0.18)).Replace(".00", "")</td>
                                                     </tr>
                                                 }
                                                 <tr>
@@ -175,25 +175,27 @@
                                                             @foreach (var item in ViewBag.orderdetails)
                                                             {
                                                                 <tr>
-                                                                    <td><input type="checkbox" class="chcktblservice" value="@item.OrderDetailId" /></td>
-                                                                    <td> @item.OrderDetailId </td>
-                                                                    <td class="text-center">@item.ServiceType</td>
-                                                                    <td class="text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.PerunitPrice)).Replace(".00", "")</td>
-                                                                    <td class="text-center">@item.Quantity</td>
+                                                                    <td><input type="checkbox" class="chcktblservice" /></td>
+                                                                    <td class="detailid"> @item.orderdetailedid </td>
+                                                                    <td class="text-center">@item.ServicType</td>
+                                                                    <td class="text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.perunitprice)).Replace(".00", "")</td>
+                                                                    <td class="text-center">@item.guestno</td>
                                                                     <td class="sbaldue text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.Due)).Replace(".00", "")</td>
-                                                                    <td class="tsamnt text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)).Replace(".00", "")</td>
+                                                                    <td class="tsamnt text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalpric1)).Replace(".00", "")</td>
                                                                     <td class="text-center">
-                                                                        <select name="DiscountType" id="DiscountType" class="selectdiscount" style="font-size: 11px;" disabled>
-                                                                            <option value="select">Select Discount Type</option>
-                                                                            <option value="Discpercentage">Percentage %</option>
-                                                                            <option value="flaterate">Flat Rate ₹</option>
-                                                                        </select>
-                                                                        <div class="ServiceDiscount" style="padding-left:5px;padding-top:8px;">
-                                                                            <input type="text" class="disctxt" id="Discount" name="Discount" value="" placeholder="Enter Discount" style="font-size: 12px; width:128px;padding:0px;" disabled>
+                                                                        <div calss="disc">
+                                                                            <select name="DiscountType" id="DiscountType" class="selectdiscount" style="font-size: 11px;" disabled>
+                                                                                <option value="select">Select Discount Type</option>
+                                                                                <option value="Discpercentage">Percentage %</option>
+                                                                                <option value="flaterate">Flat Rate ₹</option>
+                                                                            </select>
+                                                                            <div class="ServiceDiscount" style="padding-left:5px;padding-top:8px;">
+                                                                                <input type="text" class="disctxt" id="Discount" name="Discount" value="" placeholder="Enter Discount" style="font-size: 12px; width:128px;padding:0px;" disabled>
+                                                                            </div>
                                                                         </div>
                                                                     </td>
                                                                     <td class="text-right">18%</td>
-                                                                    <td class="text-right gndttl">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.TotalPrice)+(Convert.ToDouble(@item.TotalPrice)*0.18)).Replace(".00", "")</td>
+                                                                    <td class="text-right gndttl">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalpric1) +(Convert.ToDouble(@item.totalpric1) *0.18)).Replace(".00", "")</td>
                                                                 </tr>  
                                                             }
                                                         </tbody>
@@ -781,13 +783,20 @@
     var sum1= 0
     $("#btnrcvpmnt").on('click', function () {
         $('#Paymentmode').css('display', 'block');
-        //var totalamt = $("#orderdetails tr .tsamnt").text();
-        //alert(totalamt);
-        //var ctamt = totalamt.replace(/\Rs /g, '+');
-        //alert(amt);
+        $('#btnrcvpmnt').css('display', 'none');
         $('#orderdetails tr input.chcktblservice').prop('checked', true);
         if ($('#orderdetails tr input.chcktblservice').is(':checked'))
         {
+            $('#orderdetails tr #DiscountType').removeAttr('disabled');
+            $('#orderdetails tr #Discount').removeAttr('disabled');
+            $("#orderdetails tr .detailid").each(function () {
+                var rid;
+                var oid = $("#OrderDetailId").val();
+                var odid = $(this).text();
+                if (rid == '') rid = odid;
+                else rid = oid + ',' + odid;
+                $("#OrderDetailId").val(rid);
+            });
                         //opening Balance
             $("#orderdetails tr .tsamnt").each(function () {
                 var totalamt = $(this).text();
@@ -809,123 +818,6 @@
 
         }
        
-    });
-
-
-    $("#btnrcvpmnt1").on('click', function () {
-        $('#Paymentmode').css('display', 'block');
-        $('.chcktblservice').prop('checked', true);
-        $('#btnrcvpmnt').css('display', 'none');
-        var totalmnt = $('#Opening_Balance').val();
-        var finalpaying = parseFloat(totalmnt);
-        $('#Opening_Balance').val(totalmnt);
-        //$('#Current_Balance').val(totalmnt);
-        var cntdue = $('#Current_Balance1').val();
-        //var ctbalncedue1 = $('#Current_Balance').val();
-        var id = $("#OrderDetailid1").val();
-        $("#OrderDetailId").val(id);
-        var pymnt = parseFloat(cntdue);
-        $('#Current_Balance').val(cntdue);
-        var pmnt = 0
-        var gstsum2 = 0
-        var gstsum5 = $('#FinalAmount').val();
-        $("#orderdetails tr").click(function () {
-            if ($(this).find('td:eq(0)').find('input.chcktblservice').is(':not(:checked)')) {
-                var rid1;
-                var oDid1 = $("#OrderDetailid1").val();
-                $("#Discount").val('');
-                $(this).find('td:eq(1)').each(function () {
-                    var odid1 = $(this).text();
-                    var id1 = odid1.trim();
-                    rid1 = oDid1.replace(id1, "");
-                    $("#OrderDetailId").val(rid1);
-                    $("#OrderDetailid1").val(rid1);
-                });
-
-                $(this).find('.tsamnt').each(function () {
-                    var bal = $(this).text();
-                    var baldue1 = bal.replace('Rs ', '');
-                    var tbalcurrentdue1 = baldue1.replace(/,/g, '');
-                    finalpaying -= parseFloat(tbalcurrentdue1);
-                    $('#Opening_Balance').val(finalpaying);
-                });
-                $(this).find('.sbaldue').each(function () {
-                    var cntbal1 = $(this).text();
-                    var baldue1 = cntbal1.replace('Rs ', '');
-                    var tbaldue1 = baldue1.replace(/,/g, '');
-                    pymnt -= parseFloat(tbaldue1);
-                    $('#Current_Balance').val(pymnt);
-                    $('#Current_Balance1').val(pymnt);
-                    var bldue = $('#Current_Balance').val();
-                    $('#FinalAmount1').val(bldue);
-                    $('#FinalAmount').val(bldue);
-                });
-                var ttotal2;
-                var initialbal2;
-                $(this).find('.tsamnt').each(function () {
-                    var opnamnt2 = $(this).text();
-                    var totamnt2 = opnamnt2.replace('Rs ', '');
-                    ttotal2 = totamnt2.replace(/,/g, '');
-                })
-                $(this).find('.sbaldue').each(function () {
-                    var cntbal2 = $(this).text();
-                    var baldue2 = cntbal2.replace('Rs ', '');
-                    initialbal2 = baldue2.replace(/,/g, '');
-                })
-                if (ttotal2 == initialbal2 || ttotal2 != 0 && Intlbal2 != 0) {
-                    var gstplusttamnt2 = parseFloat(initialbal2);
-                    var gstplusfinal2 = gstplusttamnt2 + (gstplusttamnt2 * 18 / 100);
-                    gstsum5 -= gstplusfinal2;
-                    $('#FinalAmount1').val(gstsum5);
-                    $('#FinalAmount').val(gstsum5);
-                }
-
-            }
-            else {
-                var oDid1 = $("#OrderDetailId").val();
-                var odid1 = $(this).find('td:eq(1)').text();
-                rid1 = oDid1 + ',' + odid1;
-                $("#OrderDetailId").val(rid1);
-                $("#Discount").val('');
-                $(this).find('.tsamnt').each(function () {
-                    var nt = $(this).text();
-                    var nt1 = nt.replace('Rs ', '');
-                    var tnt = nt1.replace(/,/g, '');
-                    finalpaying += parseFloat(tnt);
-                    $('#Opening_Balance').val(finalpaying);
-                });
-                $(this).find('.sbaldue').each(function () {
-                    var cntbal2 = $(this).text();
-                    var baldue2 = cntbal2.replace('Rs ', '');
-                    var tbaldue2 = baldue2.replace(/,/g, '');
-                    pymnt += parseFloat(tbaldue2);
-                    $('#Current_Balance').val(pymnt);
-                    $('#Current_Balance1').val(pymnt);
-                    var bldue = $('#Current_Balance').val();
-                    $('#FinalAmount1').val(bldue);
-                    $('#FinalAmount').val(bldue);
-                });
-                var ttotal2;
-                var initialbal2;
-                $(this).find('.tsamnt').each(function () {
-                    var opnamnt2 = $(this).text();
-                    var totamnt2 = opnamnt2.replace('Rs ', '');
-                    ttotal2 = totamnt2.replace(/,/g, '');
-                })
-                $(this).find('.sbaldue').each(function () {
-                    var cntbal2 = $(this).text();
-                    var baldue2 = cntbal2.replace('Rs ', '');
-                    initialbal2 = baldue2.replace(/,/g, '');
-                })
-                if (ttotal2 == initialbal2 || ttotal2 != 0 && Intlbal2 != 0) {
-                    var gstplusttamnt2 = parseFloat(initialbal2);
-                    var gstplusfinal2 = gstplusttamnt2 + (gstplusttamnt2 * 18 / 100);
-                    gstsum2 += gstplusfinal2;
-                    $('#FinalAmount1').val(gstsum2);
-                    $('#FinalAmount').val(gstsum2);
-                }
-            }
-        });
     });
 
     $('#Received_Amount').on('input', function () {
@@ -1187,5 +1079,120 @@
     //    });
 
     //});*@
+@*$("#btnrcvpmnt1").on('click', function () {
+        $('#Paymentmode').css('display', 'block');
+        $('.chcktblservice').prop('checked', true);
+        $('#btnrcvpmnt').css('display', 'none');
+        var totalmnt = $('#Opening_Balance').val();
+        var finalpaying = parseFloat(totalmnt);
+        $('#Opening_Balance').val(totalmnt);
+        //$('#Current_Balance').val(totalmnt);
+        var cntdue = $('#Current_Balance1').val();
+        //var ctbalncedue1 = $('#Current_Balance').val();
+        var id = $("#OrderDetailid1").val();
+        $("#OrderDetailId").val(id);
+        var pymnt = parseFloat(cntdue);
+        $('#Current_Balance').val(cntdue);
+        var pmnt = 0
+        var gstsum2 = 0
+        var gstsum5 = $('#FinalAmount').val();
+        $("#orderdetails tr").click(function () {
+            if ($(this).find('td:eq(0)').find('input.chcktblservice').is(':not(:checked)')) {
+                var rid1;
+                var oDid1 = $("#OrderDetailid1").val();
+                $("#Discount").val('');
+                $(this).find('td:eq(1)').each(function () {
+                    var odid1 = $(this).text();
+                    var id1 = odid1.trim();
+                    rid1 = oDid1.replace(id1, "");
+                    $("#OrderDetailId").val(rid1);
+                    $("#OrderDetailid1").val(rid1);
+                });
+
+                $(this).find('.tsamnt').each(function () {
+                    var bal = $(this).text();
+                    var baldue1 = bal.replace('Rs ', '');
+                    var tbalcurrentdue1 = baldue1.replace(/,/g, '');
+                    finalpaying -= parseFloat(tbalcurrentdue1);
+                    $('#Opening_Balance').val(finalpaying);
+                });
+                $(this).find('.sbaldue').each(function () {
+                    var cntbal1 = $(this).text();
+                    var baldue1 = cntbal1.replace('Rs ', '');
+                    var tbaldue1 = baldue1.replace(/,/g, '');
+                    pymnt -= parseFloat(tbaldue1);
+                    $('#Current_Balance').val(pymnt);
+                    $('#Current_Balance1').val(pymnt);
+                    var bldue = $('#Current_Balance').val();
+                    $('#FinalAmount1').val(bldue);
+                    $('#FinalAmount').val(bldue);
+                });
+                var ttotal2;
+                var initialbal2;
+                $(this).find('.tsamnt').each(function () {
+                    var opnamnt2 = $(this).text();
+                    var totamnt2 = opnamnt2.replace('Rs ', '');
+                    ttotal2 = totamnt2.replace(/,/g, '');
+                })
+                $(this).find('.sbaldue').each(function () {
+                    var cntbal2 = $(this).text();
+                    var baldue2 = cntbal2.replace('Rs ', '');
+                    initialbal2 = baldue2.replace(/,/g, '');
+                })
+                if (ttotal2 == initialbal2 || ttotal2 != 0 && Intlbal2 != 0) {
+                    var gstplusttamnt2 = parseFloat(initialbal2);
+                    var gstplusfinal2 = gstplusttamnt2 + (gstplusttamnt2 * 18 / 100);
+                    gstsum5 -= gstplusfinal2;
+                    $('#FinalAmount1').val(gstsum5);
+                    $('#FinalAmount').val(gstsum5);
+                }
+
+            }
+            else {
+                var oDid1 = $("#OrderDetailId").val();
+                var odid1 = $(this).find('td:eq(1)').text();
+                rid1 = oDid1 + ',' + odid1;
+                $("#OrderDetailId").val(rid1);
+                $("#Discount").val('');
+                $(this).find('.tsamnt').each(function () {
+                    var nt = $(this).text();
+                    var nt1 = nt.replace('Rs ', '');
+                    var tnt = nt1.replace(/,/g, '');
+                    finalpaying += parseFloat(tnt);
+                    $('#Opening_Balance').val(finalpaying);
+                });
+                $(this).find('.sbaldue').each(function () {
+                    var cntbal2 = $(this).text();
+                    var baldue2 = cntbal2.replace('Rs ', '');
+                    var tbaldue2 = baldue2.replace(/,/g, '');
+                    pymnt += parseFloat(tbaldue2);
+                    $('#Current_Balance').val(pymnt);
+                    $('#Current_Balance1').val(pymnt);
+                    var bldue = $('#Current_Balance').val();
+                    $('#FinalAmount1').val(bldue);
+                    $('#FinalAmount').val(bldue);
+                });
+                var ttotal2;
+                var initialbal2;
+                $(this).find('.tsamnt').each(function () {
+                    var opnamnt2 = $(this).text();
+                    var totamnt2 = opnamnt2.replace('Rs ', '');
+                    ttotal2 = totamnt2.replace(/,/g, '');
+                })
+                $(this).find('.sbaldue').each(function () {
+                    var cntbal2 = $(this).text();
+                    var baldue2 = cntbal2.replace('Rs ', '');
+                    initialbal2 = baldue2.replace(/,/g, '');
+                })
+                if (ttotal2 == initialbal2 || ttotal2 != 0 && Intlbal2 != 0) {
+                    var gstplusttamnt2 = parseFloat(initialbal2);
+                    var gstplusfinal2 = gstplusttamnt2 + (gstplusttamnt2 * 18 / 100);
+                    gstsum2 += gstplusfinal2;
+                    $('#FinalAmount1').val(gstsum2);
+                    $('#FinalAmount').val(gstsum2);
+                }
+            }
+        });
+    });*@
 
     

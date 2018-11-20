@@ -26,24 +26,68 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         // GET: Admin/quotationlist
         public ActionResult Index()
         {
-            var orderss = orderService.allorderslist().Where(m => m.ordertype == "Quote").ToList();
-            ViewBag.order = orderss.OrderByDescending(m => m.OrderId);
+            var orderss = orderService.allorderslist1().Where(m => m.ordertype == "Quote").ToList();
+           // var orderss = orderService.allorderslist().Where(m => m.ordertype == "Quote").ToList();
+            ViewBag.order = orderss.OrderByDescending(m => m.orderid);
             return View();
         }
         public ActionResult QuoteReply(string id)
         {
-            var orders = orderService.userOrderList().Where(m => m.ordertype == "Quote").ToList();
-            var orders1 = orderService.userOrderList1().Where(m => m.ordertype == "Quote").ToList();
-            ViewBag.orderdetails = orders.Where(m => m.OrderId == long.Parse(id));
-            ViewBag.orderdetails1 = orders1.Where(m => m.OrderId == long.Parse(id));
+            var orderss = orderService.allorderslist1().Where(m => m.ordertype == "Quote").ToList();
+            var orders = orderss.Where(m => m.orderid == long.Parse(id));
+           // var orders1 = orderService.userOrderList1().Where(m => m.OrderId == long.Parse(id));
+            ViewBag.orderdetails = orders;
+           // ViewBag.orderdetails1 = orders1;
             return View();
         }
 
-        public ActionResult FilteredVendors(string type, string date, string id)
+        public ActionResult FilteredVendors(string type, string date, string id,string type1,string id1)
         {
-            if(type != null && date != null)
+          //  var orders = orderService.userOrderList();
+          //  var orders1 = orderService.userOrderList1();
+          // var s13 = orders.Where(m => m.OrderId == long.Parse(id));
+          //var  s3 = orders1.Where(m => m.OrderId == long.Parse(id));
+          //  var order1;
+          //  if (s13 == null) { order1 = s3; } else { order1 = s3; }
+           
+          // // var orders = orderService.alluserOrderList(type1).Where(m => m.ordertype == "Quote").ToList();
+          //  var s12 = ViewBag.orderdetails = orders.Where(m => m.OrderId == long.Parse(id)).ToList();
+
+          //  var s1 = ViewBag.orderdetails1 = orders.Where(m => m.OrderId == long.Parse(id)).FirstOrDefault();
+          //  string txtto;
+          //  if (s1.orderbooktype == "Vendor")
+          //  {
+          //      var userlogdetails = mnguserservice.getuserbyid(Convert.ToInt32(s1.userid));
+          //      string txtto1 = userlogdetails.email;
+          //      string name1 = userlogdetails.firstname;
+          //      txtto = txtto1;
+          //      name = name1;
+          //      name = Capitalise(name);
+
+          //  }
+          //  else if (s1.orderbooktype == "User")
+          //  {
+          //      var userdata = userLoginDetailsService.GetUserId((int)s1.userid);
+          //      var userdata1 = userLoginDetailsService.GetUser((int)s1.userid);
+          //      string txtto2 = userdata.UserName;
+          //      string name2 = userdata1.FirstName;
+          //      txtto = txtto2;
+          //      name = name2;
+          //      name = Capitalise(name);
+
+          //  }
+          //  string OrderId = Convert.ToString(s1.OrderId);
+          //  string url = Request.Url.Scheme + "://" + Request.Url.Authority;
+          //  ViewBag.ser = s12;
+          //  ViewBag.url = url;
+          //  ViewBag.name = name;
+          //  ViewBag.OrderId = OrderId;
+
+            if (type != null && date != null)
             {
-                ViewBag.id = id;
+                
+               
+                ViewBag.id = id1;
                 string select = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
 
 
@@ -256,6 +300,8 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         public JsonResult ParticularQuoteReply(string QuoteID, string id)
         {
             DateTime indianTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            var orderss = orderService.allorderslist1().Where(m => m.ordertype == "Quote").ToList();
+           // var particularquote = orderss.Where(m => m.orderid == long.Parse(id));
             var particularquote = quotationListsService.GetAllQuotations().FirstOrDefault(m => m.Id == long.Parse(QuoteID));
             if (particularquote.FirstTime == null && particularquote.FirstTimeQuoteDate == null)
             {
