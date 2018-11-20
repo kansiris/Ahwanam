@@ -679,12 +679,14 @@ $(document).on('click', '.updatepkg', function () {
         for (var i = 0; i < availableitems.length; i++) {
             var value = $.inArray(availableitems[i].replace('/', '_'), selectedlist.split(','));
             if (b.indexOf(value) == -1) {
+                //alert(b.indexOf(value));
                 if (value != -1) {
                     b.push(value);
                     splitteddblist[value] = newlists.split(',')[i];
                 }
                 else {
                     splitteddblist.push(newlists.split(',')[i]);
+                    //alert(newlists.split(',')[i]);
                 }
             }
         }
@@ -693,6 +695,7 @@ $(document).on('click', '.updatepkg', function () {
     else {
         menuitems = newlists;
     }
+    alert(menuitems);
     var pkgid = $(this).prev('input.packageid').val();
     var packagename = parentdiv.find('#pkgname').val();
     var pkgcategory = parentdiv.find("input[type=radio]:checked").val();
@@ -752,8 +755,7 @@ $(document).on('click', '.updatepkg', function () {
             timeslot: timeslot,
             menuitems : menuitems,
             menu:menu
-        }
-        //alert(menuitems);
+        }        
         $.ajax({
             url: '/vdb/UpdatePackage',
             type: 'post',
