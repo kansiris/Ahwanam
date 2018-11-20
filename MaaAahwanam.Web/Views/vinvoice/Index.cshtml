@@ -188,8 +188,8 @@
                                                                             <option value="Discpercentage">Percentage %</option>
                                                                             <option value="flaterate">Flat Rate ₹</option>
                                                                         </select>
-                                                                        <div class="form-group" style="padding-left:5px;padding-top:8px;">
-                                                                            <input type="text" class="form-control disctxt" id="Discount" name="Discount" value="" placeholder="Enter Discount" style="font-size: 12px; width:128px;padding:0px;" disabled>
+                                                                        <div class="ServiceDiscount" style="padding-left:5px;padding-top:8px;">
+                                                                            <input type="text" class="disctxt" id="Discount" name="Discount" value="" placeholder="Enter Discount" style="font-size: 12px; width:128px;padding:0px;" disabled>
                                                                         </div>
                                                                     </td>
                                                                     <td class="text-right">18%</td>
@@ -777,7 +777,42 @@
             }
         });
     });
+    var sum = 0
+    var sum1= 0
     $("#btnrcvpmnt").on('click', function () {
+        $('#Paymentmode').css('display', 'block');
+        //var totalamt = $("#orderdetails tr .tsamnt").text();
+        //alert(totalamt);
+        //var ctamt = totalamt.replace(/\Rs /g, '+');
+        //alert(amt);
+        $('#orderdetails tr input.chcktblservice').prop('checked', true);
+        if ($('#orderdetails tr input.chcktblservice').is(':checked'))
+        {
+                        //opening Balance
+            $("#orderdetails tr .tsamnt").each(function () {
+                var totalamt = $(this).text();
+                var ctamt = totalamt.replace(/\Rs /g, '').replace(/,/g, '');
+                sum += parseInt(ctamt);
+                      //alert(sum)
+                $('#Opening_Balance').val(sum);
+
+            });
+                   //currentbalance
+            $("#orderdetails tr .sbaldue").each(function () {
+                var totalamt = $(this).text();
+                var ctamt = totalamt.replace(/\Rs /g, '').replace(/,/g, '');
+                sum1 += parseInt(ctamt);
+                //alert(sum1)
+                $('#Current_Balance').val(sum1);
+
+            });
+
+        }
+       
+    });
+
+
+    $("#btnrcvpmnt1").on('click', function () {
         $('#Paymentmode').css('display', 'block');
         $('.chcktblservice').prop('checked', true);
         $('#btnrcvpmnt').css('display', 'none');
