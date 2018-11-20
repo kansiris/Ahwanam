@@ -232,7 +232,7 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     var orders = orderService.allorderslist1().Where(m => m.vid == id).ToList();
                    // var orders = orderService.userOrderList().Where(m => m.vid == id).ToList();
-                    var orders1 = orderService.userOrderList1().Where(m => m.vid == id).ToList();
+                  //  var orders1 = orderService.userOrderList1().Where(m => m.vid == id).ToList();
                     ViewBag.order = orders.OrderByDescending(m => m.orderid);
                    // ViewBag.order1 = orders1.OrderByDescending(m => m.OrderId);
                 }

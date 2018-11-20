@@ -46,22 +46,24 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.Vendor = vendorMasterService.GetVendor(Convert.ToInt64(Vendormaster.Id));
                 if (oid != null && oid != "")
                 {
-                    var orderdetails = newmanageuse.userOrderList().Where(m=>m.OrderId == long.Parse(oid)).ToList();
-                    if (orderdetails == null || orderdetails.Count == 0)
-                    {
-                      var  orderdetails1 = newmanageuse.userOrderList1().Where(m => m.OrderId == long.Parse(oid)).ToList();
-                        ViewBag.username = orderdetails1.FirstOrDefault().firstname + " " + orderdetails1.FirstOrDefault().lastname;
+
+                    var orderdetails1 = newmanageuse.allOrderList().Where(m=>m.orderid == long.Parse(oid)).ToList();
+                    //var orderdetails = newmanageuse.userOrderList().Where(m=>m.OrderId == long.Parse(oid)).ToList();
+                    //if (orderdetails == null || orderdetails.Count == 0)
+                    //{
+                    //  var  orderdetails1 = newmanageuse.userOrderList1().Where(m => m.OrderId == long.Parse(oid)).ToList();
+                      ViewBag.username = orderdetails1.FirstOrDefault().fname + " " + orderdetails1.FirstOrDefault().lname;
                         ViewBag.vendorname = orderdetails1.FirstOrDefault().BusinessName;
                         ViewBag.vendoraddress = orderdetails1.FirstOrDefault().Address + "," + orderdetails1.FirstOrDefault().Landmark + "," + orderdetails1.FirstOrDefault().City;
                         ViewBag.vendorcontact = orderdetails1.FirstOrDefault().ContactNumber;
-                        ViewBag.bookeddate = Convert.ToDateTime(orderdetails1.FirstOrDefault().BookedDate).ToString("MMM d,yyyy");
-                        ViewBag.orderdate = Convert.ToDateTime(orderdetails1.FirstOrDefault().OrderDate).ToString("MMM d,yyyy");
-                        ViewBag.Servicetype = orderdetails1.FirstOrDefault().ServiceType;
-                        ViewBag.serviceprice = orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity;
-                        ViewBag.orderdetailid = orderdetails1.FirstOrDefault().OrderDetailId;
+                        ViewBag.bookeddate = Convert.ToDateTime(orderdetails1.FirstOrDefault().bookdate).ToString("MMM d,yyyy");
+                        ViewBag.orderdate = Convert.ToDateTime(orderdetails1.FirstOrDefault().orderdate).ToString("MMM d,yyyy");
+                        ViewBag.Servicetype = orderdetails1.FirstOrDefault().servicetype;
+                        ViewBag.serviceprice = orderdetails1.FirstOrDefault().perunitprice * orderdetails1.FirstOrDefault().guestno;
+                        ViewBag.orderdetailid = orderdetails1.FirstOrDefault().orderdetailedid;
                         ViewBag.orderdetails = orderdetails1;                     
-                        ViewBag.totalprice = orderdetails1.FirstOrDefault().TotalPrice;
-                        ViewBag.orderdetailid = orderdetails1.FirstOrDefault().OrderDetailId;
+                        ViewBag.totalprice = orderdetails1.FirstOrDefault().totalprice;
+                     //   ViewBag.orderdetailid = orderdetails1.FirstOrDefault().orderdetailedid;
                         var payments = rcvpaymentservice.getPayments(oid).ToList();
                         if (payments.Count != 0)
                         {
@@ -76,9 +78,9 @@ namespace MaaAahwanam.Web.Controllers
                         foreach (var item in orderdetails1)
                         {
 
-                            odid = odid + item.OrderDetailId + ",";
+                            odid = odid + item.orderdetailedid + ",";
                             ViewBag.orderdetailid5 = odid;
-                            var price = item.TotalPrice;
+                            var price = item.totalprice;
                             tsprice = Convert.ToInt64(tsprice) + Convert.ToInt64(price);
                             ViewBag.total = tsprice;
                             var bdue = item.Due;
@@ -106,77 +108,78 @@ namespace MaaAahwanam.Web.Controllers
                         decimal paidamount;
                         if (amount == '0')
                         {
-                            paidamount = orderdetails1.FirstOrDefault().TotalPrice;
+                            paidamount = orderdetails1.FirstOrDefault().totalprice;
                             //paidamount = orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity;
 
                         }
                         else
                         {
-                            paidamount = orderdetails1.FirstOrDefault().TotalPrice - amount; //paidamount = (orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity) - amount; 
+                            paidamount = orderdetails1.FirstOrDefault().totalprice - amount; //paidamount = (orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity) - amount; 
                             ViewBag.paidamount = paidamount;
                         }
                     }
-                    else
-                    {
-                        ViewBag.username = orderdetails.FirstOrDefault().FirstName + " " + orderdetails.FirstOrDefault().LastName;
-                        ViewBag.vendorname = orderdetails.FirstOrDefault().BusinessName;
-                        ViewBag.vendoraddress = orderdetails.FirstOrDefault().Address + "," + orderdetails.FirstOrDefault().Landmark + "," + orderdetails.FirstOrDefault().City;
-                        ViewBag.vendorcontact = orderdetails.FirstOrDefault().ContactNumber;
-                        ViewBag.bookeddate = Convert.ToDateTime(orderdetails.FirstOrDefault().BookedDate).ToString("MMM d,yyyy");
-                        ViewBag.orderdate = Convert.ToDateTime(orderdetails.FirstOrDefault().OrderDate).ToString("MMM d,yyyy");
-                        ViewBag.Servicetype = orderdetails.FirstOrDefault().ServiceType;
-                        ViewBag.serviceprice = orderdetails.FirstOrDefault().PerunitPrice * orderdetails.FirstOrDefault().Quantity;
-                        ViewBag.orderdetails = orderdetails;
-                        ViewBag.totalprice = orderdetails.FirstOrDefault().TotalPrice;
-                        ViewBag.orderdetailid = orderdetails.FirstOrDefault().OrderDetailId;
-                        var payments = rcvpaymentservice.getPayments(oid).ToList();
-                        string odid = string.Empty;
-                        foreach (var i in orderdetails)
-                        {
-                            odid = odid + i.OrderDetailId + ",";
-                            ViewBag.orderdetailid5 = odid;
-                            var price = i.TotalPrice;
-                            tsprice = Convert.ToInt64(tsprice) + Convert.ToInt64(price);
-                            ViewBag.total = tsprice;
-                            var bdue = i.Due;
-                            balndue = Convert.ToInt64(balndue) + Convert.ToInt64(bdue);
-                            ViewBag.balance = balndue;
+                //    else
+                //    {
+                //        ViewBag.username = orderdetails.FirstOrDefault().FirstName + " " + orderdetails.FirstOrDefault().LastName;
+                //        ViewBag.vendorname = orderdetails.FirstOrDefault().BusinessName;
+                //        ViewBag.vendoraddress = orderdetails.FirstOrDefault().Address + "," + orderdetails.FirstOrDefault().Landmark + "," + orderdetails.FirstOrDefault().City;
+                //        ViewBag.vendorcontact = orderdetails.FirstOrDefault().ContactNumber;
+                //        ViewBag.bookeddate = Convert.ToDateTime(orderdetails.FirstOrDefault().BookedDate).ToString("MMM d,yyyy");
+                //        ViewBag.orderdate = Convert.ToDateTime(orderdetails.FirstOrDefault().OrderDate).ToString("MMM d,yyyy");
+                //        ViewBag.Servicetype = orderdetails.FirstOrDefault().ServiceType;
+                //        ViewBag.serviceprice = orderdetails.FirstOrDefault().PerunitPrice * orderdetails.FirstOrDefault().Quantity;
+                //        ViewBag.orderdetails = orderdetails;
+                //        ViewBag.totalprice = orderdetails.FirstOrDefault().TotalPrice;
+                //        ViewBag.orderdetailid = orderdetails.FirstOrDefault().OrderDetailId;
+                //        var payments = rcvpaymentservice.getPayments(oid).ToList();
+                //        string odid = string.Empty;
+                //        foreach (var i in orderdetails)
+                //        {
+                //            odid = odid + i.OrderDetailId + ",";
+                //            ViewBag.orderdetailid5 = odid;
+                //            var price = i.TotalPrice;
+                //            tsprice = Convert.ToInt64(tsprice) + Convert.ToInt64(price);
+                //            ViewBag.total = tsprice;
+                //            var bdue = i.Due;
+                //            balndue = Convert.ToInt64(balndue) + Convert.ToInt64(bdue);
+                //            ViewBag.balance = balndue;
 
-                        }
-                        ViewBag.payment = payments;
-                        foreach (var reports in payments)
-                        {
-                            string amount1 = reports.Received_Amount;
+                //        }
+                //        ViewBag.payment = payments;
+                //        foreach (var reports in payments)
+                //        {
+                //            string amount1 = reports.Received_Amount;
 
-                            amount = Convert.ToInt64(amount) + Convert.ToInt64(amount1);
+                //            amount = Convert.ToInt64(amount) + Convert.ToInt64(amount1);
 
-                        }
-                        decimal paidamount;
-                        if (amount == '0')
-                        {
-                            paidamount = orderdetails.FirstOrDefault().TotalPrice;
-                            //paidamount = orderdetails.FirstOrDefault().PerunitPrice * orderdetails.FirstOrDefault().Quantity;
-                        }
-                        else
-                        {
-                            paidamount = orderdetails.FirstOrDefault().TotalPrice - amount; paidamount = (orderdetails.FirstOrDefault().PerunitPrice * orderdetails.FirstOrDefault().Quantity) - amount; }
-                        ViewBag.paidamount = paidamount;
-                    }
-                    //ViewBag.paymentlist = rcvpaymentservice.Getpmntdetails(oid);
-                    ViewBag.orderid = oid;
+                //        }
+                //        decimal paidamount;
+                //        if (amount == '0')
+                //        {
+                //            paidamount = orderdetails.FirstOrDefault().TotalPrice;
+                //            //paidamount = orderdetails.FirstOrDefault().PerunitPrice * orderdetails.FirstOrDefault().Quantity;
+                //        }
+                //        else
+                //        {
+                //            paidamount = orderdetails.FirstOrDefault().TotalPrice - amount; paidamount = (orderdetails.FirstOrDefault().PerunitPrice * orderdetails.FirstOrDefault().Quantity) - amount; }
+                //        ViewBag.paidamount = paidamount;
+                //    }
+                //    //ViewBag.paymentlist = rcvpaymentservice.Getpmntdetails(oid);
+                //    ViewBag.orderid = oid;
                     
-                }
+                //}
             }
             return View();
         }
         [HttpPost]
         public ActionResult Index(Payment payments,string Received_Amount,string OrderDetailId)
         {
-            var orderdetails = newmanageuse.userOrderList().Where(m => m.OrderId == long.Parse(payments.OrderId)).ToList();
-            if (orderdetails == null || orderdetails.Count == 0)
-            {
-                var orderdetails1 = newmanageuse.userOrderList1().Where(m => m.OrderId == long.Parse(payments.OrderId)).ToList();
-                payments.User_Type = "VendorUser";
+            //var orderdetails = newmanageuse.userOrderList().Where(m => m.OrderId == long.Parse(payments.OrderId)).ToList();
+            //if (orderdetails == null || orderdetails.Count == 0)
+            //{
+            //    var orderdetails1 = newmanageuse.userOrderList1().Where(m => m.OrderId == long.Parse(payments.OrderId)).ToList();
+            var orderdetails1 = newmanageuse.allOrderList().Where(m => m.orderid == long.Parse(payments.OrderId)).ToList();
+               payments.User_Type = "VendorUser";
                 payments.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                 payments.Payment_Date = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                 var odis = OrderDetailId.Trim(',').Split(',');
@@ -195,7 +198,7 @@ namespace MaaAahwanam.Web.Controllers
                         payments.OrderDetailId = orderdetailid;
                         //var datarecord = orderdetailservices.GetOrderDetailsByOrderdetailid(Convert.ToInt32(orderdetailid));
                         decimal dueamount;
-                        var ksorder = orderdetails1.Where(m => m.OrderDetailId == long.Parse(orderdetailid)).FirstOrDefault();
+                        var ksorder = orderdetails1.Where(m => m.orderdetailedid == long.Parse(orderdetailid)).FirstOrDefault();
                         dueamount = Convert.ToDecimal(ksorder.Due);
                         if (dueamount != 0)
                         {
@@ -243,7 +246,7 @@ namespace MaaAahwanam.Web.Controllers
                         }
                     }
                 }
-            }
+            //}
             return Json("Payment Successfull", JsonRequestBehavior.AllowGet);
                 //return Content("<script language='javascript' type='text/javascript'>alert('payment Successfull');location.href='/vinvoice'</script>");
         }
@@ -262,22 +265,23 @@ namespace MaaAahwanam.Web.Controllers
                 Vendormaster Vendormaster = vendorMasterService.GetVendorByEmail(email);
                 List<Payment> payment = rcvpaymentservice.getPayments(oid);
                 string txtto = ""; string name = "";
-                var orderdetails1 = newmanageuse.userOrderList1().Where(m => m.OrderId == long.Parse(oid)).ToList();
-                if (orderdetails1.Count == 0)
-                {
-                    var orderdetails = newmanageuse.userOrderList().FirstOrDefault(m => m.OrderId == long.Parse(oid));
-                    txtto = orderdetails.username;
-                    name = home.Capitalise(orderdetails.FirstName + " " + orderdetails.LastName);
-                }
-                else
-                {
-                    txtto = orderdetails1.FirstOrDefault().username;
-                    name = home.Capitalise(orderdetails1.FirstOrDefault().firstname + " " + orderdetails1.FirstOrDefault().lastname);
-                }
+                var orderdetails1 = newmanageuse.allOrderList().Where(m => m.orderid == long.Parse(oid)).ToList();
+                //var orderdetails1 = newmanageuse.userOrderList1().Where(m => m.OrderId == long.Parse(oid)).ToList();
+                //if (orderdetails1.Count == 0)
+                //{
+                //    var orderdetails = newmanageuse.userOrderList().FirstOrDefault(m => m.OrderId == long.Parse(oid));
+                //    txtto = orderdetails.username;
+                //    name = home.Capitalise(orderdetails.FirstName + " " + orderdetails.LastName);
+                //}
+                //else
+                //{
+                //    txtto = orderdetails1.FirstOrDefault().username;
+                //    name = home.Capitalise(orderdetails1.FirstOrDefault().firstname + " " + orderdetails1.FirstOrDefault().lastname);
+                //}
                 StringBuilder cds = new StringBuilder();
                 cds.Append("<table style='border:1px black solid;'><tbody>");
                 cds.Append("<tr><td>Order Id</td><td>Order Date</td><td> Event Type </td><td>Guest Count</td><td>Perunit Price</td><td>Total Price</td></tr>");
-                cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + orderdetails1.FirstOrDefault().OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + orderdetails1.FirstOrDefault().BookedDate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + orderdetails1.FirstOrDefault().EventType + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderdetails1.FirstOrDefault().Quantity + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + orderdetails1.FirstOrDefault().PerunitPrice + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderdetails1.FirstOrDefault().TotalPrice + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+                cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + orderdetails1.FirstOrDefault().orderid + "</td><td style = 'width: 75px;border: 1px black solid;' > " + orderdetails1.FirstOrDefault().bookdate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + orderdetails1.FirstOrDefault().eventtype + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderdetails1.FirstOrDefault().guestno + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + orderdetails1.FirstOrDefault().perunitprice + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderdetails1.FirstOrDefault().totalprice + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
                 cds.Append("</tbody></table>");
                 if (payment.Count != 0) { 
                 cds.Append("<table style='border:1px black solid;'><tbody>");
