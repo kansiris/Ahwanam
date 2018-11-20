@@ -20,5 +20,9 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.Payment.Where(o => o.OrderId == oid).OrderByDescending(m=>m.Payment_Id).ToList();
         }
+        public List<Payment> getPaymentsbyodid(string orderdetailid)
+        {
+            return _dbContext.Payment.Where(o =>o.OrderDetailId == orderdetailid).OrderByDescending(m => m.Payment_Id).ToList();
+        }
     }
 }

@@ -64,16 +64,18 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.orderdetails = orderdetails1;                     
                         ViewBag.totalprice = orderdetails1.FirstOrDefault().totalprice;
                      //   ViewBag.orderdetailid = orderdetails1.FirstOrDefault().orderdetailedid;
-                        var payments = rcvpaymentservice.getPayments(oid).ToList();
-                        if (payments.Count != 0)
-                        {
-                            var disc = payments.FirstOrDefault().Discount;
-                            ViewBag.discount = Convert.ToDouble(disc);
-                        }
-                        else
-                        {
-                            ViewBag.discount = Convert.ToDouble(Discount);
-                        }
+                     var odid1= orderdetails1.FirstOrDefault().orderdetailedid.ToString();
+                    var payments = rcvpaymentservice.getPayments(oid).ToList();
+                    var paymentsbyodid = rcvpaymentservice.getPaymentsbyodid(odid1).ToList();
+                        //if (payments.Count != 0)
+                        //{
+                        //    var disc = payments.FirstOrDefault().Discount;
+                        //    ViewBag.discount = Convert.ToDouble(disc);
+                        //}
+                        //else
+                        //{
+                        //    ViewBag.discount = Convert.ToDouble(Discount);
+                        //}
                         string odid = string.Empty;
                         foreach (var item in orderdetails1)
                         {
