@@ -37,57 +37,59 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             var orders = orderss.Where(m => m.orderid == long.Parse(id));
            // var orders1 = orderService.userOrderList1().Where(m => m.OrderId == long.Parse(id));
             ViewBag.orderdetails = orders;
-           // ViewBag.orderdetails1 = orders1;
+            ViewBag.total = orders.FirstOrDefault().totalprice;
+            ViewBag.id = id;
+            // ViewBag.orderdetails1 = orders1;
             return View();
         }
 
         public ActionResult FilteredVendors(string type, string date, string id,string type1,string id1)
         {
-          //  var orders = orderService.userOrderList();
-          //  var orders1 = orderService.userOrderList1();
-          // var s13 = orders.Where(m => m.OrderId == long.Parse(id));
-          //var  s3 = orders1.Where(m => m.OrderId == long.Parse(id));
-          //  var order1;
-          //  if (s13 == null) { order1 = s3; } else { order1 = s3; }
-           
-          // // var orders = orderService.alluserOrderList(type1).Where(m => m.ordertype == "Quote").ToList();
-          //  var s12 = ViewBag.orderdetails = orders.Where(m => m.OrderId == long.Parse(id)).ToList();
+            //  var orders = orderService.userOrderList();
+            //  var orders1 = orderService.userOrderList1();
+            // var s13 = orders.Where(m => m.OrderId == long.Parse(id));
+            //var  s3 = orders1.Where(m => m.OrderId == long.Parse(id));
+            //  var order1;
+            //  if (s13 == null) { order1 = s3; } else { order1 = s3; }
 
-          //  var s1 = ViewBag.orderdetails1 = orders.Where(m => m.OrderId == long.Parse(id)).FirstOrDefault();
-          //  string txtto;
-          //  if (s1.orderbooktype == "Vendor")
-          //  {
-          //      var userlogdetails = mnguserservice.getuserbyid(Convert.ToInt32(s1.userid));
-          //      string txtto1 = userlogdetails.email;
-          //      string name1 = userlogdetails.firstname;
-          //      txtto = txtto1;
-          //      name = name1;
-          //      name = Capitalise(name);
+            // // var orders = orderService.alluserOrderList(type1).Where(m => m.ordertype == "Quote").ToList();
+            //  var s12 = ViewBag.orderdetails = orders.Where(m => m.OrderId == long.Parse(id)).ToList();
 
-          //  }
-          //  else if (s1.orderbooktype == "User")
-          //  {
-          //      var userdata = userLoginDetailsService.GetUserId((int)s1.userid);
-          //      var userdata1 = userLoginDetailsService.GetUser((int)s1.userid);
-          //      string txtto2 = userdata.UserName;
-          //      string name2 = userdata1.FirstName;
-          //      txtto = txtto2;
-          //      name = name2;
-          //      name = Capitalise(name);
+            //  var s1 = ViewBag.orderdetails1 = orders.Where(m => m.OrderId == long.Parse(id)).FirstOrDefault();
+            //  string txtto;
+            //  if (s1.orderbooktype == "Vendor")
+            //  {
+            //      var userlogdetails = mnguserservice.getuserbyid(Convert.ToInt32(s1.userid));
+            //      string txtto1 = userlogdetails.email;
+            //      string name1 = userlogdetails.firstname;
+            //      txtto = txtto1;
+            //      name = name1;
+            //      name = Capitalise(name);
 
-          //  }
-          //  string OrderId = Convert.ToString(s1.OrderId);
-          //  string url = Request.Url.Scheme + "://" + Request.Url.Authority;
-          //  ViewBag.ser = s12;
-          //  ViewBag.url = url;
-          //  ViewBag.name = name;
-          //  ViewBag.OrderId = OrderId;
+            //  }
+            //  else if (s1.orderbooktype == "User")
+            //  {
+            //      var userdata = userLoginDetailsService.GetUserId((int)s1.userid);
+            //      var userdata1 = userLoginDetailsService.GetUser((int)s1.userid);
+            //      string txtto2 = userdata.UserName;
+            //      string name2 = userdata1.FirstName;
+            //      txtto = txtto2;
+            //      name = name2;
+            //      name = Capitalise(name);
 
+            //  }
+            //  string OrderId = Convert.ToString(s1.OrderId);
+            //  string url = Request.Url.Scheme + "://" + Request.Url.Authority;
+            //  ViewBag.ser = s12;
+            //  ViewBag.url = url;
+            //  ViewBag.name = name;
+            //  ViewBag.OrderId = OrderId;
+          
             if (type != null && date != null)
             {
-                
-               
-                ViewBag.id = id1;
+
+
+                ViewBag.id = id;
                 string select = Convert.ToDateTime(date).ToString("dd-MM-yyyy");
 
 
@@ -97,6 +99,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             }
             else if (type == null && date == null)
             {
+                ViewBag.id = id;
                 ViewBag.novendor = "Select Service Type & Date To View Vendors";//"No Vendors Available On This Date";
             }
             return PartialView("FilteredVendors", "Quotations");
@@ -301,12 +304,13 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         {
             DateTime indianTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             var orderss = orderService.allorderslist1().Where(m => m.ordertype == "Quote").ToList();
-           // var particularquote = orderss.Where(m => m.orderid == long.Parse(id));
-            var particularquote = quotationListsService.GetAllQuotations().FirstOrDefault(m => m.Id == long.Parse(QuoteID));
-            if (particularquote.FirstTime == null && particularquote.FirstTimeQuoteDate == null)
+            var particularquote1 = quotationListsService.GetAllQuotations().FirstOrDefault(m => m.Id == long.Parse(QuoteID));
+            // var particularquote = orderss.Where(m => m.orderid == long.Parse(id));
+            var particularquote = orderss.FirstOrDefault(m => m.orderid == long.Parse(QuoteID));
+            if (particularquote1.FirstTime == null && particularquote1.FirstTimeQuoteDate == null)
             {
-                particularquote.FirstTime = id;
-                particularquote.FirstTimeQuoteDate = indianTime.ToString("dd-MM-yyyy hh:mm:ss");
+                particularquote1.FirstTime = id;
+                particularquote1.FirstTimeQuoteDate = indianTime.ToString("dd-MM-yyyy hh:mm:ss");
             }
             //else if (particularquote.FirstTime != null && particularquote.FirstTimeQuoteDate != null && particularquote.SecondTime == null && particularquote.SecondTimeQuoteDate == null)
             //{
@@ -321,12 +325,12 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
             FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/QuoteReply.html"));
             string readFile = File.OpenText().ReadToEnd();
-            readFile = readFile.Replace("[name]", particularquote.Name);
-            readFile = readFile.Replace("[Email]", particularquote.EmailId);
-            string txtto = particularquote.EmailId;
+            readFile = readFile.Replace("[name]", particularquote1.Name);
+            readFile = readFile.Replace("[Email]", particularquote1.EmailId);
+            string txtto = particularquote1.EmailId;
             string txtmessage = readFile;
-            string subj = "Response to your Quote #" + particularquote.Id + "";
-            int count = quotationListsService.UpdateQuote(particularquote);
+            string subj = "Response to your Quote #" + particularquote1.Id + "";
+            int count = quotationListsService.UpdateQuote(particularquote1);
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
             emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
             return Json("sucess");

@@ -58,6 +58,43 @@
             height: 130px;
             width: 300px;
         }
+
+        <style >
+        #addcustomermodel input[type=text], #addcustomermodel input[type="email"], #addcustomermodel input[type="tel"], #addcustomermodel input[type="number"] {
+            width: 101%;
+            padding: 13px 0px 2px 10px;
+            margin: 15px 5px 15px 0px;
+            box-sizing: border-box;
+            background-color: #fff;
+            color: black;
+        }
+
+        table.dataTable thead th, table.dataTable tfoot th {
+            white-space: nowrap;
+        }
+
+        table.dataTable, table.dataTable th, table.dataTable td {
+            white-space: nowrap;
+            border: none;
+        }
+
+        table td {
+            border: none;
+        }
+
+
+        .kscfont {
+            font-size: 15px;
+            font-weight: 900;
+        }
+
+        .addcutomerpopup, .cutomtblpopup {
+            position: relative;
+        }
+
+        .txtd {
+            margin-top: -5%;
+        }
     </style>
 }
 
@@ -81,7 +118,42 @@
 
                     foreach (var item in ViewBag.orderdetails1)
                     {
-                        <div class="room_type first">
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <div class="card" id="pack">
+                                    <div class="card-header" style="background: #5829bb!important;font-weight: 700; color: white;text-transform: uppercase;border: 1px purple solid;">@item.packagename</div>
+                                    <div class="card-body" style="background-color:whitesmoke">
+                                        <input type="hidden" name="">
+                                        <input type="hidden" name="packageid" id="packageid" value="@item.PackageID">
+                                        Package Type: Veg <br />
+                                        Location: @item.City<br />
+                                        Event Type :@item.eventtype <br />
+                                        Event Date :  @item.bookdate.ToString("dd/MM/yyyy") <br />
+                                        Guest Count : @item.guestno<br />
+                                        Timeslot : @item.timeslot <br />
+                                        Price : @item.totalpric1  <br />
+                                        <label class="total">Total Price : ₹@( (Convert.ToInt64(@item.totalpric1) * Convert.ToInt64(@item.guestno))) </label><br />
+                                        Final Package Total: ₹ <label class="finaltotal"></label>
+                                    </div>
+
+
+
+
+                                </div>
+
+
+
+
+                            </div>
+                            }
+                        </div>
+                        <p> Total Amount : <label class="ftotal"> @ViewBag.total</label></p>
+
+                        /**/
+
+                    }
+                    @*<div class="room_type first">
 
                             <div class="row">
                                 <input type="hidden" name="otype" id="otype" class="otype" value="@item.orderbooktype">
@@ -131,100 +203,138 @@
                                 </div>
                             </div>
                             <!-- /row -->
-                        </div>
+                        </div>*@
+                    /**/
 
-                    }
                 }
                 @if (ViewBag.orderdetails != null)
                 {
 
-                    foreach (var item in ViewBag.orderdetails)
-                    {
-                        <div class="room_type first" style="background-color: #fff;">
+                    <div class="row">
 
-                            <div class="row">
-                                <input type="hidden" name="otype" id="otype" class="otype" value="@item.orderbooktype">
-                                <input type="hidden" name="vid" id="vid" class="vid" value="@item.vid">
-                                <div class="col-md-4">
-                                    @if (item.logo != null)
-                                    {
-
-                                        <img src="../vendorimages/@item.logo.Trim(',')" class="img-fluid" alt="" style="height: 88px;width: 255px;" />
+                        @foreach (var item in ViewBag.orderdetails)
+                        {
 
 
-                                    }
-                                    else
-                                    {
-                                        <img src="~/noimages.png" class="img-fluid" alt="" style="height: 88px;width: 255px;" />
+                            <div class="col-md-3">
+                                <div class="card" id="pack">
+                                    <div class="card-header" style="background: #5829bb!important;font-weight: 700; color: white;text-transform: uppercase;border: 1px purple solid;">@item.packagename</div>
+                                    <div class="card-body" style="background-color:whitesmoke">
+                                        <input type="hidden" name="">
+                                        <input type="hidden" name="packageid" id="packageid" value="@item.packageid">
+                                        Package Type: Veg <br />
+                                        Location: @item.City<br />
+                                        Event Type :@item.eventtype <br />
+                                        Event Date :  @item.bookdate.ToString("dd/MM/yyyy") <br />
+                                        Guest Count : @item.guestno<br />
+                                        @*Timeslot : @item.timeslot <br />*@
+                                        Price : @item.totalpric1  <br />
+                                        Total Price : ₹@( (Convert.ToInt64(@item.totalpric1) * Convert.ToInt64(@item.guestno))) <br />
+                                        @*Final Package Total: ₹ <label class="finaltotal"></label>*@
+                                    </div>
 
-                                    }
-                                </div>
-                                <div class="col-md-8">
 
 
-
-                                    <table>
-
-                                        <tr>
-                                            <td>
-                                                <p> @item.BusinessName </p><p>@item.ServicType</p>
-                                            </td>
-                                            <td>
-                                                <p>Orderdetailid: @item.orderdetailedid</p>
-                                                <p>Packagename: @item.packagename</p>
-                                                <p>price/plate: @item.perunitprice </p>
-                                                <p>Guest: @item.guestno</p>
-                                            </td>
-                                            <td>
-
-                                                <p> Event Date:@item.orderdate.ToString("dd-MM-yyyy")</p>
-                                                <p>Book date: @item.bookdate.ToString("dd-MM-yyyy")</p>
-
-                                            </td>
-                                            <td>₹@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalprice)).Replace(".00", "")</td>
-                                        </tr>
-                                    </table>
 
                                 </div>
+
+
+
+
                             </div>
-                            <!-- /row -->
-                        </div>
 
-                    }
+
+
+
+
+                            @*<div class="room_type first" style="background-color: #fff;">
+
+                                    <div class="row">
+                                        <input type="hidden" name="otype" id="otype" class="otype" value="@/*item.orderbooktype*/">
+                                        <input type="hidden" name="vid" id="vid" class="vid" value="@/*item.vid*/">
+                                        <div class="col-md-4">
+                                            @//if (item.logo != null)
+                                //{
+
+                                                <img src="../vendorimages/@/*item.logo.Trim(',')*/" class="img-fluid" alt="" style="height: 88px;width: 255px;" />
+
+
+                                //}
+                                //else
+                                //{
+                                                <img src="~/noimages.png" class="img-fluid" alt="" style="height: 88px;width: 255px;" />
+
+                                //}
+                                        </div>
+                                        <div class="col-md-8">
+
+
+
+                                            <table>
+
+                                                <tr>
+                                                    <td>
+                                                        <p> @/*item.BusinessName*/ </p><p>@/*item.ServicType*/</p>
+                                                    </td>
+                                                    <td>
+                                                        <p>Orderdetailid: @/*item.orderdetailedid*/</p>
+                                                        <p>Packagename: @/*item.packagename*/</p>
+                                                        <p>price/plate: @/*item.perunitprice*/ </p>
+                                                        <p>Guest: @/*item.guestno*/</p>
+                                                    </td>
+                                                    <td>
+
+                                                        <p> Event Date:@/*item.orderdate.ToString("dd-MM-yyyy")*/</p>
+                                                        <p>Book date: @/*item.bookdate.ToString("dd-MM-yyyy")*/</p>
+
+                                                    </td>
+                                                    <td>₹@/*String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalprice)).Replace(".00", "")*/</td>
+                                                </tr>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                    <!-- /row -->
+                                </div>*@
+
+                        }
+
+                    </div>
+
+                    <p> Total Amount :  @ViewBag.total</p>
+
                 }
-
-
             </div>
         </div>
 
         <center>
 
-        @*----------common---------*@
-        <div class="row" style="margin:0">
-            <div class="col-3" style="width: 17%;">
-                Select Service Type
+            @*----------common---------*@
+            <div class="row" style="margin:0">
+                <div class="col-md-2">
+                    Select Service Type
+                </div>
+                <div class="col-md-3">
+                    <select class="" id="selectedservice" style="width: 25%;">
+                        <option value="" selected="">Select Service Type</option>
+                        <option value="Venue">Venue</option>
+                        <option value="Catering">Catering</option>
+                        <option value="Photography">Photography</option>
+                        <option value="Decorator">Decorator</option>
+                        <option value="Mehendi">Mehendi Artists</option>
+                        <option value="Pandit">Pandits</option>
+                    </select>
+                </div>
+                @*</div>
+                    <div class="row" style="margin:0">*@
+                <div class="col-md-2">
+                    <label class="">Select Date</label>
+                </div>
+                <div class="col-md-3">
+                    <input type="date" id="dp1" name="name" class="form-control">
+                </div>
             </div>
-            <div class="col-3" style="width: 17%;">
-                <select class="" id="selectedservice" style="width: 25%;">
-                    <option value="" selected="">Select Service Type</option>
-                    <option value="Venue">Venue</option>
-                    <option value="Catering">Catering</option>
-                    <option value="Photography">Photography</option>
-                    <option value="Decorator">Decorator</option>
-                    <option value="Mehendi">Mehendi Artists</option>
-                    <option value="Pandit">Pandits</option>
-                </select>
-            </div>
-        </div>
-        <div class="row" style="margin:0">
-            <div class="col-2"style="width: 17%;">
-                <label class="">Select Date</label>
-            </div>
-            <div class="col-2" style="width: 17%;">
-                <input type="date" id="dp1" name="name" class="form-control">
-            </div>
-        </div>
-            </center>
+        </center>
         <div class="tooltip-demo" align="center">
             <button type="button" id="btnsearch" class="btn btn-primary" tooltip="Select Service Type & Date" onclick="sortvendors()">Search Vendors</button>
             <a href="/Admin/Quotations" class="btn btn-danger">Cancel</a>
@@ -236,22 +346,26 @@
             @{Html.RenderAction("FilteredVendors", "quotationlist");}
         </div>
 
-  
 
 
-<center>
-    @*<button id="email" name="email" class="btn">Add Packages</button>
 
-    <button id="email" name="email" onclick="email()" class="btn">Email</button>*@
-    <button id="view" onclick="view()" name="view" class="btn">View</button>
-</center>
-                </div>
+        @*<center>
+                               <button id="email" name="email" class="btn">Add Packages</button>
+
+            <button id="email" name="email" onclick="email()" class="btn">Email</button>
+                    <button id="view" onclick="view()" name="view" class="btn">View</button>
+            </center>*@
+    </div>
 </div>
 @*</div>*@
 
 
 
 @section scripts{
+    @*<script src="~/Assets/plugins/jquery-2.0.3.min.js"></script>*@
+    @*<script src="~/Assets/jquery.dataTables.js"></script>*@
+    
+
     @*<script src="~/Assets/plugins/jquery-2.0.3.min.js"></script>*@
     @*<script src="~/Assets/plugins/datepicker/js/bootstrap-datepicker.js"></script>*@
     @*<script src="~/Assets/js/notifications.js"></script>*@
@@ -330,6 +444,132 @@
                 }
             });
         }
+          $(document).ready(function () {
+        $('#dataTables-example').DataTable({
+            "order": [[0, "desc"]]
+        });
+
+        $('#replyquote').click(function () {
+            var oTable = $('#dataTables-example').dataTable();
+            var ids = '';
+            var rowcollection = oTable.$(".call-checkbox:checked", { "page": "all" });
+            rowcollection.each(function (index, elem) {
+                var checkbox_value = $(elem).val();
+                if (ids != '')
+                { ids = ids + "," + checkbox_value; }
+                else { ids = checkbox_value; }
+            });
+            //alert(ids);
+            //$('#selectedids').val(ids);
+
+            var QuoteID = '@ViewBag.id';
+            var id = ids;
+
+            $.ajax({
+                url: '/Admin/Quotations/ParticularQuoteReply',//?QuoteID=' + QuoteID + '&&id=' + ids,
+                dataType: 'json',
+                type: 'post',
+                data: { QuoteID: QuoteID, id: ids },
+                success: function (data) {
+                    alert("Quote Replied Sucessfully!!!")
+                },
+                error: function (data) {
+                    alert("Something Went Wrong Try Again Later!!!")
+                }
+            });
+        });
+    });
+    </script>
+    <script>
+                function popup(qid, bname, cat, subcat, id, subid) {
+                    $('#stype').val(cat);
+                    $('#substype').val(subcat);
+                    $('#vid').val(id);
+                    $('#subvid').val(subid);
+                    $('#bname').empty().text(bname);
+                    $('#qid').val(qid);
+                    $('#myModal').css('display', 'block');
+                }
+
+                //function close() {
+                //    $('#myModal').css('display', 'none');
+                //}
+
+                $('.close').click(function () {
+                    $('#myModal').css('display', 'none');
+                    resetAllValues();
+                });
+
+                function resetAllValues() {
+                    $('#myModal').find('input:text').val('');
+                    $('#myModal').find('input:hidden').val('');
+                }
+
+                function SaveDetails() {
+                    var quoteResponse = {
+                        QuoteID: $('#qid').val(),
+                        BusinessName: $('#bname').text(),
+                        ServiceType: $('#stype').val(),
+                        SubServiceType: $('#substype').val(),
+                        VendorID: $('#vid').val(),
+                        VendorSubID: $('#subvid').val(),
+                        Installments: $('#addinstallments').val(),
+                        FirstInstallment: $('#firstamount').val() + "," + $('#firstdays').val(),
+                        SecondInstallment: $('#secondamount').val() + "," + $('#seconddays').val(),
+                        ThirdInstallment: $('#thirdamount').val() + "," + $('#thirddays').val(),
+                        FourthInstallment: $('#fourthamount').val() + "," + $('#fourthdays').val(),
+                        TokenAmount: $('#TokenAmount').val(),
+                        TotalAmount: $('#TotalAmount').val()
+                    }
+                    //alert(quoteResponse.QuoteID);
+                    $.ajax({
+                        url: '/Admin/Quotations/SaveInstallments',
+                        type: 'post',
+                        datatype: 'json',
+                        data: quoteResponse,
+                        success: function (data) {
+                            if (data == "Success") {
+                                alert("Installments Added");
+                                $('#myModal').css('display', 'none');
+                                resetAllValues();
+                            }
+                            else if (data == "Failed") {
+                                alert("Failed to Add Installments!!! Try Again");
+                            }
+                        },
+                        error: function (data) {
+                            alert("Something Went Wrong!!! Try Again Later");
+                        }
+                    });
+                }
+    </script>
+    <script>
+                $(function () {
+                    $('#addinstallments').change(function () {
+                        $('.instoption').hide();
+                        //$('#' + $(this).val()).show();
+                        var number = $(this).val();
+                        if (number == '1') {
+                            $('#1').show();
+                        }
+                        else if (number == '2') {
+                            $('#1').show();
+                            $('#2').show();
+                        }
+                        else if (number == '3') {
+                            $('#1').show();
+                            $('#2').show();
+                            $('#3').show();
+                        }
+                        else if (number == '4') {
+                            $('#1').show();
+                            $('#2').show();
+                            $('#3').show();
+                            $('#4').show();
+                        }
+                    });
+                });
+    </script>
     </script>
 
 }
