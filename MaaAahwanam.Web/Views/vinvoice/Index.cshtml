@@ -183,16 +183,14 @@
                                                                     <td class="sbaldue text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.Due)).Replace(".00", "")</td>
                                                                     <td class="tsamnt text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalpric1)).Replace(".00", "")</td>
                                                                     <td class="text-center">
-                                                                        <div calss="disc">
-                                                                            <select name="DiscountType" id="DiscountType" class="selectdiscount" style="font-size: 11px;" disabled>
+                                                                            <select name="DiscountType" id="DiscountType"  class="selectdiscount" style="font-size: 11px;" disabled>
                                                                                 <option value="select">Select Discount Type</option>
                                                                                 <option value="Discpercentage">Percentage %</option>
                                                                                 <option value="flaterate">Flat Rate ₹</option>
                                                                             </select>
                                                                             <div class="ServiceDiscount" style="padding-left:5px;padding-top:8px;">
-                                                                                <input type="text" class="disctxt" id="Discount" name="Discount" value="" placeholder="Enter Discount" style="font-size: 12px; width:128px;padding:0px;" disabled>
+                                                                                <input type="text" class="disctxt" id="Discount" name="Discount" placeholder="Enter Discount" style="font-size: 12px; width:128px;padding:0px;" disabled>
                                                                             </div>
-                                                                        </div>
                                                                     </td>
                                                                     <td class="text-right">18%</td>
                                                                     <td class="text-right gndttl">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalpric1) +(Convert.ToDouble(@item.totalpric1) *0.18)).Replace(".00", "")</td>
@@ -779,8 +777,7 @@
             }
         });
     });
-    var sum = 0
-    var sum1= 0
+    var sum = 0; var sum1= 0
     $("#btnrcvpmnt").on('click', function () {
         $('#Paymentmode').css('display', 'block');
         $('#btnrcvpmnt').css('display', 'none');
@@ -945,36 +942,43 @@
                 tr.find('#Discount').attr('disabled', 'disabled')
             }
             $('#FinalAmount').val(gstsum);
+         
         }
     });
-
     var discounttype = '';
-    $('.selectdiscount').change(function () {
-        discounttype = $('.selectdiscount option:selected').text();
+    //$('.selectdiscount').change(function () {
+    $('#orderdetails tr td').find('select.selectdiscount').change(function () {
+        discounttype = $(this).find('option:selected').text()
         $(this).parent('td').find('#Discount').focus();
     });
+   
 
-    $('#Discount').on('input', function () {
+    $('#orderdetails tr td').find('input.disctxt').on('input', function () {
         if (discounttype == 'Percentage %') {
             var ttamnt = $('#Opening_Balance').val();
-            var discamnt = $('#Discount').val();
+            var discamnt = $(this).val();
             if (discamnt > 100) {
                 alert('Percentage should not be greater than 100');
             }
             else {
                 var discountinpercent = ttamnt - (ttamnt * discamnt / 100);
                 finalamnt = discountinpercent + (discountinpercent * 18 / 100);
-                $('#FinalAmount').val(finalamnt);
-                $('#FinalAmount1').val(finalamnt);
+                alert(finalamnt);
+                $(this).find('.gndttl').html(finalamnt);
+                //$('#FinalAmount1').val(finalamnt);
+                //$('#FinalAmount').val(finalamnt);
             }
         }
         else if (discounttype == 'Flat Rate ₹') {
             var ttamnt1 = $('#Opening_Balance').val();
-            var discamnt1 = $('#Discount').val();
+            var discamnt1 = $(this).val();
+            //alert(discamnt1)
             var discountrupees = ttamnt1 - discamnt1;
             finalamnt1 = discountrupees + (discountrupees * 18 / 100);
-            $('#FinalAmount1').val(finalamnt1);
-            $('#FinalAmount').val(finalamnt1);
+            alert(finalamnt1)
+            $(this).find('.gndttl').html(finalamnt1);
+            //$('#FinalAmount1').val(finalamnt1);
+            //$('#FinalAmount').val(finalamnt1);
         }
     });
 </script>
