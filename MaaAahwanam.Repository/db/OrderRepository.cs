@@ -36,6 +36,10 @@ namespace MaaAahwanam.Repository.db
         {
             return maaAahwanamEntities.sp_userordlist().ToList();
         }
+        public List<sp_allvendoruserorddisplay_Result> allorderslist1()
+        {
+            return maaAahwanamEntities.sp_allvendoruserorddisplay().ToList();
+        }
         public List<sp_vendoruserorddisplay_Result> userOrderList1()
         {
             return maaAahwanamEntities.sp_vendoruserorddisplay().ToList();
