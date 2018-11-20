@@ -175,10 +175,10 @@ namespace MaaAahwanam.Web.Controllers
         List<string> sdate = new List<string>();
         List<string> stimeslot = new List<string>();
         List<SPGETpartpkg_Result> package = new List<SPGETpartpkg_Result>();
-            var alltprice1 = alltprice.Split(',');
-            var alldiscounttype1 = alldiscounttype.Split(',');
-            var discountprice1 = discountprice.Split(',');
-            var fpkgprice1 = fpkgprice.Split(',');
+            var alltprice1 = alltprice.Trim(',').Split(',');
+            var alldiscounttype1 = alldiscounttype.Trim(',').Split(',');
+            var discountprice1 = discountprice.Trim(',').Split(',');
+            var fpkgprice1 = fpkgprice.Trim(',').Split(',');
 
         var pkgs = pid.Split(',');
         var date1 = date.Trim(',').Split(',');
@@ -246,11 +246,12 @@ namespace MaaAahwanam.Web.Controllers
                 for (int j = 0; j < date1.Count(); j++)
                 {
                     if (date1[j].Split('~')[1] == data.VendorSubId.ToString())
-                    {
-                        data.price1 = alltprice1[j].Split('~')[0].Trim(':')[1].ToString();
-                        data.price2 = alldiscounttype1[j].Split('~')[0];
-                        data.price3 = discountprice1[j].Split('~')[0];
-                        data.price4 = fpkgprice1[j].Split('~')[0];
+                    {var allto = alltprice1[j].Split('₹')[1].ToString();
+                       
+                        if (allto.Split('~')[0].ToString() == null || allto.Split('~')[0].ToString() == "") { data.price1 = "0"; } else { data.price1 = allto.Split('~')[0].ToString(); }
+                        if (alldiscounttype1[j].Split('~')[0] == null|| alldiscounttype1[j].Split('~')[0] == "") { data.price2 = "0"; } else { data.price2 = alldiscounttype1[j].Split('~')[0]; }
+                        if (discountprice1[j].Split('~')[0] == null|| discountprice1[j].Split('~')[0] == "") { data.price3 = "0"; } else { data.price3 = discountprice1[j].Split('~')[0]; }
+                        if (fpkgprice1[j].Split('~')[0] == null|| fpkgprice1[j].Split('~')[0] == "") { data.price4 = "0"; } else { data.price4 = fpkgprice1[j].Split('~')[0]; }
                         data.UpdatedDate = Convert.ToDateTime(date1[j].Split('~')[0]);
                         data.timeslot = timeslot1[j].Split('~')[0];
                     }
@@ -263,9 +264,10 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.OrderBy = long.Parse(uid);
                 orderDetail.PaymentId = '1';
                 orderDetail.ServiceType = type;
-                orderDetail.ServicePrice = Convert.ToDecimal(price);
+          //      orderDetail.ServicePrice = Convert.ToDecimal(price);
                 orderDetail.attribute = data.timeslot;
-                orderDetail.TotalPrice = Convert.ToDecimal(totalprice);
+                orderDetail.TotalPrice = Convert.ToDecimal(data.price1);
+                orderDetail.ServicePrice = Convert.ToDecimal(data.price4);
                 orderDetail.PerunitPrice = Convert.ToDecimal(price);
                 orderDetail.Quantity = Convert.ToInt32(guest);
                 orderDetail.OrderId = order.OrderId;
@@ -276,10 +278,10 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     orderDetail.type = "Order";
                 }
+                orderDetail.DiscountType = data.price2;
+                orderDetail.DiscountPrice = Convert.ToDecimal(data.price3);
                 //orderDetail.Discount = Convert.ToDecimal(data.price2);
-                //orderDetail.DiscountPrice = Convert.ToDecimal(data.price2);
-                //orderDetail.Discount = Convert.ToDecimal(data.price2);
-
+                orderDetail.OrderType = "online";
                 orderDetail.Status = "Pending";
                 orderDetail.bookingtype = "Vendor";
                 orderDetail.UpdatedDate = Convert.ToDateTime(updateddate);

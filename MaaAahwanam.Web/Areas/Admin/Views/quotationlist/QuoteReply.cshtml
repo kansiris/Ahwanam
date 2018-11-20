@@ -14,7 +14,7 @@
             font-family: "Lato", sans-serif;
         }
 
-        
+
         .tablink {
             background-color: #fff;
             color: #212529;
@@ -49,17 +49,15 @@
         }
 
 
-     
 
 
-       
+
+
 
         .first .col-md-4 img {
             height: 130px;
             width: 300px;
         }
- 
-        
     </style>
 }
 
@@ -72,21 +70,22 @@
                 </div>
             </div>
             <hr />*@
-        <div class="row" >
+        <div class="row" style="margin:0">
             <div class="col-lg-12">
 
 
-               <center> <h3 >Quotation Details</h3></center>
+                <center> <h3>Quotation Details</h3></center>
                 @if (ViewBag.orderdetails1 != null)
                 {
                     @*<p style="text-transform:capitalize;font-weight:bold"> Quotation requested for</p>*@
 
                     foreach (var item in ViewBag.orderdetails1)
                     {
-                        <div class="room_type first" >
+                        <div class="room_type first">
 
                             <div class="row">
-                                <input type="hidden" name="otype" id ="otype" class="otype" value="@item.orderbooktype">
+                                <input type="hidden" name="otype" id="otype" class="otype" value="@item.orderbooktype">
+                                <input type="hidden" name="vid" id="vid" class="vid" value="@item.vid">
 
                                 <div class="col-md-4">
                                     @if (item.logo != null)
@@ -144,8 +143,8 @@
                         <div class="room_type first" style="background-color: #fff;">
 
                             <div class="row">
-                                <input type="hidden" name="otype" id ="otype" class="otype" value="@item.orderbooktype">
-
+                                <input type="hidden" name="otype" id="otype" class="otype" value="@item.orderbooktype">
+                                <input type="hidden" name="vid" id="vid" class="vid" value="@item.vid">
                                 <div class="col-md-4">
                                     @if (item.logo != null)
                                     {
@@ -197,32 +196,83 @@
 
             </div>
         </div>
-    </div>
-    <div>
-        <center>
-            <button id="email" name="email" class="btn">Add Packages</button>
 
-            <button id="email" name="email" onclick="email()" class="btn">Email</button>
-            <button id="view" onclick="view()" name="view" class="btn">View</button>
+        <center>
+
+        @*----------common---------*@
+        <div class="row" style="margin:0">
+            <div class="col-3" style="width: 17%;">
+                Select Service Type
+            </div>
+            <div class="col-3" style="width: 17%;">
+                <select class="" id="selectedservice" style="width: 25%;">
+                    <option value="" selected="">Select Service Type</option>
+                    <option value="Venue">Venue</option>
+                    <option value="Catering">Catering</option>
+                    <option value="Photography">Photography</option>
+                    <option value="Decorator">Decorator</option>
+                    <option value="Mehendi">Mehendi Artists</option>
+                    <option value="Pandit">Pandits</option>
+                </select>
+            </div>
+        </div>
+        <div class="row" style="margin:0">
+            <div class="col-2"style="width: 17%;">
+                <label class="">Select Date</label>
+            </div>
+            <div class="col-2" style="width: 17%;">
+                <input type="date" id="dp1" name="name" class="form-control">
+            </div>
+        </div>
             </center>
+        <div class="tooltip-demo" align="center">
+            <button type="button" id="btnsearch" class="btn btn-primary" tooltip="Select Service Type & Date" onclick="sortvendors()">Search Vendors</button>
+            <a href="/Admin/Quotations" class="btn btn-danger">Cancel</a>
+            @*<button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="" data-original-title="Tooltip on top">Tooltip on top</button>*@
+        </div>
+        <br />
+        <br />
+        <div id="sortvendors">
+            @{Html.RenderAction("FilteredVendors", "quotationlist");}
+        </div>
+
+  
+
+
+<center>
+    @*<button id="email" name="email" class="btn">Add Packages</button>
+
+    <button id="email" name="email" onclick="email()" class="btn">Email</button>*@
+    <button id="view" onclick="view()" name="view" class="btn">View</button>
+</center>
+                </div>
 </div>
-</div>
+@*</div>*@
 
 
 
 @section scripts{
     @*<script src="~/Assets/plugins/jquery-2.0.3.min.js"></script>*@
-    <script src="~/Assets/plugins/datepicker/js/bootstrap-datepicker.js"></script>
+    @*<script src="~/Assets/plugins/datepicker/js/bootstrap-datepicker.js"></script>*@
     @*<script src="~/Assets/js/notifications.js"></script>*@
     <script>
         //$(function () { Notifications(); });
         //$('#dp1').val(new Date().toLocaleDateString().toString("dd-MM-yyyy"));
-        $('#dp1').datepicker({
-            format: 'dd-mm-yyyy'
-        }).on('changeDate', function (ev) {
-            $('.datepicker').hide();
-            $('#btnsearch').removeAttr('disabled');
-        });
+        // $('#dp1').datepicker({
+        //    format: 'dd-mm-yyyy'
+        //}).on('changeDate', function (ev) {
+        //    $('.datepicker').hide();
+        //    $('#btnsearch').removeAttr('disabled');
+        //});
+
+        function sortvendors() {
+            var type = $('#selectedservice').val();
+            var date = $('#dp1').val();
+            var id1 = $('#vid').val();
+            var id = '@Request.QueryString["id"]';
+            var url = '/Admin/quotationlist/FilteredVendors?type=' + type + '&&date=' + date+ '&&id='+id1;
+            $('#sortvendors').empty().load(url);
+        }
 
         function view() {
             var type = $('#otype').val();
@@ -241,7 +291,7 @@
                     alert(data);
                 }
             })
-         
+
         }
     </script>
 
