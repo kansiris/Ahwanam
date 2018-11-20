@@ -64,23 +64,25 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.orderdetails = orderdetails1;                     
                         ViewBag.totalprice = orderdetails1.FirstOrDefault().totalprice;
                      //   ViewBag.orderdetailid = orderdetails1.FirstOrDefault().orderdetailedid;
-                        var payments = rcvpaymentservice.getPayments(oid).ToList();
-                        if (payments.Count != 0)
-                        {
-                            var disc = payments.FirstOrDefault().Discount;
-                            ViewBag.discount = Convert.ToDouble(disc);
-                        }
-                        else
-                        {
-                            ViewBag.discount = Convert.ToDouble(Discount);
-                        }
+                     var odid1= orderdetails1.FirstOrDefault().orderdetailedid.ToString();
+                    var payments = rcvpaymentservice.getPayments(oid).ToList();
+                    var paymentsbyodid = rcvpaymentservice.getPaymentsbyodid(odid1).ToList();
+                        //if (payments.Count != 0)
+                        //{
+                        //    var disc = payments.FirstOrDefault().Discount;
+                        //    ViewBag.discount = Convert.ToDouble(disc);
+                        //}
+                        //else
+                        //{
+                        //    ViewBag.discount = Convert.ToDouble(Discount);
+                        //}
                         string odid = string.Empty;
                         foreach (var item in orderdetails1)
                         {
 
                             odid = odid + item.orderdetailedid + ",";
                             ViewBag.orderdetailid5 = odid;
-                            var price = item.totalprice;
+                            var price = item.totalpric1;
                             tsprice = Convert.ToInt64(tsprice) + Convert.ToInt64(price);
                             ViewBag.total = tsprice;
                             var bdue = item.Due;
@@ -108,13 +110,13 @@ namespace MaaAahwanam.Web.Controllers
                         decimal paidamount;
                         if (amount == '0')
                         {
-                            paidamount = orderdetails1.FirstOrDefault().totalprice;
+                            paidamount = orderdetails1.FirstOrDefault().totalpric1;
                             //paidamount = orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity;
 
                         }
                         else
                         {
-                            paidamount = orderdetails1.FirstOrDefault().totalprice - amount; //paidamount = (orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity) - amount; 
+                            paidamount = orderdetails1.FirstOrDefault().totalpric1 - amount; //paidamount = (orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity) - amount; 
                             ViewBag.paidamount = paidamount;
                         }
                     }

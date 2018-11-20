@@ -35,5 +35,7 @@ namespace MaaAahwanam.Models
         public string FirstTimeQuoteDate { get; set; }
         public string SecondTimeQuoteDate { get; set; }
         public string ThirdTimeQuoteDate { get; set; }
+        public string OrderID { get; set; }
+        public string OrderDetailID { get; set; }
     }
 }
