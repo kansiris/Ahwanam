@@ -114,6 +114,7 @@
         <Function Name="sp_AllOrders" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="sp_allvendoruserorddisplay" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_Amenities" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="vendorid" Type="bigint" Mode="In" />
           <Parameter Name="ntype" Type="varchar" Mode="In" />
@@ -415,8 +416,9 @@
           <FunctionImport Name="sp_vendoruserorddisplay" ReturnType="Collection(MaaAahwanamModel.sp_vendoruserorddisplay_Result)" />
           <FunctionImport Name="sp_userordlist" ReturnType="Collection(MaaAahwanamModel.sp_userordlist_Result)" />
           <FunctionImport Name="sp_allorddetail" ReturnType="Collection(MaaAahwanamModel.sp_allorddetail_Result)">
-            <Parameter Name="type" Mode="In" Type="String" />
+          <Parameter Name="type" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_allvendoruserorddisplay" ReturnType="Collection(MaaAahwanamModel.sp_allvendoruserorddisplay_Result)" />
         </EntityContainer>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
           <Property Type="Int64" Name="UserLoginId" Nullable="false" />
@@ -1625,6 +1627,48 @@
           <Property Type="String" Name="City" Nullable="true" />
           <Property Type="String" Name="Landmark" Nullable="true" />
           <Property Type="String" Name="businessphoneno" Nullable="true" />
+          <Property Type="String" Name="ServicType" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_allvendoruserorddisplay_Result">
+          <Property Type="Int64" Name="orderid" Nullable="false" />
+          <Property Type="DateTime" Name="orderdate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="orderdetailstatus" Nullable="true" />
+          <Property Type="String" Name="orderstatus" Nullable="true" />
+          <Property Type="Decimal" Name="totalprice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="fname" Nullable="true" />
+          <Property Type="String" Name="lname" Nullable="true" />
+          <Property Type="Int64" Name="cutomerid" Nullable="false" />
+          <Property Type="Int64" Name="vendorsubid" Nullable="false" />
+          <Property Type="String" Name="servicetype" Nullable="true" />
+          <Property Type="DateTime" Name="bookdate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="eventtype" Nullable="true" />
+          <Property Type="String" Name="attribute" Nullable="true" />
+          <Property Type="Int64" Name="packageid" Nullable="false" />
+          <Property Type="String" Name="logo" Nullable="true" />
+          <Property Type="Decimal" Name="perunitprice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="guestno" Nullable="false" />
+          <Property Type="String" Name="customerphoneno" Nullable="true" />
+          <Property Type="String" Name="packagename" Nullable="true" />
+          <Property Type="Int64" Name="packageid1" Nullable="false" />
+          <Property Type="Int64" Name="cusromerid1" Nullable="false" />
+          <Property Type="Int64" Name="orderdetailedid" Nullable="false" />
+          <Property Type="String" Name="ordertype" Nullable="true" />
+          <Property Type="String" Name="orderdetailtype" Nullable="true" />
+          <Property Type="String" Name="orderbooktype" Nullable="true" />
+          <Property Type="String" Name="orderdetailbooktype" Nullable="true" />
+          <Property Type="Decimal" Name="totalpric1" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="SUM_AP" Nullable="true" />
+          <Property Type="String" Name="invoice" Nullable="true" />
+          <Property Type="Decimal" Name="Due" Nullable="true" Precision="22" Scale="2" />
+          <Property Type="String" Name="username" Nullable="true" />
+          <Property Type="String" Name="Isdeal" Nullable="true" />
+          <Property Type="Int64" Name="vid" Nullable="false" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="Address" Nullable="true" />
+          <Property Type="String" Name="City" Nullable="true" />
+          <Property Type="String" Name="Landmark" Nullable="true" />
+          <Property Type="String" Name="ContactNumber" Nullable="true" />
           <Property Type="String" Name="ServicType" Nullable="true" />
         </ComplexType>
       </Schema>
@@ -3099,6 +3143,52 @@
                 <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="Landmark" ColumnName="Landmark" />
                 <ScalarProperty Name="businessphoneno" ColumnName="businessphoneno" />
+                <ScalarProperty Name="ServicType" ColumnName="ServicType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_allvendoruserorddisplay" FunctionName="MaaAahwanamModel.Store.sp_allvendoruserorddisplay">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.sp_allvendoruserorddisplay_Result">
+                <ScalarProperty Name="orderid" ColumnName="orderid" />
+                <ScalarProperty Name="orderdate" ColumnName="orderdate" />
+                <ScalarProperty Name="orderdetailstatus" ColumnName="orderdetailstatus" />
+                <ScalarProperty Name="orderstatus" ColumnName="orderstatus" />
+                <ScalarProperty Name="totalprice" ColumnName="totalprice" />
+                <ScalarProperty Name="fname" ColumnName="fname" />
+                <ScalarProperty Name="lname" ColumnName="lname" />
+                <ScalarProperty Name="cutomerid" ColumnName="cutomerid" />
+                <ScalarProperty Name="vendorsubid" ColumnName="vendorsubid" />
+                <ScalarProperty Name="servicetype" ColumnName="servicetype" />
+                <ScalarProperty Name="bookdate" ColumnName="bookdate" />
+                <ScalarProperty Name="eventtype" ColumnName="eventtype" />
+                <ScalarProperty Name="attribute" ColumnName="attribute" />
+                <ScalarProperty Name="packageid" ColumnName="packageid" />
+                <ScalarProperty Name="logo" ColumnName="logo" />
+                <ScalarProperty Name="perunitprice" ColumnName="perunitprice" />
+                <ScalarProperty Name="guestno" ColumnName="guestno" />
+                <ScalarProperty Name="customerphoneno" ColumnName="customerphoneno" />
+                <ScalarProperty Name="packagename" ColumnName="packagename" />
+                <ScalarProperty Name="packageid1" ColumnName="packageid1" />
+                <ScalarProperty Name="cusromerid1" ColumnName="cusromerid1" />
+                <ScalarProperty Name="orderdetailedid" ColumnName="orderdetailedid" />
+                <ScalarProperty Name="ordertype" ColumnName="ordertype" />
+                <ScalarProperty Name="orderdetailtype" ColumnName="orderdetailtype" />
+                <ScalarProperty Name="orderbooktype" ColumnName="orderbooktype" />
+                <ScalarProperty Name="orderdetailbooktype" ColumnName="orderdetailbooktype" />
+                <ScalarProperty Name="totalpric1" ColumnName="totalpric1" />
+                <ScalarProperty Name="SUM_AP" ColumnName="SUM_AP" />
+                <ScalarProperty Name="invoice" ColumnName="invoice" />
+                <ScalarProperty Name="Due" ColumnName="Due" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="Isdeal" ColumnName="Isdeal" />
+                <ScalarProperty Name="vid" ColumnName="vid" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Landmark" ColumnName="Landmark" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
                 <ScalarProperty Name="ServicType" ColumnName="ServicType" />
               </ComplexTypeMapping>
             </ResultMapping>
