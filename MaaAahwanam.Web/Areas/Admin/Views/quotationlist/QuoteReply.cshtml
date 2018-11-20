@@ -271,7 +271,7 @@
             var type1 = $('#otype').val();
             var id1 = $('#vid').val();
             var id = '@Request.QueryString["id"]';
-            var url = '/Admin/quotationlist/FilteredVendors?type=' + type + '&&date=' + date + '&&id=' + id1 + '&&type1=' + type1;
+            var url = '/Admin/quotationlist/FilteredVendors?type=' + type + '&&date=' + date + '&&id1=' + id1 + '&&type1=' + type1 + '&&id=' + id;
             $('#sortvendors').empty().load(url);
         }
 
@@ -292,7 +292,43 @@
                     alert(data);
                 }
             })
-
+        }
+        function SaveDetails() {
+            var quoteResponse = {
+                QuoteID: $('#qid').val(),
+                BusinessName: $('#bname').text(),
+                ServiceType: $('#stype').val(),
+                SubServiceType: $('#substype').val(),
+                VendorID: $('#vid').val(),
+                VendorSubID: $('#subvid').val(),
+                Installments: $('#addinstallments').val(),
+                FirstInstallment: $('#firstamount').val() + "," + $('#firstdays').val(),
+                SecondInstallment: $('#secondamount').val() + "," + $('#seconddays').val(),
+                ThirdInstallment: $('#thirdamount').val() + "," + $('#thirddays').val(),
+                FourthInstallment: $('#fourthamount').val() + "," + $('#fourthdays').val(),
+                TokenAmount: $('#TokenAmount').val(),
+                TotalAmount: $('#TotalAmount').val()
+            }
+            //alert(quoteResponse.QuoteID);
+            $.ajax({
+                url: '/Admin/quotationlist/SaveInstallments',
+                type: 'post',
+                datatype: 'json',
+                data: quoteResponse,
+                success: function (data) {
+                    if (data == "Success") {
+                        alert("Installments Added");
+                        $('#myModal').css('display', 'none');
+                        resetAllValues();
+                    }
+                    else if (data == "Failed") {
+                        alert("Failed to Add Installments!!! Try Again");
+                    }
+                },
+                error: function (data) {
+                    alert("Something Went Wrong!!! Try Again Later");
+                }
+            });
         }
     </script>
 
