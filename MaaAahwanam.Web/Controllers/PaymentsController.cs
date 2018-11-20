@@ -54,7 +54,7 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.orderdate = Convert.ToDateTime(orderdetails1.FirstOrDefault().orderdate).ToString("MMM d,yyyy");
                         ViewBag.orderdetails = orderdetails1;
                         ViewBag.receivedTrnsDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE).ToString("dd - MMM - yyyy");
-                        ViewBag.totalprice = orderdetails1.FirstOrDefault().totalprice;
+                        ViewBag.totalprice = orderdetails1.FirstOrDefault().totalpric1;
                         ViewBag.orderdetailid = orderdetails1.FirstOrDefault().orderdetailedid;
                         var payments = rcvpmntservice.getPayments(Oid).ToList();
                         ViewBag.payment = payments;
@@ -68,9 +68,9 @@ namespace MaaAahwanam.Web.Controllers
                         decimal paidamount;
                         if (amount == '0')
                         {
-                             paidamount = orderdetails1.FirstOrDefault().totalprice;
+                             paidamount = orderdetails1.FirstOrDefault().totalpric1;
                         }
-                        else {  paidamount = orderdetails1.FirstOrDefault().totalprice - amount; }
+                        else {  paidamount = orderdetails1.FirstOrDefault().totalpric1 - amount; }
                         ViewBag.paidamount = paidamount;
                     }
                 //    else

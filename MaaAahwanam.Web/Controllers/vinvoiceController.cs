@@ -80,7 +80,7 @@ namespace MaaAahwanam.Web.Controllers
 
                             odid = odid + item.orderdetailedid + ",";
                             ViewBag.orderdetailid5 = odid;
-                            var price = item.totalprice;
+                            var price = item.totalpric1;
                             tsprice = Convert.ToInt64(tsprice) + Convert.ToInt64(price);
                             ViewBag.total = tsprice;
                             var bdue = item.Due;
@@ -108,13 +108,13 @@ namespace MaaAahwanam.Web.Controllers
                         decimal paidamount;
                         if (amount == '0')
                         {
-                            paidamount = orderdetails1.FirstOrDefault().totalprice;
+                            paidamount = orderdetails1.FirstOrDefault().totalpric1;
                             //paidamount = orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity;
 
                         }
                         else
                         {
-                            paidamount = orderdetails1.FirstOrDefault().totalprice - amount; //paidamount = (orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity) - amount; 
+                            paidamount = orderdetails1.FirstOrDefault().totalpric1 - amount; //paidamount = (orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity) - amount; 
                             ViewBag.paidamount = paidamount;
                         }
                     }
