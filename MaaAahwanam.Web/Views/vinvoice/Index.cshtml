@@ -175,8 +175,8 @@
                                                             @foreach (var item in ViewBag.orderdetails)
                                                             {
                                                                 <tr>
-                                                                    <td><input type="checkbox" class="chcktblservice" value="@item.OrderDetailId" /></td>
-                                                                    <td> @item.OrderDetailId </td>
+                                                                    <td><input type="checkbox" class="chcktblservice" /></td>
+                                                                    <td class="detailid"> @item.OrderDetailId </td>
                                                                     <td class="text-center">@item.ServiceType</td>
                                                                     <td class="text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.PerunitPrice)).Replace(".00", "")</td>
                                                                     <td class="text-center">@item.Quantity</td>
@@ -788,6 +788,28 @@
         $('#orderdetails tr input.chcktblservice').prop('checked', true);
         if ($('#orderdetails tr input.chcktblservice').is(':checked'))
         {
+            ////var rid;
+            ////var oid = $("#OrderDetailId").val();
+            //$("#orderdetails tr .detailid").each(function () {
+            //    var odid = $(this).text();
+            //    alert(odid)
+            //    //if (rid == '') rid = odid;
+            //    //else rid = oid + ',' + odid;
+            //    //alert(rid)
+            //    //$("#OrderDetailId").val(rid);
+            //});
+            var rid;
+            var oid = $("#OrderDetailId").val();
+            $("#orderdetails tr .detailid").each(function () {
+                var odid = $(this).text();
+                alert(odid)
+                    if (rid == '') rid = odid;
+                    else rid = oid + ',' + odid;
+                    alert(rid)
+                    $("#OrderDetailId").val(rid);
+            });
+           
+       
                         //opening Balance
             $("#orderdetails tr .tsamnt").each(function () {
                 var totalamt = $(this).text();
