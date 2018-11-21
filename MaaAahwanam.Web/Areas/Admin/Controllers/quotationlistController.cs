@@ -113,61 +113,63 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         }
         public ActionResult FilteredVendors1(string id, string type,string date)
         {
-           
-                var orders = orderService.alluserOrderList(type).Where(m => m.ordertype == "Quote").ToList();
-            var s12 = ViewBag.orderdetails = orders.Where(m => m.OrderId == long.Parse(id)).ToList();
+            var sid = quotationListsService.GetAllQuotations().ToList(); //.Where(m => m.Status == "Active")
+            ViewBag.quotations = sid.Where(m => m.OrderID == id);
+            ViewBag.orderid = id;
+            //     var orders = orderService.alluserOrderList(type).Where(m => m.ordertype == "Quote").ToList();
+            // var s12 = ViewBag.orderdetails = orders.Where(m => m.OrderId == long.Parse(id)).ToList();
 
-            var s1 = ViewBag.orderdetails = orders.Where(m => m.OrderId == long.Parse(id)).FirstOrDefault();
-            string txtto; 
-            if (type == "Vendor")
-            {
-                var userlogdetails = mnguserservice.getuserbyid(Convert.ToInt32(s1.userid));
-                string txtto1 = userlogdetails.email;
-                string name1 = userlogdetails.firstname;
-                txtto = txtto1;
-                name = name1;
-                name = Capitalise(name);
+            // var s1 = ViewBag.orderdetails = orders.Where(m => m.OrderId == long.Parse(id)).FirstOrDefault();
+            // string txtto; 
+            // if (type == "Vendor")
+            // {
+            //     var userlogdetails = mnguserservice.getuserbyid(Convert.ToInt32(s1.userid));
+            //     string txtto1 = userlogdetails.email;
+            //     string name1 = userlogdetails.firstname;
+            //     txtto = txtto1;
+            //     name = name1;
+            //     name = Capitalise(name);
 
-            }
-            else if (type == "User")
-            {
-                var userdata = userLoginDetailsService.GetUserId((int)s1.userid);
-                var userdata1 = userLoginDetailsService.GetUser((int)s1.userid);
-                string txtto2 = userdata.UserName;
-                string name2 = userdata1.FirstName;
-                txtto = txtto2;
-                name = name2;
-                name = Capitalise(name);
+            // }
+            // else if (type == "User")
+            // {
+            //     var userdata = userLoginDetailsService.GetUserId((int)s1.userid);
+            //     var userdata1 = userLoginDetailsService.GetUser((int)s1.userid);
+            //     string txtto2 = userdata.UserName;
+            //     string name2 = userdata1.FirstName;
+            //     txtto = txtto2;
+            //     name = name2;
+            //     name = Capitalise(name);
 
-            }
-            string OrderId = Convert.ToString(s1.OrderId);
-            
-            StringBuilder cds = new StringBuilder();
+            // }
+            // string OrderId = Convert.ToString(s1.OrderId);
 
-           // cds.Append("<table style='width:70%;'><tbody>");
-           //cds.Append("<tr><td style = 'width:20%;'></td><td><strong> Details</strong> </td><td> <strong>Event Type</strong> </td><td><strong>Total Amount</strong></td></tr>");
-           // foreach (var item in s12)
-            //{
-            //    string image;
-            //    if (item.logo != null)
-            //    {
-            //        image = "/vendorimages/" + item.logo.Trim(',') + "";
-            //    }
-            //    else { image = "/noimages.png"; }
-            //    cds.Append("<tr><td style = 'width:20%;'>  <img src = " + image + " style='height: 182px;width: 132px;'/></td><td style = '' > <p>" + "<strong>Business Name: </strong>" + item.BusinessName + "</p><p>" + "<strong>Packgename: </strong>" + item.PackageName + "</p><p>" + "<strong>Price/person:</strong> " + '₹'  + item.PerunitPrice.ToString().Replace(".00", "") + "</p><p>" + "<strong>No. of Guests:</strong> " + item.Quantity + "</p> </td><td > "  + item.EventType + " </td><td style = ''><p>" +'₹'+ item.TotalPrice.ToString().Replace(".00", "") + "</p> </td> </tr>");
-            //}
-            //cds.Append("</tbody></table>");
+            // StringBuilder cds = new StringBuilder();
+
+            //// cds.Append("<table style='width:70%;'><tbody>");
+            ////cds.Append("<tr><td style = 'width:20%;'></td><td><strong> Details</strong> </td><td> <strong>Event Type</strong> </td><td><strong>Total Amount</strong></td></tr>");
+            //// foreach (var item in s12)
+            // //{
+            // //    string image;
+            // //    if (item.logo != null)
+            // //    {
+            // //        image = "/vendorimages/" + item.logo.Trim(',') + "";
+            // //    }
+            // //    else { image = "/noimages.png"; }
+            // //    cds.Append("<tr><td style = 'width:20%;'>  <img src = " + image + " style='height: 182px;width: 132px;'/></td><td style = '' > <p>" + "<strong>Business Name: </strong>" + item.BusinessName + "</p><p>" + "<strong>Packgename: </strong>" + item.PackageName + "</p><p>" + "<strong>Price/person:</strong> " + '₹'  + item.PerunitPrice.ToString().Replace(".00", "") + "</p><p>" + "<strong>No. of Guests:</strong> " + item.Quantity + "</p> </td><td > "  + item.EventType + " </td><td style = ''><p>" +'₹'+ item.TotalPrice.ToString().Replace(".00", "") + "</p> </td> </tr>");
+            // //}
+            // //cds.Append("</tbody></table>");
 
 
 
-            
-            string url = Request.Url.Scheme + "://" + Request.Url.Authority;
-            ViewBag.ser = s12;
-            ViewBag.url = url;
-            ViewBag.name = name;
-            ViewBag.OrderId = OrderId;
-            ViewBag.table = cds.ToString();
-            
+
+            // string url = Request.Url.Scheme + "://" + Request.Url.Authority;
+            // ViewBag.ser = s12;
+            // ViewBag.url = url;
+            // ViewBag.name = name;
+            // ViewBag.OrderId = OrderId;
+            // ViewBag.table = cds.ToString();
+
             return View();
         }
 
@@ -303,15 +305,36 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         public JsonResult ParticularQuoteReply(string QuoteID, string id)
         {
             DateTime indianTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
-            var orderss = orderService.allorderslist1().Where(m => m.ordertype == "Quote").ToList();
-            var particularquote1 = quotationListsService.GetAllQuotations().FirstOrDefault(m => m.Id == long.Parse(QuoteID));
+            var s1 = orderService.allorderslist1().ToList().Where(m => m.orderid == long.Parse(QuoteID)).FirstOrDefault(); 
+           //. var s1 = orderss
+
+            QuotationsList quotationsList = new QuotationsList();
+            quotationsList.Name = s1.fname;
+            quotationsList.EmailId = s1.username;
+            quotationsList.ServiceType = s1.servicetype;
+            quotationsList.PhoneNo = s1.customerphoneno;
+            quotationsList.EventStartDate = Convert.ToDateTime(s1.bookdate);
+            quotationsList.EventStartTime = DateTime.UtcNow;
+            quotationsList.EventEnddate = DateTime.UtcNow;
+            quotationsList.EventEndtime = DateTime.UtcNow;
+            quotationsList.VendorId = "";
+            quotationsList.VendorMasterId = s1.vid.ToString();
+            quotationsList.Persons = s1.guestno.ToString();
+            string ip = HttpContext.Request.UserHostAddress;
+            //string hostName = Dns.GetHostName();
+            quotationsList.IPaddress = ip;//Dns.GetHostByName(Dns.GetHostName()).AddressList[0].ToString();
+            quotationsList.UpdatedTime = DateTime.UtcNow;
+            quotationsList.Status = "Active";
+            quotationsList.OrderID = s1.orderid.ToString();
+            quotationListsService.AddQuotationList(quotationsList);
+            //var particularquote1 = quotationListsService.GetAllQuotations().FirstOrDefault(m => m.Id == long.Parse(QuoteID));
             // var particularquote = orderss.Where(m => m.orderid == long.Parse(id));
-            var particularquote = orderss.FirstOrDefault(m => m.orderid == long.Parse(QuoteID));
-            if (particularquote1.FirstTime == null && particularquote1.FirstTimeQuoteDate == null)
-            {
-                particularquote1.FirstTime = id;
-                particularquote1.FirstTimeQuoteDate = indianTime.ToString("dd-MM-yyyy hh:mm:ss");
-            }
+            //var particularquote = orderss.FirstOrDefault(m => m.orderid == long.Parse(QuoteID));
+            //if (particularquote1.FirstTime == null && particularquote1.FirstTimeQuoteDate == null)
+            //{
+            //    particularquote1.FirstTime = id;
+            //    particularquote1.FirstTimeQuoteDate = indianTime.ToString("dd-MM-yyyy hh:mm:ss");
+            //}
             //else if (particularquote.FirstTime != null && particularquote.FirstTimeQuoteDate != null && particularquote.SecondTime == null && particularquote.SecondTimeQuoteDate == null)
             //{
             //    particularquote.SecondTime = id;
@@ -325,12 +348,12 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
             FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/QuoteReply.html"));
             string readFile = File.OpenText().ReadToEnd();
-            readFile = readFile.Replace("[name]", particularquote1.Name);
-            readFile = readFile.Replace("[Email]", particularquote1.EmailId);
-            string txtto = particularquote1.EmailId;
+            readFile = readFile.Replace("[name]", s1.fname);
+            readFile = readFile.Replace("[Email]", s1.username);
+            string txtto = s1.username;
             string txtmessage = readFile;
-            string subj = "Response to your Quote #" + particularquote1.Id + "";
-            int count = quotationListsService.UpdateQuote(particularquote1);
+            string subj = "Response to your Quote #" + s1.orderid + "";
+           // int count = quotationListsService.UpdateQuote(particularquote1);
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
             emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
             return Json("sucess");
