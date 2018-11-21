@@ -180,7 +180,7 @@ namespace MaaAahwanam.Web.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Index(Payment payments,string Received_Amount,string OrderDetailId)
+        public ActionResult Index(Payment payments,string Received_Amount,string OrderDetailId,string Discount, string DiscountType, string GST)
         {
             //var orderdetails = newmanageuse.userOrderList().Where(m => m.OrderId == long.Parse(payments.OrderId)).ToList();
             //if (orderdetails == null || orderdetails.Count == 0)
@@ -204,6 +204,9 @@ namespace MaaAahwanam.Web.Controllers
                         str = Regex.Replace(str, @"\s", "");
                         var orderdetailid = str;
                         payments.OrderDetailId = orderdetailid;
+                        payments.Discount = Discount;
+                        payments.DiscountType = DiscountType;
+                        payments.GST = GST;
                         //var datarecord = orderdetailservices.GetOrderDetailsByOrderdetailid(Convert.ToInt32(orderdetailid));
                         decimal dueamount;
                         var ksorder = orderdetails1.Where(m => m.orderdetailedid == long.Parse(orderdetailid)).FirstOrDefault();

@@ -48,7 +48,6 @@
                 <input type="hidden" id="OrderDetailId" name="OrderDetailId" value="" />
                 <input type="hidden" id="OrderDetailid1" name="OrderDetailid1" value="@ViewBag.orderdetailid5" />
                 <div class="col-md-10">
-
                     <div id="print-content">
                         <div class="row">
                             <div class="col-12" style="padding-left:30px">
@@ -90,7 +89,6 @@
                             <div class="col-lg-12" style="padding-left:30px">
                                 <div class="add_top_15">
                                     <h3><strong>Order summary</strong></h3>
-
                                     <div class="table-responsive">
                                         <table class="table table-condensed" style="width:100%;max-width:100%">
                                             <thead>
@@ -154,9 +152,8 @@
                                         <div class="col-md-12" style="padding-left:30px">
                                             <div class="add_top_15">
                                                 <h3><strong>Order Details</strong></h3>
-
-                                                <div class="table-responsive">
-                                                    <table class="table table-condensed" id="orderdetails" style="width:100%;max-width:100%">
+                                                <div class="table-responsive1">
+                                                    <table class="table table-condensed1" id="orderdetails" style="width:100%;max-width:100%">
                                                         <thead>
                                                             <tr>
                                                                 <td><strong>Select</strong></td>
@@ -211,7 +208,7 @@
                                                                             </div>
                                                                         }
                                                                     </td>
-                                                                    <td class="text-right">18%</td>
+                                                                    <td class="text-right"><label id="GST" class="lblgst">18%</label></td>
                                                                     <td class="text-right gndttl"><label class="fgndttl">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalpric1) + (Convert.ToDouble(@item.totalpric1) * 0.18)).Replace(".00", "")</label></td>
                                                                 </tr>  
                                                                 @(++count)
@@ -507,7 +504,7 @@
                                                 <div class="col-md-5" style="padding: 14px;">Received Amount</div>
                                                 <div class="col-md-7" style="padding:1px;margin-left: -19px;">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="Received_Amount" name="Received_Amount" value="" style="padding: 5px;">
+                                                        <input type="text" class="form-control" id="Received_Amount" name="Received_Amount"  style="padding: 5px;">
                                                     </div>
                                                 </div>
                                             </div>
@@ -768,7 +765,7 @@
             }
         });
     });
-    var sum = 0; var sum1= 0
+    var sum = 0; var sum1 = 0; var fnmnt=0
     $("#btnrcvpmnt").on('click', function () {
         $('#Paymentmode').css('display', 'block');
         $('#btnrcvpmnt').css('display', 'none');
@@ -790,7 +787,6 @@
                 var totalamt = $(this).text();
                 var ctamt = totalamt.replace(/\Rs /g, '').replace(/,/g, '');
                 sum += parseInt(ctamt);
-                      //alert(sum)
                 $('#Opening_Balance').val(sum);
 
             });
@@ -802,32 +798,38 @@
                 //alert(sum1)
                 $('#Current_Balance').val(sum1);
             });
+            $("#orderdetails tr label.fgndttl").each(function () {
+                var totalamt = $(this).text();
+                var ctamt = totalamt.replace(/\Rs /g, '').replace(/,/g, '');
+                fnmnt += parseInt(ctamt);
+                $('#FinalAmount').val(fnmnt);
+            });
         }      
     });
-
+ 
     $('#Received_Amount').on('input', function () {
-        var openingamnt1 = $('#Current_Balance1').val();
-        var rcvamnt = $('#Received_Amount').val();
-        var result = ''
-        if (rcvamnt == null || rcvamnt == "") {
+        var fnmnt = $('#FinalAmount1').val();
+        var rcvnmnt = $('#Received_Amount').val();
+        //var result = 0
+        if (rcvnmnt == null || rcvnmnt == "") {
             alert("Enter Some Amount");
-            $('#Current_Balance').val(openingamnt1);
-        }
-        else if (parseFloat(rcvamnt) > parseFloat(openingamnt1)) {
+            $("#FinalAmount").val(fnmnt);
+             }
+        else if (parseInt(rcvnmnt) > parseInt(fnmnt)) {
             alert("Enter less than or Equal Of Balance Due Amount...");
-            $('#Received_Amount').val("");
-            $('#Current_Balance').val(openingamnt1);
+            $("#FinalAmount").val(fnmnt);
         }
         else {
-            result = parseFloat(openingamnt1) - parseFloat(rcvamnt);
-            $('#Current_Balance').val(result);
+        var result = parseInt(rcvnmnt) - parseInt(fnmnt);
+       $("#FinalAmount").val(result);
         }
-    });   
+    });
     $("#SavePayment").click(function () {
-        //var paymenttype = $('#Payment_Type').val();
-        //var orderid =@Request.QueryString["Oid"];
         var OrderDetailId = $("#OrderDetailId").val();
         var Received_Amount = $("#Received_Amount").val();
+        var Discount = $("#Discount").val();
+        var DiscountType = $("#DiscountType").val();
+        var GST = $('#GST').val();
         var payments = {
             OrderId: $("#OrderId").val(),
             User_Id: $("#User_Id").val(),
@@ -850,16 +852,13 @@
             Wallet_Number: $("#Wallet_Number").val(),
             Current_Balance: $('#Current_Balance').val(),
             Opening_Balance: $('#Opening_Balance').val(),
-            //DiscountType: $('#DiscountType').val(),
-            //Discount: $('#Discount').val(),
-            //GST:$('#lblgst').val(),
             Remarks: $("#Remarks").val()
         }
         $.ajax({
             url: '/vinvoice/Index',
             type: 'Post',
             contentType: 'application/json',
-            data: JSON.stringify({ payments: payments, OrderDetailId: OrderDetailId, Received_Amount: Received_Amount }),
+            data: JSON.stringify({ payments: payments, OrderDetailId: OrderDetailId, Received_Amount: Received_Amount, Discount: Discount, DiscountType: DiscountType, GST: GST }),
             success: function (data) {
                 alert(data);
                 location.reload();
@@ -927,6 +926,8 @@
                 gstsum += gstplusfinal;
                 tr.find('#DiscountType').removeAttr('disabled');
                 tr.find('#Discount').removeAttr('disabled');
+                $('#FinalAmount').val(gstsum)
+                $('#FinalAmount1').val(gstsum)
             }
             else
             {
@@ -934,8 +935,14 @@
                 gstsum = parseInt(famount) - parseInt(famt);
                 tr.find('#DiscountType').attr('disabled', 'disabled');
                 tr.find('#Discount').attr('disabled', 'disabled')
+                $('#FinalAmount').val(gstsum)
+                $('#FinalAmount1').val(gstsum)
             }
-            $('#FinalAmount').val(gstsum);
+            //$('#FinalAmount').val(gstsum);
+        }
+        else {
+            $('#FinalAmount').val(duebalance);
+            $('#FinalAmount1').val(duebalance);
         }
     });
     var discounttype = '';
@@ -953,12 +960,16 @@
             }
             else {
                 disc = ttamnt - (ttamnt * discamnt / 100);
+              
             }
         }
         else if (discounttype == 'Flat Rate ₹') {
             disc = ttamnt - discamnt;
+           
         }
         var finalamnt = disc + (disc * 18 / 100);
+        $('#FinalAmount').val(finalamnt);
+        $('#FinalAmount1').val(finalamnt);
         $(this).parent('div').parent('td.text-center').parent('tr').find('.fgndttl').text('Rs ' + finalamnt);
         var amt = 0;
         $('#orderdetails tr').each(function () {
@@ -966,8 +977,10 @@
             var tamt = $(this).find('.fgndttl').text().replace('Rs ', '-').replace(',', '').substr(1);
             if (checked)
                 amt += parseInt(tamt);
+            $('#FinalAmount').val(amt);
+            $('#FinalAmount1').val(amt);
         });
-        $('#FinalAmount').val(amt);
+        //$('#FinalAmount').val(amt);
     });
 </script>
 
