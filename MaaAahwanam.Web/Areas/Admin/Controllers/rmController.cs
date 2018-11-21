@@ -80,7 +80,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult PartnerPackage(PartnerPackage partnerPackage, string command, string partid)
         {
-            partnerPackage.UpdatedDate = DateTime.Now.Date;
+            partnerPackage.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             long packageid = long.Parse(partnerPackage.packageid);
             long partid1 = long.Parse(partid);
 

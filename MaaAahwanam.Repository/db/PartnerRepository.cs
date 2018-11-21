@@ -92,7 +92,7 @@ namespace MaaAahwanam.Repository.db
             // Query the database for the row to be updated.
             var query =
                 from ord in _dbContext.PartnerPackage
-                where ord.PartnerID == partid
+                where ord.PartnerID == partid && ord.packageid == packageid.ToString()
                 select ord;
             // Query the database for the row to be updated.
 
