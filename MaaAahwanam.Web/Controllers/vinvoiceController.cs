@@ -67,17 +67,21 @@ namespace MaaAahwanam.Web.Controllers
                      var odid1= orderdetails1.FirstOrDefault().orderdetailedid.ToString();
                     var payments = rcvpaymentservice.getPayments(oid).ToList();
                     var paymentsbyodid = rcvpaymentservice.getPaymentsbyodid(odid1).ToList();
+                    List<string> discount = new List<string>();
                     if (paymentsbyodid.Count != 0)
                     {
                         var disc = paymentsbyodid.FirstOrDefault().Discount;
-                        ViewBag.discount = Convert.ToDouble(disc);
+                        //ViewBag.discount = Convert.ToDouble(disc);
                         var disctype = paymentsbyodid.FirstOrDefault().DiscountType;
-                        ViewBag.discounttype = disctype;
+                        //ViewBag.discounttype = disctype;
+                        discount.Add(disctype+'!'+disc);
                     }
                     else
                     {
-                        ViewBag.discount = Convert.ToDouble(Discount);
+                        discount.Add(null);
+                        //ViewBag.discount = Convert.ToDouble(Discount);
                     }
+                    ViewBag.discount = discount;
                     string odid = string.Empty;
                         foreach (var item in orderdetails1)
                         {
