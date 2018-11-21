@@ -643,7 +643,6 @@
         w.close();
     }
     $('#savepdf').click(function () {
-        debugger;
         // $("input[name='GridHtml']").val($("#print-content").html());
         //var pdfhtml = $("input[name='GridHtml']").val();
         var pdfhtml = document.getElementById("print-content").outerHTML;// $("#print-content").html();
@@ -710,9 +709,7 @@
         })
 
     }*@
-
     // This code is collected but useful, click below to jsfiddle link.
-
     function email(val) {
         $.ajax({
             url: '/vinvoice/Email?oid=' + val,
@@ -731,49 +728,26 @@
     };
     $(document).ready(function () {
         var now = new Date();
-        //var openamnt = $('#paidamount').val();
-        //$('#Current_Balance').val(openamnt);
         var day = ("0" + now.getDate()).slice(-2);
         var month = ("0" + (now.getMonth() + 1)).slice(-2);
-        //var today = now.getFullYear() + "-" + (month) + "-" + (day);
         var today = (day) + "-" + (month) + "-" + now.getFullYear();
         $('.datepicker').val(today);
 
         $('input:radio[name="Payment_Type"]').change(function () {
             if ($(this).val() == "Cash") {
-                $('#cashdetails').show();
-                $('#chequedetails').hide();
-                $('#carddetails').hide();
-                $('#bankdetails').hide();
-                $('#walletdetails').hide();
+                $('#cashdetails').show();$('#chequedetails').hide();$('#carddetails').hide();$('#bankdetails').hide(); $('#walletdetails').hide();
             }
             else if ($(this).val() == "Cheque") {
-                $('#cashdetails').hide();
-                $('#chequedetails').show();
-                $('#carddetails').hide();
-                $('#bankdetails').hide();
-                $('#walletdetails').hide();
+                $('#cashdetails').hide();$('#chequedetails').show();$('#carddetails').hide();$('#bankdetails').hide();$('#walletdetails').hide();
             }
             else if ($(this).val() == "Credit/DebitCard") {
-                $('#cashdetails').hide();
-                $('#chequedetails').hide();
-                $('#carddetails').show();
-                $('#bankdetails').hide();
-                $('#walletdetails').hide();
+                $('#cashdetails').hide(); $('#chequedetails').hide();$('#carddetails').show();$('#bankdetails').hide();$('#walletdetails').hide();
             }
             else if ($(this).val() == "Bank Transfer") {
-                $('#cashdetails').hide();
-                $('#chequedetails').hide();
-                $('#carddetails').hide();
-                $('#bankdetails').show();
-                $('#walletdetails').hide();
+                $('#cashdetails').hide(); $('#chequedetails').hide();$('#carddetails').hide();$('#bankdetails').show();$('#walletdetails').hide();
             }
             else if ($(this).val() == "Wallet") {
-                $('#cashdetails').hide();
-                $('#chequedetails').hide();
-                $('#carddetails').hide();
-                $('#bankdetails').hide();
-                $('#walletdetails').show();
+                $('#cashdetails').hide();$('#chequedetails').hide();$('#carddetails').hide();$('#bankdetails').hide();$('#walletdetails').show();
             }
         });
     });
@@ -810,11 +784,8 @@
                 sum1 += parseInt(ctamt);
                 //alert(sum1)
                 $('#Current_Balance').val(sum1);
-
             });
-
-        }
-       
+        }      
     });
 
     $('#Received_Amount').on('input', function () {
@@ -834,8 +805,7 @@
             result = parseFloat(openingamnt1) - parseFloat(rcvamnt);
             $('#Current_Balance').val(result);
         }
-    });
-    
+    });   
     $("#SavePayment").click(function () {
         //var paymenttype = $('#Payment_Type').val();
         //var orderid =@Request.QueryString["Oid"];
@@ -883,8 +853,6 @@
         });
 
     });
-
-
     $("#orderdetails tr input.chcktblservice").click(function () {
         var checked = $(this).is(':checked');
         var gstsum5 = $('#FinalAmount').val(); // GSt Total Amount
@@ -988,8 +956,7 @@
             //$('#orderdetails tr td.gndttl').find('label.fgndttl').html(finalamnt1);
             //$('#orderdetails tr label.fgndttl').parent('td').text(finalamnt1);
             $('#orderdetails tr').find('td').children('label.fgndttl').text(finalamnt1);
-            //$('#FinalAmount1').val(finalamnt1);
-            //$('#FinalAmount').val(finalamnt1);
+           
         }
       
     });
