@@ -590,9 +590,10 @@ namespace MaaAahwanam.Web.Controllers
                         package.Add(data);
                     }
                     var tot = tprice * Convert.ToInt32(guest);
+                    var gtot = tot + (tot * 0.18);
                     ViewBag.package = package;
                     ViewBag.tprice = tot;
-
+                    ViewBag.gtot = gtot;
                    
                 }
             }

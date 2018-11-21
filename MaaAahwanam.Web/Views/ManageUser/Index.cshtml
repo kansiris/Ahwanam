@@ -247,46 +247,65 @@
         //$('.discamount').on('input', function () {
         //                alert("ks")
         //});
+        //$(document).ready(function () {
+        window.onload = function () { 
+            var tot = $('.ftotal').text();
+            var gf1 = parseFloat(tot) + (parseFloat(tot) * 0.18)
+            $('.grandtotal').empty().text(parseInt(gf1));
+
+        }
 
         $(document).on('input', '.discamount', function () {
             var disc = $(this).val();
             var total = $(this).parents("div#pack").find('.total').text();
-            var disctype = $(this).parents("div#pack").find('select[name = disctype]').val();
             var total1 = total.split('₹')[1];
+            var gf1 = parseFloat(total1) + (parseFloat(total1) * 0.18)
+            $('.grandtotal').empty().text(parseInt(gf1));
+            var disctype = $(this).parents("div#pack").find('select[name = disctype]').val();
             if (disc == "" || disc == undefined) {
                 $(this).parents("div#pack").find('.finaltotal').empty().append(total1);
-            } else {
                 
-                var final;
-                if (disctype == 'percent') { final = (parseInt(total1) - (parseInt(disc) * 0.01)); } else if (disctype == 'flat') { final = (parseInt(total1) - parseInt(disc)); } else if (disctype == 'Select option') { alert('select discount type'); }
-                $(this).parents("div#pack").find('.finaltotal').empty().append(parseInt(final));
-
-                //var str = $('.total').text();
-                var str = [];
-                $('label.total').each(function () {
-                    str.push($(this).text().split('₹')[1]);
-                    //str = parseInt(str) + parseInt($(this).text().split('₹')[1]);
-                    // alert(str);
-                })
-                var str1 = [];
-                $('label.finaltotal').each(function () {
-                    str1.push($(this).text());
-                    //str = parseInt(str1) + parseInt($(this).text().split('₹')[1]);
-                    // alert(str);
-                })
-                var grandtotal = 0;
-                for (var i = 0; i < str.length; i++) {
-                    if (str1[i] != '') grandtotal = parseFloat(grandtotal) + parseFloat(str1[i]);
-                    else grandtotal = parseFloat(grandtotal) + parseFloat(str[i]);
-                  //  alert(grandtotal);
-                }
-                $('.ftotal').empty().text(grandtotal);
-                //alert(grandtotal);
-                var gf = parseFloat(grandtotal) + (parseFloat(grandtotal) * 0.18)
-                $('.grandtotal').empty().text(parseInt(gf));
             }
-        });
+            else if (disctype == 'percent') {
+                if (disc > 100) {
+                    alert('Percentage should not be greater than 100');
+                }
+                else {
 
+                    var final;
+                    final = (parseInt(total1) - (parseInt(total1) * (parseInt(disc) / 100)));
+                }
+            }
+            else if (disctype == 'flat') { final = (parseInt(total1) - parseInt(disc)); }
+            else if (disctype == 'Select option') { alert('select discount type'); }
+            $(this).parents("div#pack").find('.finaltotal').empty().append(parseInt(final));
+
+            //var str = $('.total').text();
+            var str = [];
+            $('label.total').each(function () {
+                str.push($(this).text().split('₹')[1]);
+                //str = parseInt(str) + parseInt($(this).text().split('₹')[1]);
+                // alert(str);
+            })
+            var str1 = [];
+            $('label.finaltotal').each(function () {
+                str1.push($(this).text());
+                //str = parseInt(str1) + parseInt($(this).text().split('₹')[1]);
+                // alert(str);
+            })
+            var grandtotal = 0;
+            for (var i = 0; i < str.length; i++) {
+                if (str1[i] != '') grandtotal = parseFloat(grandtotal) + parseFloat(str1[i]);
+                else grandtotal = parseFloat(grandtotal) + parseFloat(str[i]);
+                //  alert(grandtotal);
+            }
+            $('.ftotal').empty().text(grandtotal);
+            //alert(grandtotal);
+            var gf = parseFloat(grandtotal) + (parseFloat(grandtotal) * 0.18)
+            $('.grandtotal').empty().text(parseInt(gf));
+        }
+        );
+    
         $("#select").click(function () {
             alert('button clicked');
             var userid = $("#usedid").val();
