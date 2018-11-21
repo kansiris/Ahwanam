@@ -659,11 +659,12 @@ $(document).on('click', '.updatepkg', function () {
     var allbuttonsvals = allVal.substring(1, allVal.length);
     var newlists = '';
     if (parentdiv.find('.selpkgitems').val() != '') {
-        newlists = parentdiv.find('.selpkgitems').val() + ',' + parentdiv.find('.pkgmenuitems').val();
+        newlists = parentdiv.find('.selpkgitems').val() +','+ parentdiv.find('.pkgmenuitems').val();
     }
     else {
         newlists = parentdiv.find('.pkgmenuitems').val();
     }
+    var finalmenulist = [];
     //var newlists = parentdiv.find('.selpkgitems').val() + ',' + parentdiv.find('.pkgmenuitems').val();
     var dblist = parentdiv.find('.pkgmenuitems').val();
     var selectedlist = parentdiv.find('.availablepkgitems').val();
@@ -677,25 +678,23 @@ $(document).on('click', '.updatepkg', function () {
     var availableitems = a;
     if (selectedlist != undefined) {
         for (var i = 0; i < availableitems.length; i++) {
-            var value = $.inArray(availableitems[i].replace('/', '_'), selectedlist.split(','));
+            var value = $.inArray(availableitems[i].replace('/', '_'), selectedlist.split(','));;
             if (b.indexOf(value) == -1) {
-                //alert(b.indexOf(value));
                 if (value != -1) {
                     b.push(value);
-                    splitteddblist[value] = newlists.split(',')[i];
+                    finalmenulist[value] = newlists.split(',')[i];
                 }
                 else {
-                    splitteddblist.push(newlists.split(',')[i]);
-                    //alert(newlists.split(',')[i]);
+                    finalmenulist.push(newlists.split(',')[i]);
                 }
             }
         }
-        menuitems = splitteddblist.join(',');
+        menuitems = finalmenulist.join(',');
     }
     else {
         menuitems = newlists;
     }
-    alert(menuitems);
+    //alert(menuitems);
     var pkgid = $(this).prev('input.packageid').val();
     var packagename = parentdiv.find('#pkgname').val();
     var pkgcategory = parentdiv.find("input[type=radio]:checked").val();
