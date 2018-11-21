@@ -83,9 +83,7 @@ namespace MaaAahwanam.Web.Controllers
             takecount = takecount / selectedservices.Count();
             for (int i = 0; i < selectedservices.Count(); i++)
             {
-                selectedservices[i] = (selectedservices[i] == "Convention") ? "Convention Hall" : selectedservices[i];
-                selectedservices[i] = (selectedservices[i] == "Banquet") ? "Banquet Hall" : selectedservices[i];
-                selectedservices[i] = (selectedservices[i] == "Function") ? "Function Hall" : selectedservices[i];
+                selectedservices[i] = (selectedservices[i] == "Convention" || selectedservices[i] == "Banquet" || selectedservices[i] == "Function") ? selectedservices[i] + " Hall" : selectedservices[i];
                 var getrecords = resultsPageService.GetAllVendors(selectedservices[i]);//.Take(recordcount).ToList();
                 if (command == "next")
                     getrecords = getrecords.Skip(takecount).Take(recordcount).ToList();
