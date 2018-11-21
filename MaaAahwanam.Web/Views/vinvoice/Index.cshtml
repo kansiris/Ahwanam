@@ -174,6 +174,7 @@
                                                         <tbody>
                                                             @foreach (var item in ViewBag.orderdetails)
                                                             {
+                                                                var count = 0;
                                                                 <tr>
                                                                     <td><input type="checkbox" class="chcktblservice" /></td>
                                                                     <td class="detailid"> @item.orderdetailedid </td>
@@ -183,6 +184,23 @@
                                                                     <td class="sbaldue text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.Due)).Replace(".00", "")</td>
                                                                     <td class="tsamnt text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalpric1)).Replace(".00", "")</td>
                                                                     <td class="text-center">
+                                                                        @if (ViewBag.discount[count] != null)
+                                                                        {
+                                                                            <label>
+                                                                                Discount Type : @ViewBag.discount[count].Split("!")[0]
+                                                                                Discount : @ViewBag.discount[count].Split("!")[1]
+                                                                            </label>
+                                                                            @*<select name="DiscountType" id="DiscountType" value="@ViewBag.discount[count].Split("!")[0]" class="selectdiscount" style="font-size: 11px;" disabled>
+                                                                                <option value="select">Select Discount Type</option>
+                                                                                <option value="Discpercentage">Percentage %</option>
+                                                                                <option value="flaterate">Flat Rate ₹</option>
+                                                                            </select>
+                                                                            <div class="ServiceDiscount" style="padding-left:5px;padding-top:8px;">
+                                                                                <input type="text" class="disctxt" id="Discount" name="Discount" value="@@ViewBag.discount[count].Split("!")[1]" placeholder="Enter Discount" style="font-size: 12px; width:128px;padding:0px;" disabled>
+                                                                            </div>*@
+                                                                        }
+                                                                        else
+                                                                        {
                                                                             <select name="DiscountType" id="DiscountType"  class="selectdiscount" style="font-size: 11px;" disabled>
                                                                                 <option value="select">Select Discount Type</option>
                                                                                 <option value="Discpercentage">Percentage %</option>
@@ -191,10 +209,12 @@
                                                                             <div class="ServiceDiscount" style="padding-left:5px;padding-top:8px;">
                                                                                 <input type="text" class="disctxt" id="Discount" name="Discount" placeholder="Enter Discount" style="font-size: 12px; width:128px;padding:0px;" disabled>
                                                                             </div>
+                                                                        }
                                                                     </td>
                                                                     <td class="text-right">18%</td>
-                                                                    <td class="text-right gndttl">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalpric1) +(Convert.ToDouble(@item.totalpric1) *0.18)).Replace(".00", "")</td>
+                                                                    <td class="text-right gndttl"><label class="fgndttl">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalpric1) + (Convert.ToDouble(@item.totalpric1) * 0.18)).Replace(".00", "")</label></td>
                                                                 </tr>  
+                                                                @(++count)
                                                             }
                                                         </tbody>
                                                     </table>
@@ -630,9 +650,6 @@
     })(jQuery);
 
 </script>
-
-
-
 <script>
     function printDiv(divName) {
 
@@ -643,7 +660,6 @@
         w.close();
     }
     $('#savepdf').click(function () {
-        debugger;
         // $("input[name='GridHtml']").val($("#print-content").html());
         //var pdfhtml = $("input[name='GridHtml']").val();
         var pdfhtml = document.getElementById("print-content").outerHTML;// $("#print-content").html();
@@ -710,9 +726,7 @@
         })
 
     }*@
-
     // This code is collected but useful, click below to jsfiddle link.
-
     function email(val) {
         $.ajax({
             url: '/vinvoice/Email?oid=' + val,
@@ -731,49 +745,26 @@
     };
     $(document).ready(function () {
         var now = new Date();
-        //var openamnt = $('#paidamount').val();
-        //$('#Current_Balance').val(openamnt);
         var day = ("0" + now.getDate()).slice(-2);
         var month = ("0" + (now.getMonth() + 1)).slice(-2);
-        //var today = now.getFullYear() + "-" + (month) + "-" + (day);
         var today = (day) + "-" + (month) + "-" + now.getFullYear();
         $('.datepicker').val(today);
 
         $('input:radio[name="Payment_Type"]').change(function () {
             if ($(this).val() == "Cash") {
-                $('#cashdetails').show();
-                $('#chequedetails').hide();
-                $('#carddetails').hide();
-                $('#bankdetails').hide();
-                $('#walletdetails').hide();
+                $('#cashdetails').show();$('#chequedetails').hide();$('#carddetails').hide();$('#bankdetails').hide(); $('#walletdetails').hide();
             }
             else if ($(this).val() == "Cheque") {
-                $('#cashdetails').hide();
-                $('#chequedetails').show();
-                $('#carddetails').hide();
-                $('#bankdetails').hide();
-                $('#walletdetails').hide();
+                $('#cashdetails').hide();$('#chequedetails').show();$('#carddetails').hide();$('#bankdetails').hide();$('#walletdetails').hide();
             }
             else if ($(this).val() == "Credit/DebitCard") {
-                $('#cashdetails').hide();
-                $('#chequedetails').hide();
-                $('#carddetails').show();
-                $('#bankdetails').hide();
-                $('#walletdetails').hide();
+                $('#cashdetails').hide(); $('#chequedetails').hide();$('#carddetails').show();$('#bankdetails').hide();$('#walletdetails').hide();
             }
             else if ($(this).val() == "Bank Transfer") {
-                $('#cashdetails').hide();
-                $('#chequedetails').hide();
-                $('#carddetails').hide();
-                $('#bankdetails').show();
-                $('#walletdetails').hide();
+                $('#cashdetails').hide(); $('#chequedetails').hide();$('#carddetails').hide();$('#bankdetails').show();$('#walletdetails').hide();
             }
             else if ($(this).val() == "Wallet") {
-                $('#cashdetails').hide();
-                $('#chequedetails').hide();
-                $('#carddetails').hide();
-                $('#bankdetails').hide();
-                $('#walletdetails').show();
+                $('#cashdetails').hide();$('#chequedetails').hide();$('#carddetails').hide();$('#bankdetails').hide();$('#walletdetails').show();
             }
         });
     });
@@ -810,11 +801,8 @@
                 sum1 += parseInt(ctamt);
                 //alert(sum1)
                 $('#Current_Balance').val(sum1);
-
             });
-
-        }
-       
+        }      
     });
 
     $('#Received_Amount').on('input', function () {
@@ -834,8 +822,7 @@
             result = parseFloat(openingamnt1) - parseFloat(rcvamnt);
             $('#Current_Balance').val(result);
         }
-    });
-    
+    });   
     $("#SavePayment").click(function () {
         //var paymenttype = $('#Payment_Type').val();
         //var orderid =@Request.QueryString["Oid"];
@@ -883,20 +870,27 @@
         });
 
     });
-
-
     $("#orderdetails tr input.chcktblservice").click(function () {
         var checked = $(this).is(':checked');
         var gstsum5 = $('#FinalAmount').val(); // GSt Total Amount
         var tr = $(this).parent('td').parent('tr');
         var rid;
+        if (checked)
+         {
         var oid = $("#OrderDetailId").val();
         var odid = tr.find('td:eq(1)').text();
         if (rid == '') rid = odid;
         else rid = oid + ',' + odid;
         $("#OrderDetailId").val(rid);
+        }
+        else {
+            var oid = $("#OrderDetailId").val();
+            var odid = tr.find('td:eq(1)').text();
+            rid = oid.replace(odid, '');
+            $("#OrderDetailId").val(rid);
+        }
         var openingbal = $('#Opening_Balance').val();
-        var opamt = tr.find('.tsamnt').text().replace('Rs ', '').replace(',', '').trim();
+        var opamt = tr.find('.tsamnt').text().replace('Rs ', '').replace(/,/g, '').trim();
         //Opening Balance
         if (openingbal == '')
             $('#Opening_Balance').val(opamt);
@@ -908,7 +902,7 @@
         }
         //Balance Due
         var currentbal = $('#Current_Balance').val();
-        var cntbal = tr.find('.sbaldue').text().replace('Rs ', '').replace(',', '').trim();
+        var cntbal = tr.find('.sbaldue').text().replace('Rs ', '').replace(/,/g, '').trim();
         if (currentbal != '')
         {
             if (checked)
@@ -936,50 +930,44 @@
             }
             else
             {
-                var famt = tr.find('.gndttl').text().replace('Rs ', '').replace(',', '').trim();
+                var famt = tr.find('.gndttl').text().replace('Rs ', '').replace(/,/g, '').trim();
                 gstsum = parseInt(famount) - parseInt(famt);
                 tr.find('#DiscountType').attr('disabled', 'disabled');
                 tr.find('#Discount').attr('disabled', 'disabled')
             }
             $('#FinalAmount').val(gstsum);
-         
         }
     });
     var discounttype = '';
-    //$('.selectdiscount').change(function () {
     $('#orderdetails tr td').find('select.selectdiscount').change(function () {
         discounttype = $(this).find('option:selected').text()
         $(this).parent('td').find('#Discount').focus();
     });
-   
-
     $('#orderdetails tr td').find('input.disctxt').on('input', function () {
+        var ttamnt = $(this).parent('div').parent('td.text-center').parent('tr').find('.tsamnt').text().replace('Rs ', '-').replace(/,/g, '').substr(1);
+        var disc = 0;
+        var discamnt = $(this).val();
         if (discounttype == 'Percentage %') {
-            var ttamnt = $('#Opening_Balance').val();
-            var discamnt = $(this).val();
             if (discamnt > 100) {
                 alert('Percentage should not be greater than 100');
             }
             else {
-                var discountinpercent = ttamnt - (ttamnt * discamnt / 100);
-                finalamnt = discountinpercent + (discountinpercent * 18 / 100);
-                alert(finalamnt);
-                $(this).find('.gndttl').html(finalamnt);
-                //$('#FinalAmount1').val(finalamnt);
-                //$('#FinalAmount').val(finalamnt);
+                disc = ttamnt - (ttamnt * discamnt / 100);
             }
         }
         else if (discounttype == 'Flat Rate ₹') {
-            var ttamnt1 = $('#Opening_Balance').val();
-            var discamnt1 = $(this).val();
-            //alert(discamnt1)
-            var discountrupees = ttamnt1 - discamnt1;
-            finalamnt1 = discountrupees + (discountrupees * 18 / 100);
-            alert(finalamnt1)
-            $(this).find('.gndttl').html(finalamnt1);
-            //$('#FinalAmount1').val(finalamnt1);
-            //$('#FinalAmount').val(finalamnt1);
+            disc = ttamnt - discamnt;
         }
+        var finalamnt = disc + (disc * 18 / 100);
+        $(this).parent('div').parent('td.text-center').parent('tr').find('.fgndttl').text('Rs ' + finalamnt);
+        var amt = 0;
+        $('#orderdetails tr').each(function () {
+            var checked = $(this).find('input.chcktblservice').is(':checked');
+            var tamt = $(this).find('.fgndttl').text().replace('Rs ', '-').replace(',', '').substr(1);
+            if (checked)
+                amt += parseInt(tamt);
+        });
+        $('#FinalAmount').val(amt);
     });
 </script>
 

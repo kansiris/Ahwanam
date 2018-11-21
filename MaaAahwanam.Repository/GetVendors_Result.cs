@@ -64,5 +64,9 @@ namespace MaaAahwanam.Repository
         public string subzipcode { get; set; }
         public string Dimentions { get; set; }
         public string subdescription { get; set; }
+        public string normaldays { get; set; }
+        public string choicedays { get; set; }
+        public string holidays { get; set; }
+        public string peakdays { get; set; }
     }
 }
