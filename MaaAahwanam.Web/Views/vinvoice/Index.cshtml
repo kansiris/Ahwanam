@@ -174,6 +174,7 @@
                                                         <tbody>
                                                             @foreach (var item in ViewBag.orderdetails)
                                                             {
+                                                                var count = 0;
                                                                 <tr>
                                                                     <td><input type="checkbox" class="chcktblservice" /></td>
                                                                     <td class="detailid"> @item.orderdetailedid </td>
@@ -183,18 +184,33 @@
                                                                     <td class="sbaldue text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.Due)).Replace(".00", "")</td>
                                                                     <td class="tsamnt text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalpric1)).Replace(".00", "")</td>
                                                                     <td class="text-center">
-                                                                            <select name="DiscountType" id="DiscountType" value="@ViewBag.discounttype" class="selectdiscount" style="font-size: 11px;" disabled>
+                                                                        @if (ViewBag.discount[count] != null)
+                                                                        {
+                                                                            <select name="DiscountType" id="DiscountType" value="@ViewBag.discount[count].Split("!")[0]" class="selectdiscount" style="font-size: 11px;" disabled>
                                                                                 <option value="select">Select Discount Type</option>
                                                                                 <option value="Discpercentage">Percentage %</option>
                                                                                 <option value="flaterate">Flat Rate ₹</option>
                                                                             </select>
                                                                             <div class="ServiceDiscount" style="padding-left:5px;padding-top:8px;">
-                                                                                <input type="text" class="disctxt" id="Discount" name="Discount" value="@ViewBag.discount" placeholder="Enter Discount" style="font-size: 12px; width:128px;padding:0px;" disabled>
+                                                                                <input type="text" class="disctxt" id="Discount" name="Discount" value="@@ViewBag.discount[count].Split("!")[1]" placeholder="Enter Discount" style="font-size: 12px; width:128px;padding:0px;" disabled>
                                                                             </div>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <select name="DiscountType" id="DiscountType"  class="selectdiscount" style="font-size: 11px;" disabled>
+                                                                                <option value="select">Select Discount Type</option>
+                                                                                <option value="Discpercentage">Percentage %</option>
+                                                                                <option value="flaterate">Flat Rate ₹</option>
+                                                                            </select>
+                                                                            <div class="ServiceDiscount" style="padding-left:5px;padding-top:8px;">
+                                                                                <input type="text" class="disctxt" id="Discount" name="Discount" placeholder="Enter Discount" style="font-size: 12px; width:128px;padding:0px;" disabled>
+                                                                            </div>
+                                                                        }
                                                                     </td>
                                                                     <td class="text-right">18%</td>
                                                                     <td class="text-right gndttl"><label class="fgndttl">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalpric1) + (Convert.ToDouble(@item.totalpric1) * 0.18)).Replace(".00", "")</label></td>
                                                                 </tr>  
+                                                                @(++count)
                                                             }
                                                         </tbody>
                                                     </table>
@@ -963,35 +979,30 @@
    
 
     $('#orderdetails tr td').find('input.disctxt').on('input', function () {
+        var ttamnt = $(this).parent('div').parent('td.text-center').parent('tr').find('.tsamnt').text().replace('Rs ', '-').replace(/,/g, '').substr(1);
+        var disc = 0;
+        var discamnt = $(this).val();
         if (discounttype == 'Percentage %') {
-            var ttamnt = $('#Opening_Balance').val();
-            var discamnt = $(this).val();
             if (discamnt > 100) {
                 alert('Percentage should not be greater than 100');
             }
             else {
-                var discountinpercent = ttamnt - (ttamnt * discamnt / 100);
-                finalamnt = discountinpercent + (discountinpercent * 18 / 100);
-                alert(finalamnt);
-                $('#orderdetails tr td.gndttl').find('.fgndttl').text(finalamnt);
-                //$('#FinalAmount1').val(finalamnt);
-                //$('#FinalAmount').val(finalamnt);
+                disc = ttamnt - (ttamnt * discamnt / 100);
             }
         }
         else if (discounttype == 'Flat Rate ₹') {
-            var ttamnt1 = $('#Opening_Balance').val();
-            var discamnt1 = $(this).val();
-            //alert(discamnt1)
-            var discountrupees = ttamnt1 - discamnt1;
-            finalamnt1 = discountrupees + (discountrupees * 18 / 100);
-            //alert(finalamnt1)
-            //$('#orderdetails tr td.gndttl').find('label.fgndttl').html(finalamnt1);
-            //$('#orderdetails tr label.fgndttl').parent('td').text(finalamnt1);
-            $('#orderdetails tr').find('td').children('label.fgndttl').text(finalamnt1);
-            //$('#FinalAmount1').val(finalamnt1);
-            //$('#FinalAmount').val(finalamnt1);
+            disc = ttamnt - discamnt;
         }
-      
+        var finalamnt = disc + (disc * 18 / 100);
+        $(this).parent('div').parent('td.text-center').parent('tr').find('.fgndttl').text('Rs ' + finalamnt);
+        var amt = 0;
+        $('#orderdetails tr').each(function () {
+            var checked = $(this).find('input.chcktblservice').is(':checked');
+            var tamt = $(this).find('.fgndttl').text().replace('Rs ', '-').replace(',', '').substr(1);
+            if (checked)
+                amt += parseInt(tamt);
+        });
+        $('#FinalAmount').val(amt);
     });
 </script>
 
