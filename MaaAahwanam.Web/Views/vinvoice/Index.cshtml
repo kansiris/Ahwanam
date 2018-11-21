@@ -183,17 +183,17 @@
                                                                     <td class="sbaldue text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.Due)).Replace(".00", "")</td>
                                                                     <td class="tsamnt text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalpric1)).Replace(".00", "")</td>
                                                                     <td class="text-center">
-                                                                            <select name="DiscountType" id="DiscountType"  class="selectdiscount" style="font-size: 11px;" disabled>
+                                                                            <select name="DiscountType" id="DiscountType" value="@ViewBag.discounttype" class="selectdiscount" style="font-size: 11px;" disabled>
                                                                                 <option value="select">Select Discount Type</option>
                                                                                 <option value="Discpercentage">Percentage %</option>
                                                                                 <option value="flaterate">Flat Rate ₹</option>
                                                                             </select>
                                                                             <div class="ServiceDiscount" style="padding-left:5px;padding-top:8px;">
-                                                                                <input type="text" class="disctxt" id="Discount" name="Discount" placeholder="Enter Discount" style="font-size: 12px; width:128px;padding:0px;" disabled>
+                                                                                <input type="text" class="disctxt" id="Discount" name="Discount" value="@ViewBag.discount" placeholder="Enter Discount" style="font-size: 12px; width:128px;padding:0px;" disabled>
                                                                             </div>
                                                                     </td>
                                                                     <td class="text-right">18%</td>
-                                                                    <td class="text-right gndttl">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalpric1) +(Convert.ToDouble(@item.totalpric1) *0.18)).Replace(".00", "")</td>
+                                                                    <td class="text-right gndttl"><label class="fgndttl">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalpric1) + (Convert.ToDouble(@item.totalpric1) * 0.18)).Replace(".00", "")</label></td>
                                                                 </tr>  
                                                             }
                                                         </tbody>
@@ -890,13 +890,22 @@
         var gstsum5 = $('#FinalAmount').val(); // GSt Total Amount
         var tr = $(this).parent('td').parent('tr');
         var rid;
+        if (checked)
+         {
         var oid = $("#OrderDetailId").val();
         var odid = tr.find('td:eq(1)').text();
         if (rid == '') rid = odid;
         else rid = oid + ',' + odid;
         $("#OrderDetailId").val(rid);
+        }
+        else {
+            var oid = $("#OrderDetailId").val();
+            var odid = tr.find('td:eq(1)').text();
+            rid = oid.replace(odid, '');
+            $("#OrderDetailId").val(rid);
+        }
         var openingbal = $('#Opening_Balance').val();
-        var opamt = tr.find('.tsamnt').text().replace('Rs ', '').replace(',', '').trim();
+        var opamt = tr.find('.tsamnt').text().replace('Rs ', '').replace(/,/g, '').trim();
         //Opening Balance
         if (openingbal == '')
             $('#Opening_Balance').val(opamt);
@@ -908,7 +917,7 @@
         }
         //Balance Due
         var currentbal = $('#Current_Balance').val();
-        var cntbal = tr.find('.sbaldue').text().replace('Rs ', '').replace(',', '').trim();
+        var cntbal = tr.find('.sbaldue').text().replace('Rs ', '').replace(/,/g, '').trim();
         if (currentbal != '')
         {
             if (checked)
@@ -936,7 +945,7 @@
             }
             else
             {
-                var famt = tr.find('.gndttl').text().replace('Rs ', '').replace(',', '').trim();
+                var famt = tr.find('.gndttl').text().replace('Rs ', '').replace(/,/g, '').trim();
                 gstsum = parseInt(famount) - parseInt(famt);
                 tr.find('#DiscountType').attr('disabled', 'disabled');
                 tr.find('#Discount').attr('disabled', 'disabled')
@@ -964,7 +973,7 @@
                 var discountinpercent = ttamnt - (ttamnt * discamnt / 100);
                 finalamnt = discountinpercent + (discountinpercent * 18 / 100);
                 alert(finalamnt);
-                $(this).find('.gndttl').html(finalamnt);
+                $('#orderdetails tr td.gndttl').find('.fgndttl').text(finalamnt);
                 //$('#FinalAmount1').val(finalamnt);
                 //$('#FinalAmount').val(finalamnt);
             }
@@ -975,11 +984,14 @@
             //alert(discamnt1)
             var discountrupees = ttamnt1 - discamnt1;
             finalamnt1 = discountrupees + (discountrupees * 18 / 100);
-            alert(finalamnt1)
-            $(this).find('.gndttl').html(finalamnt1);
+            //alert(finalamnt1)
+            //$('#orderdetails tr td.gndttl').find('label.fgndttl').html(finalamnt1);
+            //$('#orderdetails tr label.fgndttl').parent('td').text(finalamnt1);
+            $('#orderdetails tr').find('td').children('label.fgndttl').text(finalamnt1);
             //$('#FinalAmount1').val(finalamnt1);
             //$('#FinalAmount').val(finalamnt1);
         }
+      
     });
 </script>
 
