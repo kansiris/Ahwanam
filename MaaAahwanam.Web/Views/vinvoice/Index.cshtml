@@ -184,8 +184,8 @@
                                                                         @if (ViewBag.discount[count] != null)
                                                                         {
                                                                             <label>
-                                                                                Discount Type : @ViewBag.discount[count].Split("!")[0]
-                                                                                Discount : @ViewBag.discount[count].Split("!")[1]
+                                                                                Discount Type : @ViewBag.discount[count].Split(new char[] { '!' })[0],
+                                                                                Discount : @ViewBag.discount[count].Split(new char[] { '!' })[1]
                                                                             </label>
                                                                             @*<select name="DiscountType" id="DiscountType" value="@ViewBag.discount[count].Split("!")[0]" class="selectdiscount" style="font-size: 11px;" disabled>
                                                                                 <option value="select">Select Discount Type</option>
@@ -779,9 +779,9 @@
     $("#SavePayment").click(function () {
         var OrderDetailId = $("#OrderDetailId").val();
         var Received_Amount = $("#Received_Amount").val();
-        var Discount = $("#Discount").val();
-        var DiscountType = $("#DiscountType").val();
-        var GST = $('#GST').val();
+        //var Discount = $("#Discount").val();
+        //var DiscountType = $("#DiscountType").val();
+        //var GST = $('#GST').val();
         var payments = {
             OrderId: $("#OrderId").val(),
             User_Id: $("#User_Id").val(),
@@ -811,7 +811,7 @@
             Remarks: $("#Remarks").val()
         }
         $.ajax({
-            url: '/vinvoice/Index',
+            url: '/vinvoice/savepayment',
             type: 'Post',
             contentType: 'application/json',
             data: JSON.stringify({ payments: payments, OrderDetailId: OrderDetailId, Received_Amount: Received_Amount }),

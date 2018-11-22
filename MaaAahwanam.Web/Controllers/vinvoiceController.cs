@@ -48,6 +48,7 @@ namespace MaaAahwanam.Web.Controllers
                 {
 
                     var orderdetails1 = newmanageuse.allOrderList().Where(m=>m.orderid == long.Parse(oid)).ToList();
+                     ViewBag.orderid = orderdetails1.FirstOrDefault().orderid;
                       ViewBag.username = orderdetails1.FirstOrDefault().fname + " " + orderdetails1.FirstOrDefault().lname;
                         ViewBag.vendorname = orderdetails1.FirstOrDefault().BusinessName;
                         ViewBag.vendoraddress = orderdetails1.FirstOrDefault().Address + "," + orderdetails1.FirstOrDefault().Landmark + "," + orderdetails1.FirstOrDefault().City;
@@ -126,7 +127,7 @@ namespace MaaAahwanam.Web.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Index(Payment payments,string Received_Amount,string OrderDetailId)
+        public ActionResult  savepayment(Payment payments,string Received_Amount,string OrderDetailId)
         {
             var orderdetails1 = newmanageuse.allOrderList().Where(m => m.orderid == long.Parse(payments.OrderId)).ToList();
                payments.User_Type = "VendorUser";
