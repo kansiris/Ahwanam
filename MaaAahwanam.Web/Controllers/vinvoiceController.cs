@@ -63,29 +63,29 @@ namespace MaaAahwanam.Web.Controllers
                      //   ViewBag.orderdetailid = orderdetails1.FirstOrDefault().orderdetailedid;
                      var odid1= orderdetails1.FirstOrDefault().orderdetailedid.ToString();
                     var payments = rcvpaymentservice.getPayments(oid).ToList();
-                    var paymentsbyodid = rcvpaymentservice.getPaymentsbyodid(odid1).ToList();
-                    List<string> discount = new List<string>();
-                    if (paymentsbyodid.Count != 0)
-                    {
-                        var disc = paymentsbyodid.FirstOrDefault().Discount;
-                        //ViewBag.discount = Convert.ToDouble(disc);
-                        var disctype = paymentsbyodid.FirstOrDefault().DiscountType;
-                        //ViewBag.discounttype = disctype;
-                        discount.Add(disctype+'!'+disc);
-                    }
-                    else
-                    {
-                        discount.Add(null);
-                        //ViewBag.discount = Convert.ToDouble(Discount);
-                    }
-                    ViewBag.discount = discount;
+                    List<string> discount = new List<string>();                 
+                    
                     string odid = string.Empty;
                         foreach (var item in orderdetails1)
                         {
-
+                        var orderdetailid = item.orderdetailedid.ToString();
                             odid = odid + item.orderdetailedid + ",";
                             ViewBag.orderdetailid5 = odid;
-                            var price = item.totalpric1;
+                        var paymentsbyodid = rcvpaymentservice.getPaymentsbyodid(orderdetailid).ToList();
+                        if (paymentsbyodid.Count != 0)
+                        {
+                            var disc = paymentsbyodid.FirstOrDefault().Discount;
+                            //ViewBag.discount = Convert.ToDouble(disc);
+                            var disctype = paymentsbyodid.FirstOrDefault().DiscountType;
+                            //ViewBag.discounttype = disctype;
+                            discount.Add(disctype + '!' + disc);
+                        }
+                        else
+                        {
+                            discount.Add(null);
+                            //ViewBag.discount = Convert.ToDouble(Discount);
+                        }
+                        var price = item.totalpric1;
                             tsprice = Convert.ToInt64(tsprice) + Convert.ToInt64(price);
                             ViewBag.total = tsprice;
                             var bdue = item.Due;
@@ -98,11 +98,11 @@ namespace MaaAahwanam.Web.Controllers
                                 GstplustotalAmount = Convert.ToDouble(GstplustotalAmount) + Convert.ToDouble(Gstplustotal);
                                 ViewBag.gstplustotalAmount = GstplustotalAmount;
                             }
+                      
 
-                        }
-                        //var tt = Convert.ToDouble(ViewBag.total);
-                        //ViewBag.grandtotal = tt + (tt * 0.18);
-                        ViewBag.payment = payments;
+                    }
+                    ViewBag.discount = discount;
+                    ViewBag.payment = payments;
                         foreach (var reports in payments)
                         {
                             string amount1 = reports.Received_Amount;
@@ -148,9 +148,9 @@ namespace MaaAahwanam.Web.Controllers
                         str = Regex.Replace(str, @"\s", "");
                         var orderdetailid = str;
                         payments.OrderDetailId = orderdetailid;
-                        payments.Discount = payments.Discount;
-                        payments.DiscountType = payments.DiscountType;
-                        payments.GST = payments.GST;
+                        //payments.Discount = payments.Discount;
+                        //payments.DiscountType = payments.DiscountType;
+                        //payments.GST = payments.GST;
                         //var datarecord = orderdetailservices.GetOrderDetailsByOrderdetailid(Convert.ToInt32(orderdetailid));
                         decimal dueamount;
                         var ksorder = orderdetails1.Where(m => m.orderdetailedid == long.Parse(orderdetailid)).FirstOrDefault();
