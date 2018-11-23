@@ -1,4 +1,5 @@
 ﻿using MaaAahwanam.Models;
+using MaaAahwanam.Repository;
 using MaaAahwanam.Repository.db;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,10 @@ namespace MaaAahwanam.Service
         {
             mngvendor = mngvendorrepository.AddVendor(mngvendor);
             return mngvendor;
+        }
+        public List<sp_customers_Result> allcustlist1()
+        {
+            return mngvendorrepository.allcustlist1();
         }
         public List<ManageVendor> getvendor(string Vid)
         {

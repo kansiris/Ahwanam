@@ -10,6 +10,7 @@ namespace MaaAahwanam.Repository.db
     public class VendorDashBoardRepository
     {
         readonly ApiContext _dbContext = new ApiContext();
+        MaaAahwanamEntities maaAahwanamEntities = new MaaAahwanamEntities();
 
         public ManageVendor AddVendor(ManageVendor mngvendor)
         {
@@ -41,6 +42,10 @@ namespace MaaAahwanam.Repository.db
             //var query = from vendor in _dbContext.ManageVendor where vendor.id == id select vendor;
             return _dbContext.ManageVendor.Where(v => v.id == id).FirstOrDefault();
 
+        }
+        public List<sp_customers_Result> allcustlist1()
+        {
+            return maaAahwanamEntities.sp_customers().ToList();
         }
         public int checkvendoremail(string email, string id)
         {

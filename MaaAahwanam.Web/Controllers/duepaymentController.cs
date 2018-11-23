@@ -13,12 +13,13 @@ namespace MaaAahwanam.Web.Controllers
     {
         VendorVenueService vendorVenueService = new VendorVenueService();
         newmanageuser newmanageuse = new newmanageuser();
+        ReceivePaymentService rcvpaymentservice = new ReceivePaymentService();
         Vendormaster vendorMaster = new Vendormaster();
         VendorMasterService vendorMasterService = new VendorMasterService();
         PartnerService partnerservice = new PartnerService();
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         // GET: duepayment
-        public ActionResult Index(string oid)
+        public ActionResult Index(string oid,string paymentby)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
@@ -34,6 +35,28 @@ namespace MaaAahwanam.Web.Controllers
 
                     var orderdetails1 = newmanageuse.allOrderList().Where(m => m.orderid == long.Parse(oid)).ToList();
                     ViewBag.orderid = orderdetails1.FirstOrDefault().orderid;
+                    ViewBag.username = orderdetails1.FirstOrDefault().fname + " " + orderdetails1.FirstOrDefault().lname;
+                    ViewBag.vendorname = orderdetails1.FirstOrDefault().BusinessName;
+                    ViewBag.vendoraddress = orderdetails1.FirstOrDefault().Address + "," + orderdetails1.FirstOrDefault().Landmark + "," + orderdetails1.FirstOrDefault().City;
+                    ViewBag.vendorcontact = orderdetails1.FirstOrDefault().ContactNumber;
+                    ViewBag.bookeddate = Convert.ToDateTime(orderdetails1.FirstOrDefault().bookdate).ToString("MMM d,yyyy");
+                    ViewBag.orderdate = Convert.ToDateTime(orderdetails1.FirstOrDefault().orderdate).ToString("MMM d,yyyy");
+                    ViewBag.orderdetailslst = orderdetails1;
+                    var payments = rcvpaymentservice.getPayments(oid).ToList();
+                    ViewBag.paymentslst = payments;
+
+                    var paymentbycustomer = rcvpaymentservice.Getpaymentby(oid, paymentby).ToList();
+                    ViewBag.paymentbycustmlst = paymentbycustomer;
+                    ViewBag.paymentbycustmname = paymentbycustomer.FirstOrDefault().PaymentBy;
+                    string odid = string.Empty;
+                    foreach (var item in orderdetails1)
+                    {
+                        var orderdetailid = item.orderdetailedid.ToString();
+                        odid = odid + item.orderdetailedid + ",";
+                        ViewBag.orderdetailid5 = odid;
+                        var paymentsbyodid = rcvpaymentservice.getPaymentsbyodid(orderdetailid).ToList();
+                       
+                    }
                 }
             }
                 return View();
