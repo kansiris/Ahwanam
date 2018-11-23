@@ -44,9 +44,9 @@
                 <input type="hidden" name="GridHtml" />
                 <input type="hidden" id="User_Id" name="User_Id" value="@ViewBag.User_Id" />
                 <input type="hidden" id="OrderId" name="OrderId" value="@ViewBag.orderid" />
-                <input type="hidden" id="paidamount" name="paidamount" value="@ViewBag.paidamount" />
+                @*<input type="hidden" id="paidamount" name="paidamount" value="@ViewBag.paidamount" />*@
                 <input type="hidden" id="OrderDetailId" name="OrderDetailId" value="" />
-                <input type="hidden" id="OrderDetailid1" name="OrderDetailid1" value="@ViewBag.orderdetailid5" />
+                @*<input type="hidden" id="OrderDetailid1" name="OrderDetailid1" value="@ViewBag.orderdetailid5" />*@
                 <div class="col-md-10">
                     <div id="print-content" class="container-fluid">
                         <div class="row">
@@ -185,8 +185,8 @@
                                                                         {  
                                                                             @(++count)
                                                                             <label>
-                                                                                Discount Type : @ViewBag.discount[count].Split("!")[0]
-                                                                                Discount : @ViewBag.discount[count].Split("!")[1]
+                                                                                Discount Type : @ViewBag.discount[count].Split(new char[] { '!' })[0],
+                                                                                Discount : @ViewBag.discount[count].Split(new char[] { '!' })[1]
                                                                             </label>
                                                                             @*<select name="DiscountType" id="DiscountType" value="@ViewBag.discount[count].Split("!")[0]" class="selectdiscount" style="font-size: 11px;" disabled>
                                                                                 <option value="select">Select Discount Type</option>
@@ -201,18 +201,20 @@
                                                                         {
                                                                             <select name="DiscountType" id="DiscountType"  class="selectdiscount" style="font-size: 11px;" disabled>
                                                                                 <option value="select">Select Discount Type</option>
-                                                                                <option value="Discpercentage">Percentage %</option>
-                                                                                <option value="flaterate">Flat Rate ₹</option>
+                                                                                <option value="Percentage %">Percentage %</option>
+                                                                                <option value="Flat Rate ₹">Flat Rate ₹</option>
                                                                             </select>
                                                                             <div class="ServiceDiscount" style="padding-left:5px;padding-top:8px;">
                                                                                 <input type="text" class="disctxt" id="Discount" name="Discount" placeholder="Enter Discount" style="font-size: 12px; width:128px;padding:0px;" disabled>
                                                                             </div>
                                                                         }
                                                                     </td>
-                                                                    <td class="text-right"><label id="GST" class="lblgst">18%</label></td>
+                                                                    <td class="text-right"><label id="GST" class="lblgst" value="0.18">18%</label></td>
                                                                     <td class="text-right gndttl"><label class="fgndttl">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalpric1) + (Convert.ToDouble(@item.totalpric1) * 0.18)).Replace(".00", "")</label></td>
                                                                 </tr>  
-                                                              
+                                                                @*@(++count)*@
+                                                                //count++;
+                                                                ++count;
                                                             }
                                                         </tbody>
                                                     </table>
@@ -230,6 +232,7 @@
                                                     <table class="table table-condensed2" style="width:100%;max-width:100%">
                                                         <thead>
                                                             <tr>
+                                                                <td><strong>Payment By</strong></td>
                                                                 <td><strong>Payment Date</strong></td>
                                                                 <td class="text-center"><strong>Payment Id</strong></td>
                                                                 <td class="text-center"><strong>Payment Type</strong></td>
@@ -240,6 +243,7 @@
                                                             @foreach (var item in ViewBag.payment)
                                                             {
                                                                 <tr>
+                                                                    <td><a href="/duepayment?oid=@ViewBag.orderid" class="orderidlnk" style="cursor:pointer">@item.PaymentBy</a> </td>
                                                                     <td> @item.Payment_Date.ToString("dd-MMM-yyyy") </td>
                                                                     <td class="text-center">@item.Payment_Id</td>
                                                                     <td class="text-center">@item.Payment_Type</td>
@@ -779,9 +783,9 @@
     $("#SavePayment").click(function () {
         var OrderDetailId = $("#OrderDetailId").val();
         var Received_Amount = $("#Received_Amount").val();
-        var Discount = $("#Discount").val();
-        var DiscountType = $("#DiscountType").val();
-        var GST = $('#GST').val();
+        //var Discount = $("#Discount").val();
+        //var DiscountType = $("#DiscountType").val();
+        //var GST = $('#GST').val();
         var payments = {
             OrderId: $("#OrderId").val(),
             User_Id: $("#User_Id").val(),
@@ -811,7 +815,7 @@
             Remarks: $("#Remarks").val()
         }
         $.ajax({
-            url: '/vinvoice/Index',
+            url: '/vinvoice/savepayment',
             type: 'Post',
             contentType: 'application/json',
             data: JSON.stringify({ payments: payments, OrderDetailId: OrderDetailId, Received_Amount: Received_Amount }),
