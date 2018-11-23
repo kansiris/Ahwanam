@@ -42,6 +42,9 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
         public ActionResult FilteredVendors(string type, string date, string id,string type1,string id1)
         {        
+
+
+
             if (type != null && date != null)
             { 
                 ViewBag.id = id;
@@ -66,10 +69,22 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         }
         public ActionResult FilteredVendors1(string id, string type,string date)
         {
+            var orderss = orderService.allorderslist1().Where(m => m.ordertype == "Quote").ToList();
+            var orders = orderss.Where(m => m.orderid == long.Parse(id));
+            ViewBag.orderdetails = orders;
+            ViewBag.total = orders.FirstOrDefault();
+            ViewBag.id = id;
             var sid = quotationListsService.GetAllQuotations().ToList(); //.Where(m => m.Status == "Active")
             ViewBag.quotations = sid.Where(m => m.OrderID == id);
             ViewBag.orderid = id;
             return View();
+        }
+
+
+        public ActionResult replyquote1()
+        {
+
+            return PartialView("replyquote1", "quotationlist");
         }
 
 
