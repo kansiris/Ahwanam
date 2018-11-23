@@ -63,6 +63,7 @@ namespace MaaAahwanam.Web.Controllers
                      //   ViewBag.orderdetailid = orderdetails1.FirstOrDefault().orderdetailedid;
                      var odid1= orderdetails1.FirstOrDefault().orderdetailedid.ToString();
                     var payments = rcvpaymentservice.getPayments(oid).ToList();
+                    ViewBag.pmntbycustomer = payments.FirstOrDefault().PaymentBy.Replace(' ', '_');
                     List<string> discount = new List<string>();                 
                     
                     string odid = string.Empty;
@@ -72,6 +73,7 @@ namespace MaaAahwanam.Web.Controllers
                             odid = odid + item.orderdetailedid + ",";
                             ViewBag.orderdetailid5 = odid;
                         var paymentsbyodid = rcvpaymentservice.getPaymentsbyodid(orderdetailid).ToList();
+                        ViewBag.paymentby = paymentsbyodid.FirstOrDefault().PaymentBy.Replace(' ', '_');
                         if (paymentsbyodid.Count != 0)
                         {
                             var disc = paymentsbyodid.FirstOrDefault().Discount;

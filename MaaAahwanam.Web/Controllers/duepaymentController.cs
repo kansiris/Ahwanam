@@ -19,7 +19,7 @@ namespace MaaAahwanam.Web.Controllers
         PartnerService partnerservice = new PartnerService();
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         // GET: duepayment
-        public ActionResult Index(string oid)
+        public ActionResult Index(string oid,string paymentby)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
@@ -44,6 +44,10 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.orderdetailslst = orderdetails1;
                     var payments = rcvpaymentservice.getPayments(oid).ToList();
                     ViewBag.paymentslst = payments;
+
+                    var paymentbycustomer = rcvpaymentservice.Getpaymentby(oid, paymentby).ToList();
+                    ViewBag.paymentbycustmlst = paymentbycustomer;
+                    ViewBag.paymentbycustmname = paymentbycustomer.FirstOrDefault().PaymentBy;
                     string odid = string.Empty;
                     foreach (var item in orderdetails1)
                     {
