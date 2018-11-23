@@ -702,5 +702,10 @@ namespace MaaAahwanam.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetVendors_Result>("GetVendors", typeParameter);
         }
+    
+        public virtual ObjectResult<sp_customers_Result> sp_customers()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_customers_Result>("sp_customers");
+        }
     }
 }

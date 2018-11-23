@@ -119,6 +119,7 @@
           <Parameter Name="vendorid" Type="bigint" Mode="In" />
           <Parameter Name="ntype" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="sp_customers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SP_Deals" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="nType" Type="nvarchar" Mode="In" />
           <Parameter Name="VID" Type="int" Mode="In" />
@@ -417,8 +418,9 @@
           </FunctionImport>
           <FunctionImport Name="sp_allvendoruserorddisplay" ReturnType="Collection(MaaAahwanamModel.sp_allvendoruserorddisplay_Result)" />
           <FunctionImport Name="GetVendors" ReturnType="Collection(MaaAahwanamModel.GetVendors_Result)">
-            <Parameter Name="type" Mode="In" Type="String" />
+          <Parameter Name="type" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_customers" ReturnType="Collection(MaaAahwanamModel.sp_customers_Result)" />
         </EntityContainer>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
           <Property Type="Int64" Name="UserLoginId" Nullable="false" />
@@ -1674,6 +1676,26 @@
           <Property Type="String" Name="choicedays" Nullable="true" />
           <Property Type="String" Name="holidays" Nullable="true" />
           <Property Type="String" Name="peakdays" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_customers_Result">
+          <Property Type="Int64" Name="custid" Nullable="false" />
+          <Property Type="String" Name="vendorid" Nullable="true" />
+          <Property Type="String" Name="usertype" Nullable="true" />
+          <Property Type="String" Name="businessname" Nullable="true" />
+          <Property Type="String" Name="custfirstname" Nullable="true" />
+          <Property Type="String" Name="custlastname" Nullable="true" />
+          <Property Type="String" Name="custmiddlename" Nullable="true" />
+          <Property Type="String" Name="custemail" Nullable="true" />
+          <Property Type="String" Name="custphoneno" Nullable="true" />
+          <Property Type="String" Name="custaddress1" Nullable="true" />
+          <Property Type="String" Name="custcity" Nullable="true" />
+          <Property Type="String" Name="custstate" Nullable="true" />
+          <Property Type="String" Name="custcontry" Nullable="true" />
+          <Property Type="String" Name="tablename" Nullable="false" MaxLength="11" />
+          <Property Type="DateTime" Name="custupdateddate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="custstatus" Nullable="true" />
+          <Property Type="Int64" Name="custupdated" Nullable="true" />
+          <Property Type="String" Name="custpin" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3198,6 +3220,30 @@
                 <ScalarProperty Name="choicedays" ColumnName="choicedays" />
                 <ScalarProperty Name="holidays" ColumnName="holidays" />
                 <ScalarProperty Name="peakdays" ColumnName="peakdays" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_customers" FunctionName="MaaAahwanamModel.Store.sp_customers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.sp_customers_Result">
+                <ScalarProperty Name="custid" ColumnName="custid" />
+                <ScalarProperty Name="vendorid" ColumnName="vendorid" />
+                <ScalarProperty Name="usertype" ColumnName="usertype" />
+                <ScalarProperty Name="businessname" ColumnName="businessname" />
+                <ScalarProperty Name="custfirstname" ColumnName="custfirstname" />
+                <ScalarProperty Name="custlastname" ColumnName="custlastname" />
+                <ScalarProperty Name="custmiddlename" ColumnName="custmiddlename" />
+                <ScalarProperty Name="custemail" ColumnName="custemail" />
+                <ScalarProperty Name="custphoneno" ColumnName="custphoneno" />
+                <ScalarProperty Name="custaddress1" ColumnName="custaddress1" />
+                <ScalarProperty Name="custcity" ColumnName="custcity" />
+                <ScalarProperty Name="custstate" ColumnName="custstate" />
+                <ScalarProperty Name="custcontry" ColumnName="custcontry" />
+                <ScalarProperty Name="tablename" ColumnName="tablename" />
+                <ScalarProperty Name="custupdateddate" ColumnName="custupdateddate" />
+                <ScalarProperty Name="custstatus" ColumnName="custstatus" />
+                <ScalarProperty Name="custupdated" ColumnName="custupdated" />
+                <ScalarProperty Name="custpin" ColumnName="custpin" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
