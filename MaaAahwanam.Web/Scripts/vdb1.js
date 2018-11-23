@@ -324,8 +324,6 @@ function Addpkgitems(mtype) {
 
 // Loading Package Menu
 $(document).on('click', '.pkgitem', function () {
-    $('.overlay').show();
-    $('#loadermsg').text("Fetching Menu Items");
     var parentdiv = $(this).parent('div.package-list').prev('div.package-box');
     var checkbox = parentdiv.find('input[type=radio]:checked').val();//$("input[name='checkradio']:checked").val();
     var pkgid = $(this).parent("div.allpkgs").find("div.pkgsave").find("input.packageid").val();
@@ -335,6 +333,8 @@ $(document).on('click', '.pkgitem', function () {
         alert("Select Menu Type")
     }
     else {
+        $('.overlay').show();
+        $('#loadermsg').text("Fetching Menu Items");
         var val = $(this).val();
         if(val == "Fry_Dry") val="Fry/Dry";
         var pkgid = $(this).text().split('(')[0]; // Course name
@@ -351,8 +351,6 @@ $(document).on('click', '.pkgitem', function () {
 
 // Loading Extra Menus
 $(document).on('click', '.extraitem', function () {
-    $('.overlay').show();
-    $('#loadermsg').text("Fetching Menu Items");
     var parentdiv = $(this).parents('div.package-list').prev('div.package-box');
     var checkbox = parentdiv.find('input[type=radio]:checked').val();//$("input[name='checkradio']:checked").val();
     var pkgid = $(this).parents("div.allpkgs").find("div.pkgsave").find("input.packageid").val();
@@ -659,11 +657,12 @@ $(document).on('click', '.updatepkg', function () {
     var allbuttonsvals = allVal.substring(1, allVal.length);
     var newlists = '';
     if (parentdiv.find('.selpkgitems').val() != '') {
-        newlists = parentdiv.find('.selpkgitems').val() +','+ parentdiv.find('.pkgmenuitems').val();
+        newlists = parentdiv.find('.pkgmenuitems').val() + ',' + parentdiv.find('.selpkgitems').val();
     }
     else {
         newlists = parentdiv.find('.pkgmenuitems').val();
     }
+    //alert(newlists);
     var finalmenulist = [];
     //var newlists = parentdiv.find('.selpkgitems').val() + ',' + parentdiv.find('.pkgmenuitems').val();
     var dblist = parentdiv.find('.pkgmenuitems').val();
@@ -687,6 +686,14 @@ $(document).on('click', '.updatepkg', function () {
                 else {
                     finalmenulist.push(newlists.split(',')[i]);
                 }
+                //if (value == -1) {
+                //    finalmenulist.push(newlists.split(',')[i]);
+                //}
+                //else {
+                //    b.push(value);
+                //    finalmenulist[value] = newlists.split(',')[i];
+                    
+                //}
             }
         }
         menuitems = finalmenulist.join(',');
@@ -694,7 +701,7 @@ $(document).on('click', '.updatepkg', function () {
     else {
         menuitems = newlists;
     }
-    //alert(menuitems);
+    alert(menuitems);
     var pkgid = $(this).prev('input.packageid').val();
     var packagename = parentdiv.find('#pkgname').val();
     var pkgcategory = parentdiv.find("input[type=radio]:checked").val();
@@ -755,16 +762,16 @@ $(document).on('click', '.updatepkg', function () {
             menuitems : menuitems,
             menu:menu
         }        
-        $.ajax({
-            url: '/vdb/UpdatePackage',
-            type: 'post',
-            datatype: 'json',
-            data: package,
-            success: function (data) {
-                alert(data);
-                $('.overlay').hide();
-            }
-        });
+        //$.ajax({
+        //    url: '/vdb/UpdatePackage',
+        //    type: 'post',
+        //    datatype: 'json',
+        //    data: package,
+        //    success: function (data) {
+        //        alert(data);
+        //        $('.overlay').hide();
+        //    }
+        //});
     }
 });
 
