@@ -94,10 +94,13 @@ namespace MaaAahwanam.Web.Controllers
                         package.VendorSubId = long.Parse(vid);
                         package.VendorType = vendordata.ServicType;
                         package.VendorSubType = servicedata.FirstOrDefault().VenueType;
+                        package.type = "Package";
                         package = vendorVenueSignUpService.addpack(package);
+                        
                         List<Package> pkg = new List<Package>(); // converting it to list
                         pkg.Add(package);
                         ViewBag.package = pkg;
+                        int addpkgmenu = AddMenuList(vid, id.ToString());
                     }
 
                     List<string> selecteditems = new List<string>();
