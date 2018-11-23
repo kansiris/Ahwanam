@@ -65,9 +65,9 @@ namespace MaaAahwanam.Web.Controllers
                 EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
                 string msg = "Email ID : " + quotationsList.EmailId + ", Name : " + quotationsList.Name + ", Phone : " + quotationsList.PhoneNo + ", Occasion Date : " + quotationsList.EventStartDate.ToShortDateString() + ", Guests Count : " + quotationsList.Persons + ", Description : " + quotationsList.Description + " , URL : " + Request.Url.Scheme + "://" + Request.Url.Authority + url;
                 msg = msg.Replace(",", "<br/><br/>");
-                emailSendingUtility.Email_maaaahwanam("seema@xsilica.com", msg, "Mail From Ahwanam");
-                emailSendingUtility.Email_maaaahwanam("amit.saxena@ahwanam.com", msg, "Mail From Ahwanam");
-                emailSendingUtility.Email_maaaahwanam("rameshsai@xsilica.com", msg +"IP:"+ip, "New Quotation Request");
+                emailSendingUtility.Email_maaaahwanam("seema@xsilica.com", msg, "Mail From Ahwanam", null);
+                emailSendingUtility.Email_maaaahwanam("amit.saxena@ahwanam.com", msg, "Mail From Ahwanam", null);
+                emailSendingUtility.Email_maaaahwanam("rameshsai@xsilica.com", msg +"IP:"+ip, "New Quotation Request", null);
                 if (quotation > 0)
                     return Json("Success");
                 else

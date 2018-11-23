@@ -69,7 +69,7 @@ namespace MaaAahwanam.Web.Controllers
             string Mailmessage = "<Table>" + Detdiv + "</Table>";
             
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-            emailSendingUtility.Email_maaaahwanam(Username, StrContent.ToString(), "Test Order Confirmation");
+            emailSendingUtility.Email_maaaahwanam(Username, StrContent.ToString(), "Test Order Confirmation", null);
             return Json("Success");
         }
     }

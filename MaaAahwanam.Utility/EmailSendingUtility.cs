@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 //using System.Net.Mail;
 using System.Net;
@@ -7,17 +8,31 @@ using System.Net.Mail;
 //using System.Web.Mail;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace MaaAahwanam.Utility
 {
     public class EmailSendingUtility
+    { 
+        public class EmailModel
     {
-        public void Email_maaaahwanam(string txtto, string txtmessage, string subj)
+            public string To { get; set; }
+            public string Subject { get; set; }
+            public string Body { get; set; }
+        }
+    
+        public void Email_maaaahwanam(string txtto, string txtmessage, string subj, HttpPostedFileBase fileUploader)
         {
             MailMessage Msg = new MailMessage();
             Msg.From = new MailAddress("maaaahwanamtest@gmail.com");
             Msg.To.Add(txtto);
             //ExbDetails ex = new ExbDetails();
+            if (fileUploader != null)
+                     {
+                          string fileName = Path.GetFileName(fileUploader.FileName);
+                           Msg.Attachments.Add(new Attachment(fileUploader.InputStream, fileName));
+
+            }
             Msg.Body = txtmessage;
             Msg.Subject = subj;
             Msg.IsBodyHtml = true;

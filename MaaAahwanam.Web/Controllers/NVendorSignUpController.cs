@@ -72,7 +72,7 @@ namespace MaaAahwanam.Web.Controllers
                     string txtmessage = readFile;//readFile + body;
                     string subj = "Account Activation";
                     EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-                    emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+                    emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj, null);
 
                     TempData["Active"] = "Check your email to active your account to login";
                     return RedirectToAction("Index", "NVendorSignUp");

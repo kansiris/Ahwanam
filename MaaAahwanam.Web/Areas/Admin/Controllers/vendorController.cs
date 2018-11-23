@@ -145,7 +145,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                     // vendor mail activation  end
 
                     EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-                    emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+                    emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj, null);
                     return Content("<script language='javascript' type='text/javascript'>alert('Invitation Sent to " + txtto + "');location.href='/admin/Vendors/SearchVendor'</script>");
                 }
             }
@@ -3321,7 +3321,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         public ActionResult submitquery(string emailid, string txtone)
         {
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-            emailSendingUtility.Email_maaaahwanam(emailid, txtone, "Attention required");
+            emailSendingUtility.Email_maaaahwanam(emailid, txtone, "Attention required", null);
             return Json("success", JsonRequestBehavior.AllowGet);
         }
 

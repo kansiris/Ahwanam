@@ -129,7 +129,7 @@ namespace MaaAahwanam.Web.Controllers
                         string txtmessage = readFile;//readFile + body;
                         string subj = "Account Activation";
                         EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-                        emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+                        emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj, null);
                         TempData["Active"] = "Check your email to active your account to login";
                         return RedirectToAction("Index", "NUserRegistration");
                     }
@@ -224,7 +224,7 @@ namespace MaaAahwanam.Web.Controllers
                         // vendor mail activation  end
 
                         EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-                        emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+                        emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj, null);
                         TempData["Active"] = "A mail is sent to your email to change password Please check your email";
                         return RedirectToAction("Index", "NUserRegistration");
                     }
@@ -395,7 +395,7 @@ namespace MaaAahwanam.Web.Controllers
                 string txtmessage = readFile;//readFile + body;
                 string subj = "Your Password is changed";
                 EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj, null);
                 return Json("success");
                 // return Content("<script language='javascript' type='text/javascript'>alert('Password Updated Successfully');location.href='" + @Url.Action("Index", "ChangePassword") + "'</script>");
             }

@@ -41,7 +41,7 @@ namespace MaaAahwanam.Web.Controllers
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
             string subject = "Ahwanam Birthday Landing Page";
             string txtto = "info@ahwanam.com,seema@xsilica.com,amit.saxena@ahwanam.com,dedeepya@gmail.com,pravalika.b@xsilica.com"; // Mention Target Email ID's here
-            emailSendingUtility.Email_maaaahwanam(txtto, msg.Replace(",", "<br/>"), subject);
+            emailSendingUtility.Email_maaaahwanam(txtto, msg.Replace(",", "<br/>"), subject, null);
             return Json("success", JsonRequestBehavior.AllowGet);
         }
     }

@@ -12,8 +12,15 @@
         body {
             font-family: "Lato", sans-serif;
         }
-
-
+        .custom-file-upload {
+            border: 1px solid #ccc;
+            display: inline-block;
+            /*padding: 6px 12px;*/
+            cursor: pointer;
+        }
+        input[type="file"] {
+            display: none;
+        }
         .tablink {
             background-color: #fff;
             color: #212529;
@@ -253,8 +260,14 @@
                                 </select>
                             </div>
                             <div>
-                            <input type="text" placeholder="Add text" />
-                                </div>
+                                <input type="text" placeholder="Add text" id="message" />
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-6" id="uma1">
+                                <label class="custom-file-upload">
+                                    <input type="file" id="contractdoc" name="file" />
+                                    <i class="fa fa-cloud-upload" style="font-size:24px"></i> File Upload
+                                </label>
+                            </div>
                             <div>
                                 <button type="button" class="btn btn-primary" value="" id="send" onclick="savedetails()">Send</button>
                             </div>
@@ -279,44 +292,97 @@
         }
 
         $('#selectmessagetype').on('change', function () {
-            $('#send').text() = 'Save';
+            if (('#selectmessagetype').val == 'Phone') {
+                $('#send').text() == "Save";
+            }
         });
 
         
         function savedetails() {
-            var quoteResponse = {
-                QuoteID: $('#qid').val(),
-                BusinessName: $('#bname').text(),
-                replyto: $('#selectreplyto').val(),
-                messagetype: $('#selectmessagetype').val(),
-                VendorID: $('#vid').val(),
-                VendorSubID: $('#subvid').val(),
-                orderid: $('#orderid').val(),
-                TokenAmount: $('#TokenAmount').val(),
-                TotalAmount: $('#TotalAmount').val()
+            var ext = $('#contractdoc').val().split('.').pop().toLowerCase();
+            if (ext != '') {
+                if ($.inArray(ext, ['PDF', 'pdf']) == -1) {
+                    alert('Invalid File Type');
+                }
+                else {
+                    var data1 = new FormData();
+                    var files = $("#contractdoc").get(0).files;
+                    if (files.length > 0) {
+                        data1.append("helpSectionImages", files[0]);
+                    }
+                }
             }
-            //alert(quoteResponse.QuoteID);
+                //OrderID: $('#orderid').val(),
+            messagetype: $('#selectmessagetype').val();
+            replyto: $('#selectreplyto').val();
+            message: $('#message').val();
+                var quoteResponse = {
+                    //  OrderID: $('#qid').val(),
+                    BusinessName: $('#bname').text(),
+                    VendorID: $('#vid').val(),
+                    VendorSubID: $('#subvid').val(),
+                    OrderID: $('#orderid').val(),
+                }
+                //alert(quoteResponse.QuoteID);
             $.ajax({
-                url: '/Admin/quotationlist/ParticularQuoteReply',//?QuoteID=' + QuoteID + '&&id=' + ids,
+                url: '/Admin/quotationlist/ParticularQuoteReply?messagetype=' + messagetype + '&&replyto=' + replyto + '&&message=' + message,
                 type: 'post',
                 datatype: 'json',
-                data: quoteResponse,
-                data: { QuoteID: QuoteID, id: ids },
-                success: function (data) {
-                    if (data == "Success") {
-                        alert("Installments Added");
-                        $('#myModal').css('display', 'none');
-                        resetAllValues();
+                data: { quoteResponse, data1 },
+                  //  data: { QuoteID: QuoteID, id: ids },
+                    success: function (data) {
+                        if (data == "Success") {
+                            alert("Installments Added");
+                            $('#myModal').css('display', 'none');
+                            resetAllValues();
+                        }
+                        else if (data == "Failed") {
+                            alert("Failed to Add Installments!!! Try Again");
+                        }
+                    },
+                    error: function (data) {
+                        alert("Something Went Wrong!!! Try Again Later");
                     }
-                    else if (data == "Failed") {
-                        alert("Failed to Add Installments!!! Try Again");
-                    }
-                },
-                error: function (data) {
-                    alert("Something Went Wrong!!! Try Again Later");
-                }
-            });
-        }
+                });
+            }
+      
+
+
+        //$('#contractdoc').change(function () {
+        //    var val = 'ks';
+        //    var partid;
+        //    var vid = $('#VendorId').val();
+        //    var partidks = $('#partid').val();
+        //    var partidks1 = $('#partid1').val();
+        //    if (partidks == '' || partidks == 'undefined') {
+        //        partid = partidks1;
+        //    } else { partid = partidks; }
+        //    if (partid == '' || partid == 'undefined') { alert('Save partner details first to save partner packages'); }
+
+        //    var ext = $('#contractdoc').val().split('.').pop().toLowerCase();
+        //    if ($.inArray(ext, ['PDF', 'pdf']) == -1) {
+        //        alert('Invalid File Type');
+        //    }
+        //    else {
+        //        var data = new FormData();
+        //        var files = $("#contractdoc").get(0).files;
+        //        if (files.length > 0) {
+        //            data.append("helpSectionImages", files[0]);
+        //        }
+        //        $.ajax({
+        //            url: '/ReSellerManagement/UploadContractdoc?command=' + val + '&&partid=' + partid + '&&vid=' + vid,
+        //            type: "POST",
+        //            processData: false,
+        //            contentType: false,
+        //            data: data,
+        //            success: function (response) {
+        //                alert(response);
+        //                if (response != '') { alert('Document saved successfully'); } else { alert('Document saving failed'); }
+
+        //            }
+        //        });
+        //    }
+        //});
         </script>
     }
 
