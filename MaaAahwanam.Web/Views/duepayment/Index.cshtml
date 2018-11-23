@@ -11,7 +11,7 @@
          border-top: none !important;
         }
        .table-condensed2, .bdline, tr.rline, td.thick-line {
-            border-top: 1px solid;
+            border-top: 1px inset;
         }
     </style>
     }
@@ -32,25 +32,25 @@
                                 <tr>
                                     <td style="width: 172px;">
                                         <strong>Billed To:</strong>
-                                        <p> sdfsdf</p>
-                                        <p></p>
+                                        <p>@ViewBag.vendorname</p>
+                                        <p>@ViewBag.vendoraddress</p>
                                     </td>
                                     <td style="width: 173px;">&nbsp;</td>
                                     <td class="on-line" style="width: 173px;">
                                         <strong>Shipped To:</strong>
-                                        <p class="on-line"> asdadasa</p>
+                                        <p class="on-line">@ViewBag.username</p>
                                         <p></p>                                      
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>&nbsp;</td>
                                     <td style="width: 173px;">&nbsp;</td>
-                                    <td style="width: 173px;"><strong>payment by:</strong><p>afdsasd</p></td>
+                                    <td style="width: 173px;"><strong>Payment By:</strong><p>afdsasd</p></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 172px;"><strong>Booked Date:</strong><p>afafafa</p></td>
+                                    <td style="width: 172px;"><strong>Booked Date:</strong><p>@ViewBag.bookeddate</p></td>
                                     <td style="width: 173px;">&nbsp;</td>
-                                    <td style="width: 173px;"><strong>Order Date:</strong><p>afdsasd</p></td>
+                                    <td style="width: 173px;"><strong>Order Date:</strong><p>@ViewBag.orderdate</p></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -68,19 +68,24 @@
                    <table class="table table-condensed2" style="width:100%;max-width:100%">
                        <thead>
                            <tr class="brline1">
+                               <td class="thick-line"><strong>Payment By</strong></td>
                                <td class="thick-line"><strong>Payment Date</strong></td>
                                <td class="text-center thick-line"><strong>Payment Id</strong></td>
                                <td class="text-center thick-line"><strong>Payment Type</strong></td>
                                <td class="text-right thick-line"><strong>Received Amount</strong></td>
                            </tr>
                        </thead>
-                       <tbody class="bdline">                    
+                       <tbody class="bdline">
+                           @foreach (var item in ViewBag.paymentslst)
+                           {
                                <tr class="rline">
-                                   <td class="thick-line"> gjlsjgs </td>
-                                   <td class="text-center thick-line">sdsfsf</td>
-                                   <td class="text-center thick-line">sdfsd</td>
-                                   <td class="text-right thick-line"> sdfsdfsdf</td>
-                               </tr>                     
+                                   <td class="thick-line">@item.PaymentBy</td>
+                                   <td class="thick-line">@item.Payment_Date.ToString("dd-MMM-yyyy") </td>
+                                   <td class="text-center thick-line">@item.Payment_Id</td>
+                                   <td class="text-center thick-line">@item.Payment_Type</td>
+                                   <td class="text-right thick-line"> Rs @item.Received_Amount</td>
+                               </tr> 
+                           }
                        </tbody>
                    </table>
                </div>
