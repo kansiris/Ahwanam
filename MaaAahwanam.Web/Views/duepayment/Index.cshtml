@@ -17,7 +17,7 @@
     }
 
 <div class="col-md-10">
-    <div id="print-content">
+    <div id="print-contentdetails" class="container-fluid">
         <div class="row">
             <div class="col-12" style="padding-left:30px">
                 <div class="invoice-title add_top_30">
@@ -99,12 +99,20 @@
         <button type="button" onclick="email(@ViewBag.orderid)" class="btn btn-primary"><i class="icon-direction-1"></i>Email</button>
         @*<button type="button" class="btn btn-primary" onclick="window.location.href='/Payments?Oid=' + @ViewBag.orderid">Receive Payment Now</button>*@
         <button type="button" class="btn btn-primary" id="btnrcvpmnt">Receive Payment</button>
-        <button name="btnprint" onclick="printDiv('print-content')" class="btn btn-primary"><i class="icon-print"></i>Print</button>
+        <button name="btnprint" onclick="printDiv('print-contentdetails')" class="btn btn-primary"><i class="icon-print"></i>Print</button>
         <button name="btnsaveas" id="savepdf" class="btn btn-primary"><i class="icon-download"></i>Save as PDF</button>
     </div>
 </div>
 
 <script>
+    function printDiv(divName) {
+
+        var printContents = document.getElementById(divName).innerHTML;
+        w = window.open();
+        w.document.write(printContents);
+        w.print();
+        w.close();
+    }
     function email(val) {
         $.ajax({
             url: '/duepayment/Email?oid=' + val,
