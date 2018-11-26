@@ -183,7 +183,7 @@
                                                                     <td class="text-center">
                                                                         @if (ViewBag.discount[count] != null)
                                                                         {  
-                                                                            @(++count)
+                                                                            @*@(++count)*@
                                                                             <label>
                                                                                 Discount Type : @ViewBag.discount[count].Split(new char[] { '!' })[0],
                                                                                 Discount : @ViewBag.discount[count].Split(new char[] { '!' })[1]
@@ -213,8 +213,7 @@
                                                                     <td class="text-right gndttl"><label class="fgndttl">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalpric1) + (Convert.ToDouble(@item.totalpric1) * 0.18)).Replace(".00", "")</label></td>
                                                                 </tr>  
                                                                 @*@(++count)*@
-                                                                //count++;
-                                                                ++count;
+                                                                count++;  
                                                             }
                                                         </tbody>
                                                     </table>
@@ -243,7 +242,7 @@
                                                             @foreach (var item in ViewBag.payment)
                                                             {
                                                                 <tr>
-                                                                    <td><a href="/duepayment?oid=@ViewBag.orderid&paymentby=@item.PaymentBy" class="orderidlnk" style="cursor:pointer">@item.PaymentBy</a> </td>
+                                                                    <td><a href="/duepayment?oid=@ViewBag.orderid&paymentby=@String.Format(@item.PaymentBy).Replace(" ", "_")" class="orderidlnk" style="cursor:pointer">@item.PaymentBy</a> </td>
                                                                     <td> @item.Payment_Date.ToString("dd-MMM-yyyy") </td>
                                                                     <td class="text-center">@item.Payment_Id</td>
                                                                     <td class="text-center">@item.Payment_Type</td>
