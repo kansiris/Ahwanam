@@ -1,7 +1,4 @@
-﻿
-@model MaaAahwanam.Models.QuotationsList 
-    
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/NmasterPage.cshtml";
 }
@@ -15,18 +12,15 @@
         body {
             font-family: "Lato", sans-serif;
         }
-
         .custom-file-upload {
             border: 1px solid #ccc;
             display: inline-block;
             /*padding: 6px 12px;*/
             cursor: pointer;
         }
-
         input[type="file"] {
             display: none;
         }
-
         .tablink {
             background-color: #fff;
             color: #212529;
@@ -59,6 +53,10 @@
             padding: 50px;
             text-align: center;
         }
+
+
+
+       
     </style>
 }
 
@@ -79,21 +77,22 @@
                     <div class="col-lg-12">
 
 
-                        <center>
-                            <h3>Quotation Details</h3>
-                        </center>
-
+                        <center> <h3>Quotation Details</h3></center>
+                        <input type="hidden" name="filename" id="filename" value="" />
                         <div class="row">
-                            <p> vendor name: @ViewBag.total.totalprice </p>
-                            <p> vendor phoneno: @ViewBag.total.ContactNumber </p>
-                            <p>customer name: @ViewBag.total.fname</p>
-                            <p>customer phoneno: @ViewBag.total.customerphoneno</p>
+                            <p>Request from the Customer: @ViewBag.total.fname</p>
+                            <p>Customer phoneno: @ViewBag.total.customerphoneno</p>
+                            <p> Request for the Vendor: @ViewBag.total.BusinessName </p>
+                            <p> Vendor phoneno: @ViewBag.total.ContactNumber </p>
+
                             @*<input type="hidden" id="stype" value="@ViewBag.total.vid"/>*@
                             <input type="hidden" id="orderid" value="@ViewBag.total.orderid" />
                             <input type="hidden" id="vid" value="@ViewBag.total.vid" />
                             <input type="hidden" id="subvid" value="@ViewBag.total.vendorsubid" />
                             @*<input type="hidden" id="qid" value="@ViewBag.total.vid"/>*@
                         </div>
+
+                        <p><strong> Customer Selected packages</strong></p>
                         @if (ViewBag.orderdetails1 != null)
                         {
 
@@ -107,24 +106,15 @@
                                             <div class="card-body" style="background-color:whitesmoke">
                                                 <input type="hidden" name="" />
                                                 <input type="hidden" name="packageid" id="packageid" value="@item.PackageID" />
-                                                Package Type: Veg
-                                                <br />
-                                                Location: @item.City
-                                                <br />
-                                                Event Type :@item.eventtype
-                                                <br />
-                                                Event Date :  @item.bookdate.ToString("dd/MM/yyyy")
-                                                <br />
-                                                Guest Count : @item.guestno
-                                                <br />
-                                                Timeslot : @item.timeslot
-                                                <br />
-                                                Price : @item.totalpric1
-                                                <br />
-                                                <label class="total">Total Price : ₹@( (Convert.ToInt64(@item.totalpric1) * Convert.ToInt64(@item.guestno))) </label>
-                                                <br />
-                                                Final Package Total: ₹
-                                                <label class="finaltotal"></label>
+                                                Package Type: Veg <br />
+                                                Location: @item.City<br />
+                                                Event Type :@item.eventtype <br />
+                                                Event Date :  @item.bookdate.ToString("dd/MM/yyyy") <br />
+                                                Guest Count : @item.guestno<br />
+                                                Timeslot : @item.timeslot <br />
+                                                Price : @item.totalpric1  <br />
+                                                <label class="total">Total Price : ₹@( (Convert.ToInt64(@item.totalpric1) * Convert.ToInt64(@item.guestno))) </label><br />
+                                                Final Package Total: ₹ <label class="finaltotal"></label>
                                             </div>
 
 
@@ -138,10 +128,7 @@
                                     </div>
                                     }
                                 </div>
-                                <p>
-                                    Total Amount :
-                                    <label class="ftotal"> @ViewBag.total.totalprice</label>
-                                </p>
+                                <p> Total Amount : <label class="ftotal"> @ViewBag.total.totalprice</label></p>
 
 
                             }
@@ -163,21 +150,14 @@
                                             <div class="card-body" style="background-color:whitesmoke">
                                                 <input type="hidden" name="" />
                                                 <input type="hidden" name="packageid" id="packageid" value="@item.packageid" />
-                                                Package Type: Veg
-                                                <br />
-                                                Location: @item.City
-                                                <br />
-                                                Event Type :@item.eventtype
-                                                <br />
-                                                Event Date :  @item.bookdate.ToString("dd/MM/yyyy")
-                                                <br />
-                                                Guest Count : @item.guestno
-                                                <br />
+                                                Package Type: Veg <br />
+                                                Location: @item.City<br />
+                                                Event Type :@item.eventtype <br />
+                                                Event Date :  @item.bookdate.ToString("dd/MM/yyyy") <br />
+                                                Guest Count : @item.guestno<br />
                                                 @*Timeslot : @item.timeslot <br />*@
-                                                Price : @item.totalpric1
-                                                <br />
-                                                Total Price : ₹@( (Convert.ToInt64(@item.totalpric1) * Convert.ToInt64(@item.guestno)))
-                                                <br />
+                                                Price : @item.totalpric1  <br />
+                                                Total Price : ₹@( (Convert.ToInt64(@item.totalpric1) * Convert.ToInt64(@item.guestno))) <br />
                                                 @*Final Package Total: ₹ <label class="finaltotal"></label>*@
                                             </div>
 
@@ -204,6 +184,97 @@
                             <p> Total Amount :  @ViewBag.total.totalprice</p>
 
                         }
+                    </div>
+                    <button type="button" id="btnsearch" class="btn btn-primary " tooltip="Select Service Type & Date" onclick="replyquote()">Reply Quote to vendor</button>
+                    <button type="button" id="btnsearch1" class="btn btn-primary " tooltip="Select Service Type & Date" onclick="replyquote1()">Reply Quote to customer</button>
+
+                </div>
+                <div id="reply">
+                    <div class=" row">
+                    
+                        <div class="col-md-3">
+                            <p> Send request to the Vendor</p>
+                        </div>
+                        @*<div class="col-md-3">
+                    <select class="" id="selectreplyto" style="width: 25%;">
+                        <option value="" selected="">Select reply to</option>
+                        <option value="Customer">Customer</option>
+                        <option value="Vendor">Vendor</option>
+                    </select>
+                </div>*@
+                        @*<div class="col-md-3">
+                    <select class="" id="selectmessagetype" style="width: 25%;">
+                        <option value="" selected="">Select Message Type</option>
+                        <option value="reply">reply</option>
+                        <option value="received">received</option>
+                    </select>
+                </div>*@
+                        @*<div class="col-md-4">
+                    <select class="" id="selectmodeofcomm" style="width: 25%;">
+                        <option value="" selected="">Select mode of communication</option>
+                        <option value="Phone">Phone</option>
+                        <option value="Email">Email</option>
+                    </select>
+                </div>*@
+                        <div>
+                            <input type="text" placeholder="Add text" id="message" />
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6" id="uma1">
+                            <form class="form-horizontal" method="post" enctype="multipart/form-data">
+
+                                <label class="custom-file-upload">
+                                    <input type="file" id="contractdoc" class="contractdoc" name="file" />
+                                    <i class="fa fa-cloud-upload" style="font-size:24px"></i> File Upload
+                                </label>
+                            </form>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-primary send" value="Vendor" id="send">Send</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="reply1">
+                    <div class=" row">
+                    
+                        <div class="col-md-3">
+                            <p> Send email to the Customer</p>
+                        </div>
+                        @*<div class="col-md-3">
+                    <select class="" id="selectreplyto" style="width: 25%;">
+                        <option value="" selected="">Select reply to</option>
+                        <option value="Customer">Customer</option>
+                        <option value="Vendor">Vendor</option>
+                    </select>
+                </div>*@
+                        @*<div class="col-md-3">
+                    <select class="" id="selectmessagetype" style="width: 25%;">
+                        <option value="" selected="">Select Message Type</option>
+                        <option value="reply">reply</option>
+                        <option value="received">received</option>
+                    </select>
+                </div>*@
+                        @*<div class="col-md-4">
+                    <select class="" id="selectmodeofcomm" style="width: 25%;">
+                        <option value="" selected="">Select mode of communication</option>
+                        <option value="Phone">Phone</option>
+                        <option value="Email">Email</option>
+                    </select>
+                </div>*@
+                        <div>
+                            <input type="text" placeholder="Add text" id="message" />
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6" id="uma1">
+                            <form class="form-horizontal" method="post" enctype="multipart/form-data">
+
+                                <label class="custom-file-upload">
+                                    <input type="file" id="contractdoc" class="contractdoc" name="file" />
+                                    <i class="fa fa-cloud-upload" style="font-size:24px"></i> File Upload
+                                </label>
+                            </form>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-primary send" value="Customer" id="send1">Send</button>
+                        </div>
                     </div>
                 </div>
                 <div id="sortvendors">
@@ -255,75 +326,9 @@
                                 }
                             </tbody>
                         </table>
-                        <button type="button" id="btnsearch" class="btn btn-primary" tooltip="Select Service Type & Date" onclick="replyquote()">Reply Quote</button>
 
                     </div>
-                    <div id="reply">
-                        @using (Html.BeginForm("ParticularQuoteReply", "quotationlist", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                        {
-                            <div class=" row">
 
-                                <div class="col-md-3">
-                                    @*<select class="" id="selectreplyto" style="width: 25%;">
-                                            <option value="" selected="">Select reply to</option>
-                                            <option value="Customer">Customer</option>
-                                            <option value="Vendor">Vendor</option>
-                                        </select>*@
-                                    @Html.DropDownList("selectreplyto", new List<SelectListItem>
-{
-    new SelectListItem { Text = "Select reply to", Value = "", Selected=true},
-    new SelectListItem { Text = "Customer", Value = "Customer"},
-    new SelectListItem { Text = "Vendor", Value = "Vendor"}
-}, "Select Department")
-                                </div>
-                                <div class="col-md-3">
-                                    @Html.DropDownList("selectmessagetype", new List<SelectListItem>
-{
-  new SelectListItem { Text = "Select Message Type", Value = "", Selected=true},
-  new SelectListItem { Text = "reply", Value = "reply"},
-  new SelectListItem { Text = "received", Value = "received"}
-}, "Select Department")
-                                    @*<select class="" id="selectmessagetype" style="width: 25%;">
-                                            <option value="" selected="">Select Message Type</option>
-                                            <option value="reply">reply</option>
-                                            <option value="received">received</option>
-                                        </select>*@
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.DropDownList("selectmodeofcomm", new List<SelectListItem>
-{
-new SelectListItem { Text = "Select mode of communication", Value = "", Selected=true},
-new SelectListItem { Text = "Phone", Value = "Phone"},
-new SelectListItem { Text = "Email", Value = "Email"}
-}, "Select Department")
-                                    @*<select class="" id="selectmodeofcomm" style="width: 25%;">
-                                            <option value="" selected="">Select mode of communication</option>
-                                            <option value="Phone">Phone</option>
-                                            <option value="Email">Email</option>
-                                        </select>*@
-                                </div>
-                                <div>
-                                    <input type="text" placeholder="Add text" id="message" />
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-6" id="uma1">
-                                    @Html.LabelFor(model => model.file, htmlAttributes: new { @class = "control-label col-md-2" })
-                                    <div class="col-md-10">
-                                        <input type="file" name="ImageFile" required />
-                                    </div>
-                                    @*<form class="form-horizontal" method="post" enctype="multipart/form-data">
-
-                                            <label class="custom-file-upload">
-                                                @*<input type="file" id="contractdoc" name="contractdoc" accept="pdf/*" />
-                                                <i class="fa fa-cloud-upload" style="font-size:24px"></i> File Upload*
-                                            </label>
-                                        </form>*@
-                                </div>
-                                <div>
-                                    <button type="button" class="btn btn-primary" value="" id="send">Send</button>
-                                </div>
-                            </div>
-                        }
-                    </div>
 
                 </div>
             </div>
@@ -335,11 +340,18 @@ new SelectListItem { Text = "Email", Value = "Email"}
 
     <script>
         $(document).ready(function () {
+            $('#reply1').hide();
             $('#reply').hide();// 'none')
-            //   $('#send').text() = 'send';
+         //   $('#send').text() = 'send';
         });
         function replyquote() {
             $('#reply').show();
+            $('#reply1').hide();
+        }
+
+        function replyquote1() {
+            $('#reply1').show();
+            $('#reply').hide();
         }
 
         $('#selectmessagetype').on('change', function () {
@@ -362,15 +374,47 @@ new SelectListItem { Text = "Email", Value = "Email"}
         //    }
         //})
 
+        
+       // function savedetails() {
 
-        // function savedetails() {
-        $('#send').click(function () {
-            var messagetype = $('#selectmessagetype').val();
-            var replyto = $('#selectreplyto').val();
+        $('.contractdoc').change(function () {
+         
+            var vid = $('#VendorId').val();
+            var OrderID = $('#orderid').val();
+            var ext = $('.contractdoc').val().split('.').pop().toLowerCase();
+
+            if ($.inArray(ext, ['PDF', 'pdf', 'doc', 'DOC']) == -1) {
+                alert('Invalid File Type');
+            }
+            else {
+                var data = new FormData();
+                var files = $(".contractdoc").get(0).files;
+                if (files.length > 0) {
+                    data.append("helpSectionImages", files[0]);
+                }
+
+                $.ajax({
+                    url: '/quotationlist/UploadContractdoc?vid=' + vid + '&&OrderID=' + OrderID,
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    data: data,
+                    success: function (response) {
+                        $('#filename').val(response);
+                        alert(response);
+                        if (response != '') { alert('Document saved successfully'); } else { alert('Document saving failed'); }
+
+                    }
+                });
+            }
+        });
+
+        $('.send').click(function () {
+            var messagetype= $('#selectmessagetype').val();
+           // var replyto= $('#selectreplyto').val();
+            var replyto = $(this).val();
             var message = $('#message').val();
-            var formData = new FormData();
-            var data1 = document.getElementById("contractdoc").files[0];
-            formData.append("contractdoc", data1);
+            var ext =  $('#filename').val();
             //var ext = $('#contractdoc').val().split('.').pop().toLowerCase();
             //if (ext != '') {
             //    if ($.inArray(ext, ['PDF', 'pdf']) == -1) {
@@ -384,76 +428,77 @@ new SelectListItem { Text = "Email", Value = "Email"}
             //        }
             //    }
             //}
-            //OrderID: $('#orderid').val(),
-
-            var quoteResponse = {
-                //  OrderID: $('#qid').val(),
-                BusinessName: $('#bname').text(),
-                VendorID: $('#vid').val(),
-                VendorSubID: $('#subvid').val(),
-                OrderID: $('#orderid').val(),
-            }
-            //alert(quoteResponse.QuoteID);
+                //OrderID: $('#orderid').val(),
+           
+                var quoteResponse = {
+                    //  OrderID: $('#qid').val(),
+                    BusinessName: $('#bname').text(),
+                    VendorID: $('#vid').val(),
+                    VendorSubID: $('#subvid').val(),
+                    OrderID: $('#orderid').val(),
+                }
+                //alert(quoteResponse.QuoteID);
             $.ajax({
-                url: '/Admin/quotationlist/ParticularQuoteReply?messagetype=' + messagetype + '&&replyto=' + replyto + '&&message=' + message,
+            url: '/Admin/quotationlist/ParticularQuoteReply?messagetype=' + messagetype + '&&replyto=' + replyto + '&&message=' + message + '&&ext=' +ext,
                 type: 'post',
                 datatype: 'json',
-                data: { quoteResponse, data1 },
-                //  data: { QuoteID: QuoteID, id: ids },
-                success: function (data) {
-                    if (data == "Success") {
-                        alert(" Quatation created sucessfully");
-                        window.location.reload();
-                        //$('#myModal').css('display', 'none');
-                        //resetAllValues();
+                data: { quoteResponse },
+                  //  data: { QuoteID: QuoteID, id: ids },
+                    success: function (data) {
+                        if (data == "Success") {
+                            alert(" Quatation created sucessfully");
+                            window.location.reload();
+                            //$('#myModal').css('display', 'none');
+                            //resetAllValues();
+                        }
+                        else if (data == "Failed") {
+                            alert("Failed to Add Installments!!! Try Again");
+                        }
+                    },
+                    error: function (data) {
+                        alert("Something Went Wrong!!! Try Again Later");
                     }
-                    else if (data == "Failed") {
-                        alert("Failed to Add Installments!!! Try Again");
-                    }
-                },
-                error: function (data) {
-                    alert("Something Went Wrong!!! Try Again Later");
-                }
-            });
-        })
+                });
+            })
+      
 
 
+        //$('#contractdoc').change(function () {
+        //    var val = 'ks';
+        //    var partid;
+        //    var vid = $('#VendorId').val();
+        //    var partidks = $('#partid').val();
+        //    var partidks1 = $('#partid1').val();
+        //    if (partidks == '' || partidks == 'undefined') {
+        //        partid = partidks1;
+        //    } else { partid = partidks; }
+        //    if (partid == '' || partid == 'undefined') { alert('Save partner details first to save partner packages'); }
 
-                    //$('#contractdoc').change(function () {
-                    //    var val = 'ks';
-                    //    var partid;
-                    //    var vid = $('#VendorId').val();
-                    //    var partidks = $('#partid').val();
-                    //    var partidks1 = $('#partid1').val();
-                    //    if (partidks == '' || partidks == 'undefined') {
-                    //        partid = partidks1;
-                    //    } else { partid = partidks; }
-                    //    if (partid == '' || partid == 'undefined') { alert('Save partner details first to save partner packages'); }
+        //    var ext = $('#contractdoc').val().split('.').pop().toLowerCase();
+        //    if ($.inArray(ext, ['PDF', 'pdf']) == -1) {
+        //        alert('Invalid File Type');
+        //    }
+        //    else {
+        //        var data = new FormData();
+        //        var files = $("#contractdoc").get(0).files;
+        //        if (files.length > 0) {
+        //            data.append("helpSectionImages", files[0]);
+        //        }
+        //        $.ajax({
+        //            url: '/ReSellerManagement/UploadContractdoc?command=' + val + '&&partid=' + partid + '&&vid=' + vid,
+        //            type: "POST",
+        //            processData: false,
+        //            contentType: false,
+        //            data: data,
+        //            success: function (response) {
+        //                alert(response);
+        //                if (response != '') { alert('Document saved successfully'); } else { alert('Document saving failed'); }
 
-                    //    var ext = $('#contractdoc').val().split('.').pop().toLowerCase();
-                    //    if ($.inArray(ext, ['PDF', 'pdf']) == -1) {
-                    //        alert('Invalid File Type');
-                    //    }
-                    //    else {
-                    //        var data = new FormData();
-                    //        var files = $("#contractdoc").get(0).files;
-                    //        if (files.length > 0) {
-                    //            data.append("helpSectionImages", files[0]);
-                    //        }
-                    //        $.ajax({
-                    //            url: '/ReSellerManagement/UploadContractdoc?command=' + val + '&&partid=' + partid + '&&vid=' + vid,
-                    //            type: "POST",
-                    //            processData: false,
-                    //            contentType: false,
-                    //            data: data,
-                    //            success: function (response) {
-                    //                alert(response);
-                    //                if (response != '') { alert('Document saved successfully'); } else { alert('Document saving failed'); }
+        //            }
+        //        });
+        //    }
+        //});
+        </script>
+    }
 
-                    //            }
-                    //        });
-                    //    }
-                    //});
-    </script>
-}
-
+    
