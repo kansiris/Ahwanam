@@ -499,8 +499,9 @@
                                                 <div class="col-md-5" style="padding: 14px;">Final Amount</div>
                                                 <div class="col-md-7" style="padding:1px;margin-left: -19px;">
                                                     <input type="hidden" class="form-control" id="FinalAmount1" name="FinalAmount1" value="@ViewBag.gstplustotalAmount" style="padding: 5px;">
+                                                    <input type="hidden" class="form-control" id="FinalAmount2" name="FinalAmount2" value="" style="padding: 5px;">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" id="FinalAmount" name="FinalAmount" value="@ViewBag.gstplustotalAmount" style="padding: 5px;">
+                                                        <input type="text" class="form-control" id="FinalAmount" name="FinalAmount" value="" style="padding: 5px;">
                                                     </div>
                                                 </div>
                                             </div>
@@ -550,6 +551,7 @@
 </main>*@
 <script src="~/newdesignstyles/Scripts/jquery-2.2.4.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js" integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs" crossorigin="anonymous"></script>
 
 <script>
@@ -873,7 +875,7 @@
         }
         $('#Paymentmode').css('display', 'block');
         // Total Amount + GST
-        if (checked) {
+        
         var total = 0; var gstsum = 0
         var openingbalance = $('#Opening_Balance').val();
         var duebalance = $('#Current_Balance').val();
@@ -901,12 +903,24 @@
             //$('#FinalAmount').val(gstsum);
         }
         else {
-            var duebalance1 = $('#Current_Balance').val();
-            $('#FinalAmount').val(duebalance1);
-            $('#FinalAmount1').val(duebalance1);
-          
+            var cnmt = $('#Current_Balance').val();
+            $('#FinalAmount').val(cnmt);
+            $('#FinalAmount1').val(cnmt);
         }
-       }
+        //var t = 0;
+        //var fnmnt = $('#FinalAmount').val();
+        //var famt1 = tr.find('.gndttl').text().replace('Rs ', '').replace(/,/g, '').trim();
+        //if (openingbalance != duebalance || openingbalance != 0 && duebalance == 0) {
+        //    t += parseInt(fnmnt);
+        //    $('#FinalAmount').val(t);
+        //    $('#FinalAmount1').val(t);
+        //}
+        //else {
+        //    t = parseInt(fnmnt) + parseInt(famt1);
+        //    $('#FinalAmount').val(t);
+        //    $('#FinalAmount1').val(t);
+        //}
+        
     });
     var discounttype = '';
     $('#orderdetails tr td').find('select.selectdiscount').change(function () {
