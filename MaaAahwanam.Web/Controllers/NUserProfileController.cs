@@ -231,7 +231,7 @@ namespace MaaAahwanam.Web.Controllers
             string subj = "Order#"+orderid+" Cancelled";
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
             //emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
-            emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+            emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj, null);
 
             var vendordetails = userLoginDetailsService.getvendor(Convert.ToInt32(vendorid));
 
@@ -249,7 +249,7 @@ namespace MaaAahwanam.Web.Controllers
             //readFile = readFile.Replace("[msg]", "Order has been Cancelled by "+name+"");
             string txtmessage1 = readfile1;
             string subj1 = "Order#" + orderid + " Cancelled";
-            emailSendingUtility.Email_maaaahwanam("rameshsai@xsilica.com", txtmessage1, subj1); //Replace this email with txtto1
+            emailSendingUtility.Email_maaaahwanam("rameshsai@xsilica.com", txtmessage1, subj1, null); //Replace this email with txtto1
         }
 
         public string Capitalise(string str)

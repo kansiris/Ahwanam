@@ -26,8 +26,8 @@ namespace MaaAahwanam.Web.Controllers
             string ip = HttpContext.Request.UserHostAddress;
             string msg = "Name: " + name + ", Email-ID : " + email + ", Mobile Number : " + mobile;
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-            emailSendingUtility.Email_maaaahwanam("rameshsai@xsilica.com", msg + ",IP:" + ip, "Mail From Ahwanam");
-            emailSendingUtility.Email_maaaahwanam("info@ahwanam.com", msg, "Mail From Pre-Launch Page");
+            emailSendingUtility.Email_maaaahwanam("rameshsai@xsilica.com", msg + ",IP:" + ip, "Mail From Ahwanam", null);
+            emailSendingUtility.Email_maaaahwanam("info@ahwanam.com", msg, "Mail From Pre-Launch Page", null);
             TempData["Active"] = "Response Recorded";
             return RedirectToAction("Index", "PreLaunch");
         }
@@ -37,8 +37,8 @@ namespace MaaAahwanam.Web.Controllers
             string ip = HttpContext.Request.UserHostAddress;
             string msg = "Name: " + name + ", Email-ID : " + email + ", Mobile Number : " + mobile;
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-            emailSendingUtility.Email_maaaahwanam("rameshsai@xsilica.com", msg +",IP:"+ip, "Mail From Ahwanam");
-            emailSendingUtility.Email_maaaahwanam("info@ahwanam.com", msg, "Mail From Pre-Launch Page");
+            emailSendingUtility.Email_maaaahwanam("rameshsai@xsilica.com", msg +",IP:"+ip, "Mail From Ahwanam", null);
+            emailSendingUtility.Email_maaaahwanam("info@ahwanam.com", msg, "Mail From Pre-Launch Page", null);
             return Json(JsonRequestBehavior.AllowGet);
         }
     }

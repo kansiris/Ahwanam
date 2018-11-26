@@ -248,9 +248,9 @@ namespace MaaAahwanam.Web.Controllers
                 string txtmessage = readFile;//readFile + body;
                 string subj = "Thanks for your order";
                 EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj, null);
                 string targetmails = "lakshmi.p@xsilica.com,seema.g@xsilica.com,rameshsai@xsilica.com";
-                emailSendingUtility.Email_maaaahwanam(targetmails, txtmessage, subj);
+                emailSendingUtility.Email_maaaahwanam(targetmails, txtmessage, subj, null);
             }
 
             return Json("success", JsonRequestBehavior.AllowGet);

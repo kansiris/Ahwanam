@@ -162,7 +162,7 @@ namespace MaaAahwanam.Web.Controllers
             string txtmessage = readFile;
             string subj = "" + BusinessName + " Order update";
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-            emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+            emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj, null);
             var vendordetails = userLoginDetailsService.getvendor(Convert.ToInt16(id));
 
 
@@ -184,7 +184,7 @@ namespace MaaAahwanam.Web.Controllers
             readFile = readFile.Replace("[orderid]", OrderId);
             txtmessage = readFile;
             subj = "Order Status Update";
-            emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+            emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj, null);
         }
     }
 }

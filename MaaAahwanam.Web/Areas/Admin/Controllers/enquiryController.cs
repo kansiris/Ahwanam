@@ -116,7 +116,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             string subj = "Response to your Quote #" + particularquote.Id + "";
             int count = quotationListsService.UpdateQuote(particularquote);
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-            emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+            emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj, null);
             return Json("sucess");
         }
 

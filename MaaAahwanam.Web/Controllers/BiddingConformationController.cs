@@ -34,7 +34,7 @@ namespace MaaAahwanam.Web.Controllers
             StrContent = StrContent.Replace("@@MessageDiv@@", Detdiv);
             string Mailmessage = "<Table>" + Detdiv + "</Table>";
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-            emailSendingUtility.Email_maaaahwanam(Username, StrContent.ToString(), "Bidding Confirmation");
+            emailSendingUtility.Email_maaaahwanam(Username, StrContent.ToString(), "Bidding Confirmation", null);
             return Json("Success");
         }
     }

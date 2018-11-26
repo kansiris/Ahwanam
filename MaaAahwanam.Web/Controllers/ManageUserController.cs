@@ -314,10 +314,10 @@ namespace MaaAahwanam.Web.Controllers
             string txtmessage = readFile;//readFile + body;
     string subj = "Thanks for your order";
     EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-    emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+    emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj, null);
             //emailSendingUtility.Email_maaaahwanam("seema@xsilica.com ", txtmessage, subj);
             string targetmails = "lakshmi.p@xsilica.com,seema.g@xsilica.com,rameshsai@xsilica.com";
-    emailSendingUtility.Email_maaaahwanam(targetmails, txtmessage, subj);
+    emailSendingUtility.Email_maaaahwanam(targetmails, txtmessage, subj, null);
 
             var vendordetails = newmanageuse.getvendor(Convert.ToInt32(vid));
 
@@ -339,7 +339,7 @@ namespace MaaAahwanam.Web.Controllers
             readfile1 = readfile1.Replace("[orderid]", OrderId);
             string txtmessage1 = readfile1;
     string subj1 = "order has been placed";
-    emailSendingUtility.Email_maaaahwanam(txtto1, txtmessage1, subj1);
+    emailSendingUtility.Email_maaaahwanam(txtto1, txtmessage1, subj1, null);
             string msg = OrderId;
 
 
@@ -508,10 +508,10 @@ namespace MaaAahwanam.Web.Controllers
                 string txtmessage = readFile;//readFile + body;
                 string subj = "Thanks for your order";
                 EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj, null);
                 //emailSendingUtility.Email_maaaahwanam("seema@xsilica.com ", txtmessage, subj);
                 string targetmails = "lakshmi.p@xsilica.com,seema.g@xsilica.com,rameshsai@xsilica.com";
-                emailSendingUtility.Email_maaaahwanam(targetmails, txtmessage, subj);
+                emailSendingUtility.Email_maaaahwanam(targetmails, txtmessage, subj, null);
 
                 var vendordetails = newmanageuse.getvendor(Convert.ToInt32(vid));
 
@@ -533,7 +533,7 @@ namespace MaaAahwanam.Web.Controllers
                 readfile1 = readfile1.Replace("[orderid]", OrderId);
                 string txtmessage1 = readfile1;
                 string subj1 = "order has been placed";
-                emailSendingUtility.Email_maaaahwanam(txtto1, txtmessage1, subj1);
+                emailSendingUtility.Email_maaaahwanam(txtto1, txtmessage1, subj1, null);
                 msg = OrderId;
             }
             else

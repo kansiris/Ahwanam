@@ -21,7 +21,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         OrderService orderService = new OrderService();
         VendorDashBoardService mnguserservice = new VendorDashBoardService();
         UserLoginDetailsService userLoginDetailsService = new UserLoginDetailsService();
-        string name;
+        string name; string txtto;
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         // GET: Admin/quotationlist
         public ActionResult Index()
@@ -184,7 +184,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             string subj1 = "order has been placed";
                         string txtto1 = s1.username;
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-            emailSendingUtility.Email_maaaahwanam(txtto1, txtmessage1, subj1);
+            emailSendingUtility.Email_maaaahwanam(txtto1, txtmessage1, subj1, null);
             var msg = "email sent";
             return Json( msg,JsonRequestBehavior.AllowGet);
         }
@@ -216,38 +216,112 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 return Json("Failed");
         }
 
-        public JsonResult ParticularQuoteReply(string QuoteID, string id)
+        public JsonResult ParticularQuoteReply(QuotationsList quoteResponse, string id, HttpPostedFileBase data1,string message, string replyto,string messagetype)
         {
             DateTime indianTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
-            var s1 = orderService.allorderslist1().ToList().Where(m => m.orderid == long.Parse(QuoteID)).FirstOrDefault(); 
+            var s1 = orderService.allorderslist1().ToList().Where(m => m.orderid == long.Parse(quoteResponse.OrderID)).FirstOrDefault();
+            var userdata = userLoginDetailsService.GetUserId((int)s1.cutomerid);
+            var userdetails = userLoginDetailsService.GetUser((int)s1.cutomerid);
             QuotationsList quotationsList = new QuotationsList();
-            quotationsList.Name = s1.fname;
-            quotationsList.EmailId = s1.username;
+            var s12 = ViewBag.orderdetails = orderService.allorderslist1().ToList().Where(m => m.orderid == long.Parse(quoteResponse.OrderID)).ToList();
+
+           
+            if (replyto == "Vendor") {
+                quotationsList.EmailId = userdata.UserName; quotationsList.Name = userdetails.FirstName;
+            }
+            else if(replyto == "Customer") { quotationsList.EmailId = s1.username; quotationsList.Name = s1.fname; }
             quotationsList.ServiceType = s1.servicetype;
             quotationsList.PhoneNo = s1.customerphoneno;
             quotationsList.EventStartDate = Convert.ToDateTime(s1.bookdate);
             quotationsList.EventStartTime = DateTime.UtcNow;
             quotationsList.EventEnddate = DateTime.UtcNow;
             quotationsList.EventEndtime = DateTime.UtcNow;
-            quotationsList.VendorId = "";
+            quotationsList.VendorId = ""; quotationsList.OrderID = quoteResponse.OrderID;
+
             quotationsList.VendorMasterId = s1.vid.ToString();
             quotationsList.Persons = s1.guestno.ToString();
             string ip = HttpContext.Request.UserHostAddress;
             quotationsList.IPaddress = ip;
             quotationsList.UpdatedTime = DateTime.UtcNow;
             quotationsList.Status = "Active";
-            quotationsList.OrderID = s1.orderid.ToString();
+            quotationsList.Reply_Type = messagetype;
+            quotationsList.ReplyToType = replyto;
+            quotationsList.Description = message;
+
             quotationListsService.AddQuotationList(quotationsList);
-            FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/QuoteReply.html"));
+            FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/kansiris.html"));
+
+            //  FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/QuoteReply.html"));
             string readFile = File.OpenText().ReadToEnd();
-            readFile = readFile.Replace("[name]", s1.fname);
-            readFile = readFile.Replace("[Email]", s1.username);
-            string txtto = s1.username;
+           
+            if (replyto == "Vendor")
+            {
+                readFile = readFile.Replace("[name]", userdetails.FirstName);
+                readFile = readFile.Replace("[Email]", userdata.UserName);
+                 txtto = s1.username;
+            }
+            else if (replyto == "Customer")
+            {
+                readFile = readFile.Replace("[name]", s1.fname);
+                readFile = readFile.Replace("[Email]", s1.username);
+                txtto = s1.username;
+            }
+            StringBuilder cds = new StringBuilder();
+            cds.Append("<table style='width:70%;'><tbody>");
+            cds.Append("<tr><td style = 'width:20%;'></td><td><strong> Details</strong> </td><td> <strong>Event Type</strong> </td><td><strong>Total Amount</strong></td></tr>");
+            foreach (var item in s12)
+            {
+                string image;
+                if (item.logo != null)
+                {
+                    image = "/vendorimages/" + item.logo.Trim(',') + "";
+                }
+                else { image = "/noimages.png"; }
+                cds.Append("<tr><td style = 'width:20%;'>  <img src = " + image + " style='height: 182px;width: 132px;'/></td><td style = '' > <p>" + "<strong>Business Name: </strong>" + item.BusinessName + "</p><p>" + "<strong>Packgename: </strong>" + item.packagename + "</p><p>" + "<strong>Price/person:</strong> " + '₹' + item.perunitprice.ToString().Replace(".00", "") + "</p><p>" + "<strong>No. of Guests:</strong> " + item.guestno + "</p> </td><td > " + item.eventtype + " </td><td style = ''><p>" + '₹' + item.totalprice.ToString().Replace(".00", "") + "</p> </td> </tr>");
+            }
+            cds.Append("</tbody></table>");
+            string url = Request.Url.Scheme + "://" + Request.Url.Authority;
             string txtmessage = readFile;
             string subj = "Response to your Quote #" + s1.orderid + "";
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-            emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+            emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj, data1);
             return Json("sucess");
         }
+
+
+
+        //public JsonResult ParticularQuoteReply(string QuoteID, string id)
+        //{
+        //    DateTime indianTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+        //    var s1 = orderService.allorderslist1().ToList().Where(m => m.orderid == long.Parse(QuoteID)).FirstOrDefault(); 
+        //    QuotationsList quotationsList = new QuotationsList();
+        //    quotationsList.Name = s1.fname;
+        //    quotationsList.EmailId = s1.username;
+        //    quotationsList.ServiceType = s1.servicetype;
+        //    quotationsList.PhoneNo = s1.customerphoneno;
+        //    quotationsList.EventStartDate = Convert.ToDateTime(s1.bookdate);
+        //    quotationsList.EventStartTime = DateTime.UtcNow;
+        //    quotationsList.EventEnddate = DateTime.UtcNow;
+        //    quotationsList.EventEndtime = DateTime.UtcNow;
+        //    quotationsList.VendorId = "";
+        //    quotationsList.VendorMasterId = s1.vid.ToString();
+        //    quotationsList.Persons = s1.guestno.ToString();
+        //    string ip = HttpContext.Request.UserHostAddress;
+        //    quotationsList.IPaddress = ip;
+        //    quotationsList.UpdatedTime = DateTime.UtcNow;
+        //    quotationsList.Status = "Active";
+        //    quotationsList.OrderID = s1.orderid.ToString();
+        //    quotationListsService.AddQuotationList(quotationsList);
+        //    FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/QuoteReply.html"));
+        //    string readFile = File.OpenText().ReadToEnd();
+        //    readFile = readFile.Replace("[name]", s1.fname);
+        //    readFile = readFile.Replace("[Email]", s1.username);
+        //    string txtto = s1.username;
+        //    string txtmessage = readFile;
+        //    string subj = "Response to your Quote #" + s1.orderid + "";
+        //    EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+        //    emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+        //    return Json("sucess");
+        //}
     }
 }

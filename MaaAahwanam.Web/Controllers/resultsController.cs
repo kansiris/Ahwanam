@@ -219,7 +219,7 @@ namespace MaaAahwanam.Web.Controllers
                     string txtmessage = readFile;//readFile + body;
                     string subj = "User search from ahwanam";
                     EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-                    emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+                    emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj, null);
                 }
             }
         }

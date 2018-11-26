@@ -128,14 +128,14 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
                 string subj = "Attention required";
 
-                emailSendingUtility.Email_maaaahwanam(emailid, txtmessage, subj);
+                emailSendingUtility.Email_maaaahwanam(emailid, txtmessage, subj,null);
 
                
                 string txtmessage1 = username +" "+ "is activated for father's day contest";
 
                 string subj1 = "Contestant is activated";
 
-                emailSendingUtility.Email_maaaahwanam("prabodh.dasari@xsilica.com", txtmessage1, subj1);
+                emailSendingUtility.Email_maaaahwanam("prabodh.dasari@xsilica.com", txtmessage1, subj1, null);
 
 
                 contestsService.Activationcontest(cont1,command );
@@ -196,7 +196,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
             string subj = "Attention required";
 
-            emailSendingUtility.Email_maaaahwanam(emailid, txtmessage, subj);
+            emailSendingUtility.Email_maaaahwanam(emailid, txtmessage, subj, null);
 
 
 
@@ -231,7 +231,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
             string subj = "Contestant Is declined";
 
-            emailSendingUtility.Email_maaaahwanam(emailid, txtmessage, subj);
+            emailSendingUtility.Email_maaaahwanam(emailid, txtmessage, subj, null);
 
 
             ViewBag.display = cid;

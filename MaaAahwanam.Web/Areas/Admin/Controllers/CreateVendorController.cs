@@ -3164,7 +3164,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
         public ActionResult submitquery(string emailid, string txtone)
         {
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-            emailSendingUtility.Email_maaaahwanam(emailid, txtone, "Attention required");
+            emailSendingUtility.Email_maaaahwanam(emailid, txtone, "Attention required", null);
             return Json("success", JsonRequestBehavior.AllowGet);
         }
 

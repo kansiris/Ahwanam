@@ -273,6 +273,11 @@ var pdiv = '';
 function Addpkgitems(mtype) {
     var type = $('#pkgmodal .selectedpkg').val();
     var maxcount = $('#pkgmodal .maxcount').val();
+    if (maxcount == 0)
+    {
+        $('#pkgmodal').modal('show');
+        return alert('Count Cannot be Zero');
+    }
     var selecteditems = '';
     var itemstable = $('#pkgmodal').find('table.menuitems');
     var ctype = $('#pkgmodal .pkgitemsection p#ctype').text();
@@ -662,12 +667,11 @@ $(document).on('click', '.updatepkg', function () {
     else {
         newlists = parentdiv.find('.pkgmenuitems').val();
     }
-    //alert(newlists);
-    var finalmenulist = [];
     //var newlists = parentdiv.find('.selpkgitems').val() + ',' + parentdiv.find('.pkgmenuitems').val();
     var dblist = parentdiv.find('.pkgmenuitems').val();
     var selectedlist = parentdiv.find('.availablepkgitems').val();
     var splitteddblist = dblist.split(',');
+    var finalmenulist = selectedlist.split(',');
     var a =[];var b=[];
     for (var i = 0; i < newlists.split(',').length; i++) {
         var thisval = newlists.split(',')[i].split('(')[0]
@@ -675,33 +679,20 @@ $(document).on('click', '.updatepkg', function () {
             a.push(thisval);
     }
     var availableitems = a;
-    if (selectedlist != undefined) {
+    if (selectedlist != undefined && selectedlist != '') {
         for (var i = 0; i < availableitems.length; i++) {
-            var value = $.inArray(availableitems[i].replace('/', '_'), selectedlist.split(','));;
-            if (b.indexOf(value) == -1) {
-                if (value != -1) {
-                    b.push(value);
-                    finalmenulist[value] = newlists.split(',')[i];
-                }
-                else {
-                    finalmenulist.push(newlists.split(',')[i]);
-                }
-                //if (value == -1) {
-                //    finalmenulist.push(newlists.split(',')[i]);
-                //}
-                //else {
-                //    b.push(value);
-                //    finalmenulist[value] = newlists.split(',')[i];
-                    
-                //}
-            }
+            var value = $.inArray(availableitems[i].replace('/', '_'), selectedlist.split(','));
+            if(value != -1)
+                finalmenulist[value] = newlists.split(',')[i];
+            else
+                finalmenulist.push(newlists.split(',')[i]);
         }
         menuitems = finalmenulist.join(',');
     }
     else {
         menuitems = newlists;
     }
-    alert(menuitems);
+    //alert(menuitems);
     var pkgid = $(this).prev('input.packageid').val();
     var packagename = parentdiv.find('#pkgname').val();
     var pkgcategory = parentdiv.find("input[type=radio]:checked").val();
@@ -762,16 +753,16 @@ $(document).on('click', '.updatepkg', function () {
             menuitems : menuitems,
             menu:menu
         }        
-        //$.ajax({
-        //    url: '/vdb/UpdatePackage',
-        //    type: 'post',
-        //    datatype: 'json',
-        //    data: package,
-        //    success: function (data) {
-        //        alert(data);
-        //        $('.overlay').hide();
-        //    }
-        //});
+        $.ajax({
+            url: '/vdb/UpdatePackage',
+            type: 'post',
+            datatype: 'json',
+            data: package,
+            success: function (data) {
+                alert(data);
+                $('.overlay').hide();
+            }
+        });
     }
 });
 

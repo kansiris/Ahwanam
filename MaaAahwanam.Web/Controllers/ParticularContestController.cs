@@ -557,13 +557,13 @@ namespace MaaAahwanam.Web.Controllers
             string txtmessage = readFile;//readFile + body;
             string subj = "Thanks for your Entry";
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-            emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+            emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj, null);
             string msg = "Manage " + name + " Approval in Admin Login";
             string emails = "prabodh.dasari@xsilica.com,ramadevi.s@xsilica.com,amit.saxena@ahwanam.com,rameshsai@xsilica.com"; // Add copy Mails Here
             int emailcount = emails.Split(',').Count();
             for (int i = 0; i < emailcount; i++)
             {
-                emailSendingUtility.Email_maaaahwanam(emails.Split(',')[i], msg, "User Need Approval to Enter Contest");
+                emailSendingUtility.Email_maaaahwanam(emails.Split(',')[i], msg, "User Need Approval to Enter Contest", null);
             }
 
         }

@@ -63,7 +63,7 @@ namespace MaaAahwanam.Web.Controllers
                 {
                     subscriptionService.addsubscription(Subscription);
                     EmailSendingUtility EmailSend = new EmailSendingUtility();
-                    EmailSend.Email_maaaahwanam(Subscription.EmailId, "Thank you for subscribing to Aahwanam", "Confirmation Subscription");
+                    EmailSend.Email_maaaahwanam(Subscription.EmailId, "Thank you for subscribing to Aahwanam", "Confirmation Subscription", null);
                     message = "success";
                 }
                 else { message = "exits"; }

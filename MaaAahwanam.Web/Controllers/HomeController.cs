@@ -136,7 +136,7 @@ namespace MaaAahwanam.Web.Controllers
                 string txtmessage = readFile;//readFile + body;
                 string subj = "Account Activation";
                 EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj, null);
                 return Json("success", JsonRequestBehavior.AllowGet);
             }
             else
@@ -298,7 +298,7 @@ namespace MaaAahwanam.Web.Controllers
                 string txtmessage = readFile;//readFile + body;
                 string subj = "Password reset information";
                 EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj, null);
                 return Json("success", JsonRequestBehavior.AllowGet);
 
             }
@@ -462,7 +462,7 @@ namespace MaaAahwanam.Web.Controllers
                 string txtmessage = readFile;//readFile + body;
                 string subj = "Your Password is changed";
                 EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj, null);
                 return Json("success");
                 // return Content("<script language='javascript' type='text/javascript'>alert('Password Updated Successfully');location.href='" + @Url.Action("Index", "ChangePassword") + "'</script>");
             }
@@ -479,7 +479,7 @@ namespace MaaAahwanam.Web.Controllers
             string msg = "Name: " + name + ", Mobile Number : " + number + ",City : " + city + ",Event Type:" + eventtype + ",Event date:" + datepicker2 + ",Description:"+Description+",IP:" + ip;
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
             string txtto = "rameshsai@xsilica.com,seema@xsilica.com,amit.saxena@ahwanam.com";
-            emailSendingUtility.Email_maaaahwanam(txtto, msg.Replace(",", "<br/>"), "Request From Ahwanam Personalized assistance");
+            emailSendingUtility.Email_maaaahwanam(txtto, msg.Replace(",", "<br/>"), "Request From Ahwanam Personalized assistance", null);
             return Content("<script language='javascript' type='text/javascript'>alert('Details Sent Successfully!!!Click OK and Explore Ahwanam.com');location.href='" + @Url.Action("Index", "Home") + "'</script>");
         }
     }
