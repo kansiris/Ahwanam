@@ -704,6 +704,8 @@ $(document).on('click', '.updatepkg', function () {
     var pkgdescription = parentdiv.find('#pkgdesc').val();
     //var menuitems = $(this).parent('div').find('input.selpkgitems').val();
     var menu = list.join(',');//$(this).parent('div').find('input.selpkgitems').val();
+    //alert(menu);
+    //alert(menuitems);
     if (packagename == '') {
         $(packagename).focus();
         alert("Enter Package Name");

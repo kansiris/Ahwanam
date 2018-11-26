@@ -54,286 +54,15 @@ namespace MaaAahwanam.Web.Controllers
             Random r = new Random();
             int rInt = r.Next(0, data.Count);
             ViewBag.venues = data.Skip(rInt).Take(3).ToList();
-            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-            {
-                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
-
-                if (user.UserType == "User")
-                {
-                    var userdata = userLoginDetailsService.GetUser((int)user.UserId);
-                    if (userdata.FirstName != "" && userdata.FirstName != null)
-                        ViewBag.username = userdata.FirstName;
-                    else if (userdata.FirstName != "" && userdata.FirstName != null && userdata.LastName != "" && userdata.LastName != null)
-                        ViewBag.username = "" + userdata.FirstName + " " + userdata.LastName + "";
-                    else
-                        ViewBag.username = userLoginDetailsService.GetUserId((int)user.UserId).UserName; //userdata.AlternativeEmailID;
-                    if (user.UserType == "Admin")
-                    {
-                        ViewBag.cartCount = cartserve.CartItemsCount(0);
-                        return PartialView("ItemsCartViewBindingLayout");
-                    }
-                    ViewBag.cartCount = cartserve.CartItemsCount1((int)user.UserId);
-                    //   List<GetCartItems_Result> cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
-                    var cartlist = cartserve.CartItemsList1(int.Parse(user.UserId.ToString()));
-                    var cartlist1 = cartserve.CartItemsList1(int.Parse(user.UserId.ToString()));
-
-                    //  decimal total = (cartlist1.TotalPrice) .Sum(s => s.TotalPrice);
-                    ViewBag.cartitems = cartlist;
-                    // ViewBag.Total = total;
-                    ViewBag.Total = "0";
-                }
-            }
-            else
-            {
+            string auth = checkAuthentication();
+            if (auth == "")
                 ViewBag.cartCount = cartserve.CartItemsCount(0);
-            }
+            else
+                ViewBag.username = auth;
             return View();
         }
 
-        //[HttpPost]
-        //public ActionResult Index(string command,string loc,string selectevent, string guests,string datetimepicker1)
-        //{
-        //    return RedirectToAction("Index", "results");
-        //}
-
-        public JsonResult register(string CustomerPhoneNumber, string CustomerName, string Password, string Email)
-        {
-            UserLogin userLogin = new UserLogin();
-            UserDetail userDetail = new UserDetail();
-            userLogin.IPAddress = HttpContext.Request.UserHostAddress;
-            userLogin.ActivationCode = Guid.NewGuid().ToString();
-            userDetail.FirstName = CustomerName;
-            userDetail.UserPhone = CustomerPhoneNumber;
-            userLogin.Password = Password;
-            userLogin.UserName = Email;
-            
-            userLogin.Status = "InActive";
-            var response = "";
-            userLogin.UserType = "User";
-            long data = userLoginDetailsService.GetLoginDetailsByEmail(Email);
-            if (data == 0)
-            { response = userLoginDetailsService.AddUserDetails(userLogin, userDetail); }
-            else
-            {
-                return Json("unique", JsonRequestBehavior.AllowGet);
-            }
-            if (response == "sucess")
-            {
-              var  activationcode = userLogin.ActivationCode;
-               var txtto = userLogin.UserName;
-                string username = userDetail.FirstName;
-                string phoneno = userDetail.UserPhone;
-
-                username = Capitalise(username);
-                string emailid = userLogin.UserName;
-                string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/home/ActivateEmail1?ActivationCode=" + activationcode + "&&Email=" + emailid;
-                FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/welcome.html"));
-                string readFile = File.OpenText().ReadToEnd();
-                readFile = readFile.Replace("[ActivationLink]", url);
-                readFile = readFile.Replace("[name]", username);
-                readFile = readFile.Replace("[phoneno]", phoneno);
-
-                string txtmessage = readFile;//readFile + body;
-                string subj = "Account Activation";
-                EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj, null);
-                return Json("success", JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return Json("Failed", JsonRequestBehavior.AllowGet);
-            }
-        }
-
-        public ActionResult ActivateEmail1(string ActivationCode, string Email)
-        {
-            try
-            {
-                UserLogin userLogin = new UserLogin();
-                UserDetail userDetails = new UserDetail();
-                if (ActivationCode == "")
-                { ActivationCode = null; }
-                var userResponse = venorVenueSignUpService.GetUserdetails(Email);
-                if (userResponse.Status != "Active")
-                {
-                    if (ActivationCode == userResponse.ActivationCode)
-                    {
-                        userLogin.Status = "Active";
-                        userDetails.Status = "Active";
-                        string email = userLogin.UserName;
-                        var userid = userResponse.UserLoginId;
-                        userLoginDetailsService.changestatus(userLogin, userDetails, (int)userid);
-                        if (userResponse.UserType == "Vendor")
-                        {
-                            vendorMaster = vendorMasterService.GetVendorByEmail(email);
-                            string vid = vendorMaster.Id.ToString();
-                            var vsid = "";
-                            if (vendorMaster.ServicType == "Catering")
-                            {
-                                var catering = vendorVenueSignUpService.GetVendorCatering(long.Parse(vid)).FirstOrDefault();
-                                vsid = catering.Id.ToString();
-                                vendorsCatering.Status = vendorMaster.Status = "Active";
-                                vendorsCatering = vendorCateringService.activeCatering(vendorsCatering, vendorMaster, long.Parse(vsid), long.Parse(vid));
-                            }
-                            if (vendorMaster.ServicType == "Decorator")
-                            {
-                                var decorators = vendorVenueSignUpService.GetVendorDecorator(long.Parse(vid)).FirstOrDefault();
-                                vsid = decorators.Id.ToString();
-                                vendorsDecorator.Status = vendorMaster.Status = "Active";
-                                vendorsDecorator = vendorDecoratorService.activeDecorator(vendorsDecorator, vendorMaster, long.Parse(vsid), long.Parse(vid));
-                            }
-                            if (vendorMaster.ServicType == "Photography")
-                            {
-                                var photography = vendorVenueSignUpService.GetVendorPhotography(long.Parse(vid)).FirstOrDefault();
-                                vsid = photography.Id.ToString();
-                                vendorsPhotography.Status = vendorMaster.Status = "Active";
-                                vendorsPhotography = vendorPhotographyService.ActivePhotography(vendorsPhotography, vendorMaster, long.Parse(vsid), long.Parse(vid));
-                            }
-                            if (vendorMaster.ServicType == "Venue")
-                            {
-                                var venues = vendorVenueSignUpService.GetVendorVenue(long.Parse(vid)).FirstOrDefault();
-                                vsid = venues.Id.ToString();
-                                vendorVenue.Status = vendorMaster.Status = "Active";
-                                vendorVenue = vendorVenueService.activeVenue(vendorVenue, vendorMaster, long.Parse(vsid), long.Parse(vid));
-                            }
-                            if (vendorMaster.ServicType == "Other")
-                            {
-                                var others = vendorVenueSignUpService.GetVendorOther(long.Parse(vid)).FirstOrDefault();
-                                vsid = others.Id.ToString();
-                                vendorsOther.Status = vendorMaster.Status = "Active";
-                                vendorsOther = vendorOthersService.activationOther(vendorsOther, vendorMaster, long.Parse(vsid), long.Parse(vid));
-                            }
-                        }
-
-                        TempData["Active"] = "Thanks for Verifying the Email";
-                        return RedirectToAction("Index", "Home");
-                    }
-                }
-                else
-                {
-                    return Content("<script language='javascript' type='text/javascript'>alert('Your Account is already Verified Please login');location.href='" + @Url.Action("Index", "Home") + "'</script>");
-                    //TempData["Active"] = "Your Account is already Verified Please login";
-                    //return RedirectToAction("Index", "NUserRegistration");
-                }
-                return Content("<script language='javascript' type='text/javascript'>alert('Email not found');location.href='" + @Url.Action("Index", "Home") + "'</script>");
-                //TempData["Active"] = "Email ID not found";
-                //return RedirectToAction("Index", "NUserRegistration");
-            }
-            catch (Exception)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-        }
-        public JsonResult login(string Password, string Email,string url1)
-        {
-            
-            UserLogin userLogin = new UserLogin();
-            UserDetail userDetail = new UserDetail();
-            userLogin.UserName = Email;
-            userLogin.Password = Password;
-            string ipaddress = HttpContext.Request.UserHostAddress;
-            var userResponse1 = resultsPageService.GetUserLogin(userLogin);
-            var userResponse = resultsPageService.GetUserLogdetails(userLogin);
-            if (userResponse1 != null)
-            {
-                if (userResponse1.Status == "Active")
-                {
-                    vendorMaster = resultsPageService.GetVendorByEmail(userLogin.UserName);
-                    string userData = JsonConvert.SerializeObject(userResponse1);
-                    ValidUserUtility.SetAuthCookie(userData, userResponse1.UserLoginId.ToString());
-                    ViewBag.userid = userResponse1.UserLoginId;
-
-                    //string txtto = "amit.saxena@ahwanam.com,rameshsai@xsilica.com,sireesh.k@xsilica.com";
-                    //int id = Convert.ToInt32(userResponse.UserLoginId);
-                    //var userdetails = userLoginDetailsService.GetUser(id);
-                    
-                    //string username = userdetails.FirstName;
-                    //username = Capitalise(username);
-                    //string emailid = userLogin.UserName;
-                    //FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/login.html"));
-                    //string readFile = File.OpenText().ReadToEnd();
-                    //readFile = readFile.Replace("[ActivationLink]", url1);
-                    //readFile = readFile.Replace("[name]", username);
-                    //readFile = readFile.Replace("[Ipaddress]", ipaddress);
-                    //readFile = readFile.Replace("[email]", Email);
-
-                    //string txtmessage = readFile;//readFile + body;
-                    //string subj = "User login from ahwanam";
-                    //EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-                    //emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
-                    return Json("success", JsonRequestBehavior.AllowGet);
-                }
-                return Json("Failed", JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                    //int userlogintablecheck = (int)userResponse1.UserLoginId;
-                    return Json("success1", JsonRequestBehavior.AllowGet);
-
-                }
-            }
-
-        public JsonResult forgotpass(string Email)
-        {
-            UserLogin userLogin = new UserLogin();
-            UserDetail userDetail = new UserDetail();
-            userLogin.UserName = Email;
-            var userResponse = venorVenueSignUpService.GetUserLogdetails(userLogin);
-            if (userResponse != null)
-            {
-                string emailid = userLogin.UserName;
-
-                string activationcode = userResponse.ActivationCode;
-                int id = Convert.ToInt32(userResponse.UserLoginId);
-                var userdetails = userLoginDetailsService.GetUser(id);
-                string name = userdetails.FirstName;
-
-                name = Capitalise(name);
-                string txtto = userLogin.UserName;
-                string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/Home/ActivateEmail?ActivationCode=" + activationcode + "&&Email=" + emailid;
-                FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/mailer.html"));
-                string readFile = File.OpenText().ReadToEnd();
-                readFile = readFile.Replace("[ActivationLink]", url);
-                readFile = readFile.Replace("[name]", name);
-                string txtmessage = readFile;//readFile + body;
-                string subj = "Password reset information";
-                EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj, null);
-                return Json("success", JsonRequestBehavior.AllowGet);
-
-            }
-            return Json("success1", JsonRequestBehavior.AllowGet);
-
-        }
-
-        public ActionResult ActivateEmail(string ActivationCode, string Email)
-        {
-            try
-            {
-                if (ActivationCode == "")
-                { ActivationCode = null; }
-                var userResponse = venorVenueSignUpService.GetUserdetails(Email);
-                if (ActivationCode == userResponse.ActivationCode)
-                {
-                    return RedirectToAction("updatepassword", "Home", new { Email = Email });
-                }
-                //return Content("<script language='javascript' type='text/javascript'>alert('email not found');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
-                TempData["Active"] = "Email ID not found";
-                return RedirectToAction("Index", "Home");
-            }
-            catch (Exception)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-        }
-
-
-        public string Capitalise(string str)
-        {
-            if (String.IsNullOrEmpty(str))
-                return String.Empty;
-            return Char.ToUpper(str[0]) + str.Substring(1).ToLower();
-        }
+        #region Cart
         public ActionResult ItemsCartViewBindingLayout()
         {
             try
@@ -381,13 +110,6 @@ namespace MaaAahwanam.Web.Controllers
             }
         }
 
-        public ActionResult SignOut()
-        {
-            Response.Cookies.Clear();
-
-            FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "Home");
-        }
         public ActionResult ItemsCartdetails()
         {
             try
@@ -427,7 +149,239 @@ namespace MaaAahwanam.Web.Controllers
             }
 
         }
+        #endregion
 
+        #region Authentication
+        public JsonResult login(string Password, string Email, string url1)
+        {
+            UserLogin userLogin = new UserLogin();
+            userLogin.UserName = Email;
+            userLogin.Password = Password;
+            //string ipaddress = HttpContext.Request.UserHostAddress;
+            var userResponse1 = resultsPageService.GetUserLogin(userLogin);
+            if (userResponse1 != null)
+            {
+                if (userResponse1.Status == "Active")
+                {
+                    vendorMaster = resultsPageService.GetVendorByEmail(userLogin.UserName);
+                    string userData = JsonConvert.SerializeObject(userResponse1);
+                    ValidUserUtility.SetAuthCookie(userData, userResponse1.UserLoginId.ToString());
+                    ViewBag.userid = userResponse1.UserLoginId;
+
+                    //string txtto = "amit.saxena@ahwanam.com,rameshsai@xsilica.com,sireesh.k@xsilica.com";
+                    //int id = Convert.ToInt32(userResponse.UserLoginId);
+                    //var userdetails = userLoginDetailsService.GetUser(id);
+
+                    //string username = userdetails.FirstName;
+                    //username = Capitalise(username);
+                    //string emailid = userLogin.UserName;
+                    //FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/login.html"));
+                    //string readFile = File.OpenText().ReadToEnd();
+                    //readFile = readFile.Replace("[ActivationLink]", url1);
+                    //readFile = readFile.Replace("[name]", username);
+                    //readFile = readFile.Replace("[Ipaddress]", ipaddress);
+                    //readFile = readFile.Replace("[email]", Email);
+
+                    //string txtmessage = readFile;//readFile + body;
+                    //string subj = "User login from ahwanam";
+                    //EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+                    //emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj);
+                    return Json("success", JsonRequestBehavior.AllowGet);
+                }
+                return Json("Failed", JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                //int userlogintablecheck = (int)userResponse1.UserLoginId;
+                return Json("success1", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult register(string CustomerPhoneNumber, string CustomerName, string Password, string Email)
+        {
+            UserLogin userLogin = new UserLogin();
+            UserDetail userDetail = new UserDetail();
+            userLogin.IPAddress = HttpContext.Request.UserHostAddress;
+            userLogin.ActivationCode = Guid.NewGuid().ToString();
+            userDetail.FirstName = CustomerName;
+            userDetail.UserPhone = CustomerPhoneNumber;
+            userLogin.Password = Password;
+            userLogin.UserName = Email;
+            userLogin.Status = "InActive";
+            var response = "";
+            userLogin.UserType = "User";
+            long data = userLoginDetailsService.GetLoginDetailsByEmail(Email);
+            if (data == 0)
+             response = userLoginDetailsService.AddUserDetails(userLogin, userDetail); 
+            else
+                return Json("unique", JsonRequestBehavior.AllowGet);
+            if (response == "sucess")
+            {
+                string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/home/ActivateEmail1?ActivationCode=" + userLogin.ActivationCode + "&&Email=" + userLogin.UserName;
+                FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/welcome.html"));
+                string readFile = File.OpenText().ReadToEnd();
+                readFile = readFile.Replace("[ActivationLink]", url);
+                readFile = readFile.Replace("[name]", Capitalise(userDetail.FirstName));
+                readFile = readFile.Replace("[phoneno]", userDetail.UserPhone);
+                TriggerEmail(userLogin.UserName, readFile, "Account Activation", null); // A Mail will be triggered
+                return Json("success", JsonRequestBehavior.AllowGet);
+            }
+            else
+                return Json("Failed", JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+
+        #region Email
+        public ActionResult SendEmail(string name, string number, string city, string eventtype, string datepicker2, string Description)
+        {
+            string msg = "Name: " + name + ", Mobile Number : " + number + ",City : " + city + ",Event Type:" + eventtype + ",Event date:" + datepicker2 + ",Description:" + Description + ",IP:" + HttpContext.Request.UserHostAddress;
+            string txtto = "rameshsai@xsilica.com,seema@xsilica.com,amit.saxena@ahwanam.com";
+            TriggerEmail(txtto, msg.Replace(",", "<br/>"), "Request From Ahwanam Personalized assistance", null); // A mail will be triggered
+            return Content("<script language='javascript' type='text/javascript'>alert('Details Sent Successfully!!!Click OK and Explore Ahwanam.com');location.href='" + @Url.Action("Index", "Home") + "'</script>");
+        }
+
+        public ActionResult ActivateEmail(string ActivationCode, string Email)
+        {
+            try
+            {
+                if (ActivationCode == "")
+                { ActivationCode = null; }
+                var userResponse = venorVenueSignUpService.GetUserdetails(Email);
+                if (ActivationCode == userResponse.ActivationCode)
+                {
+                    return RedirectToAction("updatepassword", "Home", new { Email = Email });
+                }
+                //return Content("<script language='javascript' type='text/javascript'>alert('email not found');location.href='" + @Url.Action("Index", "NUserRegistration") + "'</script>");
+                TempData["Active"] = "Email ID not found";
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        public ActionResult ActivateEmail1(string ActivationCode, string Email)
+        {
+            try
+            {
+                UserLogin userLogin = new UserLogin();
+                UserDetail userDetails = new UserDetail();
+                if (ActivationCode == "")
+                { ActivationCode = null; }
+                var userResponse = venorVenueSignUpService.GetUserdetails(Email);
+                if (userResponse.Status != "Active")
+                {
+                    if (ActivationCode == userResponse.ActivationCode)
+                    {
+                        userLogin.Status = "Active";
+                        userDetails.Status = "Active";
+                        string email = userLogin.UserName;
+                        var userid = userResponse.UserLoginId;
+                        userLoginDetailsService.changestatus(userLogin, userDetails, (int)userid);
+                        if (userResponse.UserType == "Vendor")
+                        {
+                            vendorMaster = vendorMasterService.GetVendorByEmail(email);
+                            string vid = vendorMaster.Id.ToString();
+                            if (vendorMaster.ServicType == "Catering")
+                            {
+                                var catering = vendorVenueSignUpService.GetVendorCatering(long.Parse(vid)).FirstOrDefault();
+                                vendorsCatering.Status = vendorMaster.Status = "Active";
+                                vendorsCatering = vendorCateringService.activeCatering(vendorsCatering, vendorMaster, long.Parse(catering.Id.ToString()), long.Parse(vid));
+                            }
+                            else if (vendorMaster.ServicType == "Decorator")
+                            {
+                                var decorators = vendorVenueSignUpService.GetVendorDecorator(long.Parse(vid)).FirstOrDefault();
+                                vendorsDecorator.Status = vendorMaster.Status = "Active";
+                                vendorsDecorator = vendorDecoratorService.activeDecorator(vendorsDecorator, vendorMaster, long.Parse(decorators.Id.ToString()), long.Parse(vid));
+                            }
+                            else if (vendorMaster.ServicType == "Photography")
+                            {
+                                var photography = vendorVenueSignUpService.GetVendorPhotography(long.Parse(vid)).FirstOrDefault();
+                                vendorsPhotography.Status = vendorMaster.Status = "Active";
+                                vendorsPhotography = vendorPhotographyService.ActivePhotography(vendorsPhotography, vendorMaster, long.Parse(photography.Id.ToString()), long.Parse(vid));
+                            }
+                            else if (vendorMaster.ServicType == "Venue")
+                            {
+                                var venues = vendorVenueSignUpService.GetVendorVenue(long.Parse(vid)).FirstOrDefault();
+                                vendorVenue.Status = vendorMaster.Status = "Active";
+                                vendorVenue = vendorVenueService.activeVenue(vendorVenue, vendorMaster, long.Parse(venues.Id.ToString()), long.Parse(vid));
+                            }
+                            else if (vendorMaster.ServicType == "Other")
+                            {
+                                var others = vendorVenueSignUpService.GetVendorOther(long.Parse(vid)).FirstOrDefault();
+                                vendorsOther.Status = vendorMaster.Status = "Active";
+                                vendorsOther = vendorOthersService.activationOther(vendorsOther, vendorMaster, long.Parse(others.Id.ToString()), long.Parse(vid));
+                            }
+                        }
+                        TempData["Active"] = "Thanks for Verifying the Email";
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                else
+                {
+                    return Content("<script language='javascript' type='text/javascript'>alert('Your Account is already Verified Please login');location.href='" + @Url.Action("Index", "Home") + "'</script>");
+                    //TempData["Active"] = "Your Account is already Verified Please login";
+                    //return RedirectToAction("Index", "NUserRegistration");
+                }
+                return Content("<script language='javascript' type='text/javascript'>alert('Email not found');location.href='" + @Url.Action("Index", "Home") + "'</script>");
+                //TempData["Active"] = "Email ID not found";
+                //return RedirectToAction("Index", "NUserRegistration");
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        public void TriggerEmail(string txtto, string txtmsg,string subject,HttpPostedFileBase attachment)
+        {
+            EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+            emailSendingUtility.Email_maaaahwanam(txtto, txtmsg, subject, attachment);
+        }
+        #endregion
+
+        #region References
+        public string checkAuthentication()
+        {
+            string name = "";
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                if (user.UserType == "User")
+                {
+                    var userdata = userLoginDetailsService.GetUser((int)user.UserId);
+                    if (userdata.FirstName != "" && userdata.FirstName != null)
+                        name = userdata.FirstName;
+                    else if (userdata.FirstName != "" && userdata.FirstName != null && userdata.LastName != "" && userdata.LastName != null)
+                        name = "" + userdata.FirstName + " " + userdata.LastName + "";
+                    else
+                        name = userLoginDetailsService.GetUserId((int)user.UserId).UserName; //userdata.AlternativeEmailID;
+                    //if (user.UserType == "Admin")
+                    //{
+                    //    ViewBag.cartCount = cartserve.CartItemsCount(0);
+                    //    return PartialView("ItemsCartViewBindingLayout");
+                    //}
+                    var cart = cartserve.CartItemsList((int)user.UserId).Where(m => m.Status == "Active");
+                    ViewBag.cartCount = cart.Count();
+                    ViewBag.cartitems = cart;
+                    ViewBag.Total = "0";
+                }
+            }
+            return name;
+        }
+
+        public string Capitalise(string str)
+        {
+            if (String.IsNullOrEmpty(str))
+                return String.Empty;
+            return Char.ToUpper(str[0]) + str.Substring(1).ToLower();
+        }
+        #endregion
+
+
+        #region Password
         public ActionResult updatepassword(string Email)
         {
             try
@@ -437,50 +391,58 @@ namespace MaaAahwanam.Web.Controllers
             }
             catch (Exception)
             {
-                return RedirectToAction("Index", "Nhomepage");
+                return RedirectToAction("Index", "Home");
             }
         }
+
         public ActionResult changepassword(UserLogin userLogin)
         {
             try
             {
-                string email = userLogin.UserName;
-                var userResponse = venorVenueSignUpService.GetUserdetails(email);
-                var userid = userResponse.UserLoginId;
-                userLoginDetailsService.changepassword(userLogin, (int)userid);
-                string txtto = userLogin.UserName;
-                int id = Convert.ToInt32(userResponse.UserLoginId);
-                var userdetails = userLoginDetailsService.GetUser(id);
-                string username = userdetails.FirstName;
-                username = Capitalise(username);
-                string emailid = userLogin.UserName;
+                var userResponse = venorVenueSignUpService.GetUserdetails(userLogin.UserName);
+                userLoginDetailsService.changepassword(userLogin, (int)userResponse.UserLoginId);
+                var userdetails = userLoginDetailsService.GetUser(int.Parse(userResponse.UserLoginId.ToString()));
                 string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/home";
                 FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/change-email.html"));
                 string readFile = File.OpenText().ReadToEnd();
                 readFile = readFile.Replace("[ActivationLink]", url);
-                readFile = readFile.Replace("[name]", username);
-                string txtmessage = readFile;//readFile + body;
-                string subj = "Your Password is changed";
-                EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-                emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj, null);
+                readFile = readFile.Replace("[name]", Capitalise(userdetails.FirstName));
+                TriggerEmail(userLogin.UserName, readFile, "Your Password is changed", null); // A mail will be triggered
                 return Json("success");
-                // return Content("<script language='javascript' type='text/javascript'>alert('Password Updated Successfully');location.href='" + @Url.Action("Index", "ChangePassword") + "'</script>");
             }
             catch (Exception)
             {
-                return RedirectToAction("Index", "home");
+                return RedirectToAction("Index", "Home");
             }
         }
 
-
-        public ActionResult SendEmail(string name, string number, string city, string eventtype, string datepicker2,string Description)
+        public JsonResult forgotpass(string Email)
         {
-            string ip = HttpContext.Request.UserHostAddress;
-            string msg = "Name: " + name + ", Mobile Number : " + number + ",City : " + city + ",Event Type:" + eventtype + ",Event date:" + datepicker2 + ",Description:"+Description+",IP:" + ip;
-            EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-            string txtto = "rameshsai@xsilica.com,seema@xsilica.com,amit.saxena@ahwanam.com";
-            emailSendingUtility.Email_maaaahwanam(txtto, msg.Replace(",", "<br/>"), "Request From Ahwanam Personalized assistance", null);
-            return Content("<script language='javascript' type='text/javascript'>alert('Details Sent Successfully!!!Click OK and Explore Ahwanam.com');location.href='" + @Url.Action("Index", "Home") + "'</script>");
+            UserLogin userLogin = new UserLogin();
+            userLogin.UserName = Email;
+            var userResponse = venorVenueSignUpService.GetUserLogdetails(userLogin);
+            if (userResponse != null)
+            {
+                var userdetails = userLoginDetailsService.GetUser(int.Parse(userResponse.UserLoginId.ToString()));
+                string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/Home/ActivateEmail?ActivationCode=" + userResponse.ActivationCode + "&&Email=" + Email;
+                FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/mailer.html"));
+                string readFile = File.OpenText().ReadToEnd();
+                readFile = readFile.Replace("[ActivationLink]", url);
+                readFile = readFile.Replace("[name]", Capitalise(userdetails.FirstName));
+                TriggerEmail(Email, readFile, "Password reset information", null); // A mail will be triggered
+                return Json("success", JsonRequestBehavior.AllowGet);
+            }
+            return Json("success1", JsonRequestBehavior.AllowGet);
         }
+        #endregion
+
+        #region Signout
+        public ActionResult SignOut()
+        {
+            Response.Cookies.Clear();
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index", "Home");
+        }
+        #endregion
     }
 }
