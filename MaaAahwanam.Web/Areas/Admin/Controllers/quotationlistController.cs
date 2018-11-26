@@ -216,7 +216,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 return Json("Failed");
         }
 
-        public JsonResult ParticularQuoteReply(QuotationsList quoteResponse, string id, HttpPostedFileBase data1,string message, string replyto,string messagetype)
+        public JsonResult ParticularQuoteReply(QuotationsList quoteResponse, string id, HttpPostedFileBase data1,string message, string selectreplyto, string selectmodeofcomm, string selectmessagetype)
         {
             DateTime indianTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             var s1 = orderService.allorderslist1().ToList().Where(m => m.orderid == long.Parse(quoteResponse.OrderID)).FirstOrDefault();
@@ -226,10 +226,10 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             var s12 = ViewBag.orderdetails = orderService.allorderslist1().ToList().Where(m => m.orderid == long.Parse(quoteResponse.OrderID)).ToList();
 
            
-            if (replyto == "Vendor") {
+            if (selectreplyto == "Vendor") {
                 quotationsList.EmailId = userdata.UserName; quotationsList.Name = userdetails.FirstName;
             }
-            else if(replyto == "Customer") { quotationsList.EmailId = s1.username; quotationsList.Name = s1.fname; }
+            else if(selectreplyto == "Customer") { quotationsList.EmailId = s1.username; quotationsList.Name = s1.fname; }
             quotationsList.ServiceType = s1.servicetype;
             quotationsList.PhoneNo = s1.customerphoneno;
             quotationsList.EventStartDate = Convert.ToDateTime(s1.bookdate);
@@ -244,8 +244,8 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             quotationsList.IPaddress = ip;
             quotationsList.UpdatedTime = DateTime.UtcNow;
             quotationsList.Status = "Active";
-            quotationsList.Reply_Type = messagetype;
-            quotationsList.ReplyToType = replyto;
+            quotationsList.Reply_Type = selectmessagetype;
+            quotationsList.ReplyToType = selectreplyto;
             quotationsList.Description = message;
 
             quotationListsService.AddQuotationList(quotationsList);
@@ -254,13 +254,13 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             //  FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/QuoteReply.html"));
             string readFile = File.OpenText().ReadToEnd();
            
-            if (replyto == "Vendor")
+            if (selectreplyto == "Vendor")
             {
                 readFile = readFile.Replace("[name]", userdetails.FirstName);
                 readFile = readFile.Replace("[Email]", userdata.UserName);
                  txtto = s1.username;
             }
-            else if (replyto == "Customer")
+            else if (selectreplyto == "Customer")
             {
                 readFile = readFile.Replace("[name]", s1.fname);
                 readFile = readFile.Replace("[Email]", s1.username);
