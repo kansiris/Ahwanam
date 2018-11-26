@@ -44,10 +44,9 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.orderdetailslst = orderdetails1;
                     var payments = rcvpaymentservice.getPayments(oid).ToList();
                     ViewBag.paymentslst = payments;
-
                     var paymentbycustomer = rcvpaymentservice.Getpaymentby(oid, paymentby).ToList();
                     ViewBag.paymentbycustmlst = paymentbycustomer;
-                    ViewBag.paymentbycustmname = paymentbycustomer.FirstOrDefault().PaymentBy;
+                    ViewBag.paymentbycustmname = paymentbycustomer.FirstOrDefault().PaymentBy.Replace("_", " ");
                     string odid = string.Empty;
                     foreach (var item in orderdetails1)
                     {
