@@ -78,18 +78,21 @@
 
 
                         <center> <h3>Quotation Details</h3></center>
-
+                        <input type="hidden" name="filename" id="filename" value="" />
                         <div class="row">
-                            <p> vendor name: @ViewBag.total.totalprice </p>
-                            <p> vendor phoneno: @ViewBag.total.ContactNumber </p>
-                            <p>customer name: @ViewBag.total.fname</p>
-                            <p>customer phoneno: @ViewBag.total.customerphoneno</p>
+                            <p>Request from the Customer: @ViewBag.total.fname</p>
+                            <p>Customer phoneno: @ViewBag.total.customerphoneno</p>
+                            <p> Request for the Vendor: @ViewBag.total.BusinessName </p>
+                            <p> Vendor phoneno: @ViewBag.total.ContactNumber </p>
+
                             @*<input type="hidden" id="stype" value="@ViewBag.total.vid"/>*@
                             <input type="hidden" id="orderid" value="@ViewBag.total.orderid" />
-                            <input type="hidden" id="vid" value="@ViewBag.total.vid"/>
+                            <input type="hidden" id="vid" value="@ViewBag.total.vid" />
                             <input type="hidden" id="subvid" value="@ViewBag.total.vendorsubid" />
                             @*<input type="hidden" id="qid" value="@ViewBag.total.vid"/>*@
                         </div>
+
+                        <p><strong> Customer Selected packages</strong></p>
                         @if (ViewBag.orderdetails1 != null)
                         {
 
@@ -172,7 +175,7 @@
 
 
 
-                                    
+
 
                                 }
 
@@ -181,6 +184,97 @@
                             <p> Total Amount :  @ViewBag.total.totalprice</p>
 
                         }
+                    </div>
+                    <button type="button" id="btnsearch" class="btn btn-primary " tooltip="Select Service Type & Date" onclick="replyquote()">Reply Quote to vendor</button>
+                    <button type="button" id="btnsearch1" class="btn btn-primary " tooltip="Select Service Type & Date" onclick="replyquote1()">Reply Quote to customer</button>
+
+                </div>
+                <div id="reply">
+                    <div class=" row">
+                    
+                        <div class="col-md-3">
+                            <p> Send request to the Vendor</p>
+                        </div>
+                        @*<div class="col-md-3">
+                    <select class="" id="selectreplyto" style="width: 25%;">
+                        <option value="" selected="">Select reply to</option>
+                        <option value="Customer">Customer</option>
+                        <option value="Vendor">Vendor</option>
+                    </select>
+                </div>*@
+                        @*<div class="col-md-3">
+                    <select class="" id="selectmessagetype" style="width: 25%;">
+                        <option value="" selected="">Select Message Type</option>
+                        <option value="reply">reply</option>
+                        <option value="received">received</option>
+                    </select>
+                </div>*@
+                        @*<div class="col-md-4">
+                    <select class="" id="selectmodeofcomm" style="width: 25%;">
+                        <option value="" selected="">Select mode of communication</option>
+                        <option value="Phone">Phone</option>
+                        <option value="Email">Email</option>
+                    </select>
+                </div>*@
+                        <div>
+                            <input type="text" placeholder="Add text" id="message" />
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6" id="uma1">
+                            <form class="form-horizontal" method="post" enctype="multipart/form-data">
+
+                                <label class="custom-file-upload">
+                                    <input type="file" id="contractdoc" class="contractdoc" name="file" />
+                                    <i class="fa fa-cloud-upload" style="font-size:24px"></i> File Upload
+                                </label>
+                            </form>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-primary send" value="Vendor" id="send">Send</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="reply1">
+                    <div class=" row">
+                    
+                        <div class="col-md-3">
+                            <p> Send email to the Customer</p>
+                        </div>
+                        @*<div class="col-md-3">
+                    <select class="" id="selectreplyto" style="width: 25%;">
+                        <option value="" selected="">Select reply to</option>
+                        <option value="Customer">Customer</option>
+                        <option value="Vendor">Vendor</option>
+                    </select>
+                </div>*@
+                        @*<div class="col-md-3">
+                    <select class="" id="selectmessagetype" style="width: 25%;">
+                        <option value="" selected="">Select Message Type</option>
+                        <option value="reply">reply</option>
+                        <option value="received">received</option>
+                    </select>
+                </div>*@
+                        @*<div class="col-md-4">
+                    <select class="" id="selectmodeofcomm" style="width: 25%;">
+                        <option value="" selected="">Select mode of communication</option>
+                        <option value="Phone">Phone</option>
+                        <option value="Email">Email</option>
+                    </select>
+                </div>*@
+                        <div>
+                            <input type="text" placeholder="Add text" id="message" />
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6" id="uma1">
+                            <form class="form-horizontal" method="post" enctype="multipart/form-data">
+
+                                <label class="custom-file-upload">
+                                    <input type="file" id="contractdoc" class="contractdoc" name="file" />
+                                    <i class="fa fa-cloud-upload" style="font-size:24px"></i> File Upload
+                                </label>
+                            </form>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-primary send" value="Customer" id="send1">Send</button>
+                        </div>
                     </div>
                 </div>
                 <div id="sortvendors">
@@ -195,7 +289,7 @@
                                     <th>Guests</th>
                                     <th>Requirements</th>
                                     <th>Status</th>
-                                   
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -227,57 +321,14 @@
                                         <td>
                                             @item.Status
                                         </td>
-                                      
+
                                     </tr>
                                 }
                             </tbody>
                         </table>
-                        <button type="button" id="btnsearch" class="btn btn-primary" tooltip="Select Service Type & Date" onclick="replyquote()">Reply Quote</button>
 
                     </div>
-                    <div id="reply">
-                        @using (Html.BeginForm("ContactForm", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                        {
-                            <div class=" row">
 
-                                <div class="col-md-3">
-                                    <select class="" id="selectreplyto" style="width: 25%;">
-                                        <option value="" selected="">Select reply to</option>
-                                        <option value="Customer">Customer</option>
-                                        <option value="Vendor">Vendor</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3">
-                                    <select class="" id="selectmessagetype" style="width: 25%;">
-                                        <option value="" selected="">Select Message Type</option>
-                                        <option value="reply">reply</option>
-                                        <option value="received">received</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <select class="" id="selectmodeofcomm" style="width: 25%;">
-                                        <option value="" selected="">Select mode of communication</option>
-                                        <option value="Phone">Phone</option>
-                                        <option value="Email">Email</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <input type="text" placeholder="Add text" id="message" />
-                                </div>
-                                <div class="col-12 col-sm-6 col-md-6" id="uma1">
-                                    <form class="form-horizontal" method="post" enctype="multipart/form-data">
-
-                                        <label class="custom-file-upload">
-                                            <input type="file" id="contractdoc" name="contractdoc" accept="pdf/*" />
-                                            <i class="fa fa-cloud-upload" style="font-size:24px"></i> File Upload
-                                        </label>
-                                    </form>
-                                </div>
-                                <div>
-                                    <button type="button" class="btn btn-primary" value="" id="send">Send</button>
-                                </div>
-                            </div>
-                        </div>
 
                 </div>
             </div>
@@ -289,11 +340,18 @@
 
     <script>
         $(document).ready(function () {
+            $('#reply1').hide();
             $('#reply').hide();// 'none')
          //   $('#send').text() = 'send';
         });
         function replyquote() {
             $('#reply').show();
+            $('#reply1').hide();
+        }
+
+        function replyquote1() {
+            $('#reply1').show();
+            $('#reply').hide();
         }
 
         $('#selectmessagetype').on('change', function () {
@@ -318,13 +376,45 @@
 
         
        // function savedetails() {
-        $('#send').click(function () {
+
+        $('.contractdoc').change(function () {
+         
+            var vid = $('#VendorId').val();
+            var OrderID = $('#orderid').val();
+            var ext = $('.contractdoc').val().split('.').pop().toLowerCase();
+
+            if ($.inArray(ext, ['PDF', 'pdf', 'doc', 'DOC']) == -1) {
+                alert('Invalid File Type');
+            }
+            else {
+                var data = new FormData();
+                var files = $(".contractdoc").get(0).files;
+                if (files.length > 0) {
+                    data.append("helpSectionImages", files[0]);
+                }
+
+                $.ajax({
+                    url: '/quotationlist/UploadContractdoc?vid=' + vid + '&&OrderID=' + OrderID,
+                    type: "POST",
+                    processData: false,
+                    contentType: false,
+                    data: data,
+                    success: function (response) {
+                        $('#filename').val(response);
+                        alert(response);
+                        if (response != '') { alert('Document saved successfully'); } else { alert('Document saving failed'); }
+
+                    }
+                });
+            }
+        });
+
+        $('.send').click(function () {
             var messagetype= $('#selectmessagetype').val();
-            var replyto= $('#selectreplyto').val();
+           // var replyto= $('#selectreplyto').val();
+            var replyto = $(this).val();
             var message = $('#message').val();
-            var formData = new FormData();
-            var data1 = document.getElementById("contractdoc").files[0];
-            formData.append("contractdoc", data1);
+            var ext =  $('#filename').val();
             //var ext = $('#contractdoc').val().split('.').pop().toLowerCase();
             //if (ext != '') {
             //    if ($.inArray(ext, ['PDF', 'pdf']) == -1) {
@@ -349,10 +439,10 @@
                 }
                 //alert(quoteResponse.QuoteID);
             $.ajax({
-                url: '/Admin/quotationlist/ParticularQuoteReply?messagetype=' + messagetype + '&&replyto=' + replyto + '&&message=' + message , 
+            url: '/Admin/quotationlist/ParticularQuoteReply?messagetype=' + messagetype + '&&replyto=' + replyto + '&&message=' + message + '&&ext=' +ext,
                 type: 'post',
                 datatype: 'json',
-                data: { quoteResponse, data1 },
+                data: { quoteResponse },
                   //  data: { QuoteID: QuoteID, id: ids },
                     success: function (data) {
                         if (data == "Success") {

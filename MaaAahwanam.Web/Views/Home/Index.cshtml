@@ -822,6 +822,7 @@
             $(".authenticationBlocks > div").css("display", "none");
             $(forgotBlock).css("display", "block");
         });
+
         $(document).ready(function () {
             $(regBlock).css("display", "none");
             var guests = window.localStorage.getItem("guests");
@@ -850,11 +851,12 @@
             }
             else { $('#datetimepicker1').val(date); }
         });
+
         $('#btnsearch').click(function () {
             var location = $('#loc').val();
             var eventtype = $('.current').text();
             var guests = $('#guests').val();
-            var date = $('#datetimepicker1').val();
+            var eventdate = $('#datetimepicker1').val();
             if (location == '') {
                 alert('Enter Location');
                 $('#loc').focus();
@@ -866,7 +868,7 @@
                 alert('Enter Guests');
                 $('#guests').focus();
             }
-            else if (date == '') {
+            else if (eventdate == '') {
                 alert('Select date');
                 $('#datetimepicker1').focus();
             }
@@ -874,10 +876,11 @@
                 window.localStorage.setItem("guests", guests);
                 window.localStorage.setItem("location", location);
                 window.localStorage.setItem("eventtype", eventtype);
-                window.localStorage.setItem("eventdate", date);
-                window.location.href = '/results/Index?loc=' + location + '&&eventtype=' + eventtype + '&&count=' + guests + '&&date=' + date;
+                window.localStorage.setItem("eventdate", eventdate);
+                window.location.href = '/results/Index?loc=' + location + '&&eventtype=' + eventtype + '&&count=' + guests + '&&date=' + eventdate;
             }
         });
+
         function savecustomer(clickedvalue) {
             var CustomerPhoneNumber = $("#txtphone").val();
             var CustomerName = $("#txtname").val();
@@ -931,8 +934,6 @@
                 alert("Please Enter a valid Email Address");
                 $("#txtemail").focus();
             }
-            
-
             else {
                 if (clickedvalue == 'Register') {
                     $('.overlay').show();
@@ -941,50 +942,21 @@
                         url: '/Home/register',//?CustomerPhoneNumber=' + CustomerPhoneNumber + '&CustomerName=' + CustomerName + '&Password=' + Password + '&Address=' + Address + '&Email=' + Email,
                         type: 'POST',
                         data: JSON.stringify({ CustomerPhoneNumber: CustomerPhoneNumber, CustomerName: CustomerName, Password: Password, Email: Email }),
-                        //data: JSON.stringify({ CustomerPhoneNumber, CustomerName, Password, Address, Email }),
                         dataType: 'json',
                         contentType: 'application/json',
                         success: function (data) {
                             if (data == "success") {
                                 alert("Check your email to active your account to login");
-                                //window.location.href = '/NewOrder/orderview'
-                                //$('.overlay').hide();
                                 location.reload();
                             }
-                            //else {
-                            //    alert("Customer Registered successfully");
-                            //    $("#txtphone").val('');
-                            //    $("#txtname").val('');
-                            //    $("#txtpassword").val('');
-                            //    $("#txtdeladdress").val('');
-                            //    $("#txtemail").val('');
-                            //    window.location.reload();
-                            //}
                             else if (data == "unique") {
-                                alert("E-Mail ID Already Registered!!! Try Logging with your Password");
-                                $('.overlay').hide();
+                                alert("E-Mail ID Already Registered!!! Try Logging with your Password"); 
                             }
-                            else if (data == "unique1") {
-                                alert("Registration fails");
-                                $('.overlay').hide();
-                            }
-                            else if (data == "Failed") {
-
+                            else { //{if (data == "Failed" || data == "unique1") {
                                 alert("Registration Failed");
                                 window.location.reload();
                             }
-                            else {
-                                alert("Registration Failed");
-                                // $("#txtphone").val('');
-                                $("#txtname").val('');
-                                $("#txtpassword").val('');
-                                $("#txtdeladdress").val('');
-                                $("#txtemail").val('');
-                                // window.location.reload();
-                                $("#otpopup").css("display", "block");
-                                $("#txtotp").focus();
-                                $('.overlay').hide();
-                            }
+                            $('.overlay').hide();
                         },
                         error: function (data) {
                             alert("Something Went Wrong!!! Try Again Later");
@@ -994,10 +966,10 @@
                 }
             }
         }
+
         function login(clickedvalue) {
             var url1 = document.referrer;
             if (url1 == '' || url1 == undefined) { url1 = location.href; }
-            // alert(url1);
             var Password = $("#Password1").val();
             Password = Password.replace(/\s/g, '');
             var Email = $("#UserName").val();
@@ -1021,38 +993,16 @@
                 if (clickedvalue == 'Login') {
                     $('.overlay').show();
                     $('#loadermsg').text('Authenticating....');
-                    $.ajax({
-                        url: '/Home/login',
-                        type: 'POST',
-                        data: JSON.stringify({ Password: Password, Email: Email, url1: url1 }),
-                        dataType: 'json',
-                        contentType: 'application/json',
-                        success: function (data) {
-                            if (data == "success") {
-                                window.location.reload();
-                            }
-                            else if (data == "unique") {
-                                alert("vendorlogin successfull");
-                                //vendorlogin
-                            }
-                            else if (data == "Failed") {
-                                alert("Wrong Credentials,Check Username and password");
-                                //window.location.reload();
-                                $('.overlay').hide();
-                            }
-                            else if (data == "success1") {
-                                alert("Wrong Credentials,Check Username and password");
-                                //window.location.reload();
-                                $('.overlay').hide();
-                            }
-                        },
-                        error: function (data) {
-                            alert("Something Went Wrong!!! Try Again Later");
-                        }
-                    });
+                    $.get("/Home/login", { Password: Password, Email: Email, url1: url1 },function (data) {
+                        if (data == "success") 
+                            window.location.reload();
+                        else if (data == "Failed" || data == "success1")
+                        { alert("Wrong Credentials,Check Username and password"); $('.overlay').hide(); }
+                    }).error(function (data) { alert("Something Went Wrong!!! Try again Later") });
                 }
             }
         }
+
         function forgot(clickedvalue) {
             var Email = $("#email_forgot").val();
             Email = Email.replace(' ', '');
@@ -1070,30 +1020,17 @@
                 if (clickedvalue == 'Reset Password') {
                     $('.overlay').show();
                     $('#loadermsg').text('Locating your Email Address in database....');
-                    $.ajax({
-                        url: '/Home/forgotpass',//?CustomerPhoneNumber=' + CustomerPhoneNumber + '&CustomerName=' + CustomerName + '&Password=' + Password + '&Address=' + Address + '&Email=' + Email,
-                        type: 'post',
-                        data: JSON.stringify({ Email: Email }),
-                        //data: JSON.stringify({ CustomerPhoneNumber, CustomerName, Password, Address, Email }),
-                        dataType: 'json',
-                        contentType: 'application/json',
-                        success: function (data) {
-                            if (data == "success") {
-                                alert("A mail is sent to your email to change password Please check your email");
-                                window.location.reload();
-                            }
-                            else if (data == "success1") {
-                                alert("Email ID Not Found.please enter registered Email ID");
-                                $("#email_forgot").focus();
-                            }
-                        },
-                        error: function (data) {
-                            alert("Something Went Wrong!!! Try Again Later");
+                    $.get("/Home/forgotpass", { Email: Email }, function (data) {
+                        if (data == "success") {
+                            alert("A mail is sent to your email to change password Please check your email");
+                            window.location.reload();
                         }
-                    });
+                        else if (data == "success1") {
+                            alert("Email ID Not Found.please enter registered Email ID");
+                            $("#email_forgot").focus();
+                        }
+                    }).error(function (data) { alert("Something Went Wrong!!! Try again Later")});
                 }
-
-
             }
         }
     </script>
