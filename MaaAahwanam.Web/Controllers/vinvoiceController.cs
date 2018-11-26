@@ -63,7 +63,7 @@ namespace MaaAahwanam.Web.Controllers
                      //   ViewBag.orderdetailid = orderdetails1.FirstOrDefault().orderdetailedid;
                      var odid1= orderdetails1.FirstOrDefault().orderdetailedid.ToString();
                     var payments = rcvpaymentservice.getPayments(oid).ToList();
-                    ViewBag.pmntbycustomer = payments.FirstOrDefault().PaymentBy.Replace(' ', '_');
+                    //ViewBag.pmntbycustomer = payments.FirstOrDefault().PaymentBy.Replace(' ', '_');
                     List<string> discount = new List<string>();                 
                     
                     string odid = string.Empty;
@@ -73,7 +73,7 @@ namespace MaaAahwanam.Web.Controllers
                             odid = odid + item.orderdetailedid + ",";
                             ViewBag.orderdetailid5 = odid;
                         var paymentsbyodid = rcvpaymentservice.getPaymentsbyodid(orderdetailid).ToList();
-                        ViewBag.paymentby = paymentsbyodid.FirstOrDefault().PaymentBy.Replace(' ', '_');
+                        //ViewBag.paymentby = paymentsbyodid.FirstOrDefault().PaymentBy.Replace(' ', '_');
                         if (paymentsbyodid.Count != 0)
                         {
                             var disc = paymentsbyodid.FirstOrDefault().Discount;
@@ -220,9 +220,10 @@ namespace MaaAahwanam.Web.Controllers
                 string email = newmanageuse.Getusername(long.Parse(vid));
                 ViewBag.vemail = email;
                 Vendormaster Vendormaster = vendorMasterService.GetVendorByEmail(email);
-                List<Payment> payment = rcvpaymentservice.getPayments(oid);
-                string txtto = ""; string name = "";
+                List<Payment> payment = rcvpaymentservice.getPayments(oid);              
                 var orderdetails1 = newmanageuse.allOrderList().Where(m => m.orderid == long.Parse(oid)).ToList();
+                string txtto = orderdetails1.FirstOrDefault().username;
+                string name = orderdetails1.FirstOrDefault().fname+" "+orderdetails1.FirstOrDefault().lname;
                 StringBuilder cds = new StringBuilder();
                 cds.Append("<table style='border:1px black solid;'><tbody>");
                 cds.Append("<tr><td>Order Id</td><td>Order Date</td><td> Event Type </td><td>Guest Count</td><td>Perunit Price</td><td>Total Price</td></tr>");
@@ -230,10 +231,10 @@ namespace MaaAahwanam.Web.Controllers
                 cds.Append("</tbody></table>");
                 if (payment.Count != 0) { 
                 cds.Append("<table style='border:1px black solid;'><tbody>");
-                cds.Append("<tr><td> Payment Id</td><td> Payment Type </td><td> Payment Date </td><td> Received Amount </td></tr>");
+                cds.Append("<tr><td> Payment Id</td><td> Payment By</td><td> Payment Type </td><td> Payment Date </td><td> Received Amount </td></tr>");
                 foreach (var item in payment)
                 {
-                    cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + item.Payment_Id + "</td><td style = 'width: 75px;border: 1px black solid;' > " + item.Payment_Type + " </td><td style = 'width: 75px;border: 1px black solid;'> " + item.Payment_Date + " </td><td style = 'width: 50px;border: 1px black solid;'> " + item.Received_Amount + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+                    cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + item.Payment_Id + "</td><td style = 'width: 75px;border: 1px black solid;'> " + item.PaymentBy + "</td><td style = 'width: 75px;border: 1px black solid;' > " + item.Payment_Type + " </td><td style = 'width: 75px;border: 1px black solid;'> " + item.Payment_Date + " </td><td style = 'width: 50px;border: 1px black solid;'> " + item.Received_Amount + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
                 }
                 cds.Append("</tbody></table>");
                 }
