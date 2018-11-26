@@ -236,43 +236,48 @@
 
                     </div>
                     <div id="reply">
-                        <div class=" row">
+                        @using (Html.BeginForm("ContactForm", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            <div class=" row">
 
-                            <div class="col-md-3">
-                                <select class="" id="selectreplyto" style="width: 25%;">
-                                    <option value="" selected="">Select reply to</option>
-                                    <option value="Customer">Customer</option>
-                                    <option value="Vendor">Vendor</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3">
-                                <select class="" id="selectmessagetype" style="width: 25%;">
-                                    <option value="" selected="">Select Message Type</option>
-                                    <option value="reply">reply</option>
-                                    <option value="received">received</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <select class="" id="selectmodeofcomm" style="width: 25%;">
-                                    <option value="" selected="">Select mode of communication</option>
-                                    <option value="Phone">Phone</option>
-                                    <option value="Email">Email</option>
-                                </select>
-                            </div>
-                            <div>
-                                <input type="text" placeholder="Add text" id="message" />
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-6" id="uma1">
-                                <label class="custom-file-upload">
-                                    <input type="file" id="contractdoc" name="file" />
-                                    <i class="fa fa-cloud-upload" style="font-size:24px"></i> File Upload
-                                </label>
-                            </div>
-                            <div>
-                                <button type="button" class="btn btn-primary" value="" id="send" onclick="savedetails()">Send</button>
+                                <div class="col-md-3">
+                                    <select class="" id="selectreplyto" style="width: 25%;">
+                                        <option value="" selected="">Select reply to</option>
+                                        <option value="Customer">Customer</option>
+                                        <option value="Vendor">Vendor</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="" id="selectmessagetype" style="width: 25%;">
+                                        <option value="" selected="">Select Message Type</option>
+                                        <option value="reply">reply</option>
+                                        <option value="received">received</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <select class="" id="selectmodeofcomm" style="width: 25%;">
+                                        <option value="" selected="">Select mode of communication</option>
+                                        <option value="Phone">Phone</option>
+                                        <option value="Email">Email</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <input type="text" placeholder="Add text" id="message" />
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-6" id="uma1">
+                                    <form class="form-horizontal" method="post" enctype="multipart/form-data">
+
+                                        <label class="custom-file-upload">
+                                            <input type="file" id="contractdoc" name="contractdoc" accept="pdf/*" />
+                                            <i class="fa fa-cloud-upload" style="font-size:24px"></i> File Upload
+                                        </label>
+                                    </form>
+                                </div>
+                                <div>
+                                    <button type="button" class="btn btn-primary" value="" id="send">Send</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
                 </div>
             </div>
@@ -285,7 +290,7 @@
     <script>
         $(document).ready(function () {
             $('#reply').hide();// 'none')
-            $('#send').text() = 'send';
+         //   $('#send').text() = 'send';
         });
         function replyquote() {
             $('#reply').show();
@@ -296,26 +301,45 @@
                 $('#send').text() == "Save";
             }
         });
+        //$('#contractdoc').change(function () {
+        //    var ext = $('#contractdoc').val().split('.').pop().toLowerCase();
+
+        //    if ($.inArray(ext, ['PDF', 'pdf', 'doc', 'DOC']) == -1) {
+        //        alert('Invalid File Type');
+        //    }
+        //    else {
+        //        var data = new FormData();
+        //        var files = $("#contractdoc").get(0).files;
+        //        if (files.length > 0) {
+        //            data.append("helpSectionImages", files[0]);
+        //        }
+        //    }
+        //})
 
         
-        function savedetails() {
-            var ext = $('#contractdoc').val().split('.').pop().toLowerCase();
-            if (ext != '') {
-                if ($.inArray(ext, ['PDF', 'pdf']) == -1) {
-                    alert('Invalid File Type');
-                }
-                else {
-                    var data1 = new FormData();
-                    var files = $("#contractdoc").get(0).files;
-                    if (files.length > 0) {
-                        data1.append("helpSectionImages", files[0]);
-                    }
-                }
-            }
+       // function savedetails() {
+        $('#send').click(function () {
+            var messagetype= $('#selectmessagetype').val();
+            var replyto= $('#selectreplyto').val();
+            var message = $('#message').val();
+            var formData = new FormData();
+            var data1 = document.getElementById("contractdoc").files[0];
+            formData.append("contractdoc", data1);
+            //var ext = $('#contractdoc').val().split('.').pop().toLowerCase();
+            //if (ext != '') {
+            //    if ($.inArray(ext, ['PDF', 'pdf']) == -1) {
+            //        alert('Invalid File Type');
+            //    }
+            //    else {
+            //        var data1 = new FormData();
+            //        var files = $("#contractdoc").get(0).files;
+            //        if (files.length > 0) {
+            //            data1.append("helpSectionImages", files[0]);
+            //        }
+            //    }
+            //}
                 //OrderID: $('#orderid').val(),
-            messagetype: $('#selectmessagetype').val();
-            replyto: $('#selectreplyto').val();
-            message: $('#message').val();
+           
                 var quoteResponse = {
                     //  OrderID: $('#qid').val(),
                     BusinessName: $('#bname').text(),
@@ -325,16 +349,17 @@
                 }
                 //alert(quoteResponse.QuoteID);
             $.ajax({
-                url: '/Admin/quotationlist/ParticularQuoteReply?messagetype=' + messagetype + '&&replyto=' + replyto + '&&message=' + message,
+                url: '/Admin/quotationlist/ParticularQuoteReply?messagetype=' + messagetype + '&&replyto=' + replyto + '&&message=' + message , 
                 type: 'post',
                 datatype: 'json',
                 data: { quoteResponse, data1 },
                   //  data: { QuoteID: QuoteID, id: ids },
                     success: function (data) {
                         if (data == "Success") {
-                            alert("Installments Added");
-                            $('#myModal').css('display', 'none');
-                            resetAllValues();
+                            alert(" Quatation created sucessfully");
+                            window.location.reload();
+                            //$('#myModal').css('display', 'none');
+                            //resetAllValues();
                         }
                         else if (data == "Failed") {
                             alert("Failed to Add Installments!!! Try Again");
@@ -344,7 +369,7 @@
                         alert("Something Went Wrong!!! Try Again Later");
                     }
                 });
-            }
+            })
       
 
 
