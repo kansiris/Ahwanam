@@ -40,6 +40,6 @@ namespace MaaAahwanam.Models
         public string Reply_Type { get; set; }
         public string ReplyToType { get; set; }
         public string Communication_Type { get; set; }
-        public string type { get; set; }
+        public string file { get; set; }
     }
 }
