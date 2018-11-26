@@ -280,12 +280,17 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 cds.Append("<tr><td style = 'width:20%;'>  <img src = " + image + " style='height: 182px;width: 132px;'/></td><td style = '' > <p>" + "<strong>Business Name: </strong>" + item.BusinessName + "</p><p>" + "<strong>Packgename: </strong>" + item.packagename + "</p><p>" + "<strong>Price/person:</strong> " + '₹' + item.perunitprice.ToString().Replace(".00", "") + "</p><p>" + "<strong>No. of Guests:</strong> " + item.guestno + "</p> </td><td > " + item.eventtype + " </td><td style = ''><p>" + '₹' + item.totalprice.ToString().Replace(".00", "") + "</p> </td> </tr>");
             }
             cds.Append("</tbody></table>");
+
             string url = Request.Url.Scheme + "://" + Request.Url.Authority;
+            readFile = readFile.Replace("[ActivationLink]", url);
+            readFile = readFile.Replace("[name]", name);
+            readFile = readFile.Replace("[orderid]", quoteResponse.OrderID);
+            readFile = readFile.Replace("[table]", cds.ToString());
             string txtmessage = readFile;
             string subj = "Response to your Quote #" + s1.orderid + "";
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
             emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj, data1);
-            return Json("sucess");
+            return Json("Success");
         }
 
 
