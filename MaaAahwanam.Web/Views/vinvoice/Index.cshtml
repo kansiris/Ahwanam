@@ -862,6 +862,7 @@
         }
         //Balance Due
         var currentbal = $('#Current_Balance').val();
+        var cntbal = tr.find('.sbaldue').text().replace('Rs ', '').replace(/,/g, '').trim();
         var cntbal = '';
         var cntbal1 = tr.find('.sbaldue').text().replace('Rs ', '').replace(/,/g, '').trim();
         var opamt1 = tr.find('.tsamnt').text().replace('Rs ', '').replace(/,/g, '').trim();
@@ -884,7 +885,7 @@
         }
         $('#Paymentmode').css('display', 'block');
         // Total Amount + GST
-        
+        if(checked){
         var total = 0; var gstsum = 0
         var openingbalance = $('#Opening_Balance').val();
         var duebalance = $('#Current_Balance').val();
@@ -913,22 +914,12 @@
         }
         else {
             var cnmt = $('#Current_Balance').val();
+            tr.find('#DiscountType').removeAttr('disabled');
+            tr.find('#Discount').removeAttr('disabled');
             $('#FinalAmount').val(cnmt);
             $('#FinalAmount1').val(cnmt);
-        }
-        //var t = 0;
-        //var fnmnt = $('#FinalAmount').val();
-        //var famt1 = tr.find('.gndttl').text().replace('Rs ', '').replace(/,/g, '').trim();
-        //if (openingbalance != duebalance || openingbalance != 0 && duebalance == 0) {
-        //    t += parseInt(fnmnt);
-        //    $('#FinalAmount').val(t);
-        //    $('#FinalAmount1').val(t);
-        //}
-        //else {
-        //    t = parseInt(fnmnt) + parseInt(famt1);
-        //    $('#FinalAmount').val(t);
-        //    $('#FinalAmount1').val(t);
-        //}
+        }  
+      }
         
     });
     var discounttype = '';
