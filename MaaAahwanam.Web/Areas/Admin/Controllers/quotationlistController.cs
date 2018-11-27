@@ -15,6 +15,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
     public class quotationlistController : Controller
     {
+        viewservicesservice viewservicesss = new viewservicesservice();
         newmanageuser newmanageuse = new newmanageuser();
         ProductInfoService productInfoService = new ProductInfoService();
         QuotationListsService quotationListsService = new QuotationListsService();
@@ -142,6 +143,40 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             return PartialView("replyquote1", "quotationlist");
         }
 
+        public ActionResult vendorreply(string orderid)
+        {
+            DateTime indianTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            var s1 = ViewBag.orderdetails = orderService.allorderslist1().ToList().Where(m => m.orderid == long.Parse(orderid)).FirstOrDefault();
+            var userdata = userLoginDetailsService.GetUserId((int)s1.cutomerid);
+            var userdetails = userLoginDetailsService.GetUser((int)s1.cutomerid);
+            QuotationsList quotationsList = new QuotationsList();
+            var s12 = ViewBag.orderdetails = orderService.allorderslist1().ToList().Where(m => m.orderid == long.Parse(orderid)).ToList();
+            var vendordetails = newmanageuse.getvendor(Convert.ToInt32(s1.vid));
+            List<SPGETNpkg_Result> package = new List<SPGETNpkg_Result>();
+            List<SPGETNpkg_Result> package1 = new List<SPGETNpkg_Result>();
+            List<SPGETNpkg_Result> package2 = new List<SPGETNpkg_Result>();
+            package = viewservicesss.getvendorpkgs(Convert.ToString(s1.vid)); 
+
+            foreach (var item in s12)
+            {
+                foreach (var item1 in package)
+                {
+                    if (item1.PackageID !=(item.packageid))
+                        package1.AddRange(package.Where(m => m.PackageID == item.packageid));
+                    //else
+                    //    package2.AddRange(package.Where(m => m.PackageID == item.packageid).ToList());
+                }
+            }
+        
+
+            txtto = vendordetails.EmailId;
+            string vname = vendordetails.BusinessName;
+         ViewBag.name= vendordetails.BusinessName;
+            ViewBag.Email = vendordetails.EmailId;
+            ViewBag.bookdate = s1.bookdate.ToString();
+            ViewBag.orderid = orderid;
+            return View();
+        }
 
         public List<string[]> seperatedates(List<filtervendordates_Result> data, string date, string type)
         {
