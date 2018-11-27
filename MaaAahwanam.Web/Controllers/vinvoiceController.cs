@@ -100,10 +100,8 @@ namespace MaaAahwanam.Web.Controllers
                                 GstplustotalAmount = Convert.ToDouble(GstplustotalAmount) + Convert.ToDouble(Gstplustotal);
                                 ViewBag.gstplustotalAmount = GstplustotalAmount;
                             }
-                      
-
-                    }
-                    ViewBag.discount = discount;
+                        ViewBag.discount = discount;
+                    }                  
                     ViewBag.payment = payments;
                         foreach (var reports in payments)
                         {
@@ -192,7 +190,7 @@ namespace MaaAahwanam.Web.Controllers
                             }
                             else
                             {
-                                payments.Received_Amount = rcvnmnt.ToString().Replace(".00", "");
+                                payments.Received_Amount = dueamount.ToString().Replace(".00", "");
                                 if (amnt < 0) { payments.Current_Balance = (amnt * -1).ToString().Replace(".00", ""); }
                                 else { payments.Current_Balance = "0"; }
                             }
