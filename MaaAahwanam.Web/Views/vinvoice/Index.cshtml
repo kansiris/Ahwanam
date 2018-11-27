@@ -862,7 +862,16 @@
         }
         //Balance Due
         var currentbal = $('#Current_Balance').val();
-        var cntbal = tr.find('.sbaldue').text().replace('Rs ', '').replace(/,/g, '').trim();
+        var cntbal = '';
+        var cntbal1 = tr.find('.sbaldue').text().replace('Rs ', '').replace(/,/g, '').trim();
+        var opamt1 = tr.find('.tsamnt').text().replace('Rs ', '').replace(/,/g, '').trim();
+        if (cntbal1 == opamt1 && opamt1 != 0 && cntbal1 != 0)
+        {
+            cntbal = tr.find('.gndttl').text().replace('Rs ', '').replace(/,/g, '').trim();
+        }
+        else {
+            cntbal = cntbal1;
+        }
         if (currentbal != '')
         {
             if (checked)
@@ -880,7 +889,7 @@
         var openingbalance = $('#Opening_Balance').val();
         var duebalance = $('#Current_Balance').val();
         var famount =$('#FinalAmount').val();
-        if (openingbalance == duebalance || openingbalance != 0 && duebalance != 0) {
+        if (openingbalance == duebalance && openingbalance != 0 && duebalance != 0) {
             var gstplusttamnt = parseFloat(duebalance);
             var gstplusfinal = gstplusttamnt + (gstplusttamnt * 18 / 100);
             if (checked)
