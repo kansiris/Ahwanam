@@ -78,7 +78,7 @@ namespace MaaAahwanam.Web.Controllers
                 List<Payment> payment = rcvpaymentservice.getPayments(oid);               
                 var orderdetails1 = newmanageuse.allOrderList().Where(m => m.orderid == long.Parse(oid)).ToList();
                 string txtto = orderdetails1.FirstOrDefault().username;
-                string name = orderdetails1.FirstOrDefault().fname+""+orderdetails1.FirstOrDefault().lname;
+                string name = orderdetails1.FirstOrDefault().fname+" "+orderdetails1.FirstOrDefault().lname;
                 StringBuilder cds = new StringBuilder();
                 cds.Append("<table style='border:1px black solid;'><tbody>");
                 cds.Append("<tr><td>Order Id</td><td>Order Date</td><td> Event Type </td><td>Guest Count</td><td>Perunit Price</td><td>Total Price</td></tr>");
