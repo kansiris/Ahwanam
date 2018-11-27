@@ -100,7 +100,6 @@ namespace MaaAahwanam.Web.Controllers
                                 GstplustotalAmount = Convert.ToDouble(GstplustotalAmount) + Convert.ToDouble(Gstplustotal);
                                 ViewBag.gstplustotalAmount = GstplustotalAmount;
                             }
-                      
 
                     }
                     ViewBag.discount = discount;
