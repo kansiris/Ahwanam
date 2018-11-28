@@ -879,6 +879,27 @@ $(document).on('click','.removemitem',function(){
     });
 });
 
+// Remove Course
+$(document).on('click', '.removecourse', function () {
+    
+    var cval = $(this).prev('button').val();
+    var ctext = $(this).prev('button').text();
+    var pkgid = $(this).parents('.package-list').next('.pkgsave').find('input.packageid').val();
+    $('.overlay').show();
+    $('#loadermsg').text("Removing " + ctext + " Course from list...");
+    $.ajax({
+        url: '/vdb/RemoveCourse',
+        type: 'POST',
+        data: JSON.stringify({ val: cval, text: ctext, pkgid: pkgid }),
+        dataType: 'json',
+        contentType: 'application/json',
+        success: function (data) {
+            $('.overlay').hide();
+            alert(data);
+        }
+    });
+});
+
 // Rental Package
 
 //Package Checkbox Selection
@@ -957,17 +978,17 @@ $(document).on('click', '.rsavepkg', function () {
             datatype: 'json',
             data: package,
             success: function (data) {
-                //if (type == 'Save') {
+                if (type == 'Save') {
                     if (data > 0) {
                         alert("Rental Package "+type+"d Successfully!!!");
                     }
                     else {
                         alert("Failed!!!");
                     }
-                //}
-                //else if (type == 'Update') {
-                //    alert(data);
-                //}
+                }
+                else if (type == 'Update') {
+                    alert(data);
+                }
                 $('.overlay').hide();
             }
         });

@@ -96,7 +96,7 @@ namespace MaaAahwanam.Web.Controllers
                         package.VendorSubType = servicedata.FirstOrDefault().VenueType;
                         package.type = "Package";
                         package = vendorVenueSignUpService.addpack(package);
-                        
+
                         List<Package> pkg = new List<Package>(); // converting it to list
                         pkg.Add(package);
                         ViewBag.package = pkg;
@@ -209,7 +209,7 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.availability = availability.ToList();
                     //Packages Section 
                     viewservicesservice viewservicesss = new viewservicesservice();
-                    ViewBag.availablepackages = viewservicesss.getvendorpkgs(id.ToString()).Where(m=>m.type == "Package").ToList();
+                    ViewBag.availablepackages = viewservicesss.getvendorpkgs(id.ToString()).Where(m => m.type == "Package").ToList();
 
                     //Orders Section
                     DateTime todatedate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE).Date;
@@ -223,8 +223,8 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.order = orders.OrderByDescending(m => m.orderid);
                     //ViewBag.order1 = orders1.OrderByDescending(m => m.OrderId);
                     ViewBag.todaysorder = orders.Where(p => p.bookdate == todatedate).ToList();
-                   // ViewBag.todaysorder1 = orders1.Where(p => p.BookedDate == todatedate).ToList();
-                   // ViewBag.tommaroworder1 = orders1.Where(p => p.BookedDate == tommarowdate).ToList();
+                    // ViewBag.todaysorder1 = orders1.Where(p => p.BookedDate == todatedate).ToList();
+                    // ViewBag.tommaroworder1 = orders1.Where(p => p.BookedDate == tommarowdate).ToList();
                     //ViewBag.upcominforder1 = orders1.Where(p => p.BookedDate >= tommarowdate).ToList();
                     ViewBag.tommaroworder = orders.Where(p => p.bookdate == tommarowdate).ToList();
                     ViewBag.upcominforder = orders.Where(p => p.bookdate >= tommarowdate).ToList();
@@ -234,10 +234,10 @@ namespace MaaAahwanam.Web.Controllers
                 if (c == "orders")
                 {
                     var orders = orderService.allorderslist1().Where(m => m.vid == id).ToList();
-                   // var orders = orderService.userOrderList().Where(m => m.vid == id).ToList();
-                  //  var orders1 = orderService.userOrderList1().Where(m => m.vid == id).ToList();
+                    // var orders = orderService.userOrderList().Where(m => m.vid == id).ToList();
+                    //  var orders1 = orderService.userOrderList1().Where(m => m.vid == id).ToList();
                     ViewBag.order = orders.OrderByDescending(m => m.orderid);
-                   // ViewBag.order1 = orders1.OrderByDescending(m => m.OrderId);
+                    // ViewBag.order1 = orders1.OrderByDescending(m => m.OrderId);
                 }
                 ViewBag.enable = c; // Type
                 ViewBag.id = id;   // Assigning Vendor Master ID to viewbag
@@ -597,6 +597,7 @@ namespace MaaAahwanam.Web.Controllers
             package.UpdatedDate = updateddate;
             package.type = "Rental";
             package = vendorVenueSignUpService.addpack(package);
+            string msg = string.Empty;
             return Json(package.PackageID, JsonRequestBehavior.AllowGet);
         }
 
@@ -820,6 +821,39 @@ namespace MaaAahwanam.Web.Controllers
             if (package.PackageID > 0) msg = "Package Updated SuccessFully!!!";
             else msg = "Failed TO Update Package";
             return Json(msg, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult RemoveCourse(string val, string text, string pkgid)
+        {
+            Package package = vendorVenueSignUpService.GetPackage(long.Parse(pkgid));
+            // Removing from menu column
+            List<string> fmenu = package.menu.Split(',').ToList();
+            fmenu.Remove(text);
+            package.menu = string.Join(",", fmenu);
+            // Removing from menuitems column
+            List<string> finalmenu = new List<string>();
+            var menuitems = package.menuitems.Split(',');
+            for (int i = 0; i < menuitems.Count(); i++)
+            {
+                if (menuitems[i].StartsWith(val) == false)
+                {
+                    finalmenu.Add(menuitems[i]);
+                }
+            }
+            package.menuitems = string.Join(",", finalmenu);
+            //Removing from  extramenuitems
+            List<string> extramenu = new List<string>();
+            var extramenuitems = package.extramenuitems.Trim(',').Split(',');
+            for (int i = 0; i < extramenuitems.Count(); i++)
+            {
+                if (extramenuitems[i].StartsWith(val) == false)
+                {
+                    extramenu.Add(extramenuitems[i]);
+                }
+            }
+            package.extramenuitems = string.Join(",", extramenu);
+            package = vendorVenueSignUpService.updatepack(package.PackageID.ToString(), package);
+            return Json("Removed "+text.Split('(')[0]+" Course Successfully!!!");
         }
         #endregion
 

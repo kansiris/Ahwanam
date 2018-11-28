@@ -80,7 +80,10 @@ namespace MaaAahwanam.Web.Controllers
                             //ViewBag.discount = Convert.ToDouble(disc);
                             var disctype = paymentsbyodid.FirstOrDefault().DiscountType;
                             //ViewBag.discounttype = disctype;
-                            discount.Add(disctype + '!' + disc);
+                            if(disc != null && disctype != null)
+                                discount.Add(disctype + '!' + disc);
+                            else
+                                discount.Add(null);
                         }
                         else
                         {

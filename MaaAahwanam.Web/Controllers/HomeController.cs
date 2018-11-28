@@ -231,7 +231,6 @@ namespace MaaAahwanam.Web.Controllers
         }
         #endregion
 
-
         #region Email
         public ActionResult SendEmail(string name, string number, string city, string eventtype, string datepicker2, string Description)
         {
@@ -379,7 +378,6 @@ namespace MaaAahwanam.Web.Controllers
             return Char.ToUpper(str[0]) + str.Substring(1).ToLower();
         }
         #endregion
-
 
         #region Password
         public ActionResult updatepassword(string Email)
