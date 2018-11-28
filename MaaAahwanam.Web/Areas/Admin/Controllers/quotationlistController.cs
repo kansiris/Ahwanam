@@ -15,6 +15,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
 
     public class quotationlistController : Controller
     {
+        viewservicesservice viewservicesss = new viewservicesservice();
         newmanageuser newmanageuse = new newmanageuser();
         ProductInfoService productInfoService = new ProductInfoService();
         QuotationListsService quotationListsService = new QuotationListsService();
@@ -142,6 +143,31 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             return PartialView("replyquote1", "quotationlist");
         }
 
+        public ActionResult vendorreply(string orderid)
+        {
+            DateTime indianTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            var s1 = ViewBag.orderdetails = orderService.allorderslist1().ToList().Where(m => m.orderid == long.Parse(orderid)).FirstOrDefault();
+            var userdata = userLoginDetailsService.GetUserId((int)s1.cutomerid);
+            var userdetails = userLoginDetailsService.GetUser((int)s1.cutomerid);
+            QuotationsList quotationsList = new QuotationsList();
+            var s12 = ViewBag.orderdetails = orderService.allorderslist1().ToList().Where(m => m.orderid == long.Parse(orderid)).ToList();
+
+            var vendordetails = newmanageuse.getvendor(Convert.ToInt32(s1.vid));
+            List<SPGETNpkg_Result> package = new List<SPGETNpkg_Result>();
+            List<SPGETNpkg_Result> package1 = new List<SPGETNpkg_Result>();
+            List<SPGETNpkg_Result> package2 = new List<SPGETNpkg_Result>();
+            package = viewservicesss.getvendorpkgs(Convert.ToString(s1.vid)); 
+
+               
+
+            txtto = vendordetails.EmailId;
+            string vname = vendordetails.BusinessName;
+         ViewBag.name= vendordetails.BusinessName;
+            ViewBag.Email = vendordetails.EmailId;
+            ViewBag.bookdate = s1.bookdate.ToString();
+            ViewBag.orderid = orderid;
+            return View();
+        }
 
         public List<string[]> seperatedates(List<filtervendordates_Result> data, string date, string type)
         {
@@ -324,19 +350,21 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             //  FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/QuoteReply.html"));
             string readFile = File.OpenText().ReadToEnd();
             StringBuilder cds = new StringBuilder();
+            StringBuilder cds1 = new StringBuilder();
             if (replyto == "Vendor")
             {
                 var vendordetails = newmanageuse.getvendor(Convert.ToInt32(s1.vid));
-
-
-
                 txtto = vendordetails.EmailId;
                 string vname = vendordetails.BusinessName;
                 readFile = readFile.Replace("[name]", vendordetails.BusinessName);
                 readFile = readFile.Replace("[Email]", vendordetails.EmailId);
-                readFile = readFile.Replace("[bookdate]", s1.bookdate.ToString());
-                cds.Append("<table style='width:70%;'><tbody>");
-                cds.Append("<tr><td style = 'width:20%;'></td><td><strong> Event Type</strong> </td></tr>");
+               // readFile = readFile.Replace("[bookdate]", s1.bookdate.ToString());
+                cds1.Append("<table style='width: 70 %;border: 1px solid #fffff;'><tbody style='width: 70 %;border: 1px solid #fffff;'>");
+               // cds1.Append("<tr><td style='width: 70 %;border: 1px solid #fffff;'></td><td style='width: 70 %;border: 1px solid #fffff;'><strong> Event Type</strong> </td></tr>");
+                cds1.Append("<tr><td style='width: 70 %;border: 1px solid #fffff;'>  <p>" + "<strong>No. of Guests:</strong> " + s1.guestno + "</p> <p><strong>Event Type:</strong> " +  s1.eventtype + "</p> <p><strong>Event Date:</strong> " + s1.bookdate + " </td> </tr>");            
+                cds1.Append("</tbody></table>");
+                cds.Append("<table class='example - table'><tbody>");
+               // cds.Append("<tr><td ><strong>Packgename</strong></td><td ><strong> Ahwanam Price</strong> </td><td ><strong> Market Price </strong> </td><td><strong>Availablity(Yes/No)</strong> </td></tr>");
                 foreach (var item in s12)
                 {
                     string image;
@@ -345,7 +373,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                         image = "/vendorimages/" + item.logo.Trim(',') + "";
                     }
                     else { image = "/noimages.png"; }
-                    cds.Append("<tr><td style = 'width:20%;'>  <p>" + "<strong>Packgename: </strong>" + item.packagename + "</p><p>" + "<strong>No. of Guests:</strong> " + item.guestno + "</p> </td><td > " + item.eventtype + " </td> </tr>");
+                    cds.Append("<tr><td style='width: 70 %;border: 1px solid #000;'>  <p>" + "<strong>Packgename:</strong>" + item.packagename + "</p><strong><p>Please provide the information for booking :</p><p>Date Available: Y / N(if no pls give alternate available date)</p><p>Package Price for Customer incl GST:</p><p>Package Price for Ahwanam incl GST:</p> </strong> </td></tr></tr>");
                 }
                 cds.Append("</tbody></table>");
             }
@@ -368,9 +396,6 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
                 }
                 cds.Append("</tbody></table>");
             }
-           
-           
-
             if (message == "")
             { message = null; }
             readFile = readFile.Replace("[message]", message);
@@ -379,6 +404,7 @@ namespace MaaAahwanam.Web.Areas.Admin.Controllers
             readFile = readFile.Replace("[name]", name);
             readFile = readFile.Replace("[orderid]", quoteResponse.OrderID);
             readFile = readFile.Replace("[table]", cds.ToString());
+            readFile = readFile.Replace("[table1]", cds1.ToString());
             string txtmessage = readFile;
             string subj = "Response to your Quote #" + s1.orderid + "";
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
