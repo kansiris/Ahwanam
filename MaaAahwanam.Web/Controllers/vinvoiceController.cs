@@ -184,6 +184,7 @@ namespace MaaAahwanam.Web.Controllers
                     {
                         if (amnt > 0)
                         {
+                           
                             amnt = amnt - dueamount;
                             rcvnmnt1 = amnt;
                             payments.Opening_Balance = dueamount.ToString().Replace(".00", "");
@@ -195,7 +196,7 @@ namespace MaaAahwanam.Web.Controllers
                             else
                             {
                                 payments.Received_Amount = dueamount.ToString().Replace(".00", "");
-                                if (amnt < 0) { payments.Current_Balance = (amnt * -1).ToString().Replace(".00", ""); }
+                                if (amnt < 0) { payments.Current_Balance = (amnt * -1).ToString().Replace(".00", ""); payments.Received_Amount = rcvnmnt.ToString().Replace(".00", ""); }
                                 else { payments.Current_Balance = "0"; }
                             }
                             if (payments.Current_Balance == "0")
@@ -212,7 +213,7 @@ namespace MaaAahwanam.Web.Controllers
                                 var status = newmanageuse.updateOrderstatus(orders, orderdetils, Convert.ToInt64(payments.OrderId));
                                 payments.Status = "Payment pending";
                             }
-                            payments.GST = "18%";
+                            //payments.GST = "18%";
                             payments = rcvpaymentservice.SavePayments(payments);
                         }
                     }
