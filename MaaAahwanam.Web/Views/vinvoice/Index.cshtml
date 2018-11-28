@@ -184,7 +184,7 @@
                                                                         @if (ViewBag.discount[count] != null)
                                                                         {  
                                                                             @*@(++count)*@
-                                                                            <label>
+                                                                            <label style="font-size: 11px;">
                                                                                 Discount Type : @ViewBag.discount[count].Split(new char[] { '!' })[0],
                                                                                 Discount : @ViewBag.discount[count].Split(new char[] { '!' })[1]
                                                                             </label>
@@ -209,7 +209,7 @@
                                                                             </div>
                                                                         }
                                                                     </td>
-                                                                    <td class="text-right"><label id="GST" class="lblgst" value="0.18">18%</label></td>
+                                                                    <td class="text-right"><label id="GST" class="lblgst" value="18%">18%</label></td>
                                                                     <td class="text-right gndttl"><label class="fgndttl">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalpric1) + (Convert.ToDouble(@item.totalpric1) * 0.18)).Replace(".00", "")</label></td>
                                                                 </tr>  
                                                                 @*@(++count)*@
@@ -755,10 +755,31 @@
                 //alert(sum1)
                 $('#Current_Balance').val(sum1);
             });
+           
             $("#orderdetails tr label.fgndttl").each(function () {
                 var totalamt = $(this).text();
                 var ctamt = totalamt.replace(/\Rs /g, '').replace(/,/g, '');
                 fnmnt += parseInt(ctamt);
+                var crntbalance = 0; var cntttlnmnt = 0;
+                //var cntbaldue = $("#orderdetails tr .sbaldue").text().replace(/\Rs /g, '~').replace(/,/g, '').trim();
+                //var cnttnmnt = $("#orderdetails tr .tsamnt").text().replace(/\Rs /g, '~').replace(/,/g, '').trim();
+                //crntbalance = cntbaldue.replace(/~/g, ',').substring(1);
+                //cntttlnmnt = cnttnmnt.replace(/~/g, ',').substring(1);
+                //var cntbaldue = crntbalance.split(',')
+                //var cnttnmnt = cntttlnmnt.split(',')
+       
+                //if (crntbalance == cntttlnmnt && cntttlnmnt != 0 && crntbalance != 0) {
+                //    var totalamt = $(this).text();
+                //    var ctamt = totalamt.replace(/\Rs /g, '').replace(/,/g, '');
+                //    fnmnt += parseInt(ctamt);
+
+                //}
+                //else {
+                //    var gndttl = $(this).text();
+                //    var cntgndttl = gndttl.replace(/\Rs /g, '').replace(/,/g, '');
+                //    var grndttlnmnt = parseInt(cntgndttl);
+                //    fnmnt = crntbalance + grndttlnmnt;
+                //}
                 $('#FinalAmount').val(fnmnt);
             });
         }      
@@ -811,7 +832,7 @@
             Current_Balance: $('#FinalAmount').val(),
             Discount: $("#Discount").val(),
             DiscountType: $("#DiscountType").val(),
-            GST: $('#GST').val(),
+            GST: $('#GST').text(),
             Opening_Balance: $('#Opening_Balance').val(),
             Remarks: $("#Remarks").val()
         }
