@@ -29,25 +29,10 @@
     </style>
 
 }
-
-@*<main>
-    <div id="error_page">
-        <div class="col-md-12">
-            <div class="row">
-                <div class="col-md-2">
-
-                    <div class="card" id="profilepipccontent">
-                        @{Html.RenderAction("profilepic", "vdb");}
-                    </div>
-                    @{Html.RenderAction("sidebar", "vdb"); }
-
-                </div>*@
 <input type="hidden" name="GridHtml" />
 <input type="hidden" id="User_Id" name="User_Id" value="@ViewBag.User_Id" />
 <input type="hidden" id="OrderId" name="OrderId" value="@ViewBag.orderid" />
-@*<input type="hidden" id="paidamount" name="paidamount" value="@ViewBag.paidamount" />*@
 <input type="hidden" id="OrderDetailId" name="OrderDetailId" value="" />
-@*<input type="hidden" id="OrderDetailid1" name="OrderDetailid1" value="@ViewBag.orderdetailid5" />*@
 <div class="col-md-10">
     <div id="print-content" class="container-fluid">
         <div class="row">
@@ -95,7 +80,6 @@
                 </div>
             </div>
         </div>
-
                         <div class="row">
                             <div class="col-lg-12" style="padding-left:30px">
                                 <div class="add_top_15">
@@ -184,7 +168,7 @@
                                                             @foreach (var item in ViewBag.orderdetails)
                                                             {
                                                                 
-                                                                <tr>
+                                                                <tr class="recordsection">
                                                                     <td><input type="checkbox" class="chcktblservice" /></td>
                                                                     <td class="detailid"> @item.orderdetailedid </td>
                                                                     <td class="text-center">@item.ServicType</td>
@@ -199,16 +183,7 @@
                                                                             <label>
                                                                                 Discount Type : @ViewBag.discount[count].Split(new char[] { '!' })[0]<br />
                                                                                 Discount : @ViewBag.discount[count].Split(new char[] { '!' })[1]
-                                                                            </label>
-                                                                            @*<select name="DiscountType" id="DiscountType" value="@ViewBag.discount[count].Split("!")[0]" class="selectdiscount" style="font-size: 11px;" disabled>
-                                                                                <option value="select">Select Discount Type</option>
-                                                                                <option value="Discpercentage">Percentage %</option>
-                                                                                <option value="flaterate">Flat Rate ₹</option>
-                                                                            </select>
-                                                                            <div class="ServiceDiscount" style="padding-left:5px;padding-top:8px;">
-                                                                                <input type="text" class="disctxt" id="Discount" name="Discount" value="@@ViewBag.discount[count].Split("!")[1]" placeholder="Enter Discount" style="font-size: 12px; width:128px;padding:0px;" disabled>
-                                                                            </div>*@
-                                                                        }
+                                                                            </label>                                                                        }
                                                                         else
                                                                         {
                                                                             <select name="DiscountType" id="DiscountType"  class="selectdiscount" style="font-size: 11px;" disabled>
@@ -224,7 +199,6 @@
                                                                     <td class="text-right"><label id="GST" class="lblgst" value="0.18">18%</label></td>
                                                                     <td class="text-right gndttl"><label class="fgndttl">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalpric1) + (Convert.ToDouble(@item.totalpric1) * 0.18)).Replace(".00", "")</label></td>
                                                                 </tr>  
-                                                                @*@(++count)*@
                                                                 count++;  
                                                             }
                                                         </tbody>
@@ -451,19 +425,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            @*<div class="row">
-                                    <div class="col-md-5" style="padding: 14px;">Invoiced Amount</div>
-                                    <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="Invoiced_Amount" name="Invoiced_Amount" value="" style="padding: 5px;" readonly>
-                                        </div>
-                                    </div>
-                                </div>*@
+                        <div class="col-md-4">                          
                             <div class="row">
                                 <div class="col-md-5" style="padding: 14px;">Total Amount</div>
                                 <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                    @*<input type="hidden" class="form-control" id="Opening_Balance1" name="Opening_Balance1" value="@ViewBag.total" style="padding: 5px;" readonly>*@
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="Opening_Balance" name="Opening_Balance" style="padding: 5px;" readonly>
                                     </div>
@@ -478,35 +443,7 @@
                                         <input type="text" class="form-control" id="Current_Balance" name="Current_Balance" style="padding: 5px;" readonly>
                                     </div>
                                 </div>
-                            </div>
-                            @*<div class="row">
-                                    <div class="col-md-5" style="padding: 14px;">Discount Type</div>
-                                    <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                        <div class="form-group">
-                                          <select name="DiscountType" id="DiscountType" class="selectdiscount" style="padding: 5px; width:210px;font-size:12px;">
-                                              <option value="select">Select Discount Type</option>
-                                              <option value="Discpercentage">Percentage %</option>
-                                              <option value="flaterate">Flat Rate ₹</option>
-                                          </select>
-                                        </div>
-                                    </div>
-                                </div>*@
-                            @*<div class="row">
-                                    <div class="col-md-5" style="padding: 14px;">Discount</div>
-                                    <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="Discount" name="Discount" value="@ViewBag.discount" style="padding:5px;">
-                                        </div>
-                                    </div>
-                                </div>*@
-                            @*<div class="row">
-                                    <div class="col-md-5" style="padding: 14px;">GST</div>
-                                    <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                        <div class="form-group">
-                                           <label id="lblgst" name="lblgst" value="18%" style="padding-left: 70px;">18%</label>
-                                        </div>
-                                    </div>
-                                </div>*@
+                            </div>                           
                             <div class="row">
                                 <div class="col-md-5" style="padding: 14px;">Final Amount</div>
                                 <div class="col-md-7" style="padding:1px;margin-left: -19px;">
@@ -545,70 +482,19 @@
     </div>
     <div align="right">
         <a href="/vdb?c=orders" class="btn btn-danger">Go Back</a>
-        @*<button type="button" class="btn btn-primary"><i class="icon-download"></i>Save</button>*@
         <button type="button" onclick="email(@ViewBag.orderid)" class="btn btn-primary"><i class="icon-direction-1"></i>Email</button>
-        @*<button type="button" class="btn btn-primary" onclick="window.location.href='/Payments?Oid=' + @ViewBag.orderid">Receive Payment Now</button>*@
         <button type="button" class="btn btn-primary" id="btnrcvpmnt">Receive Payment</button>
         <button name="btnsaveas" onclick="window.location.href='/vinvoice/pdfpreview?oid=@ViewBag.orderid'" class="btn btn-primary"><i class="icon-download"></i>Print</button>
         <button name="btnsaveas" onclick="window.location.href='/vinvoice/pdfpreview?oid=@ViewBag.orderid'" class="btn btn-primary"><i class="icon-download"></i>Save as PDF</button>
-        @*<button name="btnsaveas" id="savepdf" class="btn btn-primary"><i class="icon-download"></i>Save as PDF</button>*@
-        @*@using (Html.BeginForm("pdfdownload", "vinvoice", FormMethod.Post))
-        {
-            <input type="hidden" name="GridHtml" />
-            <input type="submit" id="btnSubmit" value="Export" />
-        }*@
     </div>
 </div>
 
-
-@*</div>
-
-            </div>
-
-        </div>
-    </main>*@
 <script src="~/newdesignstyles/Scripts/jquery-2.2.4.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js" integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs" crossorigin="anonymous"></script>
 
 <script>
-    //(function () {
-    //    var
-    //        form = $('#print-content'),
-    //        cache_width = form.width(),
-    //        a4 = [595.28, 841.89]; // for a4 size paper width and height
-
-    //    $('#savepdf').on('click', function () {
-    //        $('body').scrollTop(0);
-    //        createPDF();
-    //    });
-    //    //create pdf
-    //    function createPDF() {
-    //        getCanvas().then(function (canvas) {
-    //            var
-    //                img = canvas.toDataURL("image/png"),
-    //                doc = new jsPDF({
-    //                    unit: 'px',
-    //                    format: 'a4'
-    //                });
-    //            doc.addImage(img, 'JPEG', 20, 20);
-    //            doc.save('bhavdip-html-to-pdf.pdf');
-    //            form.width(cache_width);
-    //        });
-    //    }
-
-    //    // create canvas object
-    //    function getCanvas() {
-    //        form.width((a4[0] * 1.33333) - 80).css('max-width', 'none');
-    //        return html2canvas(form, {
-    //            imageTimeout: 2000,
-    //            removeContainer: true
-    //        });
-    //    }
-
-    //}());
-
     /*
  * jQuery helper plugin for examples and tests
  */
@@ -704,9 +590,6 @@
                 else {
                     alert("Error Occurred in downloading pdf");
                 }
-
-
-
             }
         })
 
@@ -827,9 +710,20 @@
     $("#SavePayment").click(function () {
         var OrderDetailId = $("#OrderDetailId").val();
         var Received_Amount = $("#Received_Amount").val();
-        //var Discount = $("#Discount").val();
-        //var DiscountType = $("#DiscountType").val();
-        //var GST = $('#GST').val();
+        var table = $('#orderdetails');
+        var count = $('#orderdetails tr').length;
+        var discount = [];
+        $('#orderdetails tr.recordsection').each(function () {
+            var checked = $(this).find('.chcktblservice').is(':checked');
+            if (checked) {
+                var disctype = $(this).find('.selectdiscount').val();
+                var disc = $(this).find('.disctxt').val();
+                var odid = $(this).find('.detailid').text();
+                discount.push(odid + '!' + disctype + '!' + disc);
+            }
+        });
+        var fdiscount = discount.join('~');
+        alert(fdiscount)
         var payments = {
             OrderId: $("#OrderId").val(),
             User_Id: $("#User_Id").val(),
@@ -850,10 +744,7 @@
             Bank_Transfer_Branchname: $("#Bank_Transfer_Branchname").val(),
             Wallet_Date: $("#Wallet_Date").val(),
             Wallet_Number: $("#Wallet_Number").val(),
-            //Current_Balance: $('#Current_Balance').val(),
             Current_Balance: $('#FinalAmount').val(),
-            Discount: $("#Discount").val(),
-            DiscountType: $("#DiscountType").val(),
             GST: $('#GST').text(),
             Opening_Balance: $('#Opening_Balance').val(),
             Remarks: $("#Remarks").val()
@@ -862,7 +753,7 @@
             url: '/vinvoice/savepayment',
             type: 'Post',
             contentType: 'application/json',
-            data: JSON.stringify({ payments: payments, OrderDetailId: OrderDetailId, Received_Amount: Received_Amount }),
+            data: JSON.stringify({ payments: payments, OrderDetailId: OrderDetailId, Received_Amount: Received_Amount, finaldiscount: fdiscount }),
             success: function (data) {
                 alert(data);
                 location.reload();
@@ -905,7 +796,6 @@
         }
         //Balance Due
         var currentbal = $('#Current_Balance').val();
-        //var cntbal = tr.find('.sbaldue').text().replace('Rs ', '').replace(/,/g, '').trim();
         var cntbal = '';
         var cntbal1 = tr.find('.sbaldue').text().replace('Rs ', '').replace(/,/g, '').trim();
         var opamt1 = tr.find('.tsamnt').text().replace('Rs ', '').replace(/,/g, '').trim();
@@ -978,10 +868,7 @@
             if (discamnt > 100) {
                 alert('Percentage should not be greater than 100');
             }
-            else {
-                disc = ttamnt - (ttamnt * discamnt / 100);
-
-            }
+            else {disc = ttamnt - (ttamnt * discamnt / 100); }
         }
         else if (discounttype == 'Flat Rate ₹') {
             disc = ttamnt - discamnt;
@@ -1000,6 +887,27 @@
             $('#FinalAmount').val(amt);
             $('#FinalAmount1').val(amt);
         });
-        //$('#FinalAmount').val(amt);
     });
+
+    
 </script>
+
+@*<script>
+    $('#disctype').click(function () {
+        var table = $('#orderdetails');
+        var count = $('#orderdetails tr').length;
+        var discount = [];
+        $('#orderdetails tr.recordsection').each(function () {
+            var checked = $(this).find('.chcktblservice').is(':checked');
+            if (checked) {
+                var disctype = $(this).find('.selectdiscount').val();
+                var disc = $(this).find('.disctxt').val();
+                var odid = $(this).find('.detailid').text();
+                discount.push(odid+'!'+disctype +'!'+ disc);
+            }
+        });
+        var fdiscount = discount.join('~');
+        alert(fdiscount);
+    });
+</script>*@
+    
