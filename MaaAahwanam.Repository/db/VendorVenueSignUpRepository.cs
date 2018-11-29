@@ -20,7 +20,7 @@ namespace MaaAahwanam.Repository.db
 
         public UserLogin GetUserLogin(UserLogin userLogin)
         {
-           var data= _dbContext.UserLogin.Where(p => p.UserName == userLogin.UserName && p.Password == userLogin.Password).FirstOrDefault(); // && p.UserType == userLogin.UserType
+            var data = _dbContext.UserLogin.Where(p => p.UserName == userLogin.UserName && p.Password == userLogin.Password).FirstOrDefault(); // && p.UserType == userLogin.UserType
             return data;
         }
         public UserLogin GetUserLogdetails(UserLogin userLogin)
@@ -28,7 +28,7 @@ namespace MaaAahwanam.Repository.db
             var data = _dbContext.UserLogin.Where(p => p.UserName == userLogin.UserName).FirstOrDefault(); // && p.UserType == userLogin.UserType
             return data;
         }
-   
+
 
         public UserLogin GetUserdetails(string email)
         {
@@ -68,7 +68,7 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return package;
         }
-        public Package updatepackage(long id,Package package)
+        public Package updatepackage(long id, Package package)
         {
             var Getpackage = _dbContext.Package.Where(m => m.PackageID == id).FirstOrDefault();
 
@@ -82,7 +82,7 @@ namespace MaaAahwanam.Repository.db
             _dbContext.Entry(Getpackage).CurrentValues.SetValues(package);
             _dbContext.SaveChanges();
 
-            
+
             return package;
         }
 
@@ -99,12 +99,17 @@ namespace MaaAahwanam.Repository.db
 
         public List<Package> Getpackages(long vid, long subvid)
         {
-          return  _dbContext.Package.Where(m=>m.VendorId == vid && m.VendorSubId == subvid).ToList();
+            return _dbContext.Package.Where(m => m.VendorId == vid && m.VendorSubId == subvid).ToList();
         }
 
         public List<Package> GetAllPackages()
         {
             return _dbContext.Package.ToList();
+        }
+
+        public Package GetPackage(long pkgid)
+        {
+            return _dbContext.Package.Where(m => m.PackageID == pkgid).FirstOrDefault();
         }
 
         public string deletedeal(long id)

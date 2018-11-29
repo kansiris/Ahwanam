@@ -1,0 +1,326 @@
+﻿@using System.Globalization
+@{
+    Layout = null;
+}
+
+
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>pdfpreview</title>
+</head>
+<body>
+    <div style="background-color:beige">
+        <button name="btnprint" onclick="printDiv('print-content')" class="btn btn-primary"><i class="icon-print"></i>Print</button>
+        <button name="btnprint" onclick=" printDiv('print-content')" class="btn btn-primary"><i class="icon-print"></i>Save as PDF</button>
+    </div>
+    <div id="print-content" class="container-fluid">
+        <div class="row">
+            <div class="col-12" style="padding-left:30px">
+                <div class="invoice-title add_top_30">
+                    <div class="table-responsive">
+                        <table class="outer" align="left">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <img src="https://www.ahwanam.com/newdesign/images/logo.png" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table style="height: 182px;" width="100%">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 172px;">
+                                        <strong>Invoice</strong>
+                                    </td>
+                                    <td style="width: 173px;">&nbsp;</td>
+                                    <td style="width: 173px;">
+                                        <strong>Order</strong> #  @ViewBag.orderid
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 172px;">
+                                        <strong>Billed To:</strong>
+                                        <p> @ViewBag.vendorname</p>
+                                        <p>@ViewBag.vendoraddress</p>
+                                    </td>
+                                    <td style="width: 173px;">&nbsp;</td>
+                                    <td style="width: 173px;">
+                                        <strong>Shipped To:</strong>
+                                        <p> @ViewBag.username</p>
+                                        <p></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 172px;">
+                                        <strong>Booked Date:</strong>
+                                        <p>@ViewBag.bookeddate</p>
+                                    </td>
+                                    <td style="width: 173px;">&nbsp;</td>
+                                    <td style="width: 173px;">
+                                        <strong>Order Date:</strong>
+                                        <p>@ViewBag.orderdate</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12" style="padding-left:30px">
+                <div class="add_top_15">
+                    <h3>
+                        <strong>Order summary</strong>
+                    </h3>
+                    <div class="table-responsive">
+                        <table class="table table-condensed" style="width:100%;max-width:100%">
+                            <thead>
+                                <tr>
+                                    <td>
+                                        <strong>Event Type</strong>
+                                    </td>
+                                    <td class="text-center">
+                                        <strong>Price</strong>
+                                    </td>
+                                    <td class="text-center">
+                                        <strong>Quantity</strong>
+                                    </td>
+                                    <td class="text-right">
+                                        <strong>Due Amount</strong>
+                                    </td>
+                                    <td class="text-right">
+                                        <strong>Total Amount</strong>
+                                    </td>
+                                    <td class="text-right">
+                                        <strong>Grand Total (Total Amount + GST)</strong>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ViewBag.orderdetails)
+                                {
+                                    <tr>
+                                        <td>@item.eventtype</td>
+                                        <td class="text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.perunitprice)).Replace(".00", "")</td>
+                                        <td class="text-center">@item.guestno</td>
+                                        <td class="text-right">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.Due)).Replace(".00", "")</td>
+                                        <td class="text-right">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalpric1)).Replace(".00", "")</td>
+                                        <td class="text-right">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalpric1) + (Convert.ToDouble(@item.totalpric1) * 0.18)).Replace(".00", "")</td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td class="thick-line"></td>
+                                    <td class="thick-line"></td>
+                                    <td class="thick-line"></td>
+                                    <td class="thick-line"></td>
+                                    <td class="thick-line text-center">
+                                        <strong>Subtotal</strong>
+                                    </td>
+                                    <td class="thick-line text-right">@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@ViewBag.total)).Replace(".00", "")</td>
+                                </tr>
+                                <tr>
+                                    <td class="no-line"></td>
+                                    <td class="no-line"></td>
+                                    <td class="no-line"></td>
+                                    <td class="no-line"></td>
+                                    <td class="no-line text-center">
+                                        <strong>GST</strong>
+                                    </td>
+                                    <td class="no-line text-right">18%</td>
+                                </tr>
+                                <tr>
+                                    <td class="no-line"></td>
+                                    <td class="no-line"></td>
+                                    <td class="no-line"></td>
+                                    <td class="no-line"></td>
+                                    <td class="no-line text-center">
+                                        <strong> Grand Total</strong>
+                                    </td>
+                                    <td class="no-line text-right">Rs  @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@ViewBag.gstplustotalAmount)).Replace(".00", "")</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" style="padding-left:30px">
+                            <div class="add_top_15">
+                                <h3>
+                                    <strong>Order Details</strong>
+                                </h3>
+                                <div class="table-responsive1">
+                                    <table class="table table-condensed1" id="orderdetails" style="width:100%;max-width:100%">
+                                        <thead>
+                                            <tr>
+                                                @*<td>
+                                                    <strong>Select</strong>
+                                                </td>*@
+                                                <td>
+                                                    <strong>Order DetailId</strong>
+                                                </td>
+                                                <td class="text-center">
+                                                    <strong>Service Name</strong>
+                                                </td>
+                                                <td class="text-center">
+                                                    <strong>Price</strong>
+                                                </td>
+                                                <td class="text-center">
+                                                    <strong>Quantity</strong>
+                                                </td>
+                                                <td class="text-center">
+                                                    <strong>Due Amount</strong>
+                                                </td>
+                                                <td class="text-center">
+                                                    <strong>Total Amount</strong>
+                                                </td>
+                                                <td class="text-center">
+                                                    <strong>Discount</strong>
+                                                </td>
+                                                <td class="text-center">
+                                                    <strong>GST</strong>
+                                                </td>
+                                                <td class="text-right">
+                                                    <strong>Grand Total</strong>
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in ViewBag.orderdetails)
+                                            {
+                                                var count = 0;
+                                            <tr>
+                                                @*<td>
+            <input type="checkbox" class="chcktblservice" />
+        </td>*@
+                                                <td class="detailid"> @item.orderdetailedid </td>
+                                                <td class="text-center">@item.ServicType</td>
+                                                <td class="text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.perunitprice)).Replace(".00", "")</td>
+                                                <td class="text-center">@item.guestno</td>
+                                                <td class="sbaldue text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.Due)).Replace(".00", "")</td>
+                                                <td class="tsamnt text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalpric1)).Replace(".00", "")</td>
+                                                <td class="text-center">
+                                                </td>
+                                                <td class="text-right">
+                                                    <label id="GST" class="lblgst" value="0.18">18%</label>
+                                                </td>
+                                                <td class="text-right gndttl">
+                                                    <label class="fgndttl">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalpric1) + (Convert.ToDouble(@item.totalpric1) * 0.18)).Replace(".00", "")</label>
+                                                </td>
+                                            </tr>
+                                                @*@(++count)*@
+                                                count++;
+                                            }
+                                        </tbody>
+                                    </table>
+                                    <hr />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @if (ViewBag.payment.Count != 0)
+                    {
+                        <div class="row">
+                            <div class="col-lg-12" style="padding-left:30px">
+                                <div class="add_top_15">
+                                    <h3>
+                                        <strong>Payment summary</strong>
+                                    </h3>
+                                    <div class="table-responsive2">
+                                        <table class="table table-condensed2" style="width:100%;max-width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <td>
+                                                        <strong>Payment By</strong>
+                                                    </td>
+                                                    <td>
+                                                        <strong>Payment Date</strong>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <strong>Payment Id</strong>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <strong>Payment Type</strong>
+                                                    </td>
+                                                    <td class="text-right">
+                                                        <strong>Received Amount</strong>
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in ViewBag.payment)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <a href="/duepayment?oid=@ViewBag.orderid&paymentby=@String.Format(@item.PaymentBy).Replace(" ", "_")" class="orderidlnk" style="cursor:pointer">@item.PaymentBy</a>
+                                                        </td>
+                                                        <td> @item.Payment_Date.ToString("dd-MMM-yyyy") </td>
+                                                        <td class="text-center">@item.Payment_Id</td>
+                                                        <td class="text-center">@item.Payment_Type</td>
+                                                        <td class="text-right"> Rs @item.Received_Amount</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <hr />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/Scripts/jquery-1.10.2.js"></script>
+    <script>
+        $(function () {
+            $("#btnSubmit").click(function () {
+                $("input[name='GridHtml']").val(document.getElementById("print-content").outerHTML); //$("#print-content").html());
+            });
+        });
+
+        function printDiv(divName) {
+
+            var printContents = document.getElementById(divName).innerHTML;
+            w = window.open();
+            w.document.write(printContents);
+            w.print();
+            w.close();
+        }
+
+        //function printTrigger(elementId) {
+        //    var getMyFrame = document.getElementById(elementId);
+        //    getMyFrame.focus();
+        //    getMyFrame.contentWindow.print();
+        //}
+        //jQuery(document).ready(function ($) {
+        //    function print(url) {
+        //        var _this = this,
+        //            iframeId = 'iframeprint',
+        //            $iframe = $('iframe#iframeprint');
+        //        $iframe.attr('src', url);
+
+        //        $iframe.load(function () {
+        //            _this.callPrint(iframeId);
+        //        });
+        //    }
+
+        //    //initiates print once content has been loaded into iframe
+        //    function callPrint(iframeId) {
+        //        var PDF = document.getElementById(iframeId);
+        //        PDF.focus();
+        //        PDF.contentWindow.print();
+        //    }
+        //});
+    </script>
+</body>
+</html>

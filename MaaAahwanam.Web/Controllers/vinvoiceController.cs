@@ -11,6 +11,10 @@ using System.Web;
 using System.Web.Mvc;
 using IronPdf;
 using System.Text.RegularExpressions;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
+using iTextSharp.text.html.simpleparser;
+using iTextSharp.tool.xml;
 
 namespace MaaAahwanam.Web.Controllers
 {
@@ -354,16 +358,130 @@ namespace MaaAahwanam.Web.Controllers
             return Json("success", JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult pdfdownload(string pdfhtml)
+        //public ActionResult pdfdownload(string pdfhtml)
+        //{
+        //    // ----ironpdf----//
+        //    // HtmlToPdf HtmlToPdf = new IronPdf.HtmlToPdf();
+        //    //var PDF = HtmlToPdf.RenderHtmlAsPdf(pdfhtml);
+        //    // var OutputPath = "HtmlToPDF.pdf";
+        //    // PDF.SaveAs(OutputPath);
+        //    // // This neat trick opens our PDF file so we can see the result in our default PDF viewer
+        //    // System.Diagnostics.Process.Start(OutputPath);
+        //    // return Json("success", JsonRequestBehavior.AllowGet);
+        //    //}
+
+        //}
+        public ActionResult pdfpreview(string oid)
         {
-            HtmlToPdf HtmlToPdf = new IronPdf.HtmlToPdf();
-            var PDF = HtmlToPdf.RenderHtmlAsPdf(pdfhtml);
-            var OutputPath = "HtmlToPDF.pdf";
-            PDF.SaveAs(OutputPath);
-            // This neat trick opens our PDF file so we can see the result in our default PDF viewer
-            System.Diagnostics.Process.Start(OutputPath);
-            return Json("success", JsonRequestBehavior.AllowGet);
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                var user = (CustomPrincipal)System.Web.HttpContext.Current.User;
+                string id = user.UserId.ToString();
+                ViewBag.userid = id;
+                string email = newmanageuse.Getusername(long.Parse(id));
+                Vendormaster Vendormaster = vendorMasterService.GetVendorByEmail(email);
+                ViewBag.Vendor = vendorMasterService.GetVendor(Convert.ToInt64(Vendormaster.Id));
+                if (oid != null && oid != "")
+                {
+
+                    var orderdetails1 = newmanageuse.allOrderList().Where(m => m.orderid == long.Parse(oid)).ToList();
+                    ViewBag.orderid = orderdetails1.FirstOrDefault().orderid;
+                    ViewBag.username = orderdetails1.FirstOrDefault().fname + " " + orderdetails1.FirstOrDefault().lname;
+                    ViewBag.vendorname = orderdetails1.FirstOrDefault().BusinessName;
+                    ViewBag.vendoraddress = orderdetails1.FirstOrDefault().Address + "," + orderdetails1.FirstOrDefault().Landmark + "," + orderdetails1.FirstOrDefault().City;
+                    ViewBag.vendorcontact = orderdetails1.FirstOrDefault().ContactNumber;
+                    ViewBag.bookeddate = Convert.ToDateTime(orderdetails1.FirstOrDefault().bookdate).ToString("MMM d,yyyy");
+                    ViewBag.orderdate = Convert.ToDateTime(orderdetails1.FirstOrDefault().orderdate).ToString("MMM d,yyyy");
+                    ViewBag.Servicetype = orderdetails1.FirstOrDefault().servicetype;
+                    ViewBag.serviceprice = orderdetails1.FirstOrDefault().perunitprice * orderdetails1.FirstOrDefault().guestno;
+                    ViewBag.orderdetailid = orderdetails1.FirstOrDefault().orderdetailedid;
+                    ViewBag.orderdetails = orderdetails1;
+                    ViewBag.totalprice = orderdetails1.FirstOrDefault().totalprice;
+                    //   ViewBag.orderdetailid = orderdetails1.FirstOrDefault().orderdetailedid;
+                    var odid1 = orderdetails1.FirstOrDefault().orderdetailedid.ToString();
+                    var payments = rcvpaymentservice.getPayments(oid).ToList();
+                    //ViewBag.pmntbycustomer = payments.FirstOrDefault().PaymentBy.Replace(' ', '_');
+                    List<string> discount = new List<string>();
+
+                    string odid = string.Empty;
+                    foreach (var item in orderdetails1)
+                    {
+                        var orderdetailid = item.orderdetailedid.ToString();
+                        odid = odid + item.orderdetailedid + ",";
+                        ViewBag.orderdetailid5 = odid;
+                        var paymentsbyodid = rcvpaymentservice.getPaymentsbyodid(orderdetailid).ToList();
+                        //ViewBag.paymentby = paymentsbyodid.FirstOrDefault().PaymentBy.Replace(' ', '_');
+                        if (paymentsbyodid.Count != 0)
+                        {
+                            var disc = paymentsbyodid.FirstOrDefault().Discount;
+                            //ViewBag.discount = Convert.ToDouble(disc);
+                            var disctype = paymentsbyodid.FirstOrDefault().DiscountType;
+                            //ViewBag.discounttype = disctype;
+                            discount.Add(disctype + '!' + disc);
+                        }
+                        else
+                        {
+                            discount.Add(null);
+                            //ViewBag.discount = Convert.ToDouble(Discount);
+                        }
+                        var price = item.totalpric1;
+                        tsprice = Convert.ToInt64(tsprice) + Convert.ToInt64(price);
+                        ViewBag.total = tsprice;
+                        var bdue = item.Due;
+                        balndue = Convert.ToInt64(balndue) + Convert.ToInt64(bdue);
+                        ViewBag.balance = balndue;
+                        if (price == bdue || price != 0 && bdue != 0)
+                        {
+                            var gsttotl = Convert.ToDouble(price);
+                            Gstplustotal = gsttotl + (gsttotl * 0.18);
+                            GstplustotalAmount = Convert.ToDouble(GstplustotalAmount) + Convert.ToDouble(Gstplustotal);
+                            ViewBag.gstplustotalAmount = GstplustotalAmount;
+                        }
+                        ViewBag.discount = discount;
+                    }
+                    ViewBag.payment = payments;
+                    foreach (var reports in payments)
+                    {
+                        string amount1 = reports.Received_Amount;
+
+                        amount = Convert.ToInt64(amount) + Convert.ToInt64(amount1);
+
+                    }
+                    decimal paidamount;
+                    if (amount == '0')
+                    {
+                        paidamount = orderdetails1.FirstOrDefault().totalpric1;
+                        //paidamount = orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity;
+
+                    }
+                    else
+                    {
+                        paidamount = orderdetails1.FirstOrDefault().totalpric1 - amount; //paidamount = (orderdetails1.FirstOrDefault().PerunitPrice * orderdetails1.FirstOrDefault().Quantity) - amount; 
+                        ViewBag.paidamount = paidamount;
+                    }
+                }
+            }
+
+            return View();
         }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult pdfdownload(string GridHtml)
+        {
+           
+            using (MemoryStream stream = new System.IO.MemoryStream())
+            {
+                StringReader sr = new StringReader(GridHtml);
+                Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 100f, 0f);
+                PdfWriter writer = PdfWriter.GetInstance(pdfDoc, stream);
+                pdfDoc.Open();
+                XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, sr);
+                pdfDoc.Close();
+                return File(stream.ToArray(), "application/pdf", "Grid.pdf");
+            }
+        }
+
         [HttpPost]
         public JsonResult GetoderdetailsbyOrderdetailId(string odid)
         {

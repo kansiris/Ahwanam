@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = ":: Invoice ::";
     Layout = "~/Views/SharedWeb/vmp.cshtml";
+    var count = 0;
 }
 
 @section css{
@@ -41,49 +42,59 @@
                     @{Html.RenderAction("sidebar", "vdb"); }
 
                 </div>*@
-                <input type="hidden" name="GridHtml" />
-                <input type="hidden" id="User_Id" name="User_Id" value="@ViewBag.User_Id" />
-                <input type="hidden" id="OrderId" name="OrderId" value="@ViewBag.orderid" />
-                @*<input type="hidden" id="paidamount" name="paidamount" value="@ViewBag.paidamount" />*@
-                <input type="hidden" id="OrderDetailId" name="OrderDetailId" value="" />
-                @*<input type="hidden" id="OrderDetailid1" name="OrderDetailid1" value="@ViewBag.orderdetailid5" />*@
-                <div class="col-md-10">
-                    <div id="print-content" class="container-fluid">
-                        <div class="row">
-                            <div class="col-12" style="padding-left:30px">
-                                <div class="invoice-title add_top_30">
-                                    <div class="table-responsive">
-                                        <table style="height: 182px;" width="100%">
-                                            <tbody>
-                                                <tr>
-                                                    <td style="width: 172px;"><strong>Invoice</strong></td>
-                                                    <td style="width: 173px;">&nbsp;</td>
-                                                    <td style="width: 173px;"><strong>Order</strong> #  @ViewBag.orderid</td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="width: 172px;">
-                                                        <strong>Billed To:</strong>
-                                                        <p> @ViewBag.vendorname</p>
-                                                        <p>@ViewBag.vendoraddress</p>
-                                                    </td>
-                                                    <td style="width: 173px;">&nbsp;</td>
-                                                    <td style="width: 173px;">
-                                                        <strong>Shipped To:</strong>
-                                                        <p> @ViewBag.username</p>
-                                                        <p></p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="width: 172px;"><strong>Booked Date:</strong><p>@ViewBag.bookeddate</p></td>
-                                                    <td style="width: 173px;">&nbsp;</td>
-                                                    <td style="width: 173px;"><strong>Order Date:</strong><p>@ViewBag.orderdate</p></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<input type="hidden" name="GridHtml" />
+<input type="hidden" id="User_Id" name="User_Id" value="@ViewBag.User_Id" />
+<input type="hidden" id="OrderId" name="OrderId" value="@ViewBag.orderid" />
+@*<input type="hidden" id="paidamount" name="paidamount" value="@ViewBag.paidamount" />*@
+<input type="hidden" id="OrderDetailId" name="OrderDetailId" value="" />
+@*<input type="hidden" id="OrderDetailid1" name="OrderDetailid1" value="@ViewBag.orderdetailid5" />*@
+<div class="col-md-10">
+    <div id="print-content" class="container-fluid">
+        <div class="row">
+            <div class="col-12" style="padding-left:30px">
+                <div class="invoice-title add_top_30">
+                    <div class="table-responsive">
+                        <table style="height: 182px;" width="100%">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 172px;">
+                                        <strong>Invoice</strong>
+                                    </td>
+                                    <td style="width: 173px;">&nbsp;</td>
+                                    <td style="width: 173px;">
+                                        <strong>Order</strong> #  @ViewBag.orderid
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 172px;">
+                                        <strong>Billed To:</strong>
+                                        <p> @ViewBag.vendorname</p>
+                                        <p>@ViewBag.vendoraddress</p>
+                                    </td>
+                                    <td style="width: 173px;">&nbsp;</td>
+                                    <td style="width: 173px;">
+                                        <strong>Shipped To:</strong>
+                                        <p> @ViewBag.username</p>
+                                        <p></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 172px;">
+                                        <strong>Booked Date:</strong>
+                                        <p>@ViewBag.bookeddate</p>
+                                    </td>
+                                    <td style="width: 173px;">&nbsp;</td>
+                                    <td style="width: 173px;">
+                                        <strong>Order Date:</strong>
+                                        <p>@ViewBag.orderdate</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
 
                         <div class="row">
                             <div class="col-lg-12" style="padding-left:30px">
@@ -169,10 +180,11 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
+
                                                             @foreach (var item in ViewBag.orderdetails)
                                                             {
-                                                                var count = 0;
-                                                                <tr class="recordsection">
+                                                                
+                                                                <tr>
                                                                     <td><input type="checkbox" class="chcktblservice" /></td>
                                                                     <td class="detailid"> @item.orderdetailedid </td>
                                                                     <td class="text-center">@item.ServicType</td>
@@ -184,8 +196,8 @@
                                                                         @if (ViewBag.discount[count] != null)
                                                                         {  
                                                                             @*@(++count)*@
-                                                                            <label style="font-size: 11px;">
-                                                                                Discount Type : @ViewBag.discount[count].Split(new char[] { '!' })[0],
+                                                                            <label>
+                                                                                Discount Type : @ViewBag.discount[count].Split(new char[] { '!' })[0]<br />
                                                                                 Discount : @ViewBag.discount[count].Split(new char[] { '!' })[1]
                                                                             </label>
                                                                             @*<select name="DiscountType" id="DiscountType" value="@ViewBag.discount[count].Split("!")[0]" class="selectdiscount" style="font-size: 11px;" disabled>
@@ -209,7 +221,7 @@
                                                                             </div>
                                                                         }
                                                                     </td>
-                                                                    <td class="text-right"><label id="GST" class="lblgst" value="18%">18%</label></td>
+                                                                    <td class="text-right"><label id="GST" class="lblgst" value="0.18">18%</label></td>
                                                                     <td class="text-right gndttl"><label class="fgndttl">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalpric1) + (Convert.ToDouble(@item.totalpric1) * 0.18)).Replace(".00", "")</label></td>
                                                                 </tr>  
                                                                 @*@(++count)*@
@@ -314,243 +326,247 @@
                                                     </div>
                                                 </div>
 
-                                            </div>
-                                            <div class="row Chequedetails" id="chequedetails" style="display:none;">
-                                                <div class="col-md-4">
-                                                    <div class="form-group" style="margin-bottom:0;">
-                                                        <label>Date:</label>
-                                                    </div>
-                                                    <div class="input-group">
-                                                        <div class="input-group-addon"></div>
-                                                        <input class="form-control datepicker" id="Cheque_Date" name="Cheque_Date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Payment By</label>
-                                                        <input type="text" class="form-control" id="PaymentBy" name="PaymentBy" placeholder="Enter Customer Name" style="padding: 5px;">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Bank name</label>
-                                                        <input type="text" class="form-control" id="Cheque_Bankname" name="Cheque_Bankname" style="padding: 5px;">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Cheque No</label>
-                                                        <input type="text" class="form-control" id="Cheque_Number" name="Cheque_Number" style="padding: 5px;">
-                                                    </div>
-                                                </div>
+                            </div>
+                            <div class="row Chequedetails" id="chequedetails" style="display:none;">
+                                <div class="col-md-4">
+                                    <div class="form-group" style="margin-bottom:0;">
+                                        <label>Date:</label>
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"></div>
+                                        <input class="form-control datepicker" id="Cheque_Date" name="Cheque_Date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Payment By</label>
+                                        <input type="text" class="form-control" id="PaymentBy" name="PaymentBy" placeholder="Enter Customer Name" style="padding: 5px;">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Bank name</label>
+                                        <input type="text" class="form-control" id="Cheque_Bankname" name="Cheque_Bankname" style="padding: 5px;">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Cheque No</label>
+                                        <input type="text" class="form-control" id="Cheque_Number" name="Cheque_Number" style="padding: 5px;">
+                                    </div>
+                                </div>
 
-                                            </div>
-                                            <div class="row credit/debitcarddetails" id="carddetails" style="display:none;">
-                                                <div class="col-md-4">
-                                                    <div class="form-group" style="margin-bottom:0;">
-                                                        <label>Date:</label>
-                                                    </div>
-                                                    <div class="input-group">
-                                                        <div class="input-group-addon"></div>
-                                                        <input class="form-control datepicker" id="creditORdebitcard_date" name="creditORdebitcard_date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Payment By</label>
-                                                        <input type="text" class="form-control" id="PaymentBy" name="PaymentBy" placeholder="Enter Customer Name" style="padding: 5px;">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Card Holder Name</label>
-                                                        <input type="text" class="form-control" id="Card_Holder_Name" name="Card_Holder_Name" style="padding: 5px;">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Last 4 digits</label>
-                                                        <input type="text" class="form-control" id="Card_Last4digits" name="Card_Last4digits" style="padding: 5px;">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row Bankdetails" id="bankdetails" style="display:none;">
-                                                <div class="col-md-4">
-                                                    <div class="form-group" style="margin-bottom:0;">
-                                                        <label>Date:</label>
-                                                    </div>
-                                                    <div class="input-group">
-                                                        <div class="input-group-addon"></div>
-                                                        <input class="form-control datepicker" id="Bank_Transfer_date" name="Bank_Transfer_date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Payment By</label>
-                                                        <input type="text" class="form-control" id="PaymentBy" name="PaymentBy" placeholder="Enter Customer Name" style="padding: 5px;">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Account Holder Name</label>
-                                                        <input type="text" class="form-control" id="Bank_Transfer_Name" name="Bank_Transfer_Name" style="padding: 5px;">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Transaction Id</label>
-                                                        <input type="text" class="form-control" id="Bank_Transaction_ID" name="Bank_Transaction_ID" style="padding: 5px;">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Bank Name</label>
-                                                        <input type="text" class="form-control" id="Bank_Transfer_IFSCcode" name="Bank_Transfer_IFSCcode" style="padding: 5px;">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Branch Name</label>
-                                                        <input type="text" class="form-control" id="Bank_Transfer_Branchname" name="Bank_Transfer_Branchname" style="padding: 5px;">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row Walletdetails" id="walletdetails" style="display:none;">
-                                                <div class="col-md-4">
-                                                    <div class="form-group" style="margin-bottom:0;">
-                                                        <label>Date:</label>
-                                                    </div>
-                                                    <div class="input-group">
-                                                        <div class="input-group-addon"></div>
-                                                        <input class="form-control datepicker" id="Wallet_Date" name="Wallet_Date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Payment By</label>
-                                                        <input type="text" class="form-control" id="PaymentBy" name="PaymentBy" placeholder="Enter Customer Name" style="padding: 5px;">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Mobile Number</label>
-                                                        <input type="text" class="form-control" id="Wallet_Number" name="Wallet_Number" style="padding: 5px;">
-                                                    </div>
-                                                </div>
-                                            </div>
+                            </div>
+                            <div class="row credit/debitcarddetails" id="carddetails" style="display:none;">
+                                <div class="col-md-4">
+                                    <div class="form-group" style="margin-bottom:0;">
+                                        <label>Date:</label>
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"></div>
+                                        <input class="form-control datepicker" id="creditORdebitcard_date" name="creditORdebitcard_date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Payment By</label>
+                                        <input type="text" class="form-control" id="PaymentBy" name="PaymentBy" placeholder="Enter Customer Name" style="padding: 5px;">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Card Holder Name</label>
+                                        <input type="text" class="form-control" id="Card_Holder_Name" name="Card_Holder_Name" style="padding: 5px;">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Last 4 digits</label>
+                                        <input type="text" class="form-control" id="Card_Last4digits" name="Card_Last4digits" style="padding: 5px;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row Bankdetails" id="bankdetails" style="display:none;">
+                                <div class="col-md-4">
+                                    <div class="form-group" style="margin-bottom:0;">
+                                        <label>Date:</label>
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"></div>
+                                        <input class="form-control datepicker" id="Bank_Transfer_date" name="Bank_Transfer_date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Payment By</label>
+                                        <input type="text" class="form-control" id="PaymentBy" name="PaymentBy" placeholder="Enter Customer Name" style="padding: 5px;">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Account Holder Name</label>
+                                        <input type="text" class="form-control" id="Bank_Transfer_Name" name="Bank_Transfer_Name" style="padding: 5px;">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Transaction Id</label>
+                                        <input type="text" class="form-control" id="Bank_Transaction_ID" name="Bank_Transaction_ID" style="padding: 5px;">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Bank Name</label>
+                                        <input type="text" class="form-control" id="Bank_Transfer_IFSCcode" name="Bank_Transfer_IFSCcode" style="padding: 5px;">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Branch Name</label>
+                                        <input type="text" class="form-control" id="Bank_Transfer_Branchname" name="Bank_Transfer_Branchname" style="padding: 5px;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row Walletdetails" id="walletdetails" style="display:none;">
+                                <div class="col-md-4">
+                                    <div class="form-group" style="margin-bottom:0;">
+                                        <label>Date:</label>
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"></div>
+                                        <input class="form-control datepicker" id="Wallet_Date" name="Wallet_Date" placeholder="DD/MM/YYYY" type="text" style="padding: 5px;">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Payment By</label>
+                                        <input type="text" class="form-control" id="PaymentBy" name="PaymentBy" placeholder="Enter Customer Name" style="padding: 5px;">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Mobile Number</label>
+                                        <input type="text" class="form-control" id="Wallet_Number" name="Wallet_Number" style="padding: 5px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            @*<div class="row">
+                                    <div class="col-md-5" style="padding: 14px;">Invoiced Amount</div>
+                                    <div class="col-md-7" style="padding:1px;margin-left: -19px;">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="Invoiced_Amount" name="Invoiced_Amount" value="" style="padding: 5px;" readonly>
                                         </div>
-                                        <div class="col-md-4">
-                                            @*<div class="row">
-                                                    <div class="col-md-5" style="padding: 14px;">Invoiced Amount</div>
-                                                    <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" id="Invoiced_Amount" name="Invoiced_Amount" value="" style="padding: 5px;" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>*@
-                                            <div class="row">
-                                                <div class="col-md-5" style="padding: 14px;">Total Amount</div>
-                                                <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                                    @*<input type="hidden" class="form-control" id="Opening_Balance1" name="Opening_Balance1" value="@ViewBag.total" style="padding: 5px;" readonly>*@
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control" id="Opening_Balance" name="Opening_Balance" style="padding: 5px;" readonly>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-5" style="padding: 14px;">Balance Due</div>
-                                                <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                                    <input type="hidden" class="form-control" id="Current_Balance1" name="Current_Balance1" value="@ViewBag.balance" style="padding: 5px;" readonly>
+                                    </div>
+                                </div>*@
+                            <div class="row">
+                                <div class="col-md-5" style="padding: 14px;">Total Amount</div>
+                                <div class="col-md-7" style="padding:1px;margin-left: -19px;">
+                                    @*<input type="hidden" class="form-control" id="Opening_Balance1" name="Opening_Balance1" value="@ViewBag.total" style="padding: 5px;" readonly>*@
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="Opening_Balance" name="Opening_Balance" style="padding: 5px;" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5" style="padding: 14px;">Balance Due</div>
+                                <div class="col-md-7" style="padding:1px;margin-left: -19px;">
+                                    <input type="hidden" class="form-control" id="Current_Balance1" name="Current_Balance1" value="@ViewBag.balance" style="padding: 5px;" readonly>
 
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control" id="Current_Balance" name="Current_Balance" style="padding: 5px;" readonly>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @*<div class="row">
-                                                    <div class="col-md-5" style="padding: 14px;">Discount Type</div>
-                                                    <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                                        <div class="form-group">
-                                                          <select name="DiscountType" id="DiscountType" class="selectdiscount" style="padding: 5px; width:210px;font-size:12px;">
-                                                              <option value="select">Select Discount Type</option>
-                                                              <option value="Discpercentage">Percentage %</option>
-                                                              <option value="flaterate">Flat Rate ₹</option>
-                                                          </select>
-                                                        </div>
-                                                    </div>
-                                                </div>*@
-                                            @*<div class="row">
-                                                    <div class="col-md-5" style="padding: 14px;">Discount</div>
-                                                    <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" id="Discount" name="Discount" value="@ViewBag.discount" style="padding:5px;">
-                                                        </div>
-                                                    </div>
-                                                </div>*@
-                                            @*<div class="row">
-                                                    <div class="col-md-5" style="padding: 14px;">GST</div>
-                                                    <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                                        <div class="form-group">
-                                                           <label id="lblgst" name="lblgst" value="18%" style="padding-left: 70px;">18%</label>
-                                                        </div>
-                                                    </div>
-                                                </div>*@
-                                            <div class="row">
-                                                <div class="col-md-5" style="padding: 14px;">Final Amount</div>
-                                                <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                                    <input type="hidden" class="form-control" id="FinalAmount1" name="FinalAmount1" value="@ViewBag.gstplustotalAmount" style="padding: 5px;">
-                                                    <input type="hidden" class="form-control" id="FinalAmount2" name="FinalAmount2" value="" style="padding: 5px;">
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control" id="FinalAmount" name="FinalAmount" value="" style="padding: 5px;">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-5" style="padding: 14px;">Received Amount</div>
-                                                <div class="col-md-7" style="padding:1px;margin-left: -19px;">
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control" id="Received_Amount" name="Received_Amount"  style="padding: 5px;">
-                                                    </div>
-                                                </div>
-                                            </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="Current_Balance" name="Current_Balance" style="padding: 5px;" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            @*<div class="row">
+                                    <div class="col-md-5" style="padding: 14px;">Discount Type</div>
+                                    <div class="col-md-7" style="padding:1px;margin-left: -19px;">
+                                        <div class="form-group">
+                                          <select name="DiscountType" id="DiscountType" class="selectdiscount" style="padding: 5px; width:210px;font-size:12px;">
+                                              <option value="select">Select Discount Type</option>
+                                              <option value="Discpercentage">Percentage %</option>
+                                              <option value="flaterate">Flat Rate ₹</option>
+                                          </select>
                                         </div>
                                     </div>
-                                    <div class="row" style="padding-left:30px">
-                                        <div class="col-md-6  remarks margin-top" style="padding:5px">
-                                            <label>Remarks</label>
-                                            <textarea class="form-control" rows="3" id="Remarks" name="Remarks"></textarea>
+                                </div>*@
+                            @*<div class="row">
+                                    <div class="col-md-5" style="padding: 14px;">Discount</div>
+                                    <div class="col-md-7" style="padding:1px;margin-left: -19px;">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="Discount" name="Discount" value="@ViewBag.discount" style="padding:5px;">
                                         </div>
                                     </div>
-                                    <br />
-                                    <div align="center">
-                                        <div style="position: absolute; left: 485px;">
-                                            <button id="SavePayment" type="button" name="command" value="Save" class="btn btn-success" style="display:block">Save Payment</button>
-                                            @*<button type="button" class="btn btn-success" style="display:block" id="disctype">Check</button>*@
+                                </div>*@
+                            @*<div class="row">
+                                    <div class="col-md-5" style="padding: 14px;">GST</div>
+                                    <div class="col-md-7" style="padding:1px;margin-left: -19px;">
+                                        <div class="form-group">
+                                           <label id="lblgst" name="lblgst" value="18%" style="padding-left: 70px;">18%</label>
                                         </div>
-                                        
                                     </div>
-                                </form>
+                                </div>*@
+                            <div class="row">
+                                <div class="col-md-5" style="padding: 14px;">Final Amount</div>
+                                <div class="col-md-7" style="padding:1px;margin-left: -19px;">
+                                    <input type="hidden" class="form-control" id="FinalAmount1" name="FinalAmount1" value="@ViewBag.gstplustotalAmount" style="padding: 5px;">
+                                    <input type="hidden" class="form-control" id="FinalAmount2" name="FinalAmount2" value="" style="padding: 5px;">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="FinalAmount" name="FinalAmount" value="" style="padding: 5px;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5" style="padding: 14px;">Received Amount</div>
+                                <div class="col-md-7" style="padding:1px;margin-left: -19px;">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="Received_Amount" name="Received_Amount" style="padding: 5px;">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div align="right">
-                        <a href="/vdb?c=orders" class="btn btn-danger">Go Back</a>
-                        @*<button type="button" class="btn btn-primary"><i class="icon-download"></i>Save</button>*@
-                        <button type="button" onclick="email(@ViewBag.orderid)" class="btn btn-primary"><i class="icon-direction-1"></i>Email</button>
-                        @*<button type="button" class="btn btn-primary" onclick="window.location.href='/Payments?Oid=' + @ViewBag.orderid">Receive Payment Now</button>*@
-                        <button type="button" class="btn btn-primary" id="btnrcvpmnt">Receive Payment</button>
-                        <button name="btnprint" onclick="printDiv('print-content')" class="btn btn-primary"><i class="icon-print"></i>Print</button>
-                        <button name="btnsaveas" id="savepdf" class="btn btn-primary"><i class="icon-download"></i>Save as PDF</button>
+                    <div class="row" style="padding-left:30px">
+                        <div class="col-md-6  remarks margin-top" style="padding:5px">
+                            <label>Remarks</label>
+                            <textarea class="form-control" rows="3" id="Remarks" name="Remarks"></textarea>
+                        </div>
                     </div>
-                </div>
-
-
-            @*</div>
-           
+                    <br />
+                    <div align="center">
+                        <div style="position: absolute; left: 485px;">
+                            <button id="SavePayment" type="button" name="command" value="Save" class="btn btn-success" style="display:block">Save Payment</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-
     </div>
-</main>*@
+    <div align="right">
+        <a href="/vdb?c=orders" class="btn btn-danger">Go Back</a>
+        @*<button type="button" class="btn btn-primary"><i class="icon-download"></i>Save</button>*@
+        <button type="button" onclick="email(@ViewBag.orderid)" class="btn btn-primary"><i class="icon-direction-1"></i>Email</button>
+        @*<button type="button" class="btn btn-primary" onclick="window.location.href='/Payments?Oid=' + @ViewBag.orderid">Receive Payment Now</button>*@
+        <button type="button" class="btn btn-primary" id="btnrcvpmnt">Receive Payment</button>
+        <button name="btnsaveas" onclick="window.location.href='/vinvoice/pdfpreview?oid=@ViewBag.orderid'" class="btn btn-primary"><i class="icon-download"></i>Print</button>
+        <button name="btnsaveas" onclick="window.location.href='/vinvoice/pdfpreview?oid=@ViewBag.orderid'" class="btn btn-primary"><i class="icon-download"></i>Save as PDF</button>
+        @*<button name="btnsaveas" id="savepdf" class="btn btn-primary"><i class="icon-download"></i>Save as PDF</button>*@
+        @*@using (Html.BeginForm("pdfdownload", "vinvoice", FormMethod.Post))
+        {
+            <input type="hidden" name="GridHtml" />
+            <input type="submit" id="btnSubmit" value="Export" />
+        }*@
+    </div>
+</div>
+
+
+@*</div>
+
+            </div>
+
+        </div>
+    </main>*@
 <script src="~/newdesignstyles/Scripts/jquery-2.2.4.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
@@ -592,8 +608,7 @@
     //    }
 
     //}());
-</script>
-<script>
+
     /*
  * jQuery helper plugin for examples and tests
  */
@@ -604,8 +619,8 @@
             html2canvas.Preload(this[0], $.extend({
                 complete: function (images) {
                     var queue = html2canvas.Parse(this[0], images, options),
-                    $canvas = $(html2canvas.Renderer(queue, options)),
-                    finishTime = new Date();
+                        $canvas = $(html2canvas.Renderer(queue, options)),
+                        finishTime = new Date();
                     $canvas.css({ position: 'absolute', left: 0, top: 0 }).appendTo(document.body);
                     $canvas.siblings().toggle();
 
@@ -655,6 +670,11 @@
 
 </script>
 <script>
+    $(function () {
+        $("#btnSubmit").click(function () {
+            $("input[name='GridHtml']").val(document.getElementById("print-content").outerHTML); //$("#print-content").html());
+        });
+    });
     function printDiv(divName) {
 
         var printContents = document.getElementById(divName).innerHTML;
@@ -689,9 +709,9 @@
 
             }
         })
-    
+
     });
-  
+
     // This code is collected but useful, click below to jsfiddle link.
     function email(val) {
         $.ajax({
@@ -784,9 +804,9 @@
                 //}
                 $('#FinalAmount').val(fnmnt);
             });
-        }      
+        }
     });
- 
+
     $('#Received_Amount').on('input', function () {
         var fnmnt = $('#FinalAmount1').val();
         var rcvnmnt = $('#Received_Amount').val();
@@ -952,9 +972,9 @@
             tr.find('#Discount').removeAttr('disabled');
             $('#FinalAmount').val(cnmt);
             $('#FinalAmount1').val(cnmt);
-        }  
+        }
       }
-        
+
     });
     var discounttype = '';
     $('#orderdetails tr td').find('select.selectdiscount').change(function () {
@@ -971,12 +991,12 @@
             }
             else {
                 disc = ttamnt - (ttamnt * discamnt / 100);
-              
+
             }
         }
         else if (discounttype == 'Flat Rate ₹') {
             disc = ttamnt - discamnt;
-           
+
         }
         var finalamnt = disc + (disc * 18 / 100);
         $('#FinalAmount').val(finalamnt);

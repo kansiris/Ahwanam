@@ -123,6 +123,11 @@ namespace MaaAahwanam.Service
             return vendorVenueSignUpRepository.GetAllPackages();
         }
 
+        public Package GetPackage(long pkgid)
+        {
+            return vendorVenueSignUpRepository.GetPackage(pkgid);
+        }
+
         public string deletepack(string id)
         {
             return vendorVenueSignUpRepository.deletepackage(long.Parse(id));
