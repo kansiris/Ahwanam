@@ -172,7 +172,7 @@
                                                             @foreach (var item in ViewBag.orderdetails)
                                                             {
                                                                 var count = 0;
-                                                                <tr>
+                                                                <tr class="recordsection">
                                                                     <td><input type="checkbox" class="chcktblservice" /></td>
                                                                     <td class="detailid"> @item.orderdetailedid </td>
                                                                     <td class="text-center">@item.ServicType</td>
@@ -525,7 +525,9 @@
                                     <div align="center">
                                         <div style="position: absolute; left: 485px;">
                                             <button id="SavePayment" type="button" name="command" value="Save" class="btn btn-success" style="display:block">Save Payment</button>
+                                            @*<button type="button" class="btn btn-success" style="display:block" id="disctype">Check</button>*@
                                         </div>
+                                        
                                     </div>
                                 </form>
                             </div>
@@ -805,9 +807,20 @@
     $("#SavePayment").click(function () {
         var OrderDetailId = $("#OrderDetailId").val();
         var Received_Amount = $("#Received_Amount").val();
-        //var Discount = $("#Discount").val();
-        //var DiscountType = $("#DiscountType").val();
-        //var GST = $('#GST').val();
+        var table = $('#orderdetails');
+        var count = $('#orderdetails tr').length;
+        var discount = [];
+        $('#orderdetails tr.recordsection').each(function () {
+            var checked = $(this).find('.chcktblservice').is(':checked');
+            if (checked) {
+                var disctype = $(this).find('.selectdiscount').val();
+                var disc = $(this).find('.disctxt').val();
+                var odid = $(this).find('.detailid').text();
+                discount.push(odid + '!' + disctype + '!' + disc);
+            }
+        });
+        var fdiscount = discount.join('~');
+        alert(fdiscount)
         var payments = {
             OrderId: $("#OrderId").val(),
             User_Id: $("#User_Id").val(),
@@ -830,8 +843,8 @@
             Wallet_Number: $("#Wallet_Number").val(),
             //Current_Balance: $('#Current_Balance').val(),
             Current_Balance: $('#FinalAmount').val(),
-            Discount: $("#Discount").val(),
-            DiscountType: $("#DiscountType").val(),
+            //Discount: $("#Discount").val(),
+            //DiscountType: $("#DiscountType").val(),
             GST: $('#GST').text(),
             Opening_Balance: $('#Opening_Balance').val(),
             Remarks: $("#Remarks").val()
@@ -840,7 +853,7 @@
             url: '/vinvoice/savepayment',
             type: 'Post',
             contentType: 'application/json',
-            data: JSON.stringify({ payments: payments, OrderDetailId: OrderDetailId, Received_Amount: Received_Amount }),
+            data: JSON.stringify({ payments: payments, OrderDetailId: OrderDetailId, Received_Amount: Received_Amount, finaldiscount: fdiscount }),
             success: function (data) {
                 alert(data);
                 location.reload();
@@ -980,5 +993,26 @@
         });
         //$('#FinalAmount').val(amt);
     });
+
+    
 </script>
+
+@*<script>
+    $('#disctype').click(function () {
+        var table = $('#orderdetails');
+        var count = $('#orderdetails tr').length;
+        var discount = [];
+        $('#orderdetails tr.recordsection').each(function () {
+            var checked = $(this).find('.chcktblservice').is(':checked');
+            if (checked) {
+                var disctype = $(this).find('.selectdiscount').val();
+                var disc = $(this).find('.disctxt').val();
+                var odid = $(this).find('.detailid').text();
+                discount.push(odid+'!'+disctype +'!'+ disc);
+            }
+        });
+        var fdiscount = discount.join('~');
+        alert(fdiscount);
+    });
+</script>*@
     
