@@ -422,8 +422,6 @@ namespace MaaAahwanam.Web.Controllers
                     var cartlist = cartService.CartItemsList(int.Parse(user.UserId.ToString()));
                     var cartnos1 = selcartid.Split(',');
                     DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
-
-
                     //Saving Record in order Table
                     OrderService orderService = new OrderService();
                     MaaAahwanam.Models.Order order = new MaaAahwanam.Models.Order();
@@ -466,11 +464,6 @@ namespace MaaAahwanam.Web.Controllers
                             totalprice = Convert.ToString(cartdetails.TotalPrice);
                         }
                         int userid = Convert.ToInt32(user.UserId);
-                 
-
-
-
-
                         //Saving Order Details
                         OrderdetailsServices orderdetailsServices = new OrderdetailsServices();
                         OrderDetail orderDetail = new OrderDetail();
@@ -502,12 +495,15 @@ namespace MaaAahwanam.Web.Controllers
                         }
                         orderDetail.bookingtype = "User";
                         orderdetailsServices.SaveOrderDetail(orderDetail);
-
                         var userlogdetails = userLoginDetailsService.GetUserId(userid);
-
                         string txtto = userlogdetails.UserName;
                         var userdetails = userLoginDetailsService.GetUser(userid);
                         string name = userdetails.FirstName;
+                        StringBuilder cds = new StringBuilder();
+                        cds.Append("<table style='border:1px black solid;'><tbody>");
+                        cds.Append("<tr><td>Order Id</td><td>Order Date</td><td> Event Type </td><td> Quantity</td><td>Perunit Price</td><td>Total Price</td></tr>");
+                        cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + orderDetail.BookedDate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + orderDetail.EventType + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderDetail.Quantity + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + orderDetail.PerunitPrice + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderDetail.TotalPrice + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+                        cds.Append("</tbody></table>");
                         name = home.Capitalise(name);
                         string OrderId = Convert.ToString(order.OrderId);
                         string url = Request.Url.Scheme + "://" + Request.Url.Authority;
@@ -516,18 +512,17 @@ namespace MaaAahwanam.Web.Controllers
                         readFile = readFile.Replace("[ActivationLink]", url);
                         readFile = readFile.Replace("[name]", name);
                         readFile = readFile.Replace("[orderid]", OrderId);
+                        readFile = readFile.Replace("[table]", cds.ToString());
+                  
                         string txtmessage = readFile;//readFile + body;
                         string subj = "Thanks for your order";
                         EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
                         emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj, null);
                         emailSendingUtility.Email_maaaahwanam("seema@xsilica.com ", txtmessage, subj, null);
-
                         var vendordetails = userLoginDetailsService.getvendor(Convert.ToInt32(id));
-
                         string txtto1 = vendordetails.EmailId;
                         string vname = vendordetails.BusinessName;
                         vname = home.Capitalise(vname);
-
                         string url1 = Request.Url.Scheme + "://" + Request.Url.Authority;
                         FileInfo file1 = new FileInfo(Server.MapPath("/mailtemplate/vorder.html"));
                         string readfile1 = file1.OpenText().ReadToEnd();
@@ -535,13 +530,13 @@ namespace MaaAahwanam.Web.Controllers
                         readfile1 = readfile1.Replace("[name]", name);
                         readfile1 = readfile1.Replace("[vname]", vname);
                         readfile1 = readfile1.Replace("[orderid]", OrderId);
+                        readFile = readFile.Replace("[table]", cds.ToString());
                         string txtmessage1 = readfile1;
                         string subj1 = "order has been placed";
                         emailSendingUtility.Email_maaaahwanam(txtto1, txtmessage1, subj1, null);
                         if (booktype == "Quote") {  }
                         else if (booktype == "booknow") { var message = cartService.Deletecartitem(long.Parse(cartno2)); }
-                       
-                    }
+                      }
                 }
                 if (booktype == "Quote") { msg = "Quotation sent"; }
                 else if (booktype == "booknow") { msg = "Order Successfully placed"; }
@@ -549,8 +544,6 @@ namespace MaaAahwanam.Web.Controllers
             }
             return Json(JsonRequestBehavior.AllowGet);
         }
-
-      
     }
 }
 
