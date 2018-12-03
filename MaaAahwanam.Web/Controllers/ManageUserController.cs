@@ -266,7 +266,7 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.ServiceType = type;
           //      orderDetail.ServicePrice = Convert.ToDecimal(price);
                 orderDetail.attribute = data.timeslot;
-                orderDetail.TotalPrice = Convert.ToDecimal(data.price1);
+                orderDetail.TotalPrice = (Convert.ToDecimal(data.price1));
                 orderDetail.ServicePrice = Convert.ToDecimal(data.price4);
                 orderDetail.PerunitPrice = Convert.ToDecimal(price);
                 orderDetail.Quantity = Convert.ToInt32(guest);
@@ -585,6 +585,11 @@ namespace MaaAahwanam.Web.Controllers
                             {
                                 data.UpdatedDate = Convert.ToDateTime(date1[j].Split('~')[0]);
                                 data.timeslot = timeslot1[j].Split('~')[0];
+                            }
+                            else {
+                              //  data.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+                                data.timeslot = "";
+
                             }
                         }
                         package.Add(data);
