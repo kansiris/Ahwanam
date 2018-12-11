@@ -1202,36 +1202,39 @@
             if (cpid == null || cpid == pid) { window.localStorage.setItem("cartid", pid) }
             var gu1 = window.localStorage.getItem("guests");
             var eventtype = window.localStorage.getItem("eventtype");
-            var seldate =  $('#selecteddate').val();//$('input[name=radioname]:checked').val();
-            var guest = '';
-            if (gu1 == null)
-                guest = $('.guests1').val();
-            else
-                guest = gu1;
-            var cart = $('#Packageselected').val();
-            var carts = cart.split(',');
-            var cpprice = carts[2];
-            var cpname = carts[1];
-            var cpid = carts[0];
-            var total = guest * cpprice;
-            url1 = '/viewservice/addcnow?pid=' + cpid + '&&guest=' + guest + '&&dcval=' + val + '&&total=' + total + '&&pprice=' + cpprice + '&&eventtype=' + eventtype + '&&bookdate=' + seldate;
-            $.ajax({
-                url: url1,
-                success: function (data) {
-                    if (data == "Success") {
-                        location.href = '/cart/Index';
+            var seldate = $('#selecteddate').val();//$('input[name=radioname]:checked').val();
+            if (seldate == null || seldate == '') { alert('Please select date'); }
+            else {
+                var guest = '';
+                if (gu1 == null)
+                    guest = $('.guests1').val();
+                else
+                    guest = gu1;
+                var cart = $('#Packageselected').val();
+                var carts = cart.split(',');
+                var cpprice = carts[2];
+                var cpname = carts[1];
+                var cpid = carts[0];
+                var total = guest * cpprice;
+                url1 = '/viewservice/addcnow?pid=' + cpid + '&&guest=' + guest + '&&dcval=' + val + '&&total=' + total + '&&pprice=' + cpprice + '&&eventtype=' + eventtype + '&&bookdate=' + seldate;
+                $.ajax({
+                    url: url1,
+                    success: function (data) {
+                        if (data == "Success") {
+                            location.href = '/cart/Index';
+                        }
+                        else if (data == "failed") {
+                            alertify.alert("Failed To add item to the cart");
+                        }
+                        else if (data == "Exists") {
+                            alertify.alert("This Service Already Exists in Cart");
+                        }
+                    },
+                    error: function (data) {
+                        alertify.alert("Something Went Wrong!!! Try Again Later");
                     }
-                    else if (data == "failed") {
-                        alertify.alert("Failed To add item to the cart");
-                    }
-                    else if (data == "Exists") {
-                        alertify.alert("This Service Already Exists in Cart");
-                    }
-                },
-                error: function (data) {
-                    alertify.alert("Something Went Wrong!!! Try Again Later");
-                }
-            });
+                });
+            }
         };
 
         $(document).ready(function () {

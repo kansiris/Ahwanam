@@ -60,8 +60,10 @@ namespace MaaAahwanam.Web.Controllers
                        
                     }
                 }
-            }
                 return View();
+            }
+                
+            return Content("<script>alert('Session Expired!!! Please Login'); location.href='/home'</script>");
         }
         public ActionResult Email(string oid)
         {
