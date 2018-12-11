@@ -1,108 +1,46 @@
-﻿@*@{
-        ViewBag.Title = "Index";
-        Layout = "~/Views/SharedWeb/UserModuleMasterPage.cshtml";
-    }*@
+﻿@using System.Globalization
 @using MaaAahwanam.Web.Models
+@using MaaAahwanam.Web.Custom
 @model Tuple<MaaAahwanam.Models.UserLogin, MaaAahwanam.Models.UserDetail>
+@{
+    Layout = null;
+}
+
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
+    @*<script>
+window['_fs_debug'] = false;
+window['_fs_host'] = 'fullstory.com';
+window['_fs_org'] = 'GZ4R7';
+window['_fs_namespace'] = 'FS';
+(function(m,n,e,t,l,o,g,y){
+    if (e in m) {if(m.console && m.console.log) { m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].');} return;}
+    g=m[e]=function(a,b,s){g.q?g.q.push([a,b,s]):g._api(a,b,s);};g.q=[];
+    o=n.createElement(t);o.async=1;o.src='https://'+_fs_host+'/s/fs.js';
+    y=n.getElementsByTagName(t)[0];y.parentNode.insertBefore(o,y);
+    g.identify=function(i,v,s){g(l,{uid:i},s);if(v)g(l,v,s)};g.setUserVars=function(v,s){g(l,v,s)};g.event=function(i,v,s){g('event',{n:i,p:v},s)};
+    g.shutdown=function(){g("rec",!1)};g.restart=function(){g("rec",!0)};
+    g.consent=function(a){g("consent",!arguments.length||a)};
+    g.identifyAccount=function(i,v){o='account';v=v||{};v.acctId=i;g(o,v)};
+    g.clearUserCookie=function(){};
+})(window,document,window['_fs_namespace'],'script','user');
+    </script>*@
     <meta charset="utf-8">
-    <meta https-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>:: Ahwanam ::</title>
-
-    <!-- Favicons-->
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title> :: Ahwanam :: </title>
     <link rel="shortcut icon" href="~/CSSWeb/images/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- semantic -->
-    <link rel="stylesheet" href="~/newdesignstyles/css/semantic.css" type="text/css">
-    <link rel="stylesheet" href="~/newdesignstyles/css/semantic.min.css" type="text/css">
-
-    <!-- BASE CSS -->
-    <link href="~/newdesignstyles/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/newdesignstyles/css/style.css" rel="stylesheet">
-    <link href="~/newdesignstyles/css/vendors.css" rel="stylesheet">
-    <link href="~/newdesignstyles/css/all_icons.min.css" rel="stylesheet">
-
-    <!-- SPECIFIC CSS -->
-    <link href="~/newdesignstyles/css/daterangepicker.css" rel="stylesheet">
-    <link href="~/newdesign/css/css" rel="stylesheet" />
-    <link href="~/newdesignstyles/css/intlTelInput.css" rel="stylesheet" />
-    <!-- YOUR CUSTOM CSS -->
-    <link href="~/newdesignstyles/css/custom.css" rel="stylesheet" />
-    @*<link href="http://design.maa-aahwanam.com/panagea/css/custom.css" rel="stylesheet">*@
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
-    <style>
-        .nice-select {
-            width: 315px;
-        }
-
-            .nice-select .list {
-                height: 250px;
-                width: 315px;
-                overflow: visible;
-                overflow-x: hidden;
-                overflow-y: auto;
-            }
-
-        #other {
-            height: 26px;
-            width: 200px;
-            border: solid 1px black;
-            padding-left: 0px;
-        }
-
-        input.form-control {
-            font-weight: 700;
-        }
-
-        .box_grid figure small5 {
-            right: -7px;
-            top: 0px;
-            padding: 0px 33px 0px;
-        }
-
-        .vendorimg {
-            max-width: 100%;
-            height: 177px;
-            overflow: hidden;
-            background-repeat: no-repeat !important;
-            background-size: cover !important;
-            background-position: center !important;
-        }
-
-        table.priceslist tr td {
-            border: 0px;
-            width: 260px;
-        }
-
-            table.priceslist tr td span {
-                float: right;
-            }
-
-                table.priceslist tr td span strong {
-                    font-size: 16px;
-                }
-
-        .box_grid .wrapper {
-            padding: 0px;
-        }
-
-        .box_grid ul {
-            padding: 0px 0px;
-        }
-
-        .uk-h1, .uk-h2, .uk-h3, .uk-h4, .uk-h5, .uk-h6, h1, h2, h3, h4, h5, h6 {
-            margin: 0 0 0px 0;
-        }
-
-        .th, td {
-            padding: 0px;
-            text-align: left;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <!-- Bootstrap core CSS -->
+    <link href="~/mdb/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="~/mdb/css/mdb.min.css" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="~/mdb/css/style.css" rel="stylesheet">
     <style>
         .overlay {
             background: no-repeat scroll center center #FFF;
@@ -116,704 +54,477 @@
             /* END EXTERNAL S */
         }
     </style>
-    @using System.Globalization
+    <style>
+        .nav-tabs .nav-link {
+        color:white;
+        }
+        #modalLRForm button {
+        width:35%;
+        }
+        #modalLRForm button.btn-info {
+        background-color:#543791!important;
+        }
+         #modalLRForm .light-blue.darken-3 {
+        background-color:#543791!important;
+        }
+    </style>
 </head>
 <body>
-
-    <div id="page">
-        <header class="header menu_fixed">
-            <div id="preloader"><div data-loader="circle-side"></div></div><!-- /Page Preload -->
-            <div id="logo">
-                <a href="/home">
-                    <img src="~/newdesignstyles/img/logo.png" width="40" height="36" data-retina="true" alt="" class="logo_sticky">
-                    <img src="~/newdesignstyles/img/logo-sticky.png" width="70" height="36" data-retina="true" alt="" class="logo_normal">
+    <!-- Main navigation -->
+    <header>
+        <!--Navbar-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top -navbar">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="~/mdb/img/logo.png" style="width: 27%;">
                 </a>
-            </div>
-            @*<ul id="top_menu">
-                    <li><a href="#" class="cart-menu-btn" title="Cart"><strong>4</strong></a></li>
-                    <li><a href="" id="sign-in" class="login" title="Sign In">Sign In</a></li>
-                    <li><a href="#" class="wishlist_bt_top" title="Your wishlist">Your wishlist</a></li>
-                </ul>*@
-            <!-- /top_menu -->
-            <a href="#menu" class="btn_mobile">
-                <div class="hamburger hamburger--spin" id="hamburger">
-                    <div class="hamburger-box">
-                        <div class="hamburger-inner"></div>
-                    </div>
-                </div>
-            </a>
-            <nav id="menu" class="main-menu">
-                @*@{Html.RenderAction("ItemsCartViewBindingLayout", "Home");}*@
-                @using MaaAahwanam.Web.Custom
-                <ul>
-                    <li>
-
-                        @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-                        {
-                            var user = (CustomPrincipal)HttpContext.Current.User;
-                            if (user.UserType == "Admin")
+                <div class="collapse navbar-collapse" style="margin-left:40%">
+                   
+                            @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
                             {
-                                Response.Redirect("/Admin/Login");
-                            }
-                            if (user.UserType == "Vendor")
-                            {
-                                //Response.Redirect("/VDashboard/changeid?id=" + user.UserId + "");
-                                Response.Redirect("/Vdb/Index");
-                            }
-                            if (user.UserType == "User")
-                            {
-                        <span><a id="sign-in" style="font-size:16px; font-weight: 700;text-transform:capitalize" class="login">@ViewBag.username</a></span>
-                        <ul>
-                            <li><a href="/Home/SignOut">Log Out</a></li>
-                        </ul>
-                            }
-                        }
-                        else
-                        {
-                        <span><a href="#sign-in-dialog" id="sign-in" style="font-size:16px" class="login" title="Sign In">Login/Register</a></span>
-                        }
-                    </li>
-                    @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
-                    {
-                    <li>
-                        <span> <a class="login" style="font-size:16px; font-weight: 700" href="/cart/Index">Cart(@ViewBag.cartCount)</a> </span>
-                    </li>
-                    }
-                    else
-                    {
-                    <li>
-                        <span><a href="/pregister" style="font-size:16px" title="Partner Registration">Partner Registration</a></span>
-                    </li>
-                    }
-                    <li>
-                        <a href="#0" class="btn_5 add_top_30" style="font-weight: 700">Call: +91 7032199007</a>
-                    </li>
-                    <li><span><img src="http://design.maa-aahwanam.com/panagea/india.png" /></span>
-                </ul>
-            </nav>
-
-        </header>
-        <!-- /header -->
-        <main>            
-            <section class="hero_single version_2">
-                <div class="wrapper">
-                    <div class="container">
-
-                        @*<form method="post">*@
-
-                        @*<div align="left">
-                                <button class="ui violet button"><img class="imgicon" src="~/newdesignstyles/images/venues.png" />Venues</button>
-                                <button class="ui violet button"><img class="imgicon" src="~/newdesignstyles/images/catering.png" />Catering</button>
-                            </div>*@
-
-                        <div class="row no-gutters custom-search-input-2">
-
-                            <div class="col-lg-2">
-                                <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="Location" id="loc" name="loc" value="Hyderabad">
-                                    <img src="http://design.maa-aahwanam.com/panagea/images/icons/location.png">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4">
-                                @*<input class="form-control" type="text" placeholder="What type of event" value="" required="" autocomplete="off">*@
-                                @*<select class="form-control" required id="selectevent" name="selectevent">
-                                        <option value="" disabled selected>Select Event</option>
-                                        <option value="Wedding">Wedding</option>
-                                        <option value="Party">Party</option>
-                                        <option value="Corporate">Corporate</option>
-                                        <option value="Baby Function">Baby Function</option>
-                                        <option value="Birthday">Birthday</option>
-                                        <option value="Engagement">Engagement</option>
-                                        <option value="Other">Other</option>
-                                    </select>*@
-                                <div class="nice-select" tabindex="0" style="background-color: #fff;">
-                                    <span class="current" style="padding-left:20px;font-weight:700;">Select Event</span>
-                                    <ul class="list">
-                                        <li data-value="" class="option disabled">Select Event</li>
-                                        <li data-value="Wedding" class="option selected">Wedding</li>
-                                        <li data-value="Party" class="option">Party</li>
-                                        <li data-value="Corporate" class="option">Corporate</li>
-                                        <li data-value="Baby Function" class="option">Baby Function</li>
-                                        <li data-value="Birthday" class="option">Birthday</li>
-                                        <li data-value="Engagement" class="option">Engagement</li>
-                                        <li data-value="Other" class="option">Other &emsp;<input type="text" id="other"></li>
+                                var user = (CustomPrincipal)HttpContext.Current.User;
+                                if (user.UserType == "Admin")
+                                {
+                                    Response.Redirect("/Admin/Login");
+                                }
+                                if (user.UserType == "Vendor")
+                                {
+                                    Response.Redirect("/Vdb/Index");
+                                }
+                                if (user.UserType == "User")
+                                {
+                                    <span><a id="sign-in" style="font-size:16px; font-weight: 700;text-transform:capitalize" class="login">@ViewBag.username</a></span>
+                                    <ul>
+                                        <li><a href="/Home/SignOut">Log Out</a></li>
                                     </ul>
-                                </div>
-                                <img src="http://design.maa-aahwanam.com/panagea/images/icons/checklist.png">
-                            </div>
-                            <div class="col-lg-2">
-                                <div class="form-group">
-                                    <input class="form-control" type="number" id="guests" name="guests" placeholder="Guests">
-                                    <img src="http://design.maa-aahwanam.com/panagea/images/icons/family.png">
-                                </div>
-                            </div>
-                            <div class="col-lg-2">
-                                <div class="form-group">
-                                    <input class="form-control" id="datetimepicker1" type="text" name="datetimepicker1" placeholder="Date">
-                                    <img src="http://design.maa-aahwanam.com/panagea/images/icons/calendar.png">
-                                </div>
-                            </div>
-                            <div class="col-lg-2">
-                                <input type="submit" id="btnsearch" class="btn_search" value="Search">
-                            </div>
-
-                        </div>
-                        <!-- /row -->
-                        @*</form>*@
+                                }
+                            }
+                            else
+                            {
+                                <a href="" style="font-size: 16px;font-family: lato;font-weight: 600;" data-toggle="modal" data-target="#modalLRForm">Login/Register</a>
+                            }
+                             &nbsp;
+                            @if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+                            {
+                                <a class="login" style="font-size:16px; font-weight: 700" href="/cart/Index">Cart(@ViewBag.cartCount)</a>
+                            }
+                            else
+                            {
+                                <a href="/pregister" style="font-size:16px;font-family: lato" title="Partner Registration">PartnerRegistration</a>
+                            }
+                            &nbsp;
+                            <button type="button" class="btn btn-danger btn-sm waves-effect waves-light" style="font-size:11px;font-weight:800;">
+                                Call: +91 7032199007
+                            </button>
+                        
+                            <img src="~/mdb/img/india.png">
+                        
                     </div>
                 </div>
-            </section>
-            <div class="container-fluid-1 px-0" id="deals">
-                <div class="margin-top-50 margin-bottom-50 themeBgColor text-white deals">
-                    <div class="row mx-0">
-
-
-                    </div>
-                    <div class="container">
-                        <div class="row">
-
-                            <div class="col-12 col-md-12">
-
-                                <div class="row-1">
-                                    <figure>
-                                        <img src="http://design.maa-aahwanam.com/panagea/images/left.png" alt="" width="42" height="42">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                                    </figure>
-                                    <p><img src="http://design.maa-aahwanam.com/panagea/images/wedding.png"><br><br><b>WEDDING</b></p>&emsp;&emsp;&emsp;&emsp;
-                                    <p><img src="http://design.maa-aahwanam.com/panagea/images/DECORATOR2.png"><br><br><b>DECORATOR</b></p>&emsp;&emsp;&emsp;&emsp;
-                                    <p><img src="http://design.maa-aahwanam.com/panagea/images/FLORIST2.png"><br><br><b>FLORIST</b></p>&emsp;&emsp;&emsp;&emsp;
-                                    <p><img src="http://design.maa-aahwanam.com/panagea/images/cocktail.png"><br><br><b>COCKTAIL PARTY</b></p>&emsp;&emsp;&emsp;&emsp;
-                                    <p><img src="http://design.maa-aahwanam.com/panagea/images/enggement.png"><br><br><b>ENGAGEMENT</b></p>&emsp;&emsp;&emsp;&emsp;
-                                    <p><img src="http://design.maa-aahwanam.com/panagea/images/buffet.png"><br><br><b>CATERING</b></p>&emsp;&emsp;&emsp;&emsp;&emsp;
-                                    <figure>
-                                        <img src="http://design.maa-aahwanam.com/panagea/images/right.png" alt="" width="42" height="42">
-                                    </figure>
-                                </div>
-
+        </nav>
+        <!-- Navbar -->
+        <!-- Full Page Intro -->
+        <div class="view container-fluid" style="background-image: url('http://design.maa-aahwanam.com/panagea/images/convention1.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+            <!-- Mask & flexbox options-->
+            <div class="mask rgba-indigo-strong d-flex justify-content-center align-items-center">
+                <!-- Content -->
+                <div class="container">
+                    <!--Grid row-->
+                    <div class="row no-gutters custom-search-input-2">
+                        <div class="col-md-2">
+                            <img src="~/mdb/img/location.png" style="top: 39%;left: 4%;">
+                            <div class="form-group">
+                                <input class="form-control" type="text" placeholder="Location" value="Hyderabad" required="" autocomplete="off">
                             </div>
-
                         </div>
+                        <div class="col-input">
+                            <img src="~/mdb/img/checklist.png" style="top: 39%;left: 4%;">
+                            <input class="form-control" placeholder="What type of event" value="" required="" autocomplete="off">
+                        </div>
+                        <div class="col-md-2">
+                            <img src="~/mdb/img/family.png" style="top: 39%; left: 4%;">
 
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Guests" required="">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <img src="~/mdb/img/calendar.png" style="top: 39%;left: 4%;">
+                            <div class="form-group">
+                                <input class="form-control" id="datetimepicker1" type="text" name="dates" placeholder="Date?" required="">
+                            </div>
+                        </div>
+                        <div class="col-button">
+                            <button type="button" class="btn btn-danger btn-lg waves-effect waves-light" style="width: 107%;margin: 0;height: 100%;font-family: roboto;font-weight: 500;">Search</button>
+                        </div>
                     </div>
-
                 </div>
+                <!--Grid row-->
             </div>
-
-            <!-- /container -->
-            <!-- /bg_color_2 -->
-            <!-- /container -->
-            @*<div class="bg_color_1">
-
-                    <div class="container margin_60_35">
-                        <center><h3><b>HOW IT WORKS</b></h3></center><br>
-                        <div class="row">
-
-                            <div class="col-md-4">
-                                <a href="#0" class="boxed_list">
-                                    <div class="numberCircle"><b>1</b></div>
-                                    <h4>Select a package & Shortlist your venues</h4>
-
-                                </a>
-                            </div>
-                            <div class="col-md-4">
-                                <a href="#0" class="boxed_list">
-                                    <div class="numberCircle"><b>2</b></div>
-                                    <h4>Fill your basic details to block venue</h4>
-
-                                </a>
-                            </div>
-                            <div class="col-md-4">
-                                <a href="#0" class="boxed_list">
-                                    <div class="numberCircle"><b>3</b></div>
-                                    <h4>Pay the final amount & start celebrations</h4>
-
-                                </a>
-                            </div>
-                        </div>
-                        <!-- /row -->
-                    </div>
-                    <!-- /container -->
-                </div>*@
-
-            <div class="bg_color_2">
-
-                <div class="container margin_80_35">
-                    <div class="main_title_2">
-                        <BR><BR><BR><BR>
-                        <h6 class="uk-h6">
-                            <B>HOW IT WORKS</B>
-                        </h6><p>Make A Story Of Painless Celebrations</p>
-                    </div><br><br><br>
-                    <div class="row">
-
-                        <div class="col-md-4">
-                            <a href="#0" class="boxed_list">
-                                <img src="http://design.maa-aahwanam.com/panagea/images/1circle.png">
-                                <h4>Select a package &amp; Shortlist your venues</h4>
-
-                            </a>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="#0" class="boxed_list">
-                                <img src="http://design.maa-aahwanam.com/panagea/images/2circle.png">
-                                <h4>Fill your basic details to block venue</h4>
-
-                            </a>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="#0" class="boxed_list">
-                                <img src="http://design.maa-aahwanam.com/panagea/images/3circle.png">
-                                <h4>Pay the final amount &amp; start celebrations</h4>
-
-                            </a>
-                        </div>
-                    </div>
-                    <!-- /row --><br><br><br>
-                </div>
-                <!-- /container -->
-            </div>
-            <!-- /bg_color_1 -->
-
-
-            <div class="container-fluid_1 margin_80_0_0">
-                <div class="main_title_2">
-                    @*<span><em></em></span>*@
-                    <h6 class="uk-h6">
-                        BEST DEALS FOR YOU
-                    </h6>
-                    <p>Get Best Deals Now From Our Website, Checkout.</p>
-                </div>
-                <div class="container margin_60_35">
-
-                    <div class="wrapper-grid">
-                        <div class="row">
-                            <div class="col-xl-4 col-lg-6 col-md-6">
-                                <div class="box_grid">
-                                    <figure>
-
-                                        <a href="#"><img src="~/newdesignstyles/images/green.jpg" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Read more</span></div></a>
-                                        <small>Upto 30%Off On Luxury Banquet Halls</small>
-                                    </figure>
-
-
-                                </div>
-                            </div>
-                            <!-- /box_grid -->
-
-                            <div class="col-xl-4 col-lg-6 col-md-6">
-                                <div class="box_grid_0">
-                                    <figure>
-
-                                        <a href="#"><img src="~/newdesignstyles/images/banquet.jpg" class="img-fluid" alt="" width="800" height="533"><div class="read_more"></div></a>
-                                        <small>Best Deals From $30 / Plate</small>
-                                    </figure>
-
-
-                                </div>
-                            </div>
-                            <!-- /box_grid -->
-                            <div class="col-xl-4 col-lg-6 col-md-6">
-                                <div class="box_grid">
-                                    <figure>
-
-                                        <a href="#"><img src="~/newdesignstyles/images/convention1.jpg" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Read more</span></div></a>
-                                        <small>Best Deals From $30 / Plate</small>
-                                    </figure>
-
-
-                                </div>
-                            </div>
-                            <!-- /box_grid -->
-                            <div class="col-sm-6">
-                                <div class="box_grid">
-                                    <figure>
-
-                                        <a href="#"><img src="~/newdesignstyles/images/banner1.jpg" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Read more</span></div></a>
-
-                                    </figure>
-
-
-                                </div>
-                            </div>
-                            <!-- /box_grid -->
-                            <div class="col-sm-6">
-                                <div class="box_grid">
-                                    <figure>
-
-                                        <a href="#"><img src="~/newdesignstyles/images/banner3.jpg" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Read more</span></div></a>
-
-                                    </figure>
-
-
-                                </div>
-                            </div>
-                            <!-- /box_grid -->
-
-
-
-
-
-
-                        </div>
-
-
-                        <!-- /row -->
-
-                    </div>
-                    <!-- /wrapper-grid -->
-
-
-
-                </div>
-                <!-- /container -->
-            </div>
-
-        </main>
-        <!-- /main -->
-
-
-        <div class="container-fluid margin_80_0">
-            <div class="main_title_2">
-                <h6 class="uk-h6">
-                    HAND PICKED VENDORS
-                </h6>
-                <p>Get Best Deals Now From Our Website, Checkout.</p>
-            </div>
-            <div class="container margin_60_35">
-
-                <div class="wrapper-grid">
-                    <div class="row">
-                        @foreach (var item in ViewBag.venues)
-                        {
-                        <div class="col-md-4 col-lg-4 col-md-4">
-                            <div class="box_grid">
-                                <figure>
-                                    <a href="/viewservice/index?id=@item.Id&&vid=@item.subid">
-                                        @if (item.logo != null)
-                                            {
-                                            @*<img src="~/vendorimages/@item.logo" class="img-fluid" alt="" width="800" height="533">*@
-                                            <div class="vendorimg" style="background:url('/vendorimages/@item.logo')"></div>
-                                            }
-                                            else if (item.image != null)
-                                            {
-                                            @*<img src="~/vendorimages/@item.image" class="img-fluid" alt="" width="800" height="533">*@
-                                            <div class="vendorimg" style="background:url('/vendorimages/@item.image')"></div>
-                                            }
-                                            else
-                                            {
-                                            @*<img src="~/noimages.png" class="img-fluid" alt="" width="800" height="533">*@
-                                            <div class="vendorimg" style="background:url(/noimages.png)"></div>
-                                            }
-                                        <div class="read_more"></div>  @*<span>Read more</span>*@
-                                    </a>
-                                    <small5>@item.subtype</small5>
-                                </figure>
-                                <div class="wrapper">
-
-                                    <h5 class="uk-h5">@item.BusinessName<p class="p_0">@item.Landmark, @item.City</p></h5>
-                                    <div class="panel panel-default">
-                                        @*<div class="ui segment">*@
-                                        <table class="priceslist">
-                                            <tr>
-                                                @*<td style="border:0px;width:170px"> <a class="ui violet label">@item.subtype</a></td>*@
-                                            </tr>
-                                            <tr>
-                                                <td><p>Veg per plate<span>&emsp;₹<strong>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost1)).Replace(".00", "")</strong></span></p></td>
-                                            </tr>
-                                            <tr>
-                                                <td><p>Non-Veg per plate<span>&emsp;₹<strong>@String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.cost2)).Replace(".00", "")</strong></span></p></td>
-                                            </tr>
-                                        </table>
-                                        @*</div>*@
-                                    </div>
-                                </div>
-                                <ul>
-                                    <li> Capacity : @item.Minimumseatingcapacity - @item.Maximumcapacity</li>
-                                    <li> <a href="/viewservice/index?id=@item.Id&&vid=@item.subid">Book Now </a></li>
-                                    @*<li><div class="score"><span>BOOK NOW</span></div></li>*@
-                                </ul>
-                            </div>
-                        </div>
-                        }
-
-                    </div>
-                    <!-- /row -->
-                </div>
-                <!-- /wrapper-grid -->
-
-                <p class="text-center">
-                    <a href="/results" class="btn_1  add_top_30">
-                        Explore More &emsp;<i class="fa fa-arrow-right" aria-hidden="true"></i>
-                    </a>
-                </p>
-
-            </div>
-            <!-- /container -->
+            <!-- Content -->
         </div>
-        <!-- /container -->
-
-
-
-        <div class="bg_color_2">
-
-
-
-        </div>
-        <!-- /bg_color_2 -->
-        <!-- /container -->
-
-
-
-        <div class="bg_color_1">
-
-
-
-            <div class="container margin_60_35">
-                <div class="main_title_2">
-
-                    <h6 class="uk-h6">
-                        LET'S TALK
-                    </h6>
-                    <p>Get Personalized assistance to help you discover, book sample and supervise your event.</p>
+        <!-- Full Page Intro -->
+    </header>
+    <!-- Main navigation -->
+    <div class="card-block">
+        <div class="row">
+            <div class="col-md-12 featurearea">
+                <img src="~/mdb/img/left.png">&emsp;&emsp;
+                <img src="~/mdb/img/wedding.png">&emsp;&emsp;
+                <img src="~/mdb/img/decorator.png">&emsp;&emsp;
+                <img src="~/mdb/img/florist.png">&emsp;&emsp;
+                <img src="~/mdb/img/cocktail.png">&emsp;&emsp;
+                <img src="~/mdb/img/engagement.png">&emsp;&emsp;
+                <img src="~/mdb/img/buffet.png">&emsp;&emsp;<img src="~/mdb/img/right.png">
+                <div class="row">
+                    <p class="icontext">WEDDING</p>
+                    <p class="icontext1">DECORS</p>
+                    <p class="icontext2">FLORISTS</p>
+                    <p class="icontext3">COCKTAIL</p>
+                    <p class="icontext4">ENGAGEMENT</p>
+                    <p class="icontext5">CATERING</p>
                 </div>
-                <form method="post" action="/Home/SendEmail">
-
-
-                    <div class="row">
-                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;	<div class="ui equal width form">
-                            <div class="fields">
-                                <div class="eight field">
-                                    <label></label>
-                                    <input type="text" id="name" name="name" placeholder="Your name" required>
-                                </div>
-
-                            </div>
-                            <div class="fields">
-                                <div class="field">
-                                    <label></label>
-                                    <input type="number" id="number" name="number" min="0" placeholder="Mobile" required>
-                                </div>
-
-                                <div class="field">
-                                    <label></label>
-                                    <input type="text" id="city" name="city" placeholder="City" required>
-                                </div>
-                            </div>
-                            <div class="fields">
-                                <div class="field">
-                                    <label></label>
-                                    <input type="text" id="eventtype" name="eventtype" placeholder="Event Type" required>
-                                </div>
-
-                                <div class="field">
-                                    <label></label>
-                                    <input type="text" id="datepicker2" name="datepicker2" placeholder="Date" required>
-                                </div>
-                            </div>
-                            <div class="eight field">
-                                <label></label>
-                                <textarea class="form-control" placeholder="Enter Your Requirements" name="Description" id="Description" cols="3" required></textarea>
-                            </div>
-                        </div>
-                        <br>
-
-                    </div>
-                    <p class="text-center">
-                        <button type="submit" value="email" name="command" class="btn_1 add_top_30">Request Call Back</button>
-                        <a href="/results" class="btn_1  add_top_30">
-                            Explore More &emsp;<i class="fa fa-arrow-right" aria-hidden="true"></i>
-                        </a><br><br>Whatsapp or Call Ahwanam.com at 7702053510<br><br>(OR)<br><br>Are you a Vendor?<a href="/pregister">REGISTER</a>
-                    </p>
-
-                </form>
             </div>
-
         </div>
-        <!--/row-->
-        <!-- /bg_color_1 -->
-        @*</main>*@
-        <!-- /main -->
     </div>
-    <!--/footer-->
-    <!-- Sign In Popup -->
-    <div id="sign-in-dialog" class="zoom-anim-dialog mfp-hide ">
-        <div class="overlay" style="display: none;">
-            <div style="left: 50%; top: 50%; position: fixed; transform: translate(-50%, -50%); text-align: center;">
-                <img src="~/CSSWeb/images/Loader.gif" /><br>
-                <p style="color: white; font-style: italic; font-family:serif;" id="loadermsg"></p>
+    <div class="jumbotron">
+        <div class="main_title_2">
+
+            <h6 class="box-h6-2">HOW IT WORKS</h6>
+            <p class="subtext-1">Make A Story Of Painless Celebrations</p>
+        </div><br><br><br>
+        <div class="card-deck" id="home-box">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="amenties" style="font-family: lato;font-size: 16px;font-weight: 600;">Select a package &amp; <br>Shortlist your venues<div id="circle"><div><p class="circle-text">1</p></div></div></h4>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="amenties" style="font-family: lato;font-size: 16px;font-weight: 600;">Fill your basic details<br> to block venue<div id="circle"><div><p class="circle-text">2</p></div></div></h4>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="amenties" style="font-family: lato;font-size: 16px;font-weight: 600;">Pay the final amount <br>& start celebrations<div id="circle"><div><p class="circle-text">3</p></div></div></h4>
+                </div>
             </div>
         </div>
-        <div class="small-dialog-header">
-            <h3>Sign In / Register</h3>
+    </div>
+    <div class="container-fluid_1 margin_80_0_0">
+        <h6 class="box-h6">BEST DEALS FOR YOU</h6>
+        <p class="subtext-1">Get Best Deals Now From Our Website, Checkout.</p>
+        <div class="container margin_60_35">
+            <div class="wrapper-grid">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-6 col-md-6">
+                        <div class="box_grid">
+                            <figure>
+                                <a href="tour-detail.html"><img src="~/mdb/img/green.jpg" class="img-fluid" alt="" width="800" height="533"></a>
+                            </figure>
+                        </div>
+                    </div>
+                    <!-- /box_grid -->
+                    <div class="col-xl-4 col-lg-6 col-md-6">
+                        <div class="box_grid_0">
+                            <figure>
+                                <a href="tour-detail.html"><img src="~/mdb/img/banquet.jpg" class="img-fluid" alt="" width="800" height="533"></a>
+                            </figure>
+                        </div>
+                    </div>
+                    <!-- /box_grid -->
+                    <div class="col-xl-4 col-lg-6 col-md-6">
+                        <div class="box_grid">
+                            <figure>
+                                <a href="tour-detail.html"><img src="~/mdb/img/convention1.jpg" class="img-fluid" alt="" width="800" height="533"></a>
+                            </figure>
+                        </div>
+                    </div>
+                    <!-- /box_grid -->
+                    <div class="col-sm-6">
+                        <div class="box_grid">
+                            <figure>
+                                <a href="tour-detail.html"><img src="~/mdb/img/banner1.jpg" class="img-fluid" alt="" width="800" height="533"><div class="read_more"></div></a>
+                            </figure>
+                        </div>
+                    </div>
+                    <!-- /box_grid -->
+                    <div class="col-sm-6">
+                        <div class="box_grid">
+                            <figure>
+                                <a href="tour-detail.html"><img src="~/mdb/img/banner3.jpg" class="img-fluid" alt="" width="800" height="533"><div class="read_more"></div></a>
+                            </figure>
+                        </div>
+                    </div>
+                    <!-- /box_grid -->
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- /wrapper-grid -->
         </div>
+        <!-- /container -->
+    </div>
+    <div class="bg_color_2">
+        <div class="col-sm-10 col-xs-8 col-md-8" id="packages">
+            <h5 class="box-h5">HAND PICKED VENDORS</h5>
+            <p class="subtext">Get Best Deals Now From Our Website, Checkout.</p>
+
+            <div class="card-deck" id="venues">
+                <div class="card">
+                    <img class="card-img-top" src="~/mdb/img/marriot.jpg" alt="Card image cap">
+                    <div class="row">
+                        <div class="rating">
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="fas fa-star" id="star"></i>
+                            <i class="fas fa-star" id="star"></i>
+                            <i class="fas fa-star" id="star"></i>
+                            <i class="fas fa-star" id="star"></i>
+                            <div id="homelabel">Hotel</div>
+                            <span class="badge badge-default" style="margin-left: -183px;margin-top: 101px;">58 Reviews</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title" id="name">
+                            Marriot Hotel
+                            <i class="fas fa-map-marker-alt" style="color: red;padding-left: 38%;"></i>
+                            Tank Bund, Hyd
+                        </h5>
+                        <div class="row">
+                            <div class="card-text" style="padding-left: 10%;font-size: 11px;font-weight: 800;font-family: lato;margin: 1px;">
+                                Veg/Plate<strike style="color: red;padding-left: 105px;font-size: 11px;font-weight: 800;font-family: roboto;">₹39999</strike><span></span><input type="text" id="placeholder" value="₹79999">
+                                <i class="fas fa-check active" style="margin-left: -16px;color: green;font-size: 11px;"></i>
+                            </div>
+                            <div class="card-text" style="padding-left: 10%;font-size: 11px;font-weight: 800;font-family: lato;margin: 1px;">
+                                Veg/Plate<strike style="color: red;padding-left: 105px;font-size: 11px;font-weight: 800;font-family: roboto;">₹39999</strike><span></span><input type="text" id="placeholder" value="₹79999">
+                                <i class="fas fa-check active" style="margin-left: -16px;color: green;font-size: 11px;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted" id="description">Capacity : 200 - 1500.<a href="#" style="float:right;padding-top: 4px;">Book Now</a></small>
+                    </div>
+                </div>
+                <div class="card">
+
+                    <img class="card-img-top" src="~/mdb/img/taj.jpg" alt="Card image cap">
+                    <div class="row">
+
+                        <div class="rating">
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="fas fa-star" id="star"></i>
+                            <i class="fas fa-star" id="star"></i>
+                            <i class="fas fa-star" id="star"></i>
+                            <i class="fas fa-star" id="star"></i>
+                            <div id="homelabel">Hotel</div>
+                            <span class="badge badge-default" style="margin-left: -183px;margin-top: 101px;">58 Reviews</span>
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title" id="name">
+                            Taj Deccan
+                            <i class="fas fa-map-marker-alt" style="color: red;padding-left: 38%;"></i>
+                            BanjaraHills, Hyd
+                        </h5>
+                        <div class="row">
+                            <div class="card-text" style="padding-left: 10%;font-size: 11px;font-weight: 800;font-family: lato;margin: 1px;">
+                                Veg/Plate<strike style="color: red;padding-left: 105px;font-size: 11px;font-weight: 800;font-family: roboto;">₹39999</strike><span></span><input type="text" id="placeholder" value="₹79999">
+                                <i class="fas fa-check active" style="margin-left: -16px;color: green;font-size: 11px;"></i>
+                            </div>
+                            <div class="card-text" style="padding-left: 10%;font-size: 11px;font-weight: 800;font-family: lato;margin: 1px;">
+                                Veg/Plate<strike style="color: red;padding-left: 105px;font-size: 11px;font-weight: 800;font-family: roboto;">₹39999</strike><span></span><input type="text" id="placeholder" value="₹79999">
+                                <i class="fas fa-check active" style="margin-left: -16px;color: green;font-size: 11px;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted" id="description">Capacity : 200 - 1500.<a href="#" style="float:right;padding-top: 4px;">Book Now</a></small>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="card-img-top" src="~/mdb/img/trident.jpg" alt="Card image cap">
+                    <div class="row">
+
+                        <div class="rating">
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="fas fa-star" id="star"></i>
+                            <i class="fas fa-star" id="star"></i>
+                            <i class="fas fa-star" id="star"></i>
+                            <i class="fas fa-star" id="star"></i>
+                            <div id="homelabel">Hotel</div>
+                            <span class="badge badge-default" style="margin-left: -183px;margin-top: 101px;">58 Reviews</span>
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title" id="name">
+                            Trident Hotel
+                            <i class="fas fa-map-marker-alt" style="color: red;padding-left: 39%;"></i>
+                            Hitechcity, Hyd
+                        </h5>
+                        <div class="row">
+                            <div class="card-text" style="padding-left: 10%;font-size: 11px;font-weight: 800;font-family: lato;margin: 1px;">
+                                Veg/Plate<strike style="color: red;padding-left: 105px;font-size: 11px;font-weight: 800;font-family: roboto;">₹39999</strike><span></span><input type="text" id="placeholder" value="₹79999">
+                                <i class="fas fa-check active" style="margin-left: -16px;color: green;font-size: 11px;"></i>
+                            </div>
+                            <div class="card-text" style="padding-left: 10%;font-size: 11px;font-weight: 800;font-family: lato;margin: 1px;">
+                                Veg/Plate<strike style="color: red;padding-left: 105px;font-size: 11px;font-weight: 800;font-family: roboto;">₹39999</strike><span></span><input type="text" id="placeholder" value="₹79999">
+                                <i class="fas fa-check active" style="margin-left: -16px;color: green;font-size: 11px;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted" id="description">Capacity : 200 - 1500.<a href="#" style="float:right;padding-top: 4px;">Book Now</a></small>
+                    </div>
+                </div>
+            </div>
+
+        </div><br>
+        <a href="/results" class="btn_1  add_top_30">
+            Explore More &emsp;<img src="~/mdb/img/arrow1.png">
+        </a>
+        <br><br>
+    </div>
+
+    <div class="container margin_60_35">
         <form>
-            <div class="sign-in-wrapper">
-                @*<a href="#0" class="social_bt facebook">Login with Facebook</a>
-                    <a href="#0" class="social_bt google">Login with Google</a>
-                    <div class="divider"><span>Or</span></div>*@
-                <div class="authenticationBlocks">
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="text" class="form-control" placeholder="Email ID" name="UserName" id="UserName" />
-
-                        @*<input type="email" class="form-control" name="email" id="email">*@
-                        <i class="icon_mail_alt"></i>
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="Password" class="form-control" placeholder="Password" name="Password1" id="Password1" />
-
-                        @*<input type="password" class="form-control" name="password" id="password" value="">*@
-                        <i class="icon_lock_alt"></i>
-                    </div>
-                    <div class="clearfix add_bottom_15">
-                        @*<div class="checkboxes float-left">
-                                <label class="container_check">
-                                    Remember me
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>*@
-                        <div class="float-right mt-1"><a id="forgot" href="javascript:void(0);">Forgot Password?</a></div>
-                    </div>
-                    <div class="text-center"><input type="button" value="Login" onclick="login(this.value)" class="btn_1 full-width" style="margin:0" name="command"></div>
-
-                    <div class="text-center">
-                        Don’t have an account? <a id="signup" class="registerBtn" href="javascript:void(0);">Sign up</a>
-                    </div>
-                    @*<p style="margin-left: 72px;">
-                        <button class="btn btn-primary text-white text-center" onclick="fbLogin()"><i class="fa fa-facebook mr-2" aria-hidden="true"></i> Login with Facebook</button>
-                            </p><p style="margin-left: 82px;">
-                        <button class="btn btn-primary text-white text-center" id="GoogleLogin" onclick="glogin()"><i class="fa fa-google mr-2" aria-hidden="true"></i> Login with Gmail</button>
-                        </p>*@
-                </div>
-                @*<div class="float-right mt-1 registerBtn"><a id="signup" href="javascript:void(0);">Sign up</a></div>*@
-                <div id="forgot_pw" class="forgotks" style="min-height: 290px;">
-                    <div class="form-group">
-                        <label>Please confirm login email below</label>
-                        <input type="email" class="form-control" name="email_forgot" id="email_forgot">
-                        <i class="icon_mail_alt"></i>
-                    </div>
-                    <p>You will receive an email containing a link allowing you to reset your password to a new preferred one.</p>
-                    <div class="text-center"><input type="button" value="Reset Password" onclick="forgot(this.value)" class="btn_1 full-width" style="margin:0" name="command"></div>
-                    <div class="float-right mt-1"><a id="forgot" class="loginBtn" href="javascript:void(0);">Login</a></div>
-
-                </div>
-                <div id="signup" class="register">
-
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" class="form-control" name="txtname" id="txtname" placeholder="Enter your Name">
-                        <i class="icon-user"></i>
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" class="form-control" name="Password" minlength="5" id="Password" placeholder="Enter your Password">
-                        <i class="icon_lock_alt"></i>
-                    </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" class="form-control" name="Email" id="txtemail" placeholder="Enter your Email ID">
-                        <i class="icon_mail_alt"></i>
-                    </div>
-                    <div class="form-group">
-                        <label>Phone Number</label>
-                        <input type="text" pattern="^\d{10}$" style="padding-left:80px;" class="form-control" id="txtphone">
-                        <i class="icon_phone"></i>
-                    </div>
-                    <span id="error-msg" style="color:red"></span>
-
-
-                    <p>You will receive an email containing a link allowing you to activate</p>
-                    <div class="float-right mt-1"><a id="signin" class="loginBtn" href="javascript:void(0);">Login</a></div>
-
-                    <div class="text-center"><input type="button" id="btnregister" value="Register" style="padding:16px 26px" onclick="savecustomer(this.value)" class="btn btn-danger" disabled></div> @*class="btn_1" *@
-
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <input type="email" class="form-page" id="inputEmail4" placeholder="Email">
                 </div>
             </div>
         </form>
-        <!--form -->
     </div>
-    <!-- /Sign In Popup -->
-    <div id="toTop"></div><!-- Back to top button -->
-    <!-- COMMON SCRIPTS -->
-    <script src="~/newdesignstyles/Scripts/jquery-2.2.4.min.js"></script>
-    <script src="~/newdesignstyles/Scripts/common_scripts.js"></script>
-    <script src="~/newdesignstyles/Scripts/main.js"></script>
 
-    <!-- DATEPICKER  -->
-    <script src="~/newdesignstyles/Scripts/moment.min.js"></script>
-    <script src="~/newdesignstyles/Scripts/daterangepicker.js"></script>
-    <script src="~/Scripts/fauth.js"></script>
-    <script src="~/newdesignstyles/Scripts/intlTelInput.js"></script>
-    <script>
-        var input = document.querySelector("#txtphone"), errorMsg = document.querySelector("#error-msg");
-        var iti = window.intlTelInput(input, {
-            initialCountry: "auto",
-            geoIpLookup: function (success, failure) {
-                
-                $.get("https://ipinfo.io", function () { }, "jsonp").always(function (resp) {
-                    var countryCode = (resp && resp.country) ? resp.country : "";
-                    success(countryCode);
-                });
-            },
-            utilsScript: "newdesignstyles/Scripts/utils.js",
-        });
+    <!-- Full Height Modal Right -->
+    <!--Modal: Login / Register Form-->
+    <div class="modal fade" id="modalLRForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog cascading-modal" role="document">
+            <!--Content-->
+            <div class="modal-content">
 
-        var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+                <!--Modal cascading tabs-->
+                <div class="modal-c-tabs">
+                    
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs md-tabs tabs-2 light-blue darken-3" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#panel7" role="tab">
+                                <i class="fa fa-user mr-1"></i>
+                                Login
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#panel8" role="tab">
+                                <i class="fa fa-user-plus mr-1"></i>
+                                Register
+                            </a>
+                        </li>
+                    </ul>
+                    
+                        <!-- Tab panels -->
+                        <div class="tab-content">
+                            <!--Panel 7-->
+                            <div class="login tab-pane fade in show active" id="panel7" role="tabpanel">
+                                <form method="post" action="home/Authentication?type=login">
+                                    <!--Body-->
+                                    <div class="modal-body mb-1">
+                                        <div class="md-form form-sm mb-5">
+                                            <i class="fa fa-envelope prefix"></i>
+                                            <input type="email" id="Item1_UserName" name="Item1.UserName" class="form-control form-control-sm validate" required>
+                                            <label data-error="wrong" data-success="right" for="Item1_UserName">Your email</label>
+                                        </div>
 
-        input.addEventListener('blur', function () {
-            reset();
-            if (input.value.trim()) {
-                if (iti.isValidNumber()) {
-                    //validMsg.classList.remove("hide");
-                    $('#btnregister').removeAttr('disabled');
-                } else {
-                    input.classList.add("error");
-                    var errorCode = iti.getValidationError();
-                    errorMsg.innerHTML = errorMap[errorCode];
-                    errorMsg.classList.remove("hide");
-                }
-            }
-        });
+                                        <div class="md-form form-sm mb-4">
+                                            <i class="fa fa-lock prefix"></i>
+                                            <input type="password" id="Item1_Password" name="Item1.Password" class="form-control form-control-sm validate" required>
+                                            <label data-error="wrong" data-success="right" for="Item1_Password">Your password</label>
+                                        </div>
+                                        <div class="text-center mt-2">
+                                            <button type="submit" id="btnlogin" class="btn btn-info">Log in <i class="fa  fa-arrow-circle-right" aria-hidden="true"></i></button>
+                                        </div>
+                                    </div>
+                                    
+                                    <!--Footer-->
+                                    <div class="modal-footer">
+                                        <div class="options text-center text-md-right mt-1">
+                                            @*<p>Not a member? <a href="#panel8" class="blue-text">Sign Up</a></p>*@
+                                            <p>Forgot <a href="#" class="blue-text">Password?</a></p>
+                                        </div>
+                                        <button type="button" class="btn btn-danger waves-effect ml-auto" data-dismiss="modal">Close</button>
+                                    </div>
+                                    </form>
+                            </div>
+                            <!--/.Panel 7-->
+                            <!--Panel 8-->
+                            <div class="register tab-pane fade" id="panel8" role="tabpanel">
+                                <form method="post" action="home/Authentication?type=register">
+                                    <!--Body-->
+                                    <div class="modal-body">
+                                        <div class="md-form form-sm mb-5">
+                                            <i class="fa fa-user prefix"></i>
+                                            <input type="text" id="Item2_FirstName" name="Item2.FirstName" class="form-control form-control-sm validate" required>
+                                            <label data-error="wrong" data-success="right" for="Item2_FirstName">Your Name</label>
+                                        </div>
 
-        var reset = function () {
-            input.classList.remove("error");
-            errorMsg.innerHTML = "";
-            errorMsg.classList.add("hide");
-        };
+                                        <div class="md-form form-sm mb-5">
+                                            <i class="fa fa-envelope prefix"></i>
+                                            <input type="email" id="Item1_UserName" name="Item1.UserName" class="form-control form-control-sm validate" required>
+                                            <label data-error="wrong" data-success="right" for="Item1_UserName">Your email</label>
+                                        </div>
 
-    </script>
+                                        <div class="md-form form-sm mb-5">
+                                            <i class="fa fa-lock prefix"></i>
+                                            <input type="password" id="Item1_Password" name="Item1.Password" class="form-control form-control-sm validate" required>
+                                            <label data-error="wrong" data-success="right" for="Item1_Password">Your password</label>
+                                        </div>
 
-    @*gmail login*@
-    <script src="~/Scripts/gauth.js"></script>
-    <script>
-        $('#datetimepicker1,#datepicker2').daterangepicker({
-            singleDatePicker: true,
-            minDate: new Date(),
-            locale: {
-                format: 'DD/MM/YYYY'
-            }
-        });
-    </script>
-    <script src="~/Scripts/auth.js"></script>
+                                        <div class="md-form form-sm mb-4">
+                                            <i class="fa fa-mobile prefix"></i>
+                                            <input type="tel" id="Item2_UserPhone" name="Item2.UserPhone" class="form-control form-control-sm validate" required>
+                                            <label data-error="wrong" data-success="right" for="Item2_UserPhone">Phone Number</label>
+                                        </div>
 
-    <!-- semantic -->
-    <script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.js"></script>
-    <script type="text/javascript" src="~/newdesignstyles/Scripts/semantic.min.js"></script>
+                                        <div class="text-center form-sm mt-2">
+                                            <button type="submit" id="btnregister" class="btn btn-info">Sign up <i class="fa fa-arrow-circle-right"></i></button>
+                                        </div>
 
-    <!--Start of Tawk.to Script-->
-    <script type="text/javascript">
-        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-        (function () {
-            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-            s1.async = true;
-            s1.src = 'https://embed.tawk.to/5b7e7e93afc2c34e96e7d2fe/default';
-            s1.charset = 'UTF-8';
-            s1.setAttribute('crossorigin', '*');
-            s0.parentNode.insertBefore(s1, s0);
-        })();
-    </script>
-    <!--End of Tawk.to Script-->
+                                    </div>
+                                    <!--Footer-->
+                                    <div class="modal-footer">
+                                        <div class="options text-right">
+                                            @*<p class="pt-1">Already have an account? <a href="#panel7" class="blue-text">Log In</a></p>*@
+                                        </div>
+                                        <button type="button" class="btn btn-danger waves-effect ml-auto" data-dismiss="modal">Close</button>
+                                    </div>
+                                    </form>
+                                </div>
+                            <!--/.Panel 8-->
+                        </div>
+                </div>
+            </div>
+            <!--/.Content-->
+        </div>
+    </div>
+    <!--Modal: Login / Register Form-->
+
+    <div class="text-center">
+        <a href="" class="btn btn-default btn-rounded my-3" data-toggle="modal" data-target="#modalLRForm">
+            Launch
+            Modal LogIn/Register
+        </a>
+    </div>
+    <!-- Full Height Modal Right -->
+    <!-- /Start your project here-->
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="~/mdb/js/jquery-3.3.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="~/mdb/js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="~/mdb/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="~/mdb/js/mdb.min.js"></script>
+    
 </body>
 </html>
