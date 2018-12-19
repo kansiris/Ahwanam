@@ -94,6 +94,8 @@ namespace MaaAahwanam.Web.Controllers
             return list;
         }
 
+        #region extra code
+
         public List<searchresults> allvendors(int count, string[] selectedservices, string command, int takecount)
         {
             VenorVenueSignUpService vendorVenueSignUpService = new VenorVenueSignUpService();
@@ -189,6 +191,8 @@ namespace MaaAahwanam.Web.Controllers
             }
             return type;
         }
+
+        #endregion
 
         public void SendEmail(string type, string count, string loc, string eventtype, string date)
         {
