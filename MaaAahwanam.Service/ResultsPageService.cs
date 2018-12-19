@@ -17,6 +17,10 @@ namespace MaaAahwanam.Service
         {
             return resultsPageRepository.GetAllVendors(type);
         }
+        public List<GetFilteredVendors_Result> GetVendorsByName(string type, string name)
+        {
+            return resultsPageRepository.GetVendorsByName(type, name);
+        }
         public Vendormaster GetVendorByEmail(string emailid)
         {
             return resultsPageRepository.GetVendorByEmail(emailid);

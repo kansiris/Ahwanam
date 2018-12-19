@@ -707,5 +707,18 @@ namespace MaaAahwanam.Repository
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_customers_Result>("sp_customers");
         }
+    
+        public virtual ObjectResult<GetFilteredVendors_Result> GetFilteredVendors(string type, string name)
+        {
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetFilteredVendors_Result>("GetFilteredVendors", typeParameter, nameParameter);
+        }
     }
 }

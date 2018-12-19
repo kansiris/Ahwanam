@@ -34,5 +34,6 @@ namespace MaaAahwanam.Models
         public string Error_Description { get; set; }
         public string Payment_Status { get; set; }
         public string Gateway_ID { get; set; }
+        public string Cancellation_Amount { get; set; }
     }
 }
