@@ -245,6 +245,8 @@ namespace MaaAahwanam.Web.Controllers
                         ViewBag.userid = userResponse1.UserLoginId;
                         if (userResponse1.UserType == "Vendor")
                             return RedirectToAction("Index", "vdb");
+                        else if (userResponse1.UserType == "Admin")
+                            return RedirectToAction("Login", "Admin");
                         else if(userResponse1.UserType == "User")
                             return RedirectToAction("Index", "Home");
                     }

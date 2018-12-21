@@ -130,8 +130,8 @@ namespace MaaAahwanam.Web.Controllers
                         }
                     }                   
                         var disctype = payments.DiscountType;
-                            var disc = Convert.ToInt32(payments.Discount);
-                            if (disc != 0)
+                    var disc = int.Parse(payments.Discount);
+                            if (disc != 0 )
                             {
                                 decimal discount = 0;
                                 if (disctype == "Percentage %")
