@@ -140,17 +140,17 @@ $('#SaveVendor').click(function () {
     else if (phoneno == '') { alert('Enter Phone Number'); $('#phoneno').focus(); }
     else if (phoneno.length < 10) { alert('Enter 10 digits only'); $('#phoneno').focus(); }
     else if (!phonenopattern.test(phoneno)) { alert("Please Enter 10 digit Phone Number "); $("#phoneno").focus(); }
-    else if (adress1 == '') { alert('Enter Supplier Flat Number'); $('#adress1').focus(); }
-    else if (adress2 == '') { alert('Enter Supplier Locality'); $('#adress2').focus(); }
-    else if (pin_code == '') { alert('Enter Pin Code'); $('#pin_code').focus(); }
-    else if (pin_code.length < 6) { alert('Enter 6 digits only'); $('#pin_code').focus(); }
-    else if (!pincodepattern.test(pin_code)) { alert("Please Enter 6 digit Pincode "); $("#pin_code").focus(); }
-    else if (city == '') { alert('Enter City Name'); $('#city').focus(); }
-    else if (!cpattren.test(city)) { alert("Enter only alphabates"); $("#city").focus(); }
-    else if (state == '') { alert('Enter State Name'); $('#state').focus(); }
-    else if (!spattren.test(state)) { alert("Enter only alphabates"); $("#state").focus(); }
-    else if (country == '') { alert('Enter Country Name'); $('#country').focus(); }
-    else if (!countrypattren.test(country)) { alert("Enter only alphabates"); $("#country").focus(); }
+    //else if (adress1 == '') { alert('Enter Supplier Flat Number'); $('#adress1').focus(); }
+    //else if (adress2 == '') { alert('Enter Supplier Locality'); $('#adress2').focus(); }
+    //else if (pin_code == '') { alert('Enter Pin Code'); $('#pin_code').focus(); }
+    //else if (pin_code.length < 6) { alert('Enter 6 digits only'); $('#pin_code').focus(); }
+    //else if (!pincodepattern.test(pin_code)) { alert("Please Enter 6 digit Pincode "); $("#pin_code").focus(); }
+    //else if (city == '') { alert('Enter City Name'); $('#city').focus(); }
+    //else if (!cpattren.test(city)) { alert("Enter only alphabates"); $("#city").focus(); }
+    //else if (state == '') { alert('Enter State Name'); $('#state').focus(); }
+    //else if (!spattren.test(state)) { alert("Enter only alphabates"); $("#state").focus(); }
+    //else if (country == '') { alert('Enter Country Name'); $('#country').focus(); }
+    //else if (!countrypattren.test(country)) { alert("Enter only alphabates"); $("#country").focus(); }
     else {
         var managevendor = {
             vendorId: $('#vendorId').val(),
@@ -224,17 +224,17 @@ $('#EditVendor').click(function () {
     else if (phoneno == '') { alert('Enter Phone Number'); $('#phoneno').focus(); }
     else if (phoneno.length < 10) { alert('Enter 10 digits only'); $('#phoneno').focus(); }
     else if (!phonenopattern.test(phoneno)) { alert("Please Enter 10 digit Phone Number "); $("#phoneno").focus(); }
-    else if (adress1 == '') { alert('Enter Supplier Flat Number'); $('#adress1').focus(); }
-    else if (adress2 == '') { alert('Enter Supplier Locality'); $('#adress2').focus(); }
-    else if (pin_code == '') { alert('Enter Pin Code'); $('#pin_code').focus(); }
-    else if (pin_code.length < 6) { alert('Enter 6 digits only'); $('#pin_code').focus(); }
-    else if (!pincodepattern.test(pin_code)) { alert("Please Enter 6 digit Pincode "); $("#pin_code").focus(); }
-    else if (city == '') { alert('Enter City Name'); $('#city').focus(); }
-    else if (!cpattren.test(city)) { alert("Enter only alphabates"); $("#city").focus(); }
-    else if (state == '') { alert('Enter State Name'); $('#state').focus(); }
-    else if (!spattren.test(state)) { alert("Enter only alphabates"); $("#state").focus(); }
-    else if (country == '') { alert('Enter Country Name'); $('#country').focus(); }
-    else if (!countrypattren.test(country)) { alert("Enter only alphabates"); $("#country").focus(); }
+    //else if (adress1 == '') { alert('Enter Supplier Flat Number'); $('#adress1').focus(); }
+    //else if (adress2 == '') { alert('Enter Supplier Locality'); $('#adress2').focus(); }
+    //else if (pin_code == '') { alert('Enter Pin Code'); $('#pin_code').focus(); }
+    //else if (pin_code.length < 6) { alert('Enter 6 digits only'); $('#pin_code').focus(); }
+    //else if (!pincodepattern.test(pin_code)) { alert("Please Enter 6 digit Pincode "); $("#pin_code").focus(); }
+    //else if (city == '') { alert('Enter City Name'); $('#city').focus(); }
+    //else if (!cpattren.test(city)) { alert("Enter only alphabates"); $("#city").focus(); }
+    //else if (state == '') { alert('Enter State Name'); $('#state').focus(); }
+    //else if (!spattren.test(state)) { alert("Enter only alphabates"); $("#state").focus(); }
+    //else if (country == '') { alert('Enter Country Name'); $('#country').focus(); }
+    //else if (!countrypattren.test(country)) { alert("Enter only alphabates"); $("#country").focus(); }
     else {
         var managevendor = {
             Businessname: $('#Businessname').val(),
