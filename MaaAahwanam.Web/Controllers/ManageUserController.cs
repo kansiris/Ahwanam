@@ -223,7 +223,7 @@ namespace MaaAahwanam.Web.Controllers
                     totalprice = Convert.ToString(tprice * Convert.ToInt16(booknowinfo.guest));
                 }
             }
-                Order order = new Order();
+            Order order = new Order();
             order.TotalPrice = Convert.ToDecimal(totalprice);
             order.OrderDate = Convert.ToDateTime(updateddate); //Convert.ToDateTime(bookeddate);
             order.UpdatedBy = long.Parse(booknowinfo.vid);
@@ -263,25 +263,26 @@ namespace MaaAahwanam.Web.Controllers
                 for (int j = 0; j < date1.Count(); j++)
                 {
                     if (date1[j].Split('~')[1] == data.VendorSubId.ToString())
-                    {var allto = alltprice1[j].Split('₹')[1].ToString();
-                       
+                    {
+                        var allto = alltprice1[j].Split('₹')[1].ToString();
+
                         if (allto.Split('~')[0].ToString() == null || allto.Split('~')[0].ToString() == "") { data.price1 = "0"; } else { data.price1 = allto.Split('~')[0].ToString(); }
-                        if (alldiscounttype1[j].Split('~')[0] == null|| alldiscounttype1[j].Split('~')[0] == "") { data.price2 = "0"; } else { data.price2 = alldiscounttype1[j].Split('~')[0]; }
-                        if (discountprice1[j].Split('~')[0] == null|| discountprice1[j].Split('~')[0] == "") { data.price3 = "0"; } else { data.price3 = discountprice1[j].Split('~')[0]; }
-                        if (fpkgprice1[j].Split('~')[0] == null|| fpkgprice1[j].Split('~')[0] == "") { data.price4 = "0"; } else { data.price4 = fpkgprice1[j].Split('~')[0]; }
+                        if (alldiscounttype1[j].Split('~')[0] == null || alldiscounttype1[j].Split('~')[0] == "") { data.price2 = "0"; } else { data.price2 = alldiscounttype1[j].Split('~')[0]; }
+                        if (discountprice1[j].Split('~')[0] == null || discountprice1[j].Split('~')[0] == "") { data.price3 = "0"; } else { data.price3 = discountprice1[j].Split('~')[0]; }
+                        if (fpkgprice1[j].Split('~')[0] == null || fpkgprice1[j].Split('~')[0] == "") { data.price4 = "0"; } else { data.price4 = fpkgprice1[j].Split('~')[0]; }
                         data.UpdatedDate = Convert.ToDateTime(date1[j].Split('~')[0]);
                         data.timeslot = timeslot1[j].Split('~')[0];
                     }
                 }
 
-               // data.UpdatedDate = Convert.ToDateTime(date1[i].Split('~')[0]);
+                // data.UpdatedDate = Convert.ToDateTime(date1[i].Split('~')[0]);
                 //data.timeslot = timeslot1[i].Split('~')[0];
-               
+
                 orderDetail.OrderId = order.OrderId;
                 orderDetail.OrderBy = long.Parse(booknowinfo.uid);
                 orderDetail.PaymentId = '1';
                 orderDetail.ServiceType = type;
-          //      orderDetail.ServicePrice = Convert.ToDecimal(price);
+                //      orderDetail.ServicePrice = Convert.ToDecimal(price);
                 orderDetail.attribute = data.timeslot;
                 orderDetail.TotalPrice = (Convert.ToDecimal(data.price1));
                 orderDetail.ServicePrice = Convert.ToDecimal(data.price4);
@@ -309,73 +310,73 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.EventType = etype1;
                 orderDetail.ServiceType = data.VendorType;
                 orderDetail.DealId = long.Parse(pkgs[i]);
-                orderDetail =   newmanageuse.SaveOrderDetail(orderDetail);
+                orderDetail = newmanageuse.SaveOrderDetail(orderDetail);
             }
             var userlogdetails = mnguserservice.getuserbyid(userid);
-    string txtto = userlogdetails.email;
-    string name = userlogdetails.firstname;
-    name = home.Capitalise(name);
+            string txtto = userlogdetails.email;
+            string name = userlogdetails.firstname;
+            name = home.Capitalise(name);
             string OrderId = Convert.ToString(order.OrderId);
-    StringBuilder cds = new StringBuilder();
-    cds.Append("<table style='border:1px black solid;'><tbody>");
+            StringBuilder cds = new StringBuilder();
+            cds.Append("<table style='border:1px black solid;'><tbody>");
             cds.Append("<tr><td>Order Id</td><td>Order Date</td><td> Event Type </td><td> Quantity</td><td>Perunit Price</td><td>Total Price</td></tr>");
-            cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + orderDetail.BookedDate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + orderDetail.EventType + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderDetail.Quantity + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + orderDetail.PerunitPrice+ " </td><td style = 'width: 50px;border: 1px black solid;'> " +orderDetail.TotalPrice+ " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+            cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + orderDetail.BookedDate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + orderDetail.EventType + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderDetail.Quantity + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + orderDetail.PerunitPrice + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderDetail.TotalPrice + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
             cds.Append("</tbody></table>");
             string url = Request.Url.Scheme + "://" + Request.Url.Authority;
-    FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
-    string readFile = File.OpenText().ReadToEnd();
-    readFile = readFile.Replace("[ActivationLink]", url);
+            FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/order.html"));
+            string readFile = File.OpenText().ReadToEnd();
+            readFile = readFile.Replace("[ActivationLink]", url);
             readFile = readFile.Replace("[name]", name);
             readFile = readFile.Replace("[orderid]", OrderId);
             readFile = readFile.Replace("[table]", cds.ToString());
             string txtmessage = readFile;//readFile + body;
-    string subj = "Thanks for your order";
-    EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
-    emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj, null);
+            string subj = "Thanks for your order";
+            EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
+            emailSendingUtility.Email_maaaahwanam(txtto, txtmessage, subj, null);
             //emailSendingUtility.Email_maaaahwanam("seema@xsilica.com ", txtmessage, subj);
             string targetmails = "lakshmi.p@xsilica.com,seema.g@xsilica.com,rameshsai@xsilica.com";
-    emailSendingUtility.Email_maaaahwanam(targetmails, txtmessage, subj, null);
+            emailSendingUtility.Email_maaaahwanam(targetmails, txtmessage, subj, null);
 
             var vendordetails = newmanageuse.getvendor(Convert.ToInt32(booknowinfo.vid));
 
-    string txtto1 = vendordetails.EmailId;
-    string vname = vendordetails.BusinessName;
-    vname = home.Capitalise(vname);
+            string txtto1 = vendordetails.EmailId;
+            string vname = vendordetails.BusinessName;
+            vname = home.Capitalise(vname);
             StringBuilder cds2 = new StringBuilder();
-    cds2.Append("<table style='border:1px black solid;'><tbody>");
+            cds2.Append("<table style='border:1px black solid;'><tbody>");
             cds2.Append("<tr><td>Order Id</td><td>Order Date</td><td>Customer Name</td><td>Customer Phone Number</td><td>flatno</td><td>Locality</td></tr>");
             cds2.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderDate + "</td><td style = 'width: 75px;border: 1px black solid;'> " + userlogdetails.firstname + " " + userlogdetails.lastname + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.phoneno + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress1 + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress2 + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
             cds2.Append("</tbody></table>");
             string url1 = Request.Url.Scheme + "://" + Request.Url.Authority;
-    FileInfo file1 = new FileInfo(Server.MapPath("/mailtemplate/vorder.html"));
-    string readfile1 = file1.OpenText().ReadToEnd();
-    readfile1 = readfile1.Replace("[ActivationLink]", url1);
+            FileInfo file1 = new FileInfo(Server.MapPath("/mailtemplate/vorder.html"));
+            string readfile1 = file1.OpenText().ReadToEnd();
+            readfile1 = readfile1.Replace("[ActivationLink]", url1);
             readfile1 = readfile1.Replace("[name]", name);
             readfile1 = readfile1.Replace("[vname]", vname);
             readfile1 = readfile1.Replace("[msg]", cds2.ToString());
             readfile1 = readfile1.Replace("[orderid]", OrderId);
             string txtmessage1 = readfile1;
-    string subj1 = "order has been placed";
-    emailSendingUtility.Email_maaaahwanam(txtto1, txtmessage1, subj1, null);
+            string subj1 = "order has been placed";
+            emailSendingUtility.Email_maaaahwanam(txtto1, txtmessage1, subj1, null);
             string msg = OrderId;
 
 
             return Json(msg, JsonRequestBehavior.AllowGet);
-}
+        }
 
 
         [HttpPost]
         public JsonResult booknowss(string loc, string eventtype, string guest, string date, string pid, string vid, string selectedp,
             string businessname, string firstname, string lastname, string email, string phoneno, string adress1, string adress2, string city, string state,
-            string country, string pincode, string Status, string ctype,string timeslot)
+            string country, string pincode, string Status, string ctype, string timeslot)
         {
             string msg; string totalprice = ""; int price;
             if (Status != "InActive")
             {
 
-             
-               
-             
+
+
+
                 string type = "";
                 string etype1 = "";
                 DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
@@ -384,8 +385,8 @@ namespace MaaAahwanam.Web.Controllers
                 List<string> sdate = new List<string>();
                 List<string> stimeslot = new List<string>();
                 List<SPGETpartpkg_Result> package = new List<SPGETpartpkg_Result>();
-             
-                    var pkgs = pid.Split(',');
+
+                var pkgs = pid.Split(',');
                 for (int i = 0; i < pkgs.Count(); i++)
                 {
 
@@ -512,7 +513,7 @@ namespace MaaAahwanam.Web.Controllers
                 cds.Append("<table style='border:1px black solid;'><tbody>");
                 cds.Append("<tr><td>Order Id</td><td>Order Date</td><td> Event Type </td><td> Quantity</td><td>Perunit Price</td><td>Total Price</td></tr>");
 
-                cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + orderDetail1.BookedDate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + orderDetail1.EventType+ " </td><td style = 'width: 50px;border: 1px black solid;'> " +orderDetail1.Quantity + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + orderDetail1.PerunitPrice + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderDetail1.TotalPrice + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+                cds.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;' > " + orderDetail1.BookedDate + " </td><td style = 'width: 75px;border: 1px black solid;'> " + orderDetail1.EventType + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderDetail1.Quantity + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + orderDetail1.PerunitPrice + " </td><td style = 'width: 50px;border: 1px black solid;'> " + orderDetail1.TotalPrice + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
 
                 cds.Append("</tbody></table>");
                 string url = Request.Url.Scheme + "://" + Request.Url.Authority;
@@ -538,7 +539,7 @@ namespace MaaAahwanam.Web.Controllers
                 StringBuilder cds2 = new StringBuilder();
                 cds2.Append("<table style='border:1px black solid;'><tbody>");
                 cds2.Append("<tr><td>Order Id</td><td>Order Date</td><td>Customer Name</td><td>Customer Phone Number</td><td>flatno</td><td>Locality</td></tr>");
-                cds2.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderDate+ "</td><td style = 'width: 75px;border: 1px black solid;'> " + userlogdetails.firstname + " " + userlogdetails.lastname + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.phoneno + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress1 + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress2 + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
+                cds2.Append("<tr><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderId + "</td><td style = 'width: 75px;border: 1px black solid;'> " + order.OrderDate + "</td><td style = 'width: 75px;border: 1px black solid;'> " + userlogdetails.firstname + " " + userlogdetails.lastname + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.phoneno + " </td> <td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress1 + " </td><td style = 'width: 50px;border: 1px black solid;'> " + userlogdetails.adress2 + " </td></tr>");  //<td style = 'width: 50px;border: 2px black solid;'> " + item.eventstartdate + " </td><td> date </td>
                 cds2.Append("</tbody></table>");
                 string url1 = Request.Url.Scheme + "://" + Request.Url.Authority;
                 FileInfo file1 = new FileInfo(Server.MapPath("/mailtemplate/vorder.html"));
@@ -561,7 +562,7 @@ namespace MaaAahwanam.Web.Controllers
         }
 
 
-       
+
 
         public ActionResult orderdetails(string select, string packageid, string date, string timeslot)
         {
@@ -573,7 +574,7 @@ namespace MaaAahwanam.Web.Controllers
                     string uid = user.UserId.ToString();
                     string vemail = newmanageuse.Getusername(long.Parse(uid));
                     vendorMaster = newmanageuse.GetVendorByEmail(vemail);
-                   var VendorId = vendorMaster.Id.ToString();
+                    var VendorId = vendorMaster.Id.ToString();
 
                     List<string> sdate = new List<string>();
                     List<string> stimeslot = new List<string>();
@@ -603,8 +604,9 @@ namespace MaaAahwanam.Web.Controllers
                                 data.UpdatedDate = Convert.ToDateTime(date1[j].Split('~')[0]);
                                 data.timeslot = timeslot1[j].Split('~')[0];
                             }
-                            else {
-                              //  data.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+                            else
+                            {
+                                //  data.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
                                 data.timeslot = "";
 
                             }
@@ -616,7 +618,7 @@ namespace MaaAahwanam.Web.Controllers
                     ViewBag.package = package;
                     ViewBag.tprice = tot;
                     ViewBag.gtot = gtot;
-                   
+
                 }
             }
             return View("orderdetails");
