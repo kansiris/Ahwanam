@@ -165,34 +165,34 @@
                                         </thead>
                                         <tbody>
 
-                                            @foreach (var item in ViewBag.orderdetails)
-                                            {
-
-                                                <tr class="recordsection">
-                                                    <td><input type="checkbox" class="chcktblservice" /></td>
-                                                    <td class="detailid"> @item.orderdetailedid </td>
-                                                    <td class="text-center">@item.ServicType</td>
-                                                    <td class="text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.perunitprice)).Replace(".00", "")</td>
-                                                    <td class="text-center">@item.guestno</td>
-                                                    <td class="sbaldue text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.Due)).Replace(".00", "")</td>
-                                                    <td class="tsamnt text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalpric1)).Replace(".00", "")</td>
-                                                    <td class="text-center">
-                                                        @if (ViewBag.discount[count] != null)
-                                                        {
-                                                            @*@(++count)*@
-                                                            <label>
-                                                                Discount Type : @ViewBag.discount[count].Split(new char[] { '!' })[0]<br />
-                                                                Discount : @ViewBag.discount[count].Split(new char[] { '!' })[1]
-                                                            </label>                                                                        }
-                                                        else
-                                                        {
-                                                            <select name="DiscountType" id="DiscountType" class="selectdiscount" style="font-size: 11px;" disabled>
-                                                                <option value="select">Select Discount Type</option>
-                                                                <option value="Percentage %">Percentage %</option>
-                                                                <option value="Flat Rate ₹">Flat Rate ₹</option>
-                                                            </select>
+                                                            @foreach (var item in ViewBag.orderdetails)
+                                                            {
+                                                                
+                                                                <tr class="recordsection">
+                                                                    <td><input type="checkbox" class="chcktblservice" /></td>
+                                                                    <td class="detailid"> @item.orderdetailedid </td>
+                                                                    <td class="text-center">@item.ServicType</td>
+                                                                    <td class="text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.perunitprice)).Replace(".00", "")</td>
+                                                                    <td class="text-center">@item.guestno</td>
+                                                                    <td class="sbaldue text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.Due)).Replace(".00", "")</td>
+                                                                    <td class="tsamnt text-center">Rs @String.Format(new CultureInfo("en-IN", false), "{0:n}", Convert.ToDouble(@item.totalpric1)).Replace(".00", "")</td>
+                                                                    <td class="text-center">
+                                                                        @if (ViewBag.discount[count] != null)
+                                                                        {  
+                                                                            @*@(++count)*@
+                                                                            <label>
+                                                                                Discount Type : @ViewBag.discount[count].Split(new char[] { '!' })[0]<br />
+                                                                                Discount : @ViewBag.discount[count].Split(new char[] { '!' })[1]
+                                                                            </label>                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <select name="DiscountType" id="DiscountType"  class="selectdiscount" style="font-size: 11px;" disabled>
+                                                                                <option value="notselected">Select Discount Type</option>
+                                                                                <option value="Percentage %">Percentage %</option>
+                                                                                <option value="Flat Rate ₹">Flat Rate ₹</option>
+                                                                            </select>
                                                                             <div class="ServiceDiscount" style="padding-left:5px;padding-top:8px;">
-                                                                                <input type="text" class="disctxt" id="Discount" name="Discount" placeholder="Enter Discount" style="font-size: 12px; width:128px;padding:0px;" disabled>
+                                                                                <input type="text" class="disctxt" id="Discount" name="Discount" placeholder="Enter Discount" style="font-size: 12px; width:128px;padding:0px;" value="0" disabled>
                                                                             </div>
                                                         }
                                                     </td>
@@ -722,7 +722,7 @@
             }
         });
         var fdiscount = discount.join('~');
-        alert(fdiscount)
+        //alert(fdiscount)
         var payments = {
             OrderId: $("#OrderId").val(),
             User_Id: $("#User_Id").val(),
