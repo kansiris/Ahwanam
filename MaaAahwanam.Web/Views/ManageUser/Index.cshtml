@@ -74,10 +74,10 @@
     <div class="container-fluid">
         <div class="ksc">
             @{Html.RenderAction("orderdetails", "ManageUser"); }
-            
-        </div><div class="content1"  id="userslist1" style="padding:10px;">
-    @{Html.RenderAction("customerdetails", "ManageUser"); }
-</div>
+
+        </div><div class="content1" id="userslist1" style="padding:10px;">
+            @{Html.RenderAction("customerdetails", "ManageUser"); }
+        </div>
         <div class="content" id="userslist" style="padding:10px;">
             @{Html.RenderAction("mnguserdetails", "ManageUser"); }
         </div>
@@ -216,17 +216,15 @@
                             </label>
                         </span>
                     </div>
-
                 </div>
             </div>
             <div class="actions">
                 <div class="row" align="center">
                     <div class="col-md-4">
                         @*<button id="booknow" type="submit" name="command" value="Save" class="btn btn-success" style="float:right"> Book Now</button>
-        @*<button id="booknowss" type="submit" name="command" value="Save" class="btn btn-success" style="float:right">Save and Book Now</button>
-        <button id="booknowss" type="submit" name="command" value="Save" class="btn btn-success" style="float:right">save and Book Now</button>*@
-                        <button  id="select" type="submit" name="command" value="select" class="btn btn-success" style="float:right">select</button>
-
+                            @*<button id="booknowss" type="submit" name="command" value="Save" class="btn btn-success" style="float:right">Save and Book Now</button>
+                            <button id="booknowss" type="submit" name="command" value="Save" class="btn btn-success" style="float:right">save and Book Now</button>*@
+                        <button id="select" type="submit" name="command" value="select" class="btn btn-success" style="float:right">select</button>
                     </div>
                     <div class="col-md-4">
                         <button id="SaveUser" type="submit" name="command" value="Save" class="btn btn-success" style="display:block">Save</button>
@@ -248,7 +246,7 @@
         //                alert("ks")
         //});
         //$(document).ready(function () {
-        window.onload = function () { 
+        window.onload = function () {
             var tot = $('.ftotal').text();
             var gf1 = parseFloat(tot) + (parseFloat(tot) * 0.18)
             $('.grandtotal').empty().text(parseInt(gf1));
@@ -264,7 +262,7 @@
             var disctype = $(this).parents("div#pack").find('select[name = disctype]').val();
             if (disc == "" || disc == undefined) {
                 $(this).parents("div#pack").find('.finaltotal').empty().append(total1);
-                
+
             }
             else if (disctype == 'percent') {
                 if (disc > 100) {
@@ -305,9 +303,9 @@
             $('.grandtotal').empty().text(parseInt(gf));
         }
         );
-    
+
         $("#select").click(function () {
-          //  alert('customer Selected');
+            //  alert('customer Selected');
             var userid = $("#usedid").val();
             $.ajax({
                 url: '/ManageUser/customerdetails?id=' + userid,
@@ -318,20 +316,19 @@
                     $('#addcustomermodel').modal('hide');
                 },
                 error: function (result) {
-                    alert("failed");
+                    alert("Something Went Wrong!!! Try Again After SomeTime");
                 }
             })
-        }
-        );
+        }0);
 
         $(document).on('click', '.booknow', function () {
-        //$('.booknow').click(function () {
-    var vid = $("#vendorId").val();
-    var userid = $("#usedid").val();
-    var packageid = window.localStorage.getItem("vpbookpid");
-    var vpbook = window.localStorage.getItem("vpbook");
-    var date = window.localStorage.getItem("vpbookdate");
-    var timeslot = window.localStorage.getItem("vpbooktimeslot");
+            //$('.booknow').click(function () {
+            var vid = $("#vendorId").val();
+            var userid = $("#usedid").val();
+            var packageid = window.localStorage.getItem("vpbookpid");
+            var vpbook = window.localStorage.getItem("vpbook");
+            var date = window.localStorage.getItem("vpbookdate");
+            var timeslot = window.localStorage.getItem("vpbooktimeslot");
             var packid = packageid;
             //$('form input, form select').each(
             //    function (index) {
@@ -364,56 +361,50 @@
                 } else {
                     alert("Please at least check one of the checkbox");
                 }
-               
                 //alert('Package ID:' + pkgid + 'Total Price:' + tprice + 'Discount Type:' + discount + 'Discount Price:' + discountprice + 'Final Price:' + fpkgprice);
             });
-           // alert(alltprice + alldiscounttype + discountprice + fpkgprice);
-    //  alert(vpbook);
-    var vpbook1 = vpbook.split(',');
-    var loc = vpbook1[0];
-    var eventtype = vpbook1[2];
-    var guests = vpbook1[1];
-    var date = date;
-    var timeslot = timeslot;
-    var booktype = $(this).val();
-    if (packid == '') {
-        var selectedp = window.localStorage.getItem("vpbook");
-    }
-    // alert(eventtype);
-    $('.overlay').show();
-    $('#loadermsg').text('Booking in process....');
-    var type = $("input[name='type']:checked").val();
-    if (type == 'Corporate') {
-        var Businessname = $('#Businessname').val();
-        if (Businessname == '') { alert('Enter Customer Business Name'); $('#Businessname').focus(); }
-    }
-    
-    else {
-        $.ajax({
-            url: '/ManageUser/booknow?uid=' + userid + '&&loc=' + loc + '&&eventtype=' + eventtype + '&&guest=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&timeslot=' + timeslot + '&&booktype=' + booktype + '&&alltprice=' + alltprice + '&&alldiscounttype=' + alldiscounttype + '&&discountprice=' + alldiscountprice + '&&fpkgprice=' + allfpkgprice,
-            type: 'POST',
-            contentType: 'application/json',
-            success: function (result) {
-                if (result == "please active the user") {
-                    alert(result);
-                }
-                else if (result != "") {
-                    alert("Order placed Successfully");
-                    window.localStorage.removeItem("vpbook");
-                    window.localStorage.removeItem("vpbookdate");
-                    window.localStorage.removeItem("vpbooktimeslot");
-                    window.localStorage.removeItem("vpbookpid");
-                    window.location.href = "/vinvoice/Index?oid=" + result;
-                } else {
-                    alert("Error Occurred in placing order");
-                }
+            // alert(alltprice + alldiscounttype + discountprice + fpkgprice);
+            //  alert(vpbook);
+            var vpbook1 = vpbook.split(',');
+            var loc = vpbook1[0];
+            var eventtype = vpbook1[2];
+            var guests = vpbook1[1];
+            var date = date;
+            var timeslot = timeslot;
+            var booktype = $(this).val();
+            if (packid == '') {
+                var selectedp = window.localStorage.getItem("vpbook");
+            }
+            // alert(eventtype);
+            $('.overlay').show();
+            $('#loadermsg').text('Booking in process....');
+            var type = $("input[name='type']:checked").val();
+            if (type == 'Corporate') {
+                var Businessname = $('#Businessname').val();
+                if (Businessname == '') { alert('Enter Customer Business Name'); $('#Businessname').focus(); }
+            }
+            else {
+                $.ajax({
+                    url: '/ManageUser/booknow?uid=' + userid + '&&loc=' + loc + '&&eventtype=' + eventtype + '&&guest=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&timeslot=' + timeslot + '&&booktype=' + booktype + '&&alltprice=' + alltprice + '&&alldiscounttype=' + alldiscounttype + '&&discountprice=' + alldiscountprice + '&&fpkgprice=' + allfpkgprice,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    success: function (result) {
+                        if (result == "please active the user") {
+                            alert(result);
+                        }
+                        else if (result != "") {
+                            alert("Order placed Successfully");
+                            window.localStorage.removeItem("vpbook");
+                            window.localStorage.removeItem("vpbookdate");
+                            window.localStorage.removeItem("vpbooktimeslot");
+                            window.localStorage.removeItem("vpbookpid");
+                            window.location.href = "/vinvoice/Index?oid=" + result;
+                        } else {
+                            alert("Error Occurred in placing order");
+                        }
+                    }
+                });
             }
         });
-    }
-});
-
-          
-    
     </script>
-   
 }
