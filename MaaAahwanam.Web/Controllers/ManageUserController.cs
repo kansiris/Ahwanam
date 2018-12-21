@@ -141,7 +141,7 @@ namespace MaaAahwanam.Web.Controllers
                 string uid = user.UserId.ToString();
                 string vemail = newmanageuse.Getusername(long.Parse(uid));
                 vendorMaster = newmanageuse.GetVendorByEmail(vemail);
-               string VendorId = vendorMaster.Id.ToString();
+                string VendorId = vendorMaster.Id.ToString();
                 ViewBag.masterid = VendorId;
                 ViewBag.Userlist = mnguserservice.getuser(VendorId);
             }
@@ -159,11 +159,28 @@ namespace MaaAahwanam.Web.Controllers
         //    return Json("Sucess", JsonRequestBehavior.AllowGet);
         //}
 
+
+       public class booknowinfo {
+          public  string uid { get; set; }
+            public string loc { get; set; }
+            public string eventtype { get; set; }
+            public string guest { get; set; }
+            public string date { get; set; }
+            public string pid { get; set; }
+            public string vid { get; set; }
+            public string timeslot { get; set; }
+            public string booktype { get; set; }
+            public string alltprice { get; set; }
+            public string alldiscounttype { get; set; }
+            public string discountprice { get; set; }
+            public string fpkgprice { get; set; }
+        }
+
       
     [HttpPost]
-    public JsonResult booknow(string uid, string loc, string eventtype, string guest, string date, string pid, string vid, string timeslot,string booktype, string alltprice, string alldiscounttype, string discountprice, string fpkgprice)
+    public JsonResult booknow(booknowinfo booknowinfo)
     {
-        int userid = Convert.ToInt32(uid);
+        int userid = Convert.ToInt32(booknowinfo.uid);
         int price;
         string totalprice = "";
         string type = "";
@@ -175,17 +192,17 @@ namespace MaaAahwanam.Web.Controllers
         List<string> sdate = new List<string>();
         List<string> stimeslot = new List<string>();
         List<SPGETpartpkg_Result> package = new List<SPGETpartpkg_Result>();
-            var alltprice1 = alltprice.Trim(',').Split(',');
-            var alldiscounttype1 = alldiscounttype.Trim(',').Split(',');
-            var discountprice1 = discountprice.Trim(',').Split(',');
-            var fpkgprice1 = fpkgprice.Trim(',').Split(',');
+            var alltprice1 = booknowinfo.alltprice.Trim(',').Split(',');
+            var alldiscounttype1 = booknowinfo.alldiscounttype.Trim(',').Split(',');
+            var discountprice1 = booknowinfo.discountprice.Trim(',').Split(',');
+            var fpkgprice1 = booknowinfo.fpkgprice.Trim(',').Split(',');
 
-        var pkgs = pid.Split(',');
-        var date1 = date.Trim(',').Split(',');
-        var timeslot1 = timeslot.Split(',');
+        var pkgs = booknowinfo.pid.Split(',');
+        var date1 = booknowinfo.date.Trim(',').Split(',');
+        var timeslot1 = booknowinfo.timeslot.Split(',');
             OrderDetail orderDetail = new OrderDetail();
 
-            etype1 = eventtype;
+            etype1 = booknowinfo.eventtype;
             for (int i = 0; i < pkgs.Count(); i++)
             {
 
@@ -199,20 +216,20 @@ namespace MaaAahwanam.Web.Controllers
                 if (type == "Photography" || type == "Decorator" || type == "Other")
                 {
                     totalprice = Convert.ToString(price);
-                    guest = "0";
+                    booknowinfo.guest = "0";
                 }
                 else
                 {
-                    totalprice = Convert.ToString(tprice * Convert.ToInt16(guest));
+                    totalprice = Convert.ToString(tprice * Convert.ToInt16(booknowinfo.guest));
                 }
             }
                 Order order = new Order();
             order.TotalPrice = Convert.ToDecimal(totalprice);
             order.OrderDate = Convert.ToDateTime(updateddate); //Convert.ToDateTime(bookeddate);
-            order.UpdatedBy = long.Parse(vid);
-            order.OrderedBy = long.Parse(vid);
+            order.UpdatedBy = long.Parse(booknowinfo.vid);
+            order.OrderedBy = long.Parse(booknowinfo.vid);
             order.UpdatedDate = Convert.ToDateTime(updateddate);
-            if (booktype == "Quote") { order.type = "Quote"; }
+            if (booknowinfo.booktype == "Quote") { order.type = "Quote"; }
             else
             {
                 order.type = "Order";
@@ -236,11 +253,11 @@ namespace MaaAahwanam.Web.Controllers
                 if (type == "Photography" || type == "Decorator" || type == "Other")
                 {
                     totalprice = Convert.ToString(price);
-                    guest = "0";
+                    booknowinfo.guest = "0";
                 }
                 else
                 {
-                    totalprice = Convert.ToString(price* Convert.ToInt16(guest));
+                    totalprice = Convert.ToString(price* Convert.ToInt16(booknowinfo.guest));
                 }
 
                 for (int j = 0; j < date1.Count(); j++)
@@ -261,7 +278,7 @@ namespace MaaAahwanam.Web.Controllers
                 //data.timeslot = timeslot1[i].Split('~')[0];
                
                 orderDetail.OrderId = order.OrderId;
-                orderDetail.OrderBy = long.Parse(uid);
+                orderDetail.OrderBy = long.Parse(booknowinfo.uid);
                 orderDetail.PaymentId = '1';
                 orderDetail.ServiceType = type;
           //      orderDetail.ServicePrice = Convert.ToDecimal(price);
@@ -269,11 +286,11 @@ namespace MaaAahwanam.Web.Controllers
                 orderDetail.TotalPrice = (Convert.ToDecimal(data.price1));
                 orderDetail.ServicePrice = Convert.ToDecimal(data.price4);
                 orderDetail.PerunitPrice = Convert.ToDecimal(price);
-                orderDetail.Quantity = Convert.ToInt32(guest);
+                orderDetail.Quantity = Convert.ToInt32(booknowinfo.guest);
                 orderDetail.OrderId = order.OrderId;
-                orderDetail.VendorId = long.Parse(vid);
+                orderDetail.VendorId = long.Parse(booknowinfo.vid);
 
-                if (booktype == "Quote") { orderDetail.type = "Quote"; }
+                if (booknowinfo.booktype == "Quote") { orderDetail.type = "Quote"; }
                 else
                 {
                     orderDetail.type = "Order";
@@ -319,7 +336,7 @@ namespace MaaAahwanam.Web.Controllers
             string targetmails = "lakshmi.p@xsilica.com,seema.g@xsilica.com,rameshsai@xsilica.com";
     emailSendingUtility.Email_maaaahwanam(targetmails, txtmessage, subj, null);
 
-            var vendordetails = newmanageuse.getvendor(Convert.ToInt32(vid));
+            var vendordetails = newmanageuse.getvendor(Convert.ToInt32(booknowinfo.vid));
 
     string txtto1 = vendordetails.EmailId;
     string vname = vendordetails.BusinessName;

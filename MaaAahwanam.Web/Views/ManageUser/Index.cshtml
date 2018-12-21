@@ -389,9 +389,13 @@
     }
     
     else {
+        var booknow = {
+            uid: userid, loc:loc,eventtype:eventtype,guest: guests,date: date, pid: packid ,vid: vid,timeslot:timeslot,booktype:booktype,alltprice:alltprice,alldiscounttype:alldiscounttype,discountprice:alldiscountprice,fpkgprice: allfpkgprice };
+
         $.ajax({
-            url: '/ManageUser/booknow?uid=' + userid + '&&loc=' + loc + '&&eventtype=' + eventtype + '&&guest=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&timeslot=' + timeslot + '&&booktype=' + booktype + '&&alltprice=' + alltprice + '&&alldiscounttype=' + alldiscounttype + '&&discountprice=' + alldiscountprice + '&&fpkgprice=' + allfpkgprice,
+            url: '/ManageUser/booknow',
             type: 'POST',
+            data: JSON.stringify({ booknowinfo: booknow }),
             contentType: 'application/json',
             success: function (result) {
                 if (result == "please active the user") {
