@@ -386,17 +386,17 @@ $('#booknow').click(function () {
     else if (phoneno == '') { alert('Enter Phone Number'); $('#phoneno').focus(); }
     else if (phoneno.length < 10) { alert('Enter 10 digits only'); $('#phoneno').focus(); }
     else if (!phonenopattern.test(phoneno)) { alert("Please Enter 10 digit Phone Number "); $("#phoneno").focus(); }
-    else if (adress1 == '') { alert('Enter Customer Flat Number'); $('#adress1').focus(); }
-    else if (adress2 == '') { alert('Enter Customer Locality'); $('#adress2').focus(); }
-    else if (pincode == '') { alert('Enter Pin Code'); $('#pincode').focus(); }
-    else if (pincode.length < 6) { alert('Enter 6 digits only'); $('#pincode').focus(); }
-    else if (!pincodepattern.test(pincode)) { alert("Please Enter 6 digit Pincode "); $("#pincode").focus(); }
-    else if (city == '') { alert('Enter City Name'); $('#city').focus(); }
-    else if (state == '') { alert('Enter State Name'); $('#state').focus(); }
-    else if (country == '') { alert('Enter Country Name'); $('#country').focus(); }
-    else if (!countrypattren.test(country)) { alert("Enter only alphabates"); $("#country").focus(); }
-    else if (!spattren.test(state)) { alert("Enter only alphabates"); $("#state").focus(); }
-    else if (!cpattren.test(city)) { alert("Enter only alphabates"); $("#city").focus(); }
+    //else if (adress1 == '') { alert('Enter Customer Flat Number'); $('#adress1').focus(); }
+    //else if (adress2 == '') { alert('Enter Customer Locality'); $('#adress2').focus(); }
+    //else if (pincode == '') { alert('Enter Pin Code'); $('#pincode').focus(); }
+    //else if (pincode.length < 6) { alert('Enter 6 digits only'); $('#pincode').focus(); }
+    //else if (!pincodepattern.test(pincode)) { alert("Please Enter 6 digit Pincode "); $("#pincode").focus(); }
+    //else if (city == '') { alert('Enter City Name'); $('#city').focus(); }
+    //else if (state == '') { alert('Enter State Name'); $('#state').focus(); }
+    //else if (country == '') { alert('Enter Country Name'); $('#country').focus(); }
+    //else if (!countrypattren.test(country)) { alert("Enter only alphabates"); $("#country").focus(); }
+    //else if (!spattren.test(state)) { alert("Enter only alphabates"); $("#state").focus(); }
+    //else if (!cpattren.test(city)) { alert("Enter only alphabates"); $("#city").focus(); }
     else if (!fnamepattren.test(firstname)) { alert("Enter only alphabates"); $("#firstname").focus(); }
     else if (!lnamepattren.test(lastname)) { alert("Enter only alphabates"); $("#lastname").focus(); }
     else {
@@ -488,17 +488,17 @@ $('#booknowss').click(function () {
         else if (phoneno == '') { alert('Enter Phone Number'); $('#phoneno').focus(); }
         else if (phoneno.length < 10) { alert('Enter 10 digits only'); $('#phoneno').focus(); }
         else if (!phonenopattern.test(phoneno)) { alert("Please Enter 10 digit Phone Number "); $("#phoneno").focus(); }
-        else if (adress1 == '') { alert('Enter Customer Flat Number'); $('#adress1').focus(); }
-        else if (adress2 == '') { alert('Enter Customer Locality'); $('#adress2').focus(); }
-        else if (pincode == '') { alert('Enter Pin Code'); $('#pincode').focus(); }
-        else if (pincode.length < 6) { alert('Enter 6 digits only'); $('#pincode').focus(); }
-        else if (!pincodepattern.test(pincode)) { alert("Please Enter 6 digit Pincode "); $("#pincode").focus(); }
-        else if (city == '') { alert('Enter City Name'); $('#city').focus(); }
-        else if (state == '') { alert('Enter State Name'); $('#state').focus(); }
-        else if (country == '') { alert('Enter Country Name'); $('#country').focus(); }
-        else if (!countrypattren.test(country)) { alert("Enter only alphabates"); $("#country").focus(); }
-        else if (!spattren.test(state)) { alert("Enter only alphabates"); $("#state").focus(); }
-        else if (!cpattren.test(city)) { alert("Enter only alphabates"); $("#city").focus(); }
+        //else if (adress1 == '') { alert('Enter Customer Flat Number'); $('#adress1').focus(); }
+        //else if (adress2 == '') { alert('Enter Customer Locality'); $('#adress2').focus(); }
+        //else if (pincode == '') { alert('Enter Pin Code'); $('#pincode').focus(); }
+        //else if (pincode.length < 6) { alert('Enter 6 digits only'); $('#pincode').focus(); }
+        //else if (!pincodepattern.test(pincode)) { alert("Please Enter 6 digit Pincode "); $("#pincode").focus(); }
+        //else if (city == '') { alert('Enter City Name'); $('#city').focus(); }
+        //else if (state == '') { alert('Enter State Name'); $('#state').focus(); }
+        //else if (country == '') { alert('Enter Country Name'); $('#country').focus(); }
+        //else if (!countrypattren.test(country)) { alert("Enter only alphabates"); $("#country").focus(); }
+        //else if (!spattren.test(state)) { alert("Enter only alphabates"); $("#state").focus(); }
+        //else if (!cpattren.test(city)) { alert("Enter only alphabates"); $("#city").focus(); }
         else if (!fnamepattren.test(firstname)) { alert("Enter only alphabates"); $("#firstname").focus(); }
         else if (!lnamepattren.test(lastname)) { alert("Enter only alphabates"); $("#lastname").focus(); }
         else {
