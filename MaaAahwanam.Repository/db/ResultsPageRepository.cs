@@ -16,6 +16,10 @@ namespace MaaAahwanam.Repository.db
         {
             return maaAahwanamEntities.GetVendors(type).ToList();
         }
+        public List<GetFilteredVendors_Result> GetVendorsByName(string type, string name)
+        {
+            return maaAahwanamEntities.GetFilteredVendors(type,name).ToList();
+        }
         public Vendormaster GetVendorByEmail(string emailid)
         {
             return _dbContext.Vendormaster.Where(m => m.EmailId == emailid).FirstOrDefault();

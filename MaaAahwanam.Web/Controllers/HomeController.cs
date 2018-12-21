@@ -212,7 +212,7 @@ namespace MaaAahwanam.Web.Controllers
             userLogin.UserType = "User";
             long data = userLoginDetailsService.GetLoginDetailsByEmail(Email);
             if (data == 0)
-             response = userLoginDetailsService.AddUserDetails(userLogin, userDetail); 
+                response = userLoginDetailsService.AddUserDetails(userLogin, userDetail);
             else
                 return Json("unique", JsonRequestBehavior.AllowGet);
             if (response == "sucess")
@@ -228,6 +228,56 @@ namespace MaaAahwanam.Web.Controllers
             }
             else
                 return Json("Failed", JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Authentication(string type, [Bind(Prefix = "Item1")]UserLogin userLogin, [Bind(Prefix = "Item2")]UserDetail userDetail)
+        {
+            if (type == "login")
+            {
+                var userResponse1 = resultsPageService.GetUserLogin(userLogin);
+                if (userResponse1 != null)
+                {
+                    if (userResponse1.Status == "Active")
+                    {
+                        vendorMaster = resultsPageService.GetVendorByEmail(userLogin.UserName);
+                        string userData = JsonConvert.SerializeObject(userResponse1);
+                        ValidUserUtility.SetAuthCookie(userData, userResponse1.UserLoginId.ToString());
+                        ViewBag.userid = userResponse1.UserLoginId;
+                        if (userResponse1.UserType == "Vendor")
+                            return RedirectToAction("Index", "vdb");
+                        else if(userResponse1.UserType == "User")
+                            return RedirectToAction("Index", "Home");
+                    }
+                    
+                }
+                return Content("<script>alert('Wrong Credentials,Check Username and password');location.href='/home';</script>");
+            }
+            else if (type == "register")
+            {
+                userLogin.IPAddress = HttpContext.Request.UserHostAddress;
+                userLogin.Status = "InActive";
+                var response = "";
+                userLogin.UserType = "User";
+                long data = userLoginDetailsService.GetLoginDetailsByEmail(userLogin.UserName);
+                if (data == 0)
+                    response = userLoginDetailsService.AddUserDetails(userLogin, userDetail);
+                else
+                    return Content("<script>alert('E-Mail ID Already Registered!!! Try Logging with your Password');location.href='/home';</script>");
+                if (response == "sucess")
+                {
+                    string url = Request.Url.Scheme + "://" + Request.Url.Authority + "/home/ActivateEmail1?ActivationCode=" + userLogin.ActivationCode + "&&Email=" + userLogin.UserName;
+                    FileInfo File = new FileInfo(Server.MapPath("/mailtemplate/welcome.html"));
+                    string readFile = File.OpenText().ReadToEnd();
+                    readFile = readFile.Replace("[ActivationLink]", url);
+                    readFile = readFile.Replace("[name]", Capitalise(userDetail.FirstName));
+                    readFile = readFile.Replace("[phoneno]", userDetail.UserPhone);
+                    TriggerEmail(userLogin.UserName, readFile, "Account Activation", null); // A Mail will be triggered
+                    return Content("<script>alert('Check your email to active your account to login');location.href='/home';</script>");
+                }
+                else
+                return Content("<script>alert('Registration Failed');location.href='/home';</script>");
+            }
+            return RedirectToAction("Index", "Home");
         }
         #endregion
 
@@ -334,7 +384,7 @@ namespace MaaAahwanam.Web.Controllers
             }
         }
 
-        public void TriggerEmail(string txtto, string txtmsg,string subject,HttpPostedFileBase attachment)
+        public void TriggerEmail(string txtto, string txtmsg, string subject, HttpPostedFileBase attachment)
         {
             EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
             emailSendingUtility.Email_maaaahwanam(txtto, txtmsg, subject, attachment);
