@@ -363,48 +363,56 @@
                 }
                 //alert('Package ID:' + pkgid + 'Total Price:' + tprice + 'Discount Type:' + discount + 'Discount Price:' + discountprice + 'Final Price:' + fpkgprice);
             });
-            // alert(alltprice + alldiscounttype + discountprice + fpkgprice);
-            //  alert(vpbook);
-            var vpbook1 = vpbook.split(',');
-            var loc = vpbook1[0];
-            var eventtype = vpbook1[2];
-            var guests = vpbook1[1];
-            var date = date;
-            var timeslot = timeslot;
-            var booktype = $(this).val();
-            if (packid == '') {
-                var selectedp = window.localStorage.getItem("vpbook");
-            }
-            // alert(eventtype);
-            $('.overlay').show();
-            $('#loadermsg').text('Booking in process....');
-            var type = $("input[name='type']:checked").val();
-            if (type == 'Corporate') {
-                var Businessname = $('#Businessname').val();
-                if (Businessname == '') { alert('Enter Customer Business Name'); $('#Businessname').focus(); }
-            }
-            else {
-                $.ajax({
-                    url: '/manageuser/booknow?uid=' + userid + '&&loc=' + loc + '&&eventtype=' + eventtype + '&&guest=' + guests + '&&date=' + date + '&&pid=' + packid + '&&vid=' + vid + '&&timeslot=' + timeslot + '&&booktype=' + booktype + '&&alltprice=' + alltprice + '&&alldiscounttype=' + alldiscounttype + '&&discountprice=' + alldiscountprice + '&&fpkgprice=' + allfpkgprice,
-                    type: 'POST',
-                    contentType: 'application/json',
-                    success: function (result) {
-                        if (result == "please active the user") {
-                            alert(result);
-                        }
-                        else if (result != "") {
-                            alert("Order placed Successfully");
-                            window.localStorage.removeItem("vpbook");
-                            window.localStorage.removeItem("vpbookdate");
-                            window.localStorage.removeItem("vpbooktimeslot");
-                            window.localStorage.removeItem("vpbookpid");
-                            window.location.href = "/vinvoice/Index?oid=" + result;
-                        } else {
-                            alert("Error Occurred in placing order");
-                        }
-                    }
-                });
+           // alert(alltprice + alldiscounttype + discountprice + fpkgprice);
+    //  alert(vpbook);
+    var vpbook1 = vpbook.split(',');
+    var loc = vpbook1[0];
+    var eventtype = vpbook1[2];
+    var guests = vpbook1[1];
+    var date = date;
+    var timeslot = timeslot;
+    var booktype = $(this).val();
+    if (packid == '') {
+        var selectedp = window.localStorage.getItem("vpbook");
+    }
+    // alert(eventtype);
+    $('.overlay').show();
+    $('#loadermsg').text('Booking in process....');
+    var type = $("input[name='type']:checked").val();
+    if (type == 'Corporate') {
+        var Businessname = $('#Businessname').val();
+        if (Businessname == '') { alert('Enter Customer Business Name'); $('#Businessname').focus(); }
+    }
+    
+    else {
+        var booknow = {
+            uid: userid, loc:loc,eventtype:eventtype,guest: guests,date: date, pid: packid ,vid: vid,timeslot:timeslot,booktype:booktype,alltprice:alltprice,alldiscounttype:alldiscounttype,discountprice:alldiscountprice,fpkgprice: allfpkgprice };
+
+        $.ajax({
+            url: '/ManageUser/booknow',
+            type: 'POST',
+            data: JSON.stringify({ booknowinfo: booknow }),
+            contentType: 'application/json',
+            success: function (result) {
+                if (result == "please active the user") {
+                    alert(result);
+                }
+                else if (result != "") {
+                    alert("Order placed Successfully");
+                    window.localStorage.removeItem("vpbook");
+                    window.localStorage.removeItem("vpbookdate");
+                    window.localStorage.removeItem("vpbooktimeslot");
+                    window.localStorage.removeItem("vpbookpid");
+                    window.location.href = "/vinvoice/Index?oid=" + result;
+                } else {
+                    alert("Error Occurred in placing order");
+                }
             }
         });
+    }
+});
+
+          
+    
     </script>
 }
