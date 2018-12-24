@@ -724,6 +724,10 @@
         });
         var fdiscount = discount.join('~');
         //alert(fdiscount)
+        var PaymentBy = $('#PaymentBy').val();
+        if (PaymentBy == '') { alert('Enter Payment By Person Name'); $('#PaymentBy').focus(); }
+        else if (Cash_Card_Holdername == '') { alert("Enter Cashier Name"); $("#Cash_Card_Holdername").focus(); }
+        else{
         var payments = {
             OrderId: $("#OrderId").val(),
             User_Id: $("#User_Id").val(),
@@ -762,8 +766,9 @@
                 alert("failed");
             }
         });
-
-    });
+        }
+        });
+   
     $("#orderdetails tr input.chcktblservice").click(function () {
         var checked = $(this).is(':checked');
         var gstsum5 = $('#FinalAmount').val(); // GSt Total Amount
