@@ -267,11 +267,10 @@ namespace MaaAahwanam.Web.Controllers
             if (id != 0)
             {
                 ViewBag.venues = vendorVenueSignUpService.GetVendorVenue(id).ToList();
-                ViewBag.catering = vendorVenueSignUpService.GetVendorCatering(id).ToList();
-                ViewBag.photography = vendorVenueSignUpService.GetVendorPhotography(id);
-                ViewBag.decorators = vendorVenueSignUpService.GetVendorDecorator(id);
-                ViewBag.others = vendorVenueSignUpService.GetVendorOther(id);
-                ViewBag.others = vendorVenueSignUpService.GetVendorOther(id);
+                //ViewBag.catering = vendorVenueSignUpService.GetVendorCatering(id).ToList();
+                //ViewBag.photography = vendorVenueSignUpService.GetVendorPhotography(id);
+                //ViewBag.decorators = vendorVenueSignUpService.GetVendorDecorator(id);
+                //ViewBag.others = vendorVenueSignUpService.GetVendorOther(id);
                 ViewBag.resellername = partnerservice.GetPartners(Convert.ToString(id));
 
                 return PartialView("sidebar");
