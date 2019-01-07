@@ -307,15 +307,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Others_TestimonialDetail_Result>("MaaAahwanam_Others_TestimonialDetail", idParameter);
         }
     
-        public virtual ObjectResult<VendorsDatesbooked_Result> VendorsDatesbooked(Nullable<int> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorsDatesbooked_Result>("VendorsDatesbooked", idParameter);
-        }
-    
         public virtual ObjectResult<SP_Amenities_Result> SP_Amenities(Nullable<long> vendorid, string ntype)
         {
             var vendoridParameter = vendorid.HasValue ?
@@ -719,6 +710,15 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("name", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetFilteredVendors_Result>("GetFilteredVendors", typeParameter, nameParameter);
+        }
+    
+        public virtual ObjectResult<VendorsDatesbooked_Result> VendorsDatesbooked(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorsDatesbooked_Result>("VendorsDatesbooked", idParameter);
         }
     }
 }
