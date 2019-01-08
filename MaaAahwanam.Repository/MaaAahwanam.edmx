@@ -305,9 +305,6 @@
           <FunctionImport Name="MaaAahwanam_Others_TestimonialDetail" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_TestimonialDetail_Result)">
           <Parameter Name="Id" Mode="In" Type="Int64" />
           </FunctionImport>
-          <FunctionImport Name="VendorsDatesbooked" ReturnType="Collection(MaaAahwanamModel.VendorsDatesbooked_Result)">
-          <Parameter Name="id" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="SP_Amenities" ReturnType="Collection(MaaAahwanamModel.SP_Amenities_Result)">
             <Parameter Name="vendorid" Mode="In" Type="Int64" />
             <Parameter Name="ntype" Mode="In" Type="String" />
@@ -428,6 +425,9 @@
           <FunctionImport Name="GetFilteredVendors" ReturnType="Collection(MaaAahwanamModel.GetFilteredVendors_Result)">
             <Parameter Name="type" Mode="In" Type="String" />
             <Parameter Name="name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="VendorsDatesbooked" ReturnType="Collection(MaaAahwanamModel.VendorsDatesbooked_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
@@ -700,17 +700,6 @@
           <Property Type="String" Name="Description" Nullable="true" />
           <Property Type="String" Name="ImagePath" Nullable="true" />
           <Property Type="String" Name="Status" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="VendorsDatesbooked_Result">
-          <Property Type="DateTime" Name="StartDate" Nullable="true" Precision="23" />
-          <Property Type="String" Name="StartTime" Nullable="true" />
-          <Property Type="DateTime" Name="EndDate" Nullable="true" Precision="23" />
-          <Property Type="String" Name="EndTime" Nullable="true" />
-          <Property Type="String" Name="EventName" Nullable="true" />
-          <Property Type="String" Name="Address" Nullable="true" />
-          <Property Type="String" Name="Location" Nullable="true" />
-          <Property Type="String" Name="State" Nullable="true" />
-          <Property Type="String" Name="City" Nullable="true" />
         </ComplexType>
         <ComplexType Name="SP_Amenities_Result">
           <Property Type="String" Name="VenueType" Nullable="true" />
@@ -1762,6 +1751,17 @@
           <Property Type="String" Name="holidays" Nullable="true" />
           <Property Type="String" Name="peakdays" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="VendorsDatesbooked_Result">
+          <Property Type="DateTime" Name="StartDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="StartTime" Nullable="true" />
+          <Property Type="DateTime" Name="EndDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="EndTime" Nullable="true" />
+          <Property Type="String" Name="EventName" Nullable="true" />
+          <Property Type="String" Name="Address" Nullable="true" />
+          <Property Type="String" Name="Location" Nullable="true" />
+          <Property Type="String" Name="State" Nullable="true" />
+          <Property Type="String" Name="City" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2141,21 +2141,6 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="VendorsDatesbooked" FunctionName="MaaAahwanamModel.Store.VendorsDatesbooked">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.VendorsDatesbooked_Result">
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
-                <ScalarProperty Name="EventName" ColumnName="EventName" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="City" ColumnName="City" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -3370,6 +3355,21 @@
                 <ScalarProperty Name="choicedays" ColumnName="choicedays" />
                 <ScalarProperty Name="holidays" ColumnName="holidays" />
                 <ScalarProperty Name="peakdays" ColumnName="peakdays" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VendorsDatesbooked" FunctionName="MaaAahwanamModel.Store.VendorsDatesbooked">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.VendorsDatesbooked_Result">
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="EventName" ColumnName="EventName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
