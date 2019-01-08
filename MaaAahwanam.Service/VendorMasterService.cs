@@ -64,6 +64,11 @@ namespace MaaAahwanam.Service
             return vendormasterRepository.VendormasterList().Select(m => m.City).ToList<dynamic>();
         }
 
+        public List<string> AvailableServices()
+        {
+            return vendormasterRepository.VendormasterList().Select(m => m.ServicType).Distinct().ToList();
+        }
+
         public Vendormaster UpdateVendorStorefront(Vendormaster vendorMaster, long id)
         {
             return vendormasterRepository.UpdateVendorStorefront(vendorMaster, id);

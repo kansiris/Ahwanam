@@ -160,8 +160,9 @@ namespace MaaAahwanam.Web.Controllers
         //}
 
 
-       public class booknowinfo {
-          public  string uid { get; set; }
+        public class booknowinfo
+        {
+            public string uid { get; set; }
             public string loc { get; set; }
             public string eventtype { get; set; }
             public string guest { get; set; }
@@ -176,30 +177,29 @@ namespace MaaAahwanam.Web.Controllers
             public string fpkgprice { get; set; }
         }
 
-      
-    [HttpPost]
-    public JsonResult booknow(booknowinfo booknowinfo)
-    {
-        int userid = Convert.ToInt32(booknowinfo.uid);
-        int price;
-        string totalprice = "";
-        string type = "";
-        string etype1 = "";
-        HomeController home = new HomeController();
-        DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
-        //Saving Record in order Table
-        //  OrderService orderService = new OrderService();
-        List<string> sdate = new List<string>();
-        List<string> stimeslot = new List<string>();
-        List<SPGETpartpkg_Result> package = new List<SPGETpartpkg_Result>();
+        [HttpPost]
+        public JsonResult booknow(booknowinfo booknowinfo)
+        {
+            int userid = Convert.ToInt32(booknowinfo.uid);
+            int price;
+            string totalprice = "";
+            string type = "";
+            string etype1 = "";
+            HomeController home = new HomeController();
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            //Saving Record in order Table
+            //  OrderService orderService = new OrderService();
+            List<string> sdate = new List<string>();
+            List<string> stimeslot = new List<string>();
+            List<SPGETpartpkg_Result> package = new List<SPGETpartpkg_Result>();
             var alltprice1 = booknowinfo.alltprice.Trim(',').Split(',');
             var alldiscounttype1 = booknowinfo.alldiscounttype.Trim(',').Split(',');
             var discountprice1 = booknowinfo.discountprice.Trim(',').Split(',');
             var fpkgprice1 = booknowinfo.fpkgprice.Trim(',').Split(',');
 
-        var pkgs = booknowinfo.pid.Split(',');
-        var date1 = booknowinfo.date.Trim(',').Split(',');
-        var timeslot1 = booknowinfo.timeslot.Split(',');
+            var pkgs = booknowinfo.pid.Split(',');
+            var date1 = booknowinfo.date.Trim(',').Split(',');
+            var timeslot1 = booknowinfo.timeslot.Split(',');
             OrderDetail orderDetail = new OrderDetail();
 
             etype1 = booknowinfo.eventtype;
@@ -257,7 +257,7 @@ namespace MaaAahwanam.Web.Controllers
                 }
                 else
                 {
-                    totalprice = Convert.ToString(price* Convert.ToInt16(booknowinfo.guest));
+                    totalprice = Convert.ToString(price * Convert.ToInt16(booknowinfo.guest));
                 }
 
                 for (int j = 0; j < date1.Count(); j++)

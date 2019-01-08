@@ -76,6 +76,7 @@ namespace MaaAahwanam.Web.Controllers
             }
             return count;
         }
+
         public JsonResult vendorreg(string vname, string businessname,string mobile,string email,string businesstype,string serviceselection, string Password)
         {
             UserLogin userLogin1 = new UserLogin();
