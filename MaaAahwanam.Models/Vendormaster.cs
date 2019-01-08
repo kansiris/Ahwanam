@@ -37,5 +37,6 @@ namespace MaaAahwanam.Models
         public int tier { get; set; }
         public int priority { get; set; }
         public string GeoLocation { get; set; }
+        public string BusinessType { get; set; }
     }
 }
