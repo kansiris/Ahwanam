@@ -206,7 +206,7 @@ namespace MaaAahwanam.Web.Controllers
             userDetail.FirstName = CustomerName;
             userDetail.UserPhone = CustomerPhoneNumber;
             userLogin.Password = Password;
-            userLogin.UserName = Email;
+            userLogin.UserName = userDetail.AlternativeEmailID = Email;
             userLogin.Status = "InActive";
             var response = "";
             userLogin.UserType = "User";

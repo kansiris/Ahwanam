@@ -76,7 +76,7 @@ namespace MaaAahwanam.Web.Controllers
                 if (user.UserType == "User")
                 {
                     List<GetCartItems_Result> cartlist = cartserve.CartItemsList(int.Parse(user.UserId.ToString())).ToList();
-                    
+
                     if (cartlist.Count == 0)
                     {
                         ViewBag.tamount = "000";
@@ -124,7 +124,7 @@ namespace MaaAahwanam.Web.Controllers
             return PartialView("billing");
         }
 
-        public JsonResult email(string selcartid,string searchedcontent)
+        public JsonResult email(string selcartid, string searchedcontent)
         {
             selcartid = selcartid.Trim(',');
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
@@ -141,12 +141,12 @@ namespace MaaAahwanam.Web.Controllers
                     string username = userdetails.FirstName;
                     string phoneno = userdetails.UserPhone;
                     HomeController home = new HomeController();
-                    username = home.Capitalise(username) + " "+ home.Capitalise(userdetails.LastName);
+                    username = home.Capitalise(username) + " " + home.Capitalise(userdetails.LastName);
                     List<GetCartItems_Result> cartlist = cartserve.CartItemsList(int.Parse(user.UserId.ToString()));
                     var cartid1 = selcartid.Split(',');
                     QuotationsList quotationsList = new QuotationsList();
 
-                   
+
 
 
                     //for (int i = 0; i < cartid1.Count(); i++)
@@ -163,13 +163,13 @@ namespace MaaAahwanam.Web.Controllers
                         quotationsList.Name = userdetails.FirstName;
                         quotationsList.EmailId = userlogin.UserName;
                         quotationsList.ServiceType = qcart.ServiceType;
-            quotationsList.PhoneNo = userdetails.UserPhone;
-                        quotationsList.EventStartDate= DateTime.UtcNow;
+                        quotationsList.PhoneNo = userdetails.UserPhone;
+                        quotationsList.EventStartDate = DateTime.UtcNow;
                         quotationsList.EventStartTime = DateTime.UtcNow;
                         quotationsList.EventEnddate = DateTime.UtcNow;
                         quotationsList.EventEndtime = DateTime.UtcNow;
                         quotationsList.VendorId = qcart.subid.ToString();
-            quotationsList.VendorMasterId = qcart.Id.ToString();
+                        quotationsList.VendorMasterId = qcart.Id.ToString();
                         quotationsList.Persons = qcart.Quantity.ToString();
                         string ip = HttpContext.Request.UserHostAddress;
                         //string hostName = Dns.GetHostName();
@@ -194,7 +194,7 @@ namespace MaaAahwanam.Web.Controllers
                     readFile = readFile.Replace("[Ipaddress]", ipaddress);
                     readFile = readFile.Replace("[email]", Email);
                     readFile = readFile.Replace("[phoneno]", phoneno);
-                    readFile = readFile.Replace("[usersearch]", searchedcontent.Replace(",","<br/>"));
+                    readFile = readFile.Replace("[usersearch]", searchedcontent.Replace(",", "<br/>"));
                     string txtmessage = readFile;//readFile + body;
                     string subj = "Get Assistance/Quote From Cart Page";
                     EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
@@ -407,7 +407,7 @@ namespace MaaAahwanam.Web.Controllers
         //    return Json(JsonRequestBehavior.AllowGet);
         //}
 
-        public ActionResult booknow(string selcartid, string searchedcontent,string total,string booktype)
+        public ActionResult booknow(string selcartid, string searchedcontent, string total, string booktype)
         {
             if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
             {
@@ -513,7 +513,7 @@ namespace MaaAahwanam.Web.Controllers
                         readFile = readFile.Replace("[name]", name);
                         readFile = readFile.Replace("[orderid]", OrderId);
                         readFile = readFile.Replace("[table]", cds.ToString());
-                  
+
                         string txtmessage = readFile;//readFile + body;
                         string subj = "Thanks for your order";
                         EmailSendingUtility emailSendingUtility = new EmailSendingUtility();
@@ -534,9 +534,9 @@ namespace MaaAahwanam.Web.Controllers
                         string txtmessage1 = readfile1;
                         string subj1 = "order has been placed";
                         emailSendingUtility.Email_maaaahwanam(txtto1, txtmessage1, subj1, null);
-                        if (booktype == "Quote") {  }
+                        if (booktype == "Quote") { }
                         else if (booktype == "booknow") { var message = cartService.Deletecartitem(long.Parse(cartno2)); }
-                      }
+                    }
                 }
                 if (booktype == "Quote") { msg = "Quotation sent"; }
                 else if (booktype == "booknow") { msg = "Order Successfully placed"; }
