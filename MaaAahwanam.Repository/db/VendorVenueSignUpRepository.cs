@@ -35,6 +35,13 @@ namespace MaaAahwanam.Repository.db
             var data = _dbContext.UserLogin.Where(p => p.UserName == email).FirstOrDefault(); // && p.UserType == userLogin.UserType
             return data;
         }
+
+        public UserLogin GetUserLoginByCode(string code)
+        {
+            var data = _dbContext.UserLogin.Where(p => p.ActivationCode == code).FirstOrDefault(); // && p.UserType == userLogin.UserType
+            return data;
+        }
+
         public Vendormaster AddVendormaster(Vendormaster vendormaster)
         {
             _dbContext.Vendormaster.Add(vendormaster);

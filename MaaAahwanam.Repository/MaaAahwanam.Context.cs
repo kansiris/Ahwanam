@@ -720,5 +720,19 @@ namespace MaaAahwanam.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorsDatesbooked_Result>("VendorsDatesbooked", idParameter);
         }
+    
+        public virtual ObjectResult<GetCaterers_Result> GetCaterers()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCaterers_Result>("GetCaterers");
+        }
+    
+        public virtual ObjectResult<GetOthers_Result> GetOthers(string type)
+        {
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetOthers_Result>("GetOthers", typeParameter);
+        }
     }
 }

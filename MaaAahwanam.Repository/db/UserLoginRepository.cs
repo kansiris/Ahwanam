@@ -52,6 +52,7 @@ namespace MaaAahwanam.Repository.db
             {
                 ord.Password = userLogin.Password;
                 // Insert any additional changes to column values.
+                ord.UpdatedDate = userLogin.UpdatedDate;
             }
 
             // Submit the changes to the database.
@@ -158,12 +159,14 @@ namespace MaaAahwanam.Repository.db
             return userLogin;
         }
 
-        //public UserLogin UpdateActivationCode(UserLogin userlogin)
-        //{
-        //    var GetMasterRecord = _dbContext.UserLogin.SingleOrDefault(m => m.UserName == userlogin.UserName);
-        //    _dbContext.Entry(GetMasterRecord).CurrentValues.SetValues(userlogin);
-        //    _dbContext.SaveChanges();
-        //    return userlogin;
-        //}
+        public UserLogin UpdateActivationCode(UserLogin userlogin)
+        {
+            var GetMasterRecord = _dbContext.UserLogin.Where(m => m.UserName == userlogin.UserName).FirstOrDefault();
+            //GetMasterRecord.ActivationCode = userlogin.ActivationCode;
+            userlogin.UserLoginId = GetMasterRecord.UserLoginId;
+            _dbContext.Entry(GetMasterRecord).CurrentValues.SetValues(userlogin);
+            _dbContext.SaveChanges();
+            return userlogin;
+        }
     }
 }

@@ -44,5 +44,15 @@ namespace MaaAahwanam.Repository.db
         {
             return maaAahwanamEntities.GetDecorators().ToList();
         }
+
+        public List<GetCaterers_Result> GetAllCaterers()
+        {
+            return maaAahwanamEntities.GetCaterers().ToList();
+        }
+
+        public List<GetOthers_Result> GetAllOthers(string type)
+        {
+            return maaAahwanamEntities.GetOthers(type).ToList();
+        }
     }
 }

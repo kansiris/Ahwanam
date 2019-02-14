@@ -43,5 +43,15 @@ namespace MaaAahwanam.Service
         {
             return resultsPageRepository.GetAllDecorators();
         }
+
+        public List<GetCaterers_Result> GetAllCaterers()
+        {
+            return resultsPageRepository.GetAllCaterers();
+        }
+
+        public List<GetOthers_Result> GetAllOthers(string type)
+        {
+            return resultsPageRepository.GetAllOthers(type);
+        }
     }
 }

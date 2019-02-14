@@ -129,5 +129,10 @@ namespace MaaAahwanam.Service
         {
             return userDetailsRepository.GetUserLoginTypes(email);
         }
+
+        public UserLogin UpdateActivationCode(UserLogin userlogin)
+        {
+            return userLoginRepository.UpdateActivationCode(userlogin);
+        }
     }
 }

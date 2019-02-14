@@ -46,7 +46,10 @@ namespace MaaAahwanam.Service
             return vendorVenueSignUpRepository.GetUserdetails(email);
         }
 
-      
+        public UserLogin GetUserLoginByCode(string code)
+        {
+            return vendorVenueSignUpRepository.GetUserLoginByCode(code);
+        }
 
         public Vendormaster AddvendorMaster(Vendormaster vendormaster)
         {
