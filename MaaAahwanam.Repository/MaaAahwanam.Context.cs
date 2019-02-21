@@ -623,16 +623,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_OrderDetails_Result>("sp_OrderDetails", orderByParameter);
         }
     
-        public virtual ObjectResult<GetDecorators_Result> GetDecorators()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDecorators_Result>("GetDecorators");
-        }
-    
-        public virtual ObjectResult<GetPhotographers_Result> GetPhotographers()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPhotographers_Result>("GetPhotographers");
-        }
-    
         public virtual ObjectResult<packagevendordates_Result> packagevendordates()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<packagevendordates_Result>("packagevendordates");
@@ -712,9 +702,23 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorsDatesbooked_Result>("VendorsDatesbooked", idParameter);
         }
     
+        public virtual ObjectResult<GetVendors_Result> GetVendors(string type)
+        {
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetVendors_Result>("GetVendors", typeParameter);
+        }
+    
         public virtual ObjectResult<GetCaterers_Result> GetCaterers()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCaterers_Result>("GetCaterers");
+        }
+    
+        public virtual ObjectResult<GetDecorators_Result> GetDecorators()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDecorators_Result>("GetDecorators");
         }
     
         public virtual ObjectResult<GetOthers_Result> GetOthers(string type)
@@ -726,13 +730,9 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetOthers_Result>("GetOthers", typeParameter);
         }
     
-        public virtual ObjectResult<GetVendors_Result> GetVendors(string type)
+        public virtual ObjectResult<GetPhotographers_Result> GetPhotographers()
         {
-            var typeParameter = type != null ?
-                new ObjectParameter("type", type) :
-                new ObjectParameter("type", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetVendors_Result>("GetVendors", typeParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPhotographers_Result>("GetPhotographers");
         }
     }
 }

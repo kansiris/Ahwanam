@@ -39,6 +39,7 @@ namespace MaaAahwanam.Repository
         public int tier { get; set; }
         public int priority { get; set; }
         public string GeoLocation { get; set; }
+        public string BusinessType { get; set; }
         public long subid { get; set; }
         public string subtype { get; set; }
         public string subtypename { get; set; }
@@ -54,5 +55,8 @@ namespace MaaAahwanam.Repository
         public string subcity { get; set; }
         public string substate { get; set; }
         public string subzipcode { get; set; }
+        public string fbrating { get; set; }
+        public string googlerating { get; set; }
+        public string jdrating { get; set; }
     }
 }

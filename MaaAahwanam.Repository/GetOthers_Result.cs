@@ -56,5 +56,8 @@ namespace MaaAahwanam.Repository
         public string subcity { get; set; }
         public string substate { get; set; }
         public string subzipcode { get; set; }
+        public string fbrating { get; set; }
+        public string googlerating { get; set; }
+        public string jdrating { get; set; }
     }
 }
