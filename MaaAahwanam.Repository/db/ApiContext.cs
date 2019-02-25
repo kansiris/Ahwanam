@@ -77,5 +77,8 @@ namespace MaaAahwanam.Repository.db
         public DbSet<AllSupplierServices> AllSupplierServices { get; set; }
         public DbSet<StaffAccess> StaffAccess { get; set; }
         public DbSet<Rating> Rating { get; set; }
+        public DbSet<Category> Category { get; set; }
+        public DbSet<filter> filter { get; set; }
+        public DbSet<filter_value> filter_value { get; set; }
     }
 }
