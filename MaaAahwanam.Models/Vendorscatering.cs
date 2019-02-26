@@ -35,5 +35,6 @@ namespace MaaAahwanam.Models
         public int MinGuests { get; set; }
         public int MaxGuests { get; set; }
         //public int tier { get; set; }
+        public string page_name { get; set; }
     }
 }

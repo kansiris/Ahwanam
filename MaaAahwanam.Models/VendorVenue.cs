@@ -88,5 +88,6 @@ namespace MaaAahwanam.Models
         public string Intercom { get; set; }
         public string Sufficient_Room_Size { get; set; }
         public string Sufficient_Washroom { get; set; }
+        public string page_name { get; set; }
     }
 }

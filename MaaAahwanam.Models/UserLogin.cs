@@ -23,5 +23,6 @@ namespace MaaAahwanam.Models
         public string businesstype { get; set; }
         public string EmailOTP { get; set; }
         public string MobileOTP { get; set; }
+        public string Loginsession { get; set; }
     }
 }

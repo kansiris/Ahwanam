@@ -28,5 +28,6 @@ namespace MaaAahwanam.Models
         public string State { get; set; }
         public string ZipCode { get; set; }
         //public int tier { get; set; }
+        public string page_name { get; set; }
     }
 }
