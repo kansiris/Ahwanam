@@ -59,5 +59,6 @@ namespace MaaAahwanam.Repository
         public string fbrating { get; set; }
         public string googlerating { get; set; }
         public string jdrating { get; set; }
+        public string page_name { get; set; }
     }
 }

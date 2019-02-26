@@ -702,15 +702,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VendorsDatesbooked_Result>("VendorsDatesbooked", idParameter);
         }
     
-        public virtual ObjectResult<GetVendors_Result> GetVendors(string type)
-        {
-            var typeParameter = type != null ?
-                new ObjectParameter("type", type) :
-                new ObjectParameter("type", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetVendors_Result>("GetVendors", typeParameter);
-        }
-    
         public virtual ObjectResult<GetCaterers_Result> GetCaterers()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetCaterers_Result>("GetCaterers");
@@ -733,6 +724,15 @@ namespace MaaAahwanam.Repository
         public virtual ObjectResult<GetPhotographers_Result> GetPhotographers()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPhotographers_Result>("GetPhotographers");
+        }
+    
+        public virtual ObjectResult<GetVendors_Result> GetVendors(string type)
+        {
+            var typeParameter = type != null ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetVendors_Result>("GetVendors", typeParameter);
         }
     }
 }
