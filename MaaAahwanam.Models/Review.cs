@@ -20,5 +20,6 @@ namespace MaaAahwanam.Models
         public DateTime? UpdatedDate { get; set; }
         public string Status { get; set; }
         public long Sid { get; set; }
+        public string rating { get; set; }
     }
 }
