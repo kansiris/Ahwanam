@@ -80,5 +80,7 @@ namespace MaaAahwanam.Repository.db
         public DbSet<Category> Category { get; set; }
         public DbSet<filter> filter { get; set; }
         public DbSet<filter_value> filter_value { get; set; }
+        public DbSet<Ceremony> Ceremony { get; set; }
+        public DbSet<CeremonyCategory> CeremonyCategory { get; set; }
     }
 }
