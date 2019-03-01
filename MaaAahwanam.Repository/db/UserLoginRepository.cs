@@ -180,5 +180,12 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return usertoken;
         }
+
+        public int RemoveToken(string token,long userloginid)
+        {
+            var getdata = _dbContext.UserToken.Where(m => m.UserLoginID == userloginid && m.Token == token).FirstOrDefault();
+            _dbContext.UserToken.Remove(getdata);
+            return _dbContext.SaveChanges();
+        }
     }
 }
