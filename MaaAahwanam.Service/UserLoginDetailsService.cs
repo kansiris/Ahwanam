@@ -134,5 +134,16 @@ namespace MaaAahwanam.Service
         {
             return userLoginRepository.UpdateActivationCode(userlogin);
         }
+
+        //Token Part
+        public int checktoken(string token, string IP)
+        {
+            return userLoginRepository.checktoken(token, IP);
+        }
+
+        public UserToken addtoken(UserToken usertoken)
+        {
+            return userLoginRepository.addtoken(usertoken);
+        }
     }
 }

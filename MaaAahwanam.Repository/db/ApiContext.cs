@@ -82,5 +82,6 @@ namespace MaaAahwanam.Repository.db
         public DbSet<filter_value> filter_value { get; set; }
         public DbSet<Ceremony> Ceremony { get; set; }
         public DbSet<CeremonyCategory> CeremonyCategory { get; set; }
+        public DbSet<UserToken> UserToken { get; set; }
     }
 }

@@ -168,5 +168,17 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return userlogin;
         }
+
+        public int checktoken(string token, string IP)
+        {
+            return _dbContext.UserToken.Where(m => m.Token == token && m.IPAddress == IP).Count();
+        }
+
+        public UserToken addtoken(UserToken usertoken)
+        {
+            _dbContext.UserToken.Add(usertoken);
+            _dbContext.SaveChanges();
+            return usertoken;
+        }
     }
 }
