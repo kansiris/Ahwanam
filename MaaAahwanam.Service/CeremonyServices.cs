@@ -16,6 +16,11 @@ namespace MaaAahwanam.Service
         {
             return ceremonyrepo.Getall();
         }
+
+        public Ceremony Getceremony(string pagename)
+        {
+            return ceremonyrepo.Getceremonydetails(pagename);
+        }
         public List<CeremonyCategory> getceremonydetails(long id)
         {
             return ceremonyrepo.getceremonycategory(id);
