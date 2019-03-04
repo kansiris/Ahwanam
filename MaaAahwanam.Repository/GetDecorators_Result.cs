@@ -11,7 +11,7 @@ namespace MaaAahwanam.Repository
 {
     using System;
     
-    public partial class GetDecorators_Result
+    public partial class 
     {
         public long Id { get; set; }
         public long UserId { get; set; }
