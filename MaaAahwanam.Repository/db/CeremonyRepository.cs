@@ -17,9 +17,14 @@ namespace MaaAahwanam.Repository.db
             return _dbContext.Ceremony.ToList();
         }
 
-        public CeremonyCategory getceremonycategory(long id)
+        public Ceremony Getceremonydetails(string pagename)
         {
-            return _dbContext.CeremonyCategory.Where(c => c.CeremonyId == id).FirstOrDefault();
+            return _dbContext.Ceremony.Where(c => c.page_name == pagename).FirstOrDefault();
+        }
+
+        public List<CeremonyCategory> getceremonycategory(long id)
+        {
+            return _dbContext.CeremonyCategory.Where(c => c.CeremonyId == id).ToList();
         }
     }
 }

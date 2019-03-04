@@ -18,6 +18,9 @@ namespace MaaAahwanam.Models
         public DateTime EndDate { get; set; }
         public DateTime UpdatedDate { get; set; }
         public string Status { get; set; }
+        public string name { get; set; }
+        public string ceremonyImage { get; set; }
         public string page_name { get; set; }
+
     }
 }
