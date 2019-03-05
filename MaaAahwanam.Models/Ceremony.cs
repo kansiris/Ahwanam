@@ -21,6 +21,8 @@ namespace MaaAahwanam.Models
         public string name { get; set; }
         public string ceremonyImage { get; set; }
         public string page_name { get; set; }
+        public string default_category { get; set; }
+        public int type { get; set; }
 
     }
 }
