@@ -16,7 +16,6 @@ namespace MaaAahwanam.Service
         {
             return ceremonyrepo.Getall();
         }
-        
         public List<Ceremony> Getallbasedtype(int type)
         {
             return ceremonyrepo.Getalleventtype(type);
