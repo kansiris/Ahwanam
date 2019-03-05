@@ -16,7 +16,10 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.Ceremony.ToList();
         }
-
+        public List<Ceremony> Getalleventtype(int type)
+        {
+            return _dbContext.Ceremony.Where(c => c.type == type).ToList();
+        }
         public Ceremony Getceremonydetails(string pagename)
         {
             return _dbContext.Ceremony.Where(c => c.page_name == pagename).FirstOrDefault();
