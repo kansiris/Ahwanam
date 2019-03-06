@@ -29,5 +29,6 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.CeremonyCategory.Where(c => c.CeremonyId == id).ToList();
         }
+
     }
 }
