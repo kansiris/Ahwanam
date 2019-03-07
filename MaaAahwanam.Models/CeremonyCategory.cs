@@ -17,5 +17,6 @@ namespace MaaAahwanam.Models
         public string image { get; set; }
         public DateTime UpdatedDate { get; set; }
         public string Status { get; set; }
+        public string page_name { get; set; }
     }
 }

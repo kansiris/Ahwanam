@@ -19,5 +19,10 @@ namespace MaaAahwanam.Models
         public DateTime WhishListedDate { get; set; }
         public string IPAddress { get; set; }
         public string Status { get; set; }
+        public string Notes { get; set; }
+        public string Ceremony { get; set; }
+        public string Budjet { get; set; }
+        public DateTime? EventStartDate { get; set; }
+        public DateTime? EventEndDate { get; set; }
     }
 }
