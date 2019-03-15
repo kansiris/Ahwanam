@@ -31,5 +31,25 @@ namespace MaaAahwanam.Service
         {
             return whishListRepository.RemoveWhishList(WhishListID);
         }
+
+        public wishlist Addwishlist(wishlist wishlists)
+        {
+            return whishListRepository.Addwishlist(wishlists);
+        }
+
+        public Userwishlist Adduserwishlist(Userwishlist userwishlists)
+        {
+            return whishListRepository.AddUserwishlist(userwishlists);
+        }
+
+        public int RemoveUserWishlist(long wishlistId)
+        {
+            return whishListRepository.RemoveuserWishList(wishlistId);
+        }
+
+        public int Removewishlist(long wishlistId)
+        {
+            return whishListRepository.Removewishlists(wishlistId);
+        }
     }
 }

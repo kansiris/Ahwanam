@@ -28,8 +28,8 @@ namespace MaaAahwanam.Web.Controllers
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
 
 
-        //static int count = 0;
-        // GET: NParticularVendor
+        static int count = 0;
+        //GET: NParticularVendor
         public ActionResult Index(string type, string id, string vid, string m)
         {
 
@@ -72,13 +72,13 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.particularPhotography = Photographyrecords.Where(c => c.Id == long.Parse(vid)).FirstOrDefault();
                 ViewBag.particularOther = Otherrecords.Where(c => c.Id == long.Parse(vid)).FirstOrDefault();
 
-                
+
 
 
                 string price = "";
                 if (type == "Venues" || type == "Hotel" || type == "Resort" || type == "Convention Hall" || type == "Venue" || type == "Banquet Hall" || type == "Function Hall" || type == "Venue")
                 {
-                    if (ViewBag.particularVenue != null) { price = ViewBag.particularVenue.VegLunchCost.ToString(); } else { return RedirectToAction("Index","ErrorPage"); }
+                    if (ViewBag.particularVenue != null) { price = ViewBag.particularVenue.VegLunchCost.ToString(); } else { return RedirectToAction("Index", "ErrorPage"); }
                     ViewBag.location = ViewBag.particularVenue;
                 }
                 else if (type == "Catering")
@@ -101,7 +101,7 @@ namespace MaaAahwanam.Web.Controllers
                     if (ViewBag.particularOther != null) { price = ViewBag.particularOther.ItemCost.ToString(); } else { return RedirectToAction("Index", "ErrorPage"); }
                     ViewBag.location = ViewBag.particularOther;
                 }
-                if(ViewBag.location == null)
+                if (ViewBag.location == null)
                 {
                     ViewBag.location = data;
                 }
@@ -115,7 +115,7 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.Other = Otherrecords;
                 ViewBag.servicetypeprice = price;
 
-                int count = Venuerecords.Where(k => k.Id != long.Parse(vid)).Count() + Cateringrecords.Where(k => k.Id != long.Parse(vid)).Count()+ Decoratorrecords.Where(k => k.Id != long.Parse(vid)).Count() + Photographyrecords.Where(k => k.Id != long.Parse(vid)).Count()+ Otherrecords.Where(k => k.Id != long.Parse(vid)).Count();
+                int count = Venuerecords.Where(k => k.Id != long.Parse(vid)).Count() + Cateringrecords.Where(k => k.Id != long.Parse(vid)).Count() + Decoratorrecords.Where(k => k.Id != long.Parse(vid)).Count() + Photographyrecords.Where(k => k.Id != long.Parse(vid)).Count() + Otherrecords.Where(k => k.Id != long.Parse(vid)).Count();
                 if (count == 0)
                     ViewBag.msg = "No Extra Services Available";
                 else
@@ -129,7 +129,7 @@ namespace MaaAahwanam.Web.Controllers
                 ViewBag.availablepackages = vendorProductsService.getvendorpkgs(id).Where(p => p.VendorSubId == long.Parse(vid)).ToList();
                 //var orderdates = orderService.userOrderList().Where(k => k.Id == long.Parse(id) && k.Status == "Active").Select(k => k.OrderDate.Value.ToString("dd-MM-yyyy")).ToList();
 
-                string orderdates = productInfoService.disabledate(long.Parse(id), long.Parse(vid), type).Replace('/','-');
+                string orderdates = productInfoService.disabledate(long.Parse(id), long.Parse(vid), type).Replace('/', '-');
 
                 //Blocking Dates
                 //var vendorid = userLoginDetailsService.GetLoginDetailsByEmail(Productinfo.EmailId);
@@ -156,23 +156,23 @@ namespace MaaAahwanam.Web.Controllers
                     }
                     //ViewBag.vendoravailabledates = String.Join(",", betweendates,orderdates);
                     var vendoravailabledates = String.Join(",", betweendates);
-                    if(orderdates != "")
-                    vendoravailabledates = vendoravailabledates + "," + String.Join(",", orderdates.TrimStart(','));
+                    if (orderdates != "")
+                        vendoravailabledates = vendoravailabledates + "," + String.Join(",", orderdates.TrimStart(','));
                     ViewBag.vendoravailabledates = vendoravailabledates;
-                    //var today = DateTime.UtcNow;
-                    //var first = new DateTime(today.Year, today.Month, 1);
-                    //var vendordates = vendorDatesService.GetCurrentMonthDates(long.Parse(id)).Select(n => n.StartDate.ToShortDateString()).ToArray();
-                    //var bookeddates = productInfoService.GetCount(long.Parse(id), long.Parse(vid), type).Where(k => k.BookedDate > first).Select(l => l.BookedDate.Value.ToShortDateString()).Distinct().ToArray();
+                    var today = DateTime.UtcNow;
+                    var first = new DateTime(today.Year, today.Month, 1);
+                    var vendordates = vendorDatesService.GetCurrentMonthDates(long.Parse(id)).Select(n => n.StartDate.ToShortDateString()).ToArray();
+                    var bookeddates = productInfoService.GetCount(long.Parse(id), long.Parse(vid), type).Where(k => k.BookedDate > first).Select(l => l.BookedDate.Value.ToShortDateString()).Distinct().ToArray();
 
-                    ////var bookeddates = productInfoService.disabledate(vid, Svid, type).Split(',');
-                    //var finalbookeddates = bookeddates.Except(vendordates).ToList();
-                    //var finalvendordates = vendordates.Except(bookeddates).ToList();
-                    ////var finalbookeddates1 = bookeddates;
-                    ////var finalvendordates1 = vendordates;
-                    //if (finalbookeddates.Count() != 0)
-                    //    ViewBag.vendoravailabledates = string.Join(",", finalvendordates) + string.Join(",", finalbookeddates);
-                    //else
-                    //    ViewBag.vendoravailabledates = string.Join(",", finalvendordates);
+                    //var bookeddates = productInfoService.disabledate(vid, Svid, type).Split(',');
+                    var finalbookeddates = bookeddates.Except(vendordates).ToList();
+                    var finalvendordates = vendordates.Except(bookeddates).ToList();
+                    //var finalbookeddates1 = bookeddates;
+                    //var finalvendordates1 = vendordates;
+                    if (finalbookeddates.Count() != 0)
+                        ViewBag.vendoravailabledates = string.Join(",", finalvendordates) + string.Join(",", finalbookeddates);
+                    else
+                        ViewBag.vendoravailabledates = string.Join(",", finalvendordates);
                 }
                 return View();
             }
@@ -218,7 +218,7 @@ namespace MaaAahwanam.Web.Controllers
             }
         }
 
-        public ActionResult DealsSection(string type, string L1,string vid)
+        public ActionResult DealsSection(string type, string L1, string vid)
         {
             try
             {
@@ -231,7 +231,7 @@ namespace MaaAahwanam.Web.Controllers
                 //if (type == "Mehendi" || type == "Pandit")
                 //    type = "Other";
                 ViewBag.type = type;
-                var records = vendorProductsService.Getvendorproducts_Result(type).Where(m=>m.subid != vid);
+                var records = vendorProductsService.Getvendorproducts_Result(type).Where(m => m.subid != vid);
                 ViewBag.deal = records.Take(takecount).ToList();
                 int count = records.Count();
 
@@ -365,7 +365,7 @@ namespace MaaAahwanam.Web.Controllers
             }
         }
 
-        public ActionResult AddToCart(string type, string eventtype, string timeslot, string date, string id, string vid, string price, string guest, string selectedtype,string total,string SelectedCategory, string SelectedPriceType)
+        public ActionResult AddToCart(string type, string eventtype, string timeslot, string date, string id, string vid, string price, string guest, string selectedtype, string total, string SelectedCategory, string SelectedPriceType)
         {
             try
             {
@@ -382,14 +382,14 @@ namespace MaaAahwanam.Web.Controllers
                     //if (type != "Mehendi" && type != "Pandit" && type != "Decorator" && type != "Other" && type != "Photography")
                     //    cartItem.TotalPrice = decimal.Parse(total) * decimal.Parse(guest);
                     //else
-                        cartItem.TotalPrice = decimal.Parse(total);
+                    cartItem.TotalPrice = decimal.Parse(total);
                     cartItem.firsttotalprice = total;
 
                     cartItem.Orderedby = user.UserId;
                     cartItem.UpdatedDate = Convert.ToDateTime(updateddate);
                     cartItem.Perunitprice = decimal.Parse(price);
-                    if(type != "Photography" && type!= "Decorator")
-                    cartItem.Quantity = Convert.ToInt16(guest);
+                    if (type != "Photography" && type != "Decorator")
+                        cartItem.Quantity = Convert.ToInt16(guest);
                     cartItem.subid = Convert.ToInt64(vid);
                     cartItem.attribute = timeslot;
                     cartItem.EventType = eventtype;
@@ -412,7 +412,7 @@ namespace MaaAahwanam.Web.Controllers
                             return Json("failed", JsonRequestBehavior.AllowGet);
                     }
                 }
-                return Json("Login",JsonRequestBehavior.AllowGet);
+                return Json("Login", JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

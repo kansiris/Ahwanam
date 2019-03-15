@@ -15,6 +15,9 @@
         <Function Name="cartcount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="Ceremonydetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ceremony" Type="nvarchar(max)" Mode="In" />
+        </Function>
         <Function Name="Deal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="type" Type="varchar" Mode="In" />
         </Function>
@@ -437,6 +440,9 @@
           <Parameter Name="type" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetPhotographers" ReturnType="Collection(MaaAahwanamModel.GetPhotographers_Result)" />
+          <FunctionImport Name="Ceremonydetails" ReturnType="Collection(MaaAahwanamModel.Ceremonydetails_Result)">
+            <Parameter Name="ceremony" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
           <Property Type="Int64" Name="UserLoginId" Nullable="false" />
@@ -1883,6 +1889,23 @@
           <Property Type="String" Name="googlerating" Nullable="true" />
           <Property Type="String" Name="jdrating" Nullable="true" />
           <Property Type="String" Name="page_name" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Ceremonydetails_Result">
+          <Property Type="Int64" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="Image" Nullable="true" />
+          <Property Type="DateTime" Name="StartDate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="EndDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="page_name1" Nullable="true" />
+          <Property Type="String" Name="name" Nullable="true" />
+          <Property Type="String" Name="ceremonyImage" Nullable="true" />
+          <Property Type="String" Name="default_category" Nullable="true" />
+          <Property Type="Int64" Name="detailId" Nullable="false" />
+          <Property Type="Int64" Name="CeremonyId" Nullable="false" />
+          <Property Type="String" Name="shortdescription" Nullable="true" />
+          <Property Type="String" Name="Category" Nullable="true" />
+          <Property Type="String" Name="page_name2" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3614,6 +3637,27 @@
                 <ScalarProperty Name="googlerating" ColumnName="googlerating" />
                 <ScalarProperty Name="jdrating" ColumnName="jdrating" />
                 <ScalarProperty Name="page_name" ColumnName="page_name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Ceremonydetails" FunctionName="MaaAahwanamModel.Store.Ceremonydetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.Ceremonydetails_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="page_name1" ColumnName="page_name1" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="ceremonyImage" ColumnName="ceremonyImage" />
+                <ScalarProperty Name="default_category" ColumnName="default_category" />
+                <ScalarProperty Name="detailId" ColumnName="detailId" />
+                <ScalarProperty Name="CeremonyId" ColumnName="CeremonyId" />
+                <ScalarProperty Name="shortdescription" ColumnName="shortdescription" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="page_name2" ColumnName="page_name2" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

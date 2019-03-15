@@ -12,6 +12,7 @@ namespace MaaAahwanam.Repository.db
    public class CeremonyRepository
     {
         readonly ApiContext _dbContext = new ApiContext();
+        MaaAahwanamEntities maaAahwanamEntities = new MaaAahwanamEntities();
         public List<Ceremony> Getall()
         {
             return _dbContext.Ceremony.ToList();
@@ -28,6 +29,11 @@ namespace MaaAahwanam.Repository.db
         public List<CeremonyCategory> getceremonycategory(long id)
         {
             return _dbContext.CeremonyCategory.Where(c => c.CeremonyId == id).ToList();
+        }
+
+        public List<Ceremonydetails_Result> GetDetails(string ceremony)
+        {
+            return maaAahwanamEntities.Ceremonydetails(ceremony).ToList();
         }
 
     }

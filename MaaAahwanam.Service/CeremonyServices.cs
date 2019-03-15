@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MaaAahwanam.Repository;
 
 namespace MaaAahwanam.Service
 {
@@ -28,5 +29,10 @@ namespace MaaAahwanam.Service
         {
             return ceremonyrepo.getceremonycategory(id);
         }
-   }
+
+        public List<Ceremonydetails_Result> Getdetails(string ceremony)
+        {
+            return ceremonyrepo.GetDetails(ceremony);
+        }
+    }
 }

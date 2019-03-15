@@ -23,6 +23,7 @@ namespace MaaAahwanam.Models
         public string page_name { get; set; }
         public string default_category { get; set; }
         public int type { get; set; }
+        public string location { get; set; }
 
     }
 }

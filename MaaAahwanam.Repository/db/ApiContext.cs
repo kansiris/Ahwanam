@@ -83,5 +83,8 @@ namespace MaaAahwanam.Repository.db
         public DbSet<Ceremony> Ceremony { get; set; }
         public DbSet<CeremonyCategory> CeremonyCategory { get; set; }
         public DbSet<UserToken> UserToken { get; set; }
+        public DbSet<Collabrator> Collabrator { get; set; }
+        public DbSet<wishlist> wishlist { get; set; }
+        public DbSet<Userwishlist> Userwishlist { get; set; }
     }
 }

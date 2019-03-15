@@ -734,5 +734,14 @@ namespace MaaAahwanam.Repository
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetPhotographers_Result>("GetPhotographers");
         }
+    
+        public virtual ObjectResult<Ceremonydetails_Result> Ceremonydetails(string ceremony)
+        {
+            var ceremonyParameter = ceremony != null ?
+                new ObjectParameter("ceremony", ceremony) :
+                new ObjectParameter("ceremony", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Ceremonydetails_Result>("Ceremonydetails", ceremonyParameter);
+        }
     }
 }
