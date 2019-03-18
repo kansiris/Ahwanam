@@ -187,5 +187,10 @@ namespace MaaAahwanam.Repository.db
             _dbContext.UserToken.Remove(getdata);
             return _dbContext.SaveChanges();
         }
+
+        public long userloginId(string token)
+        {
+            return _dbContext.UserLogin.Where(t => t.ActivationCode == token).Select(u => u.UserLoginId).FirstOrDefault();
+        }
     }
 }

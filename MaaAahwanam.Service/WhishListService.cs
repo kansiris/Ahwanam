@@ -12,6 +12,7 @@ namespace MaaAahwanam.Service
     {
         private static TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
         WhishListRepository whishListRepository = new WhishListRepository();
+        NotesRepository noterepo = new NotesRepository();
 
         DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
 
@@ -42,6 +43,11 @@ namespace MaaAahwanam.Service
             return whishListRepository.AddUserwishlist(userwishlists);
         }
 
+        public wishlist getwishlist(long userId)
+        {
+            return whishListRepository.getwishlist(userId);
+        }
+
         public int RemoveUserWishlist(long wishlistId)
         {
             return whishListRepository.RemoveuserWishList(wishlistId);
@@ -50,6 +56,29 @@ namespace MaaAahwanam.Service
         public int Removewishlist(long wishlistId)
         {
             return whishListRepository.Removewishlists(wishlistId);
+        }
+        public Note AddNotes(Note note)
+        {
+            return noterepo.AddNotes(note);
+        }
+
+        public Note UpdateNotes(Note note, long notesId)
+        {
+            return noterepo.UpdateNotes(note, notesId);
+        }
+
+        public int RemoveNotes(long notesId)
+        {
+            return noterepo.RemoveNotes(notesId);
+        }
+
+        public Collabrator AddCollabrator(Collabrator collabrator)
+        {
+            return noterepo.AddCollabrator(collabrator);
+        }
+        public int RemoveCollabrator(long collabratorId)
+        {
+            return noterepo.RemoveCollabrator(collabratorId);
         }
     }
 }

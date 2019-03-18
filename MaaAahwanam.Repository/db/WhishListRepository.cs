@@ -52,13 +52,23 @@ namespace MaaAahwanam.Repository.db
             return userwishlists;
         }
 
+        public wishlist getwishlist(long userId)
+        {
+         return _dbContext.wishlist.Where(w => w.UserId == userId).FirstOrDefault();
+        }
+
         public int RemoveuserWishList(long wishlistId)
         {
             var getdata = _dbContext.Userwishlist.Where(m => m.wishlistId == wishlistId).FirstOrDefault();
             _dbContext.Userwishlist.Remove(getdata);
             return _dbContext.SaveChanges();
         }
-
+        public int Removewishlist(long wishlistId)
+        {
+            var getdata = _dbContext.wishlist.Where(m => m.Id == wishlistId).FirstOrDefault();
+            _dbContext.wishlist.Remove(getdata);
+            return _dbContext.SaveChanges();
+        }
         public int Removewishlists(long wishlistId)
         {
             var data = _dbContext.wishlist.Where(m => m.Id == wishlistId).FirstOrDefault();

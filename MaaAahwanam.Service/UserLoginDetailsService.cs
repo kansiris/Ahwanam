@@ -150,5 +150,14 @@ namespace MaaAahwanam.Service
         {
             return userLoginRepository.RemoveToken(token, userloginid);
         }
+
+        public long userloginId(string token)
+        {
+            return userLoginRepository.userloginId(token);
+        }
+        public UserDetail GetUserProfilebyUserLoginId(long UserloginId)
+        {
+            return userDetailsRepository.GetUserProfilebyUserLoginId(UserloginId);
+        }
     }
 }

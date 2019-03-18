@@ -22,6 +22,12 @@ namespace MaaAahwanam.Repository.db
             return userDetails;
         }
 
+        public UserDetail GetUserProfilebyUserLoginId(long UserloginId)
+        {
+            var data = _dbContext.UserDetail.SingleOrDefault(u => u.UserLoginId == UserloginId);
+            return data;
+        }
+
 
         public UserLogin GetLoginDetails(int userId)
         {

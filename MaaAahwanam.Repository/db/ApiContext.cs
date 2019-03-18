@@ -86,5 +86,6 @@ namespace MaaAahwanam.Repository.db
         public DbSet<Collabrator> Collabrator { get; set; }
         public DbSet<wishlist> wishlist { get; set; }
         public DbSet<Userwishlist> Userwishlist { get; set; }
+        public DbSet<Note> Notes { get; set; }
     }
 }
