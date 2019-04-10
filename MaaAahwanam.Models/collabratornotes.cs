@@ -7,16 +7,14 @@ using System.Threading.Tasks;
 
 namespace MaaAahwanam.Models
 {
-    public class Note
+    public class collabratornotes
     {
         [Key]
-        public long NotesId { get; set; }
-        public long wishlistId { get; set; }
-        public long VendorId { get; set; }
-        public long VendorSubId { get; set; }
-        public long wishlistItemId { get; set; }
-        public long UserId { get; set; }
-        public string Notes { get; set; }
+        public long collabratornotesId { get; set; }
+        public long wishlist_id { get; set; }
+        public long vendor_id { get; set; }
+        public long Userid { get; set; }
+        public string collabratorNote { get; set; }
         public string Name { get; set; }
         public DateTime AddedDate { get; set; }
         public DateTime UpdatedDate { get; set; }

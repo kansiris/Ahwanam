@@ -53,5 +53,49 @@ namespace MaaAahwanam.Service
         {
             return resultsPageRepository.GetAllOthers(type);
         }
+
+        public UserDetail GetUser(UserDetail userdetail)
+        {
+            return resultsPageRepository.GetUser(userdetail);
+        }
+
+        public List<SP_Getvendormasterdata_Result> Getvendormasterdata()
+        {
+            return resultsPageRepository.Getvendormasterdata();
+        }
+
+        public List<GetVendorsByCategoryId_Result> GetvendorbycategoryId(int CategoryTypeId)
+        {
+            return resultsPageRepository.GetvendorbycategoryId(CategoryTypeId);
+        }
+        public List<GetCategoryByname_Result> Getvendorbycategory(string categorytype)
+        {
+            return resultsPageRepository.Getvendorbycategory(categorytype);
+        }
+
+        public Vendormasterdata Getvendor(long vendorid)
+        {
+            return resultsPageRepository.Getvendor(vendorid);
+        }
+
+        public List<VendorAmenity> GetAmenities(long vendorid)
+        {
+            return resultsPageRepository.GetAmenities(vendorid);
+        }
+
+        public List<VendorPolicies> GetPolicies(long vendorid)
+        {
+            return resultsPageRepository.GetPolicies(vendorid);
+        }
+        public Getvendor_vendorid_Result Getsupplier(long vendorid)
+        {
+            return resultsPageRepository.Getsupplier(vendorid);
+        }
+
+        public List<VendorAvailableArea> GetavailableAreas(long vendorid)
+        {
+            return resultsPageRepository.GetavailableAreas(vendorid);
+        }
+
     }
 }

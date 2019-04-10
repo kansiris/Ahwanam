@@ -36,5 +36,15 @@ namespace MaaAahwanam.Repository.db
             return maaAahwanamEntities.Ceremonydetails(ceremony).ToList();
         }
 
+        public List<Ceremonydetails_id_Result> Getceremonydetails(long ceremonyid)
+        {
+            return maaAahwanamEntities.Ceremonydetails_id(ceremonyid).ToList();
+        }
+
+        public List<Getwedding_Result> GetVendorDetails(string ceremony)
+        {
+            return maaAahwanamEntities.Getwedding(ceremony).ToList();
+        }
+
     }
 }

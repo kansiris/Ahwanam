@@ -11,6 +11,11 @@ namespace MaaAahwanam.Repository.db
     {
         readonly ApiContext _dbContext = new ApiContext();
 
+        public List<Note> Getnote(long wishlist_id,long vendor_id)
+        {
+            return _dbContext.Notes.Where(n => n.wishlistId == wishlist_id && n.VendorId == vendor_id).ToList();
+        }
+
         public Note AddNotes(Note note)
         {
             _dbContext.Notes.Add(note);
@@ -18,13 +23,17 @@ namespace MaaAahwanam.Repository.db
             return note;
         }
 
-        public Note UpdateNotes(Note note,long notesId)
+        public Note UpdateNotes(long notesid,string notes)
         {
-            var Notedata = _dbContext.Notes.SingleOrDefault(n =>n.NotesId == notesId);
+            Note note = new Note();
+            TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+            var Notedata = _dbContext.Notes.SingleOrDefault(n =>n.NotesId==notesid);
             note.NotesId = Notedata.NotesId;
-            note.VendorId = Notedata.VendorId;
             note.wishlistId = Notedata.wishlistId;
-            note.VendorSubId = Notedata.VendorSubId;
+            note.wishlistItemId = Notedata.wishlistItemId;
+            note.VendorId = Notedata.VendorId;
+            note.Notes = notes;
+            note.UpdatedDate= TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
             _dbContext.Entry(Notedata).CurrentValues.SetValues(note);
             _dbContext.SaveChanges();
             return Notedata;
@@ -32,9 +41,27 @@ namespace MaaAahwanam.Repository.db
 
         public int RemoveNotes(long notesId)
         {
+            int i;
             var data = _dbContext.Notes.Where(n => n.NotesId == notesId).FirstOrDefault();
-            _dbContext.Notes.Remove(data);
-            return _dbContext.SaveChanges();
+            if (data != null)
+            {
+                _dbContext.Notes.Remove(data);
+                _dbContext.SaveChanges();
+                i = 1;
+            }
+            else
+                i = 0;
+            return i;
+        }
+
+        public long GetcollabratorDetailsByEmail(string username)
+        {
+            var count = _dbContext.Collabrator.Where(m => m.Email == username).FirstOrDefault();
+            if (count != null)
+                return count.Id;
+            else
+                //count.UserLoginId = 0;
+                return 0;
         }
 
         public Collabrator AddCollabrator(Collabrator collabrator)

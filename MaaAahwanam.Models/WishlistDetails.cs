@@ -7,15 +7,17 @@ using System.Threading.Tasks;
 
 namespace MaaAahwanam.Models
 {
-    public class Collabrator
+    public class WishlistDetails
     {
         [Key]
-        public long Id { get; set; }
+        public long WishlistdetailId { get; set; }
         public long UserId { get; set; }
-        public long wishlistid { get; set; }
-        public string Email { get; set; }
-        public string PhoneNo { get; set; }
+        public string Name { get; set; }
+        public string Event { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public string Description { get; set; }
         public DateTime UpdatedDate { get; set; }
-       public string wishlistlink { get; set; }
+
     }
 }

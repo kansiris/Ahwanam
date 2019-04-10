@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace MaaAahwanam.Models
 {
-   public class Userwishlist
+    public class Servicewishlist
     {
         [Key]
-        public long Id { get; set; }
+        public long wishlistserviceId { get; set; }
         public long wishlistId { get; set; }
         public long vendorId { get; set; }
         public long vendorsubId { get; set; }

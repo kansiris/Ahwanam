@@ -35,6 +35,13 @@ namespace MaaAahwanam.Repository.db
             return data;
         }
 
+        public UserDetail GetUser(UserDetail userdetail)
+        {
+            var data = _dbContext.UserDetail.Where(u => u.UserDetailId == userdetail.UserDetailId && u.AlternativeEmailID == userdetail.AlternativeEmailID).FirstOrDefault();
+            return data;
+        }
+
+
         public List<GetPhotographers_Result> GetAllPhotographers()
         {
             return maaAahwanamEntities.GetPhotographers().ToList();
@@ -54,5 +61,46 @@ namespace MaaAahwanam.Repository.db
         {
             return maaAahwanamEntities.GetOthers(type).ToList();
         }
+
+        public List<SP_Getvendormasterdata_Result> Getvendormasterdata()
+        {
+            return maaAahwanamEntities.SP_Getvendormasterdata().ToList();
+        }
+
+        public List<GetVendorsByCategoryId_Result> GetvendorbycategoryId(int CategoryTypeId)
+        {
+            return maaAahwanamEntities.GetVendorsByCategoryId(CategoryTypeId).ToList();
+        }
+
+        public List<GetCategoryByname_Result> Getvendorbycategory(string categorytype)
+        {
+            return maaAahwanamEntities.GetCategoryByname(categorytype).ToList();
+        }
+
+        public Vendormasterdata Getvendor(long vendorid)
+        {
+            var data = _dbContext.Vendormasterdata.Where(v=>v.VendormasterId == vendorid).FirstOrDefault();
+            return data;
+        }
+        public Getvendor_vendorid_Result Getsupplier(long vendorid)
+        {
+            return maaAahwanamEntities.Getvendor_vendorid(vendorid).FirstOrDefault();
+        }
+
+        public List<VendorAmenity> GetAmenities(long vendorid)
+        {
+            return _dbContext.VendorAmenity.Where(a => a.VendorId == vendorid).ToList();
+           
+        }
+        public List<VendorPolicies> GetPolicies(long vendorid)
+        {
+            return _dbContext.VendorPolicies.Where(p => p.VendorId == vendorid).ToList();
+            
+        }
+        public List<VendorAvailableArea> GetavailableAreas(long vendorid)
+        {
+            return _dbContext.VendorAvailableArea.Where(v => v.VendorId == vendorid).ToList();
+        }
+        
     }
 }

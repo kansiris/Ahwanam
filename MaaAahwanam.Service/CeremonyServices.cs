@@ -34,5 +34,15 @@ namespace MaaAahwanam.Service
         {
             return ceremonyrepo.GetDetails(ceremony);
         }
+
+        public List<Ceremonydetails_id_Result> Getceremonydetails(long ceremonyid)
+        {
+            return ceremonyrepo.Getceremonydetails(ceremonyid);
+        }
+
+        public List<Getwedding_Result> GetVendorDetails(string ceremony)
+        {
+            return ceremonyrepo.GetVendorDetails(ceremony);
+        }
     }
 }

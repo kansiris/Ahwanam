@@ -3,6 +3,7 @@ using MaaAahwanam.Models;
 using MaaAahwanam.Repository.db;
 using MaaAahwanam.Service.Mapper;
 using System.Collections.Generic;
+using MaaAahwanam.Repository;
 
 namespace MaaAahwanam.Service
 {
@@ -158,6 +159,11 @@ namespace MaaAahwanam.Service
         public UserDetail GetUserProfilebyUserLoginId(long UserloginId)
         {
             return userDetailsRepository.GetUserProfilebyUserLoginId(UserloginId);
+        }
+
+        public Getmyprofile_Result Getmyprofile(string token)
+        {
+            return userLoginRepository.Getmyprofile(token);
         }
     }
 }

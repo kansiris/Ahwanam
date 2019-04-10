@@ -15,6 +15,11 @@ namespace MaaAahwanam.Repository.db
             return _dbContext.Category.ToList();
         }
 
+        public Category category(int categoryid)
+        {
+            return _dbContext.Category.Where(c => c.servicType_id == categoryid).FirstOrDefault();
+        }
+
         public List<filter> AllFilters(int id)
         {
             return _dbContext.filter.Where(m=>m.serviceType_id == id).ToList();

@@ -7,7 +7,7 @@ namespace MaaAahwanam.Repository.db
     public class UserLoginRepository
     {
         readonly ApiContext _dbContext = new ApiContext();
-
+        MaaAahwanamEntities maaAahwanamEntities = new MaaAahwanamEntities();
         public UserLoginRepository()
         {
 
@@ -190,7 +190,13 @@ namespace MaaAahwanam.Repository.db
 
         public long userloginId(string token)
         {
-            return _dbContext.UserLogin.Where(t => t.ActivationCode == token).Select(u => u.UserLoginId).FirstOrDefault();
+            return _dbContext.UserToken.Where(t => t.Token == token).Select(u => u.UserLoginID).FirstOrDefault();
+        }
+
+
+        public Getmyprofile_Result Getmyprofile(string token)
+        {
+            return maaAahwanamEntities.Getmyprofile(token).FirstOrDefault();
         }
     }
 }

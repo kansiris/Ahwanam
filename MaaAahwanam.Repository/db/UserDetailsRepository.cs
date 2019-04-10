@@ -232,5 +232,7 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.UserLogin.Where(m => m.UserName == email).ToList();
         }
+
+      
     }
 }
