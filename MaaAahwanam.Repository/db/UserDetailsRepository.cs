@@ -233,6 +233,19 @@ namespace MaaAahwanam.Repository.db
             return _dbContext.UserLogin.Where(m => m.UserName == email).ToList();
         }
 
+        //public UserDetail updateuserdetails(UserDetail userDetail,string email)
+        //{
+           
+        //    var data= _dbContext.UserDetail.SingleOrDefault(m => m.AlternativeEmailID == email);
+        //    userDetail.UserDetailId = data.UserDetailId;
+        //    userDetail.UserLoginId = data.UserLoginId;
+        //    userDetail.FirstName = userDetail.FirstName;
+        //    userDetail.LastName = data.Last;
+        //    userDetail.name = data.name;
+        //    userDetail.AlternativeEmailID = data.AlternativeEmailID;
+
+        //}
+
       
     }
 }
