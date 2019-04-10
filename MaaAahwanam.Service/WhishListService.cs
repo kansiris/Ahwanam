@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MaaAahwanam.Models;
 using MaaAahwanam.Repository.db;
+using MaaAahwanam.Repository;
 
 namespace MaaAahwanam.Service
 {
@@ -33,38 +34,71 @@ namespace MaaAahwanam.Service
         //    return whishListRepository.RemoveWhishList(WhishListID);
         //}
 
-        public wishlist Addwishlist(wishlist wishlists)
+        public string AddAllwishlist(WishlistDetails wishlists, Userwishlistdetails userwishlists)
         {
-            return whishListRepository.Addwishlist(wishlists);
+            string response;
+            DateTime updateddate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            wishlists.UpdatedDate = userwishlists.WhishListedDate = updateddate;
+            try
+            {
+                WishlistDetails w1 = whishListRepository.AddUserwishlist(wishlists);
+                //userwishlists.wishlistId = w1.wishlistId;
+                userwishlists.UserId = w1.UserId;
+                Userwishlistdetails w2 = whishListRepository.AddUserwishlistitem(userwishlists);
+                response = "success";
+            }
+            catch (Exception ex)
+            {
+                response = "failure";
+            }
+            return response;
         }
 
-        public Userwishlist Adduserwishlist(Userwishlist userwishlists)
+        public WishlistDetails AddUserwishlist(WishlistDetails wishlists)
         {
-            return whishListRepository.AddUserwishlist(userwishlists);
+            return whishListRepository.AddUserwishlist(wishlists);
         }
 
-        public wishlist getwishlist(long userId)
+        public Userwishlistdetails Adduserwishlistitem(Userwishlistdetails userwishlists)
         {
-            return whishListRepository.getwishlist(userId);
+            return whishListRepository.AddUserwishlistitem(userwishlists);
         }
 
-        public int RemoveUserWishlist(long wishlistId)
+        public WishlistDetails getwishlistdetails(long wishlistid)
         {
-            return whishListRepository.RemoveuserWishList(wishlistId);
+            return whishListRepository.getwishlistdetails(wishlistid);
         }
 
-        public int Removewishlist(long wishlistId)
+        public GetwishlistDetails_Result Getwishlistdetail(long wishlistid)
         {
-            return whishListRepository.Removewishlists(wishlistId);
+            return whishListRepository.Getwishlistdetail(wishlistid);
+        }
+        public int Removewishlistitem(long vendorId, long vendorsubId, long UserId)
+        {
+            return whishListRepository.Removewishlistitem(vendorId, vendorsubId, UserId);
+        }
+
+        public int Removeitem(long vendorId, long wishlistid, long userid)
+        {
+            return whishListRepository.Removeitem(vendorId, wishlistid, userid);
+        }
+        //public int Removewishlistitem(long wishlistId)
+        //{
+        //    return whishListRepository.Removewishlistitem(wishlistId);
+        //}
+
+        public List<Note> Getnote(long wishlist_id, long vendor_id)
+        {
+            return noterepo.Getnote(wishlist_id, vendor_id);
         }
         public Note AddNotes(Note note)
         {
             return noterepo.AddNotes(note);
         }
 
-        public Note UpdateNotes(Note note, long notesId)
+        public Note UpdateNotes(long notesId,string notes)
         {
-            return noterepo.UpdateNotes(note, notesId);
+            return noterepo.UpdateNotes(notesId, notes);
         }
 
         public int RemoveNotes(long notesId)
@@ -72,13 +106,43 @@ namespace MaaAahwanam.Service
             return noterepo.RemoveNotes(notesId);
         }
 
+        public long GetcollabratorDetailsByEmail(string username)
+        {
+            return noterepo.GetcollabratorDetailsByEmail(username);
+        }
+
         public Collabrator AddCollabrator(Collabrator collabrator)
         {
-            return noterepo.AddCollabrator(collabrator);
+                return noterepo.AddCollabrator(collabrator);
         }
         public int RemoveCollabrator(long collabratorId)
         {
             return noterepo.RemoveCollabrator(collabratorId);
+        }
+        public long Getvendordetailsbyvendorid(long vendorid, long wishlistid)
+        {
+            return whishListRepository.Getvendordetailsbyvendorid(vendorid, wishlistid);
+        }
+        public WishlistDetails Getuserfromwishlistbyuserid(long userid)
+        {
+            return whishListRepository.Getuserfromwishlistbyuserid(userid);
+        }
+        //public Getdetailsofwishlistitem_Result Getdetailsofvendor(long vendorid)
+        //{
+        //    return whishListRepository.Getdetailsofvendor(vendorid);
+        //}
+
+        public Getwishlisdata_vendorid_Result Getdetailsofvendorbyid(long vendorid)
+        {
+            return whishListRepository.Getdetailsofvendorbyid(vendorid);
+        }
+        public List<Getwishlistdetails_userid_Result> getwishlistdetailsbyuserid(long userid)
+        {
+            return whishListRepository.getwishlistdetailsbyuserid(userid);
+        }
+        public List<Getwishlistvendors_Result> getwishlistvendors(long wishlistid, int categoryid)
+        {
+            return whishListRepository.getwishlistvendors(wishlistid, categoryid);
         }
     }
 }

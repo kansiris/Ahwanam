@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace MaaAahwanam.Models
 {
-    public class VendorVenue
+    public class VendorService
     {
-        public long Id { get; set; }
+        [Key]
+        public long vendorserviceId { get; set; }
         public long VendorMasterId { get; set; }
         public string VenueType { get; set; }
         public string Food { get; set; }
@@ -31,19 +32,11 @@ namespace MaaAahwanam.Models
         public string Menuwiththenoofitems { get; set; }
         public string Distancefrommainplaceslike { get; set; }
         public string LiveCookingStation { get; set; }
-        public long ServiceCost { get; set; }
         public string Status { get; set; }
         public long UpdatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public string discount { get; set; }
         public string name { get; set; }
-        public string Address { get; set; }
-        public string Landmark { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public string ZipCode { get; set; }
-        public string GeoLocation { get; set; }
-        //public int tier { get; set; }
         public string Dimentions { get; set; }
         public string Description { get; set; }
         public string AC { get; set; }
@@ -89,6 +82,6 @@ namespace MaaAahwanam.Models
         public string Sufficient_Room_Size { get; set; }
         public string Sufficient_Washroom { get; set; }
         public string page_name { get; set; }
-      
+        public string Image { get; set; }
     }
 }

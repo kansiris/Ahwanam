@@ -18,5 +18,6 @@ namespace MaaAahwanam.Models
         public DateTime UpdatedDate { get; set; }
         public string Status { get; set; }
         public string page_name { get; set; }
+        public long categoryId { get; set; }
     }
 }

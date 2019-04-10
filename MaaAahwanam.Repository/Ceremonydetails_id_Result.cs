@@ -11,7 +11,7 @@ namespace MaaAahwanam.Repository
 {
     using System;
     
-    public partial class Ceremonydetails_Result
+    public partial class Ceremonydetails_id_Result
     {
         public long Id { get; set; }
         public string Title { get; set; }

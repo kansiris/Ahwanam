@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace MaaAahwanam.Models
 {
-   public class wishlist
+   public class Wishlist
     {
         [Key]
-        public long Id { get; set; }
+        public long WishlistId { get; set; }
         public long UserId { get; set; }
         public string Name { get; set; }
         public string Event { get; set; }
@@ -18,6 +18,5 @@ namespace MaaAahwanam.Models
         public DateTime? EndDate { get; set; }
         public string Description { get; set; }
         public DateTime UpdatedDate { get; set; }
-
     }
 }

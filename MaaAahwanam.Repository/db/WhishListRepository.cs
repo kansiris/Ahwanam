@@ -10,6 +10,7 @@ namespace MaaAahwanam.Repository.db
     public class WhishListRepository
     {
         readonly ApiContext _dbContext = new ApiContext();
+        MaaAahwanamEntities maaAahwanamEntities = new MaaAahwanamEntities();
         public List<AvailableWhishLists> GetUserWhishlist(string id)
         {
             return _dbContext.AvailableWhishLists.Where(m => m.UserID == id).ToList();
@@ -38,42 +39,94 @@ namespace MaaAahwanam.Repository.db
             }
         }
 
-        public wishlist Addwishlist(wishlist wishlists)
+        public WishlistDetails AddUserwishlist(WishlistDetails wishlists)
         {
-            _dbContext.wishlist.Add(wishlists);
+            _dbContext.WishlistDetails.Add(wishlists);
             _dbContext.SaveChanges();
             return wishlists;
         }
 
-        public Userwishlist AddUserwishlist(Userwishlist userwishlists)
+        public Userwishlistdetails AddUserwishlistitem(Userwishlistdetails userwishlists)
         {
-            _dbContext.Userwishlist.Add(userwishlists);
+            _dbContext.Userwishlistdetails.Add(userwishlists);
             _dbContext.SaveChanges();
             return userwishlists;
         }
 
-        public wishlist getwishlist(long userId)
+        public WishlistDetails getwishlistdetails(long wishlistid)
         {
-         return _dbContext.wishlist.Where(w => w.UserId == userId).FirstOrDefault();
+            return _dbContext.WishlistDetails.Where(w => w.WishlistdetailId == wishlistid).FirstOrDefault();
+        }
+        public GetwishlistDetails_Result Getwishlistdetail(long wishlistid)
+        {
+            return maaAahwanamEntities.GetwishlistDetails(wishlistid).FirstOrDefault();
         }
 
-        public int RemoveuserWishList(long wishlistId)
+        public int Removewishlistitem(long vendorId, long vendorsubId, long UserId)
         {
-            var getdata = _dbContext.Userwishlist.Where(m => m.wishlistId == wishlistId).FirstOrDefault();
-            _dbContext.Userwishlist.Remove(getdata);
+
+            var getdata = _dbContext.Userwishlistdetails.Where(m => m.vendorId == vendorId && m.vendorsubId == vendorsubId && m.UserId == UserId).FirstOrDefault();
+            _dbContext.Userwishlistdetails.Remove(getdata);
             return _dbContext.SaveChanges();
+
         }
-        public int Removewishlist(long wishlistId)
+         public int Removeitem(long vendorId,long wishlistid, long userid)
         {
-            var getdata = _dbContext.wishlist.Where(m => m.Id == wishlistId).FirstOrDefault();
-            _dbContext.wishlist.Remove(getdata);
-            return _dbContext.SaveChanges();
+            int i;
+            var getdata = _dbContext.Userwishlistdetails.Where(m => m.vendorId == vendorId && m.wishlistId == wishlistid && m.UserId == userid).FirstOrDefault();
+            if(getdata!=null)
+            {
+                _dbContext.Userwishlistdetails.Remove(getdata);
+                _dbContext.SaveChanges();
+                i = 1;
+            }
+            else
+            {
+                i = 0;
+            }
+
+            return i;
         }
-        public int Removewishlists(long wishlistId)
+
+        //public int Removewishlistitem(long vendorId, long vendorsubId, long UserId)
+        //{
+        //    var getdata = _dbContext.wishlist.Where(m => m.vendor == wishlistId).FirstOrDefault();
+        //    _dbContext.wishlist.Remove(getdata);
+        //    return _dbContext.SaveChanges();
+        //}
+
+        public long Getvendordetailsbyvendorid(long vendorid,long wishlistid)
         {
-            var data = _dbContext.wishlist.Where(m => m.Id == wishlistId).FirstOrDefault();
-            _dbContext.wishlist.Remove(data);
-            return _dbContext.SaveChanges();
+            var count = _dbContext.Userwishlistdetails.Where(v => v.vendorId == vendorid && v.wishlistId == wishlistid).FirstOrDefault();
+            if (count != null)
+                return count.vendorId;
+            else
+                //count.UserLoginId = 0;
+                return 0;
+        }
+
+        public WishlistDetails Getuserfromwishlistbyuserid(long userid)
+        {
+            return _dbContext.WishlistDetails.Where(u => u.UserId == userid).FirstOrDefault();
+        }
+
+        //public Getdetailsofwishlistitem_Result Getdetailsofvendor(long vendorid)
+        //{
+        //    return maaAahwanamEntities.Getdetailsofwishlistitem(vendorid).FirstOrDefault();
+        //}
+        public Getwishlisdata_vendorid_Result Getdetailsofvendorbyid(long vendorid)
+        {
+            return maaAahwanamEntities.Getwishlisdata_vendorid(vendorid).FirstOrDefault();
+        }
+
+        public List<Getwishlistdetails_userid_Result> getwishlistdetailsbyuserid(long userid)
+        {
+            return maaAahwanamEntities.Getwishlistdetails_userid(userid).ToList();
+        }
+
+        public List<Getwishlistvendors_Result> getwishlistvendors(long wishlistid,int categoryid)
+        {
+            return maaAahwanamEntities.Getwishlistvendors(wishlistid, categoryid).ToList();
         }
     }
 }

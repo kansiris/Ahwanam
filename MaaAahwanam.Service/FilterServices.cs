@@ -16,6 +16,11 @@ namespace MaaAahwanam.Service
             return filtersRepository.AllCategories();
         }
 
+        public Category category(int categoryid)
+        {
+            return filtersRepository.category(categoryid);
+        }
+
         public List<filter> AllFilters(int id)
         {
             return filtersRepository.AllFilters(id);
