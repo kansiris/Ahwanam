@@ -97,5 +97,14 @@ namespace MaaAahwanam.Service
             return resultsPageRepository.GetavailableAreas(vendorid);
         }
 
+        public List<Review> Getreviews(long vendorid)
+        {
+            return resultsPageRepository.Getreviews(vendorid);
+        }
+
+        public List<VendormasterImage> Getimages(long vendorid)
+        {
+            return resultsPageRepository.Getimages(vendorid);
+        }
     }
 }

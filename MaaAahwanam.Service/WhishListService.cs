@@ -96,14 +96,29 @@ namespace MaaAahwanam.Service
             return noterepo.AddNotes(note);
         }
 
-        public Note UpdateNotes(long notesId,string notes)
+        public Note UpdateNotes(long notesId,string notes,long userid)
         {
-            return noterepo.UpdateNotes(notesId, notes);
+            return noterepo.UpdateNotes(notesId, notes,userid);
         }
+       
 
         public int RemoveNotes(long notesId)
         {
             return noterepo.RemoveNotes(notesId);
+        }
+
+        public collabratornotes addcollabratornote(collabratornotes cnotes)
+        {
+            return noterepo.addcollabratornote(cnotes);
+        }
+
+        public collabratornotes UpdatecollabratorNotes(long notesid, string notes, long userid)
+        {
+            return noterepo.UpdatecollabratorNotes(notesid, notes, userid);
+        }
+        public int RemovecollabratorNotes(long notesId)
+        {
+            return noterepo.RemovecollabratorNotes(notesId);
         }
 
         public long GetcollabratorDetailsByEmail(string username)

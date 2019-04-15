@@ -198,5 +198,32 @@ namespace MaaAahwanam.Repository.db
         {
             return maaAahwanamEntities.Getmyprofile(token).FirstOrDefault();
         }
+
+            public UserDetail updateprofile(UserDetail userdetail,long userloginid)
+        {
+            var getdetails = _dbContext.UserDetail.SingleOrDefault(u => u.UserLoginId == userloginid);
+            UserDetail details = new UserDetail();
+            details.UserDetailId = getdetails.UserDetailId;
+            details.UserLoginId = getdetails.UserLoginId;
+            details.AlternativeEmailID = getdetails.AlternativeEmailID;
+            details.UserPhone = userdetail.UserPhone;
+            details.FirstName = userdetail.FirstName;
+            details.name = userdetail.name;
+            details.UpdatedDate = userdetail.UpdatedDate;
+            details.LastName = getdetails.LastName;
+            details.Status = getdetails.Status;
+            details.City = getdetails.City;
+            details.Country = getdetails.Country;
+            details.Address = getdetails.Address;
+            details.Landmark = getdetails.Landmark;
+            details.State = getdetails.State;
+            details.ZipCode = getdetails.ZipCode;
+            details.UserImgId = getdetails.UserImgId;
+            details.UserImgName = getdetails.UserImgName;
+            details.UpdatedBy = getdetails.UpdatedBy;
+            _dbContext.Entry(getdetails).CurrentValues.SetValues(details);
+            _dbContext.SaveChanges();
+            return details;
+        }
     }
 }

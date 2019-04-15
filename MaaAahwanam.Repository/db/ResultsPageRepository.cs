@@ -101,6 +101,16 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.VendorAvailableArea.Where(v => v.VendorId == vendorid).ToList();
         }
+
+        public List<Review> Getreviews(long vendorid)
+        {
+            return _dbContext.Review.Where(r => r.ServiceId == vendorid).ToList();
+        }
+
+        public List<VendormasterImage> Getimages(long vendorid)
+        {
+            return _dbContext.VendormasterImage.Where(i => i.VendorId == vendorid).ToList();
+        }
         
     }
 }

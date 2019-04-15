@@ -165,5 +165,10 @@ namespace MaaAahwanam.Service
         {
             return userLoginRepository.Getmyprofile(token);
         }
+
+        public UserDetail updateprofile(UserDetail userdetail, long userloginid)
+        {
+            return userLoginRepository.updateprofile(userdetail, userloginid);
+        }
     }
 }

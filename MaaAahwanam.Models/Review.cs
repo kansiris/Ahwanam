@@ -21,5 +21,7 @@ namespace MaaAahwanam.Models
         public string Status { get; set; }
         public long Sid { get; set; }
         public string rating { get; set; }
+        public int categoryid { get; set; }
+        public string servicetype { get; set; }
     }
 }
