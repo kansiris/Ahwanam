@@ -159,5 +159,10 @@ namespace MaaAahwanam.Service
         {
             return whishListRepository.getwishlistvendors(wishlistid, categoryid);
         }
+
+        public List<Collabrator> Getcollabrators(long userid)
+        {
+            return whishListRepository.Getcollabrators(userid);
+        }
     }
 }

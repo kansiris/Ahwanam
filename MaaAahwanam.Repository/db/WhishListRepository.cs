@@ -128,5 +128,9 @@ namespace MaaAahwanam.Repository.db
         {
             return maaAahwanamEntities.Getwishlistvendors(wishlistid, categoryid).ToList();
         }
+        public List<Collabrator> Getcollabrators(long userid)
+        {
+            return _dbContext.Collabrator.Where(c => c.UserId == userid).ToList();
+        }
     }
 }
