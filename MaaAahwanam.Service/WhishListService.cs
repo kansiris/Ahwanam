@@ -96,9 +96,9 @@ namespace MaaAahwanam.Service
             return noterepo.AddNotes(note);
         }
 
-        public Note UpdateNotes(Note n,long userid)
+        public Note UpdateNotes(Note n1, long notesId)
         {
-            return noterepo.UpdateNotes(n,userid);
+            return noterepo.UpdateNotes(n1, notesId);
         }
        
 
@@ -112,9 +112,9 @@ namespace MaaAahwanam.Service
             return noterepo.addcollabratornote(cnotes);
         }
 
-        public collabratornotes UpdatecollabratorNotes(long notesid, string notes, long userid)
+        public collabratornotes UpdatecollabratorNotes(collabratornotes note, long notesId)
         {
-            return noterepo.UpdatecollabratorNotes(notesid, notes, userid);
+            return noterepo.UpdatecollabratorNotes(note, notesId);
         }
         public int RemovecollabratorNotes(long notesId)
         {

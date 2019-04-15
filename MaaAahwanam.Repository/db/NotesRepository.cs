@@ -30,21 +30,16 @@ namespace MaaAahwanam.Repository.db
             return cnotes;
         }
 
-        public collabratornotes UpdatecollabratorNotes(long notesid, string notes,long userid)
+        public collabratornotes UpdatecollabratorNotes(collabratornotes note, long notesId)
         {
-            collabratornotes cnote = new collabratornotes();
-            TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
-            var Notedata = _dbContext.collabratornotes.SingleOrDefault(n => n.collabratornotesId == notesid);
-            cnote.collabratornotesId= Notedata.collabratornotesId;
-            cnote.wishlist_id = Notedata.wishlist_id;
-            cnote.vendor_id= Notedata.vendor_id;
-            cnote.collabratorNote = notes;
-            cnote.Userid = userid;
-            cnote.Name = Notedata.Name;
-            cnote.UpdatedDate = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
-            _dbContext.Entry(Notedata).CurrentValues.SetValues(cnote);
+            var Notedata = _dbContext.collabratornotes.SingleOrDefault(n => n.collabratornotesId == notesId);
+            note.collabratornotesId = Notedata.collabratornotesId;
+            note.wishlist_id = Notedata.wishlist_id;
+            note.vendor_id = Notedata.vendor_id;
+            note.AddedDate = Notedata.AddedDate;
+            _dbContext.Entry(Notedata).CurrentValues.SetValues(note);
             _dbContext.SaveChanges();
-            return cnote;
+            return note;
         }
 
         public int RemovecollabratorNotes(long notesId)
@@ -63,19 +58,14 @@ namespace MaaAahwanam.Repository.db
         }
 
 
-        public Note UpdateNotes(Note n,long userid)
+        public Note UpdateNotes(Note note, long notesId)
         {
-            Note note = new Note();
-            TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
-            var Notedata = _dbContext.Notes.SingleOrDefault(n =>n.NotesId==n.NotesId);
+            var Notedata = _dbContext.Notes.SingleOrDefault(n => n.NotesId == notesId);
             note.NotesId = Notedata.NotesId;
             note.wishlistId = Notedata.wishlistId;
             note.wishlistItemId = Notedata.wishlistItemId;
             note.VendorId = Notedata.VendorId;
-            note.Notes = n.Notes;
-            note.UserId = userid;
-            note.Name = Notedata.Name;
-            note.UpdatedDate= TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+            note.AddedDate = Notedata.AddedDate;
             _dbContext.Entry(Notedata).CurrentValues.SetValues(note);
             _dbContext.SaveChanges();
             return note;
