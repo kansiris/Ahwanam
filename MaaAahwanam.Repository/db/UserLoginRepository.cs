@@ -50,6 +50,8 @@ namespace MaaAahwanam.Repository.db
             // you want to change.
             foreach (UserLogin ord in query)
             {
+                ord.resetemaillink = userLogin.resetemaillink;
+                ord.isreset = userLogin.isreset;
                 ord.Password = userLogin.Password;
                 // Insert any additional changes to column values.
                 ord.UpdatedDate = userLogin.UpdatedDate;

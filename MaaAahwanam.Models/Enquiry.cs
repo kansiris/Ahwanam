@@ -25,5 +25,7 @@ namespace MaaAahwanam.Models
         public long UpdatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public string Status { get; set; }
+        public string originfromurl { get; set; }
+         public string city { get; set; }
     }
 }

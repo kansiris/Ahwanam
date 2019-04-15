@@ -63,16 +63,16 @@ namespace MaaAahwanam.Repository.db
         }
 
 
-        public Note UpdateNotes(long notesid,string notes,long userid)
+        public Note UpdateNotes(Note n,long userid)
         {
             Note note = new Note();
             TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
-            var Notedata = _dbContext.Notes.SingleOrDefault(n =>n.NotesId==notesid);
+            var Notedata = _dbContext.Notes.SingleOrDefault(n =>n.NotesId==n.NotesId);
             note.NotesId = Notedata.NotesId;
             note.wishlistId = Notedata.wishlistId;
             note.wishlistItemId = Notedata.wishlistItemId;
             note.VendorId = Notedata.VendorId;
-            note.Notes = notes;
+            note.Notes = n.Notes;
             note.UserId = userid;
             note.Name = Notedata.Name;
             note.UpdatedDate= TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);

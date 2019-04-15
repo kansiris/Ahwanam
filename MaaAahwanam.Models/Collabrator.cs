@@ -14,6 +14,7 @@ namespace MaaAahwanam.Models
         public long UserId { get; set; }
         public long wishlistid { get; set; }
         public string Email { get; set; }
+        public string collabratorname { get; set; }
         public string PhoneNo { get; set; }
         public DateTime UpdatedDate { get; set; }
        public string wishlistlink { get; set; }

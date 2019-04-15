@@ -96,9 +96,9 @@ namespace MaaAahwanam.Service
             return noterepo.AddNotes(note);
         }
 
-        public Note UpdateNotes(long notesId,string notes,long userid)
+        public Note UpdateNotes(Note n,long userid)
         {
-            return noterepo.UpdateNotes(notesId, notes,userid);
+            return noterepo.UpdateNotes(n,userid);
         }
        
 

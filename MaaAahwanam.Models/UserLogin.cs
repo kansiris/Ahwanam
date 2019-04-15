@@ -24,5 +24,7 @@ namespace MaaAahwanam.Models
         public string EmailOTP { get; set; }
         public string MobileOTP { get; set; }
         public string Loginsession { get; set; }
+        public string isreset { get; set; }
+        public string resetemaillink { get; set; }
     }
 }

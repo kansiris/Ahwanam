@@ -23,5 +23,7 @@ namespace MaaAahwanam.Models
         public string rating { get; set; }
         public int categoryid { get; set; }
         public string servicetype { get; set; }
+        public string reviewsfrom { get; set; }
+        public DateTime? reviewaddedDate { get; set; }
     }
 }
