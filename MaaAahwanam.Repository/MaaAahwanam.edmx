@@ -483,9 +483,6 @@
           <Parameter Name="ceremony" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SP_Getvendormasterdata" ReturnType="Collection(MaaAahwanamModel.SP_Getvendormasterdata_Result)" />
-          <FunctionImport Name="GetVendorsByCategoryId" ReturnType="Collection(MaaAahwanamModel.GetVendorsByCategoryId_Result)">
-          <Parameter Name="categoryId" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="GetCategoryByname" ReturnType="Collection(MaaAahwanamModel.GetCategoryByname_Result)">
           <Parameter Name="categorytype" Mode="In" Type="String" />
           </FunctionImport>
@@ -519,7 +516,10 @@
           <Parameter Name="ceremonyid" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="Getmyprofile" ReturnType="Collection(MaaAahwanamModel.Getmyprofile_Result)">
-            <Parameter Name="token" Mode="In" Type="String" />
+          <Parameter Name="token" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetVendorsByCategoryId" ReturnType="Collection(MaaAahwanamModel.GetVendorsByCategoryId_Result)">
+            <Parameter Name="categoryId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
@@ -2051,27 +2051,6 @@
           <Property Type="String" Name="Amenity" Nullable="true" />
           <Property Type="String" Name="Policies" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="GetVendorsByCategoryId_Result">
-          <Property Type="Int64" Name="VendorId" Nullable="false" />
-          <Property Type="String" Name="BusinessName" Nullable="true" />
-          <Property Type="String" Name="Address" Nullable="true" />
-          <Property Type="String" Name="City" Nullable="true" />
-          <Property Type="String" Name="Description" Nullable="true" />
-          <Property Type="String" Name="ServiceType" Nullable="true" />
-          <Property Type="String" Name="Type_of_price" Nullable="true" />
-          <Property Type="Decimal" Name="MinPrice" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="MaxPrice" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="VegPrice" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="NonvegPrice" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="Rating" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Int64" Name="ReviewsCount" Nullable="false" />
-          <Property Type="Decimal" Name="RentAmount" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="String" Name="Image" Nullable="true" />
-          <Property Type="Int32" Name="Category_TypeId" Nullable="false" />
-          <Property Type="String" Name="name" Nullable="true" />
-          <Property Type="String" Name="display_name" Nullable="true" />
-          <Property Type="String" Name="category_image" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="GetCategoryByname_Result">
           <Property Type="Int64" Name="VendorId" Nullable="false" />
           <Property Type="String" Name="BusinessName" Nullable="true" />
@@ -2274,6 +2253,28 @@
           <Property Type="String" Name="UserPhone" Nullable="true" />
           <Property Type="String" Name="name" Nullable="true" />
           <Property Type="String" Name="Token" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetVendorsByCategoryId_Result">
+          <Property Type="Int64" Name="VendorId" Nullable="false" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="String" Name="Address" Nullable="true" />
+          <Property Type="String" Name="City" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="ServiceType" Nullable="true" />
+          <Property Type="String" Name="Type_of_price" Nullable="true" />
+          <Property Type="Decimal" Name="MinPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="MaxPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="VegPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="NonvegPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Rating" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int64" Name="ReviewsCount" Nullable="false" />
+          <Property Type="Decimal" Name="RentAmount" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="Image" Nullable="true" />
+          <Property Type="Int32" Name="Category_TypeId" Nullable="false" />
+          <Property Type="Int32" Name="priority" Nullable="false" />
+          <Property Type="String" Name="name" Nullable="true" />
+          <Property Type="String" Name="display_name" Nullable="true" />
+          <Property Type="String" Name="category_image" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -4099,31 +4100,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetVendorsByCategoryId" FunctionName="MaaAahwanamModel.Store.GetVendorsByCategoryId">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.GetVendorsByCategoryId_Result">
-                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
-                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
-                <ScalarProperty Name="Type_of_price" ColumnName="Type_of_price" />
-                <ScalarProperty Name="MinPrice" ColumnName="MinPrice" />
-                <ScalarProperty Name="MaxPrice" ColumnName="MaxPrice" />
-                <ScalarProperty Name="VegPrice" ColumnName="VegPrice" />
-                <ScalarProperty Name="NonvegPrice" ColumnName="NonvegPrice" />
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
-                <ScalarProperty Name="ReviewsCount" ColumnName="ReviewsCount" />
-                <ScalarProperty Name="RentAmount" ColumnName="RentAmount" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="Category_TypeId" ColumnName="Category_TypeId" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="display_name" ColumnName="display_name" />
-                <ScalarProperty Name="category_image" ColumnName="category_image" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetCategoryByname" FunctionName="MaaAahwanamModel.Store.GetCategoryByname">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MaaAahwanamModel.GetCategoryByname_Result">
@@ -4368,6 +4344,32 @@
                 <ScalarProperty Name="UserPhone" ColumnName="UserPhone" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="Token" ColumnName="Token" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetVendorsByCategoryId" FunctionName="MaaAahwanamModel.Store.GetVendorsByCategoryId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.GetVendorsByCategoryId_Result">
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
+                <ScalarProperty Name="Type_of_price" ColumnName="Type_of_price" />
+                <ScalarProperty Name="MinPrice" ColumnName="MinPrice" />
+                <ScalarProperty Name="MaxPrice" ColumnName="MaxPrice" />
+                <ScalarProperty Name="VegPrice" ColumnName="VegPrice" />
+                <ScalarProperty Name="NonvegPrice" ColumnName="NonvegPrice" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="ReviewsCount" ColumnName="ReviewsCount" />
+                <ScalarProperty Name="RentAmount" ColumnName="RentAmount" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Category_TypeId" ColumnName="Category_TypeId" />
+                <ScalarProperty Name="priority" ColumnName="priority" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="display_name" ColumnName="display_name" />
+                <ScalarProperty Name="category_image" ColumnName="category_image" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

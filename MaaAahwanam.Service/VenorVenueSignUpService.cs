@@ -51,6 +51,11 @@ namespace MaaAahwanam.Service
             return vendorVenueSignUpRepository.GetUserLoginByCode(code);
         }
 
+        public UserLogin Getuserloginbycode(string code)
+        {
+            return vendorVenueSignUpRepository.Getuserloginbycode(code);
+        }
+
         public Vendormaster AddvendorMaster(Vendormaster vendormaster)
         {
             vendormaster.Status = "InActive";

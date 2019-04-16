@@ -46,5 +46,6 @@ namespace MaaAahwanam.Models
         public long Capacity { get; set; }
         public string latitude { get; set; }
         public string longitude { get; set; }
+        public string coverimage { get; set; }
     }
 }

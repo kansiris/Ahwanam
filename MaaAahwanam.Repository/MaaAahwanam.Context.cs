@@ -749,15 +749,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_Getvendormasterdata_Result>("SP_Getvendormasterdata");
         }
     
-        public virtual ObjectResult<GetVendorsByCategoryId_Result> GetVendorsByCategoryId(Nullable<int> categoryId)
-        {
-            var categoryIdParameter = categoryId.HasValue ?
-                new ObjectParameter("categoryId", categoryId) :
-                new ObjectParameter("categoryId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetVendorsByCategoryId_Result>("GetVendorsByCategoryId", categoryIdParameter);
-        }
-    
         public virtual ObjectResult<GetCategoryByname_Result> GetCategoryByname(string categorytype)
         {
             var categorytypeParameter = categorytype != null ?
@@ -863,6 +854,15 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("token", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Getmyprofile_Result>("Getmyprofile", tokenParameter);
+        }
+    
+        public virtual ObjectResult<GetVendorsByCategoryId_Result> GetVendorsByCategoryId(Nullable<int> categoryId)
+        {
+            var categoryIdParameter = categoryId.HasValue ?
+                new ObjectParameter("categoryId", categoryId) :
+                new ObjectParameter("categoryId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetVendorsByCategoryId_Result>("GetVendorsByCategoryId", categoryIdParameter);
         }
     }
 }
