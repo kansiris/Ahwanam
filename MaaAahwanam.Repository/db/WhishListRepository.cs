@@ -132,5 +132,10 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.Collabrator.Where(c => c.UserId == userid).ToList();
         }
+
+        public List<Userwishlistdetails> getuserwishlistdata(long wishlistid)
+        {
+            return _dbContext.Userwishlistdetails.Where(w => w.wishlistId == wishlistid).ToList();
+        }
     }
 }

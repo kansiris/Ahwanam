@@ -25,5 +25,10 @@ namespace MaaAahwanam.Service
             }
             return response;
         }
+        public Enquiry SaveallEnquiries(Enquiry enquiry)
+        {
+                EnquiryRepository enquiryRepository = new EnquiryRepository();
+            return enquiryRepository.SaveEnquiries(enquiry);
+        }
     }
 }

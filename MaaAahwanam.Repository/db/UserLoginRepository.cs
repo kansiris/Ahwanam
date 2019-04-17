@@ -165,6 +165,9 @@ namespace MaaAahwanam.Repository.db
         {
             var GetMasterRecord = _dbContext.UserLogin.Where(m => m.UserName == userlogin.UserName).FirstOrDefault();
             //GetMasterRecord.ActivationCode = userlogin.ActivationCode;
+            GetMasterRecord.resetemaillink = userlogin.resetemaillink;
+            GetMasterRecord.isreset = userlogin.isreset;
+            GetMasterRecord.UpdatedDate = userlogin.UpdatedDate;
             userlogin.UserLoginId = GetMasterRecord.UserLoginId;
             _dbContext.Entry(GetMasterRecord).CurrentValues.SetValues(userlogin);
             _dbContext.SaveChanges();

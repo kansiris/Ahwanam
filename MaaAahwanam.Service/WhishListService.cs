@@ -164,5 +164,10 @@ namespace MaaAahwanam.Service
         {
             return whishListRepository.Getcollabrators(userid);
         }
+
+        public List<Userwishlistdetails> getuserwishlistdata(long wishlistid)
+        {
+            return whishListRepository.getuserwishlistdata(wishlistid);
+        }
     }
 }
