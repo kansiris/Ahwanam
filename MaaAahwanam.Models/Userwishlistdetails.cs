@@ -26,5 +26,6 @@ namespace MaaAahwanam.Models
         public DateTime? EventStartDate { get; set; }
         public DateTime? EventEndDate { get; set; }
         public long? collabratorid { get; set; }
+        public int categoryid { get; set; }
     }
 }

@@ -16,10 +16,10 @@ namespace MaaAahwanam.Models
         public string Service { get; set; }
         public long ServiceId { get; set; }
         public string Comments { get; set; }
-        public int UpdatedBy { get; set; }
+        public int? UpdatedBy { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public string Status { get; set; }
-        public long Sid { get; set; }
+        public long? Sid { get; set; }
         public string rating { get; set; }
         public int categoryid { get; set; }
         public string servicetype { get; set; }

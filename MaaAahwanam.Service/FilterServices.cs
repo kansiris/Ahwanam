@@ -21,6 +21,7 @@ namespace MaaAahwanam.Service
             return filtersRepository.category(categoryid);
         }
 
+
         public List<filter> AllFilters(int id)
         {
             return filtersRepository.AllFilters(id);
