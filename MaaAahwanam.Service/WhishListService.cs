@@ -121,9 +121,9 @@ namespace MaaAahwanam.Service
             return noterepo.RemovecollabratorNotes(notesId);
         }
 
-        public long GetcollabratorDetailsByEmail(string username)
+        public long GetcollabratorDetailsByEmail(string username,long userid)
         {
-            return noterepo.GetcollabratorDetailsByEmail(username);
+            return noterepo.GetcollabratorDetailsByEmail(username, userid);
         }
 
         public Collabrator AddCollabrator(Collabrator collabrator)
