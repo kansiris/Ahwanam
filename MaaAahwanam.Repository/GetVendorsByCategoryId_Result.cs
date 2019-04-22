@@ -30,6 +30,7 @@ namespace MaaAahwanam.Repository
         public string Image { get; set; }
         public int Category_TypeId { get; set; }
         public int priority { get; set; }
+        public long Capacity { get; set; }
         public string name { get; set; }
         public string display_name { get; set; }
         public string category_image { get; set; }
