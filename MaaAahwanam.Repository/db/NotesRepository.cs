@@ -92,7 +92,6 @@ namespace MaaAahwanam.Repository.db
             if (count != null)
                 return count.Id;
             else
-                //count.UserLoginId = 0;
                 return 0;
         }
 
