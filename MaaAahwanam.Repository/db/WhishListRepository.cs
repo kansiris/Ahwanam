@@ -137,5 +137,10 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.Userwishlistdetails.Where(w => w.wishlistId == wishlistid).ToList();
         }
+
+        public List<sharedwishlist_Result> getsharedwishlist(string email)
+        {
+            return maaAahwanamEntities.sharedwishlist(email).ToList();
+        }
     }
 }

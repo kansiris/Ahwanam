@@ -157,6 +157,9 @@
         <Function Name="ServicesRecordView" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="RequestId" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="sharedwishlist" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="sharedemail" Type="nvarchar(max)" Mode="In" />
+        </Function>
         <Function Name="sp_allorddetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="type" Type="nvarchar" Mode="In" />
         </Function>
@@ -271,7 +274,6 @@
           <FunctionImport Name="MaaAahwanam_Others_RegisteredUsersDetails" ReturnType="Collection(MaaAahwanamModel.MaaAahwanam_Others_RegisteredUsersDetails_Result)">
           <Parameter Name="UserLoginId" Mode="In" Type="Int64" />
           </FunctionImport>
-          <FunctionImport Name="SP_GetTestimonials" ReturnType="Collection(MaaAahwanamModel.SP_GetTestimonials_Result)" />
           <FunctionImport Name="SP_vendordatesbooked" ReturnType="Collection(MaaAahwanamModel.SP_vendordatesbooked_Result)">
           <Parameter Name="VID" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -519,7 +521,11 @@
           <Parameter Name="token" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetVendorsByCategoryId" ReturnType="Collection(MaaAahwanamModel.GetVendorsByCategoryId_Result)">
-            <Parameter Name="categoryId" Mode="In" Type="Int32" />
+          <Parameter Name="categoryId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GetTestimonials" ReturnType="Collection(MaaAahwanamModel.SP_GetTestimonials_Result)" />
+          <FunctionImport Name="sharedwishlist" ReturnType="Collection(MaaAahwanamModel.sharedwishlist_Result)">
+            <Parameter Name="sharedemail" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
@@ -555,13 +561,6 @@
           <Property Type="String" Name="UserName" Nullable="true" />
           <Property Type="Int64" Name="UserDetailId" Nullable="false" />
           <Property Type="String" Name="UserPhone" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="SP_GetTestimonials_Result">
-          <Property Type="Int64" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="true" />
-          <Property Type="String" Name="Email" Nullable="true" />
-          <Property Type="String" Name="Description" Nullable="true" />
-          <Property Type="String" Name="ImagePath" Nullable="true" />
         </ComplexType>
         <ComplexType Name="SP_vendordatesbooked_Result">
           <Property Type="String" Name="City" Nullable="true" />
@@ -2277,6 +2276,20 @@
           <Property Type="String" Name="display_name" Nullable="true" />
           <Property Type="String" Name="category_image" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="SP_GetTestimonials_Result">
+          <Property Type="Int64" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" />
+          <Property Type="String" Name="Email" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="ImagePath" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sharedwishlist_Result">
+          <Property Type="Int64" Name="WishlistdetailId" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" />
+          <Property Type="Int64" Name="wuserid" Nullable="false" />
+          <Property Type="Int64" Name="cuserid" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2326,17 +2339,6 @@
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="UserDetailId" ColumnName="UserDetailId" />
                 <ScalarProperty Name="UserPhone" ColumnName="UserPhone" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_GetTestimonials" FunctionName="MaaAahwanamModel.Store.SP_GetTestimonials">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.SP_GetTestimonials_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -4372,6 +4374,28 @@
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="display_name" ColumnName="display_name" />
                 <ScalarProperty Name="category_image" ColumnName="category_image" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GetTestimonials" FunctionName="MaaAahwanamModel.Store.SP_GetTestimonials">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.SP_GetTestimonials_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sharedwishlist" FunctionName="MaaAahwanamModel.Store.sharedwishlist">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.sharedwishlist_Result">
+                <ScalarProperty Name="WishlistdetailId" ColumnName="WishlistdetailId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="wuserid" ColumnName="wuserid" />
+                <ScalarProperty Name="cuserid" ColumnName="cuserid" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -86,7 +86,7 @@ namespace MaaAahwanam.Repository.db
             return i;
         }
 
-        public long GetcollabratorDetailsByEmail(string username, long userid)
+        public long GetcollabratorDetailsByEmail(string username,long userid)
         {
             var count = _dbContext.Collabrator.Where(m => m.Email == username && m.UserId == userid).FirstOrDefault();
             if (count != null)

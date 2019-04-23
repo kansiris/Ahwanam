@@ -123,7 +123,7 @@ namespace MaaAahwanam.Service
 
         public long GetcollabratorDetailsByEmail(string username,long userid)
         {
-            return noterepo.GetcollabratorDetailsByEmail(username, userid);
+            return noterepo.GetcollabratorDetailsByEmail(username,userid);
         }
 
         public Collabrator AddCollabrator(Collabrator collabrator)
@@ -168,6 +168,11 @@ namespace MaaAahwanam.Service
         public List<Userwishlistdetails> getuserwishlistdata(long wishlistid)
         {
             return whishListRepository.getuserwishlistdata(wishlistid);
+        }
+
+        public List<sharedwishlist_Result> getsharedwishlist(string email)
+        {
+            return whishListRepository.getsharedwishlist(email);
         }
     }
 }
