@@ -47,11 +47,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaaAahwanam_Others_RegisteredUsersDetails_Result>("MaaAahwanam_Others_RegisteredUsersDetails", userLoginIdParameter);
         }
     
-        public virtual ObjectResult<SP_GetTestimonials_Result> SP_GetTestimonials()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetTestimonials_Result>("SP_GetTestimonials");
-        }
-    
         public virtual ObjectResult<SP_vendordatesbooked_Result> SP_vendordatesbooked(Nullable<int> vID)
         {
             var vIDParameter = vID.HasValue ?
@@ -863,6 +858,20 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("categoryId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetVendorsByCategoryId_Result>("GetVendorsByCategoryId", categoryIdParameter);
+        }
+    
+        public virtual ObjectResult<SP_GetTestimonials_Result> SP_GetTestimonials()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GetTestimonials_Result>("SP_GetTestimonials");
+        }
+    
+        public virtual ObjectResult<sharedwishlist_Result> sharedwishlist(string sharedemail)
+        {
+            var sharedemailParameter = sharedemail != null ?
+                new ObjectParameter("sharedemail", sharedemail) :
+                new ObjectParameter("sharedemail", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sharedwishlist_Result>("sharedwishlist", sharedemailParameter);
         }
     }
 }

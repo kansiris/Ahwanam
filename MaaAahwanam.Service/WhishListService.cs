@@ -169,5 +169,10 @@ namespace MaaAahwanam.Service
         {
             return whishListRepository.getuserwishlistdata(wishlistid);
         }
+
+        public List<sharedwishlist_Result> getsharedwishlist(string email)
+        {
+            return whishListRepository.getsharedwishlist(email);
+        }
     }
 }
