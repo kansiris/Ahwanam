@@ -22,7 +22,7 @@ namespace MaaAahwanam.Repository.db
 
         public List<filter> AllFilters(int id)
         {
-            return _dbContext.filter.Where(m=>m.serviceType_id == id).ToList();
+            return _dbContext.filter.Where(m=>m.serviceType_id == id && m.status == "Active").ToList();
         }
 
         public List<filter_value> FilterValues(int id)
