@@ -263,6 +263,9 @@
         <Function Name="VendorsDatesbooked" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
+        <Function Name="wishlistitemavailable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userid" Type="bigint" Mode="In" />
+        </Function>
         <EntityContainer Name="MaaAahwanamModelStoreContainer" />
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -525,7 +528,10 @@
           </FunctionImport>
           <FunctionImport Name="SP_GetTestimonials" ReturnType="Collection(MaaAahwanamModel.SP_GetTestimonials_Result)" />
           <FunctionImport Name="sharedwishlist" ReturnType="Collection(MaaAahwanamModel.sharedwishlist_Result)">
-            <Parameter Name="sharedemail" Mode="In" Type="String" />
+          <Parameter Name="sharedemail" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="wishlistitemavailable" ReturnType="Collection(MaaAahwanamModel.wishlistitemavailable_Result)">
+            <Parameter Name="userid" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
@@ -2289,6 +2295,12 @@
           <Property Type="Int64" Name="wuserid" Nullable="false" />
           <Property Type="Int64" Name="cuserid" Nullable="false" />
           <Property Type="String" Name="Email" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="wishlistitemavailable_Result">
+          <Property Type="Int64" Name="WishlistdetailId" Nullable="false" />
+          <Property Type="Int64" Name="wishlistserviceId" Nullable="false" />
+          <Property Type="Int64" Name="vendorId" Nullable="false" />
+          <Property Type="Int32" Name="categoryid" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -4396,6 +4408,16 @@
                 <ScalarProperty Name="wuserid" ColumnName="wuserid" />
                 <ScalarProperty Name="cuserid" ColumnName="cuserid" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="wishlistitemavailable" FunctionName="MaaAahwanamModel.Store.wishlistitemavailable">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.wishlistitemavailable_Result">
+                <ScalarProperty Name="WishlistdetailId" ColumnName="WishlistdetailId" />
+                <ScalarProperty Name="wishlistserviceId" ColumnName="wishlistserviceId" />
+                <ScalarProperty Name="vendorId" ColumnName="vendorId" />
+                <ScalarProperty Name="categoryid" ColumnName="categoryid" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -142,5 +142,10 @@ namespace MaaAahwanam.Repository.db
         {
             return maaAahwanamEntities.sharedwishlist(email).ToList();
         }
+
+        public List<wishlistitemavailable_Result> getwishlistitemdetail(long userid)
+        {
+            return maaAahwanamEntities.wishlistitemavailable(userid).ToList();
+        }
     }
 }

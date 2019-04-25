@@ -873,5 +873,14 @@ namespace MaaAahwanam.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sharedwishlist_Result>("sharedwishlist", sharedemailParameter);
         }
+    
+        public virtual ObjectResult<wishlistitemavailable_Result> wishlistitemavailable(Nullable<long> userid)
+        {
+            var useridParameter = userid.HasValue ?
+                new ObjectParameter("userid", userid) :
+                new ObjectParameter("userid", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<wishlistitemavailable_Result>("wishlistitemavailable", useridParameter);
+        }
     }
 }

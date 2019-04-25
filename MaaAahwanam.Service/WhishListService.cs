@@ -174,5 +174,9 @@ namespace MaaAahwanam.Service
         {
             return whishListRepository.getsharedwishlist(email);
         }
+        public List<wishlistitemavailable_Result> getwishlistitemdetail(long userid)
+        {
+            return whishListRepository.getwishlistitemdetail(userid);
+        }
     }
 }
