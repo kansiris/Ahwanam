@@ -110,6 +110,9 @@ namespace MaaAahwanam.Repository.db
         {
             return _dbContext.VendormasterImage.Where(i => i.VendorId == vendorid).ToList();
         }
-        
+        public List<allcategories_Result> getallcategories()
+        {
+            return maaAahwanamEntities.allcategories().ToList();
+        }
     }
 }

@@ -882,5 +882,10 @@ namespace MaaAahwanam.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<wishlistitemavailable_Result>("wishlistitemavailable", useridParameter);
         }
+    
+        public virtual ObjectResult<allcategories_Result> allcategories()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<allcategories_Result>("allcategories");
+        }
     }
 }

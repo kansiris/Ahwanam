@@ -8,6 +8,7 @@
         <Function Name="addvendorservices" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="allcategories" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="allnotifications" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="AllVendorList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ServicType" Type="nvarchar" Mode="In" />
@@ -531,8 +532,9 @@
           <Parameter Name="sharedemail" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="wishlistitemavailable" ReturnType="Collection(MaaAahwanamModel.wishlistitemavailable_Result)">
-            <Parameter Name="userid" Mode="In" Type="Int64" />
+          <Parameter Name="userid" Mode="In" Type="Int64" />
           </FunctionImport>
+          <FunctionImport Name="allcategories" ReturnType="Collection(MaaAahwanamModel.allcategories_Result)" />
         </EntityContainer>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
           <Property Type="Int64" Name="UserLoginId" Nullable="false" />
@@ -2301,6 +2303,12 @@
           <Property Type="Int64" Name="wishlistserviceId" Nullable="false" />
           <Property Type="Int64" Name="vendorId" Nullable="false" />
           <Property Type="Int32" Name="categoryid" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="allcategories_Result">
+          <Property Type="Int32" Name="servicType_id" Nullable="false" />
+          <Property Type="String" Name="name" Nullable="true" />
+          <Property Type="String" Name="display_name" Nullable="true" />
+          <Property Type="String" Name="image" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -4418,6 +4426,16 @@
                 <ScalarProperty Name="wishlistserviceId" ColumnName="wishlistserviceId" />
                 <ScalarProperty Name="vendorId" ColumnName="vendorId" />
                 <ScalarProperty Name="categoryid" ColumnName="categoryid" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="allcategories" FunctionName="MaaAahwanamModel.Store.allcategories">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.allcategories_Result">
+                <ScalarProperty Name="servicType_id" ColumnName="servicType_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="display_name" ColumnName="display_name" />
+                <ScalarProperty Name="image" ColumnName="image" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

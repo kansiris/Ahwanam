@@ -106,5 +106,10 @@ namespace MaaAahwanam.Service
         {
             return resultsPageRepository.Getimages(vendorid);
         }
+
+        public List<allcategories_Result> getallcategories()
+        {
+            return resultsPageRepository.getallcategories();
+        }
     }
 }
