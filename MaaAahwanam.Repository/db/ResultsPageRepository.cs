@@ -41,7 +41,6 @@ namespace MaaAahwanam.Repository.db
             return data;
         }
 
-
         public List<GetPhotographers_Result> GetAllPhotographers()
         {
             return maaAahwanamEntities.GetPhotographers().ToList();
