@@ -111,5 +111,18 @@ namespace MaaAahwanam.Service
         {
             return resultsPageRepository.getallcategories();
         }
+        public List<getcategorieslst_Result> getnewcategories()
+        {
+            return resultsPageRepository.getnewcategories();
+        }
+        public List<getallvendorevalue_Result> getallvendordata()
+        {
+            return resultsPageRepository.getallvendordata();
+        }
+
+        public List<browevendors_Result> getbrowsevendors(int id)
+        {
+            return resultsPageRepository.getbrowsevendors(id);
+        }
     }
 }

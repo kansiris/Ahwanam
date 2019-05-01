@@ -30,6 +30,11 @@ namespace MaaAahwanam.Repository.db
             return _dbContext.filter_value.Where(m => m.filter_id == id).ToList();
         }
 
+        public List<newfilterresult> newFilterValues(int id)
+        {
+            return _dbContext.newfilterresult.Where(m => m.filter_id == id).ToList();
+        }
+
         public filter_value ParticularFilterValue(int id)
         {
             return _dbContext.filter_value.Where(m => m.id == id).FirstOrDefault();

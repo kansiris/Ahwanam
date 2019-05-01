@@ -11,26 +11,22 @@ namespace MaaAahwanam.Repository
 {
     using System;
     
-    public partial class Getwishlisdata_vendorid_Result
+    public partial class getcategorieslst_Result
     {
-        public long VendorId { get; set; }
+        public int Category_TypeId { get; set; }
+        public long VendormasterId { get; set; }
         public string BusinessName { get; set; }
-        public string Address { get; set; }
-        public string City { get; set; }
-        public string Description { get; set; }
-        public string ServiceType { get; set; }
-        public string Type_of_price { get; set; }
         public decimal MinPrice { get; set; }
         public decimal MaxPrice { get; set; }
+        public int priority { get; set; }
+        public string name { get; set; }
         public decimal VegPrice { get; set; }
         public decimal NonvegPrice { get; set; }
         public decimal Rating { get; set; }
         public long ReviewsCount { get; set; }
         public decimal RentAmount { get; set; }
+        public string Type_of_price { get; set; }
+        public string ServiceType { get; set; }
         public string Image { get; set; }
-        public int Category_TypeId { get; set; }
-        public string name { get; set; }
-        public string display_name { get; set; }
-        public string category_image { get; set; }
     }
 }

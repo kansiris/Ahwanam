@@ -114,5 +114,18 @@ namespace MaaAahwanam.Repository.db
         {
             return maaAahwanamEntities.allcategories().ToList();
         }
+
+        public List<getcategorieslst_Result> getnewcategories()
+        {
+            return maaAahwanamEntities.getcategorieslst().ToList();
+        }
+        public List<getallvendorevalue_Result> getallvendordata()
+        {
+            return maaAahwanamEntities.getallvendorevalue().ToList();
+        }
+        public List<browevendors_Result> getbrowsevendors(int id)
+        {
+            return maaAahwanamEntities.browevendors(id).ToList();
+        }
     }
 }

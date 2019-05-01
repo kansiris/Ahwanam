@@ -802,15 +802,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Getdetailsofwishlistitem_Result>("Getdetailsofwishlistitem", vendoridParameter);
         }
     
-        public virtual ObjectResult<Getwishlisdata_vendorid_Result> Getwishlisdata_vendorid(Nullable<long> vendorid)
-        {
-            var vendoridParameter = vendorid.HasValue ?
-                new ObjectParameter("vendorid", vendorid) :
-                new ObjectParameter("vendorid", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Getwishlisdata_vendorid_Result>("Getwishlisdata_vendorid", vendoridParameter);
-        }
-    
         public virtual ObjectResult<Getwishlistdetails_userid_Result> Getwishlistdetails_userid(Nullable<long> userid)
         {
             var useridParameter = userid.HasValue ?
@@ -886,6 +877,34 @@ namespace MaaAahwanam.Repository
         public virtual ObjectResult<allcategories_Result> allcategories()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<allcategories_Result>("allcategories");
+        }
+    
+        public virtual ObjectResult<getcategorieslst_Result> getcategorieslst()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getcategorieslst_Result>("getcategorieslst");
+        }
+    
+        public virtual ObjectResult<getallvendorevalue_Result> getallvendorevalue()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getallvendorevalue_Result>("getallvendorevalue");
+        }
+    
+        public virtual ObjectResult<Getwishlisdata_vendorid_Result> Getwishlisdata_vendorid(Nullable<long> vendorid)
+        {
+            var vendoridParameter = vendorid.HasValue ?
+                new ObjectParameter("vendorid", vendorid) :
+                new ObjectParameter("vendorid", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Getwishlisdata_vendorid_Result>("Getwishlisdata_vendorid", vendoridParameter);
+        }
+    
+        public virtual ObjectResult<browevendors_Result> browevendors(Nullable<int> categoryid)
+        {
+            var categoryidParameter = categoryid.HasValue ?
+                new ObjectParameter("categoryid", categoryid) :
+                new ObjectParameter("categoryid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<browevendors_Result>("browevendors", categoryidParameter);
         }
     }
 }

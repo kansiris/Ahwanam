@@ -48,6 +48,9 @@ namespace MaaAahwanam.Models
         public string longitude { get; set; }
         public string coverimage { get; set; }
         public string Affiliated { get; set; }
+        public string MetatagTitle { get; set; }
+        public string MetatagDesicription { get; set; }
+        public string MetatagKeywords { get; set; }
         
     }
 }

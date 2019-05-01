@@ -142,10 +142,10 @@ namespace MaaAahwanam.Service
         {
             return whishListRepository.Getuserfromwishlistbyuserid(userid);
         }
-        //public Getdetailsofwishlistitem_Result Getdetailsofvendor(long vendorid)
-        //{
-        //    return whishListRepository.Getdetailsofvendor(vendorid);
-        //}
+        public Getdetailsofwishlistitem_Result Getdetailsofvendor(long vendorid)
+        {
+            return whishListRepository.Getdetailsofvendor(vendorid);
+        }
 
         public Getwishlisdata_vendorid_Result Getdetailsofvendorbyid(long vendorid)
         {

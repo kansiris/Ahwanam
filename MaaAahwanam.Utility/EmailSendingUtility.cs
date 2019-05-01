@@ -9,6 +9,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+//using System.Net.Mail;
 
 namespace MaaAahwanam.Utility
 {
@@ -24,7 +25,7 @@ namespace MaaAahwanam.Utility
         public void Email_maaaahwanam(string txtto, string txtmessage, string subj, HttpPostedFileBase fileUploader)
         {
             MailMessage Msg = new MailMessage();
-            Msg.From = new MailAddress("maaaahwanamtest@gmail.com");
+            Msg.From = new MailAddress("weddingplanners@sevenvows.co.in", "SevenVows");
             Msg.To.Add(txtto);
             //ExbDetails ex = new ExbDetails();
             if (fileUploader != null)
@@ -40,7 +41,7 @@ namespace MaaAahwanam.Utility
             SmtpClient smtp = new SmtpClient();
             smtp.Host = ("smtp.gmail.com").ToString();
             System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
-            NetworkCred.UserName = ("maaaahwanamtest@gmail.com").ToString();
+            NetworkCred.UserName = ("weddingplanners@sevenvows.co.in").ToString();
             NetworkCred.Password = ("maaaahwanamtest").ToString();
             smtp.UseDefaultCredentials = true;
             smtp.Credentials = NetworkCred;
@@ -50,11 +51,13 @@ namespace MaaAahwanam.Utility
 
             //Mail method for go daddy
             //string HostAdd = "relay-hosting.secureserver.net";
-            //string FromEmailid = "info@sevenvows.co.in";
+            //string FromEmailid = "weddingplanners@sevenvows.co.in";
             //string Pass = "spreadinghappiness";
             //string to = txtto.ToString();
+            //string displayname = "Seven Vows";
             //MailMessage mailMessage = new MailMessage();
             //mailMessage.From = FromEmailid;
+            ////mailMessage.h
             //mailMessage.Subject = subj;
             //mailMessage.BodyFormat = MailFormat.Html;
             //mailMessage.Body = txtmessage;
@@ -62,6 +65,8 @@ namespace MaaAahwanam.Utility
             //System.Web.Mail.SmtpMail.SmtpServer = HostAdd;
             //System.Web.Mail.SmtpMail.Send(mailMessage);
             //mailMessage = null;
+
+
         }
         public void Email_maaaahwanam1(string txtto, string txtmessage, string subj, string from)
         {
@@ -105,7 +110,7 @@ namespace MaaAahwanam.Utility
         public void Wordpress_Email(string txtto, string txtmessage, string subj, HttpPostedFileBase fileUploader)
         {
             MailMessage Msg = new MailMessage();
-            Msg.From = new MailAddress("info@ahwanam.com");
+            Msg.From = new MailAddress("info@sevenvows.co.in", "SevenVows");
             Msg.To.Add(txtto);
             //ExbDetails ex = new ExbDetails();
             if (fileUploader != null)
@@ -116,12 +121,12 @@ namespace MaaAahwanam.Utility
             Msg.Body = txtmessage;
             Msg.Subject = subj;
             Msg.IsBodyHtml = true;
-            // your remote SMTP server IP.
+            //your remote SMTP server IP.
             SmtpClient smtp = new SmtpClient();
             smtp.Host = ("smtp.gmail.com").ToString();
             System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
-            NetworkCred.UserName = ("info@ahwanam.com").ToString();
-            NetworkCred.Password = ("spreadinghappiness").ToString();
+            NetworkCred.UserName = ("info@sevenvows.co.in").ToString();
+            NetworkCred.Password = ("Samsung@1234").ToString();
             smtp.UseDefaultCredentials = true;
             smtp.Credentials = NetworkCred;
             smtp.Port = 587;

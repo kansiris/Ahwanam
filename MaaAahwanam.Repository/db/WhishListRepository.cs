@@ -110,10 +110,10 @@ namespace MaaAahwanam.Repository.db
             return _dbContext.WishlistDetails.Where(u => u.UserId == userid).FirstOrDefault();
         }
 
-        //public Getdetailsofwishlistitem_Result Getdetailsofvendor(long vendorid)
-        //{
-        //    return maaAahwanamEntities.Getdetailsofwishlistitem(vendorid).FirstOrDefault();
-        //}
+        public Getdetailsofwishlistitem_Result Getdetailsofvendor(long vendorid)
+        {
+            return maaAahwanamEntities.Getdetailsofwishlistitem(vendorid).FirstOrDefault();
+        }
         public Getwishlisdata_vendorid_Result Getdetailsofvendorbyid(long vendorid)
         {
             return maaAahwanamEntities.Getwishlisdata_vendorid(vendorid).FirstOrDefault();

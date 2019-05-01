@@ -33,9 +33,15 @@ namespace MaaAahwanam.Service
             return filtersRepository.FilterValues(id);
         }
 
+        public List<newfilterresult> newFilterValues(int id)
+        {
+            return filtersRepository.newFilterValues(id);
+        }
         public filter_value ParticularFilterValue(int id)
         {
             return filtersRepository.ParticularFilterValue(id);
         }
+
+       
     }
 }
