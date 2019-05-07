@@ -230,7 +230,6 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return details;
         }
-
         public UserLogin Getlogindetails(string username)
         {
             var getdata = _dbContext.UserLogin.Where(u => u.UserName == username).FirstOrDefault();
