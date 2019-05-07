@@ -34,6 +34,10 @@ namespace MaaAahwanam.Service
             return resultsPageRepository.GetUserLogin(userLogin);
         }
 
+        public getuserlogindetails_Result GetUserLoginDetail(UserLogin userLogin)
+        {
+            return resultsPageRepository.GetUserLoginDetail(userLogin);
+        }
         public List<GetPhotographers_Result> GetAllPhotographers()
         {
             return resultsPageRepository.GetAllPhotographers();

@@ -170,5 +170,10 @@ namespace MaaAahwanam.Service
         {
             return userLoginRepository.updateprofile(userdetail, userloginid);
         }
+
+        public UserLogin Getlogindetails(string username)
+        {
+            return userLoginRepository.Getlogindetails(username);
+        }
     }
 }

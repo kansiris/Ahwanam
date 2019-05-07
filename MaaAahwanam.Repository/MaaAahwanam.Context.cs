@@ -766,15 +766,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Getvendor_category_vendorid_Result>("Getvendor_category_vendorid", categoryIdParameter, vendoridParameter);
         }
     
-        public virtual ObjectResult<Getvendor_vendorid_Result> Getvendor_vendorid(Nullable<long> vendorid)
-        {
-            var vendoridParameter = vendorid.HasValue ?
-                new ObjectParameter("vendorid", vendorid) :
-                new ObjectParameter("vendorid", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Getvendor_vendorid_Result>("Getvendor_vendorid", vendoridParameter);
-        }
-    
         public virtual ObjectResult<Ceremonydetails_Result> Ceremonydetails(string ceremony)
         {
             var ceremonyParameter = ceremony != null ?
@@ -905,6 +896,28 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("categoryid", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<browevendors_Result>("browevendors", categoryidParameter);
+        }
+    
+        public virtual ObjectResult<Getvendor_vendorid_Result> Getvendor_vendorid(Nullable<long> vendorid)
+        {
+            var vendoridParameter = vendorid.HasValue ?
+                new ObjectParameter("vendorid", vendorid) :
+                new ObjectParameter("vendorid", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Getvendor_vendorid_Result>("Getvendor_vendorid", vendoridParameter);
+        }
+    
+        public virtual ObjectResult<getuserlogindetails_Result> getuserlogindetails(string email, string password)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("email", email) :
+                new ObjectParameter("email", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("password", password) :
+                new ObjectParameter("password", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getuserlogindetails_Result>("getuserlogindetails", emailParameter, passwordParameter);
         }
     }
 }

@@ -83,6 +83,10 @@
         <Function Name="getservicetype" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ntype" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="getuserlogindetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="email" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="password" Type="nvarchar(max)" Mode="In" />
+        </Function>
         <Function Name="Getvendor_category_vendorid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="categoryId" Type="int" Mode="In" />
           <Parameter Name="vendorid" Type="bigint" Mode="In" />
@@ -501,9 +505,6 @@
             <Parameter Name="categoryId" Mode="In" Type="Int32" />
             <Parameter Name="vendorid" Mode="In" Type="Int64" />
           </FunctionImport>
-          <FunctionImport Name="Getvendor_vendorid" ReturnType="Collection(MaaAahwanamModel.Getvendor_vendorid_Result)">
-          <Parameter Name="vendorid" Mode="In" Type="Int64" />
-          </FunctionImport>
           <FunctionImport Name="Ceremonydetails" ReturnType="Collection(MaaAahwanamModel.Ceremonydetails_Result)">
           <Parameter Name="ceremony" Mode="In" Type="String" />
           </FunctionImport>
@@ -543,7 +544,14 @@
           <Parameter Name="vendorid" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="browevendors" ReturnType="Collection(MaaAahwanamModel.browevendors_Result)">
-            <Parameter Name="categoryid" Mode="In" Type="Int32" />
+          <Parameter Name="categoryid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Getvendor_vendorid" ReturnType="Collection(MaaAahwanamModel.Getvendor_vendorid_Result)">
+          <Parameter Name="vendorid" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="getuserlogindetails" ReturnType="Collection(MaaAahwanamModel.getuserlogindetails_Result)">
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
@@ -2110,27 +2118,6 @@
           <Property Type="String" Name="display_name" Nullable="true" />
           <Property Type="String" Name="category_image" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="Getvendor_vendorid_Result">
-          <Property Type="Int64" Name="VendorId" Nullable="false" />
-          <Property Type="String" Name="BusinessName" Nullable="true" />
-          <Property Type="String" Name="Address" Nullable="true" />
-          <Property Type="String" Name="City" Nullable="true" />
-          <Property Type="String" Name="Description" Nullable="true" />
-          <Property Type="String" Name="ServiceType" Nullable="true" />
-          <Property Type="String" Name="Type_of_price" Nullable="true" />
-          <Property Type="Decimal" Name="MinPrice" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="MaxPrice" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="VegPrice" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="NonvegPrice" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="Rating" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Int64" Name="ReviewsCount" Nullable="false" />
-          <Property Type="Decimal" Name="RentAmount" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="String" Name="Image" Nullable="true" />
-          <Property Type="Int32" Name="Category_TypeId" Nullable="false" />
-          <Property Type="String" Name="name" Nullable="true" />
-          <Property Type="String" Name="display_name" Nullable="true" />
-          <Property Type="String" Name="category_image" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="Ceremonydetails_Result">
           <Property Type="Int64" Name="Id" Nullable="false" />
           <Property Type="String" Name="Title" Nullable="true" />
@@ -2366,6 +2353,48 @@
           <Property Type="Decimal" Name="RentAmount" Nullable="false" Precision="18" Scale="2" />
           <Property Type="String" Name="charge_type" Nullable="true" />
           <Property Type="String" Name="pic_url" Nullable="true" MaxLength="83" />
+        </ComplexType>
+        <ComplexType Name="Getvendor_vendorid_Result">
+          <Property Type="Int64" Name="VendorId" Nullable="false" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="String" Name="Address" Nullable="true" />
+          <Property Type="String" Name="City" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="ServiceType" Nullable="true" />
+          <Property Type="String" Name="Type_of_price" Nullable="true" />
+          <Property Type="Decimal" Name="MinPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="MaxPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="VegPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="NonvegPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Rating" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int64" Name="ReviewsCount" Nullable="false" />
+          <Property Type="Decimal" Name="RentAmount" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="Image" Nullable="true" />
+          <Property Type="Int32" Name="Category_TypeId" Nullable="false" />
+          <Property Type="String" Name="name" Nullable="true" />
+          <Property Type="String" Name="display_name" Nullable="true" />
+          <Property Type="String" Name="category_image" Nullable="true" />
+          <Property Type="String" Name="MetatagTitle" Nullable="true" />
+          <Property Type="String" Name="MetatagDesicription" Nullable="true" />
+          <Property Type="String" Name="MetatagKeywords" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getuserlogindetails_Result">
+          <Property Type="Int64" Name="UserLoginId" Nullable="false" />
+          <Property Type="String" Name="UserName" Nullable="true" />
+          <Property Type="String" Name="Password" Nullable="true" />
+          <Property Type="String" Name="UserType" Nullable="true" />
+          <Property Type="DateTime" Name="RegDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Status" Nullable="true" />
+          <Property Type="Int64" Name="UpdatedBy" Nullable="false" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ActivationCode" Nullable="true" />
+          <Property Type="String" Name="IPAddress" Nullable="true" />
+          <Property Type="String" Name="businesstype" Nullable="true" />
+          <Property Type="String" Name="EmailOTP" Nullable="true" />
+          <Property Type="String" Name="MobileOTP" Nullable="true" />
+          <Property Type="String" Name="Loginsession" Nullable="true" />
+          <Property Type="String" Name="isreset" Nullable="true" />
+          <Property Type="String" Name="resetemaillink" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -4230,31 +4259,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Getvendor_vendorid" FunctionName="MaaAahwanamModel.Store.Getvendor_vendorid">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.Getvendor_vendorid_Result">
-                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
-                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
-                <ScalarProperty Name="Type_of_price" ColumnName="Type_of_price" />
-                <ScalarProperty Name="MinPrice" ColumnName="MinPrice" />
-                <ScalarProperty Name="MaxPrice" ColumnName="MaxPrice" />
-                <ScalarProperty Name="VegPrice" ColumnName="VegPrice" />
-                <ScalarProperty Name="NonvegPrice" ColumnName="NonvegPrice" />
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
-                <ScalarProperty Name="ReviewsCount" ColumnName="ReviewsCount" />
-                <ScalarProperty Name="RentAmount" ColumnName="RentAmount" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="Category_TypeId" ColumnName="Category_TypeId" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="display_name" ColumnName="display_name" />
-                <ScalarProperty Name="category_image" ColumnName="category_image" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="Ceremonydetails" FunctionName="MaaAahwanamModel.Store.Ceremonydetails">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MaaAahwanamModel.Ceremonydetails_Result">
@@ -4552,6 +4556,56 @@
                 <ScalarProperty Name="RentAmount" ColumnName="RentAmount" />
                 <ScalarProperty Name="charge_type" ColumnName="charge_type" />
                 <ScalarProperty Name="pic_url" ColumnName="pic_url" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Getvendor_vendorid" FunctionName="MaaAahwanamModel.Store.Getvendor_vendorid">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.Getvendor_vendorid_Result">
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
+                <ScalarProperty Name="Type_of_price" ColumnName="Type_of_price" />
+                <ScalarProperty Name="MinPrice" ColumnName="MinPrice" />
+                <ScalarProperty Name="MaxPrice" ColumnName="MaxPrice" />
+                <ScalarProperty Name="VegPrice" ColumnName="VegPrice" />
+                <ScalarProperty Name="NonvegPrice" ColumnName="NonvegPrice" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="ReviewsCount" ColumnName="ReviewsCount" />
+                <ScalarProperty Name="RentAmount" ColumnName="RentAmount" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Category_TypeId" ColumnName="Category_TypeId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="display_name" ColumnName="display_name" />
+                <ScalarProperty Name="category_image" ColumnName="category_image" />
+                <ScalarProperty Name="MetatagTitle" ColumnName="MetatagTitle" />
+                <ScalarProperty Name="MetatagDesicription" ColumnName="MetatagDesicription" />
+                <ScalarProperty Name="MetatagKeywords" ColumnName="MetatagKeywords" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getuserlogindetails" FunctionName="MaaAahwanamModel.Store.getuserlogindetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.getuserlogindetails_Result">
+                <ScalarProperty Name="UserLoginId" ColumnName="UserLoginId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+                <ScalarProperty Name="RegDate" ColumnName="RegDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="ActivationCode" ColumnName="ActivationCode" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="businesstype" ColumnName="businesstype" />
+                <ScalarProperty Name="EmailOTP" ColumnName="EmailOTP" />
+                <ScalarProperty Name="MobileOTP" ColumnName="MobileOTP" />
+                <ScalarProperty Name="Loginsession" ColumnName="Loginsession" />
+                <ScalarProperty Name="isreset" ColumnName="isreset" />
+                <ScalarProperty Name="resetemaillink" ColumnName="resetemaillink" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

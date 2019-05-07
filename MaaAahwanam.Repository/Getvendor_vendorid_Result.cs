@@ -32,5 +32,8 @@ namespace MaaAahwanam.Repository
         public string name { get; set; }
         public string display_name { get; set; }
         public string category_image { get; set; }
+        public string MetatagTitle { get; set; }
+        public string MetatagDesicription { get; set; }
+        public string MetatagKeywords { get; set; }
     }
 }

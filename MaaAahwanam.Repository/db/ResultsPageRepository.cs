@@ -35,6 +35,11 @@ namespace MaaAahwanam.Repository.db
             return data;
         }
 
+        public getuserlogindetails_Result GetUserLoginDetail(UserLogin userLogin)
+        {
+            var data = maaAahwanamEntities.getuserlogindetails(userLogin.UserName, userLogin.Password).FirstOrDefault();
+            return data;
+        }
         public UserDetail GetUser(UserDetail userdetail)
         {
             var data = _dbContext.UserDetail.Where(u => u.UserDetailId == userdetail.UserDetailId && u.AlternativeEmailID == userdetail.AlternativeEmailID).FirstOrDefault();
