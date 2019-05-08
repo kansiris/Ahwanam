@@ -24,34 +24,33 @@ namespace MaaAahwanam.Utility
 
         public void Email_maaaahwanam(string txtto, string txtmessage, string subj, HttpPostedFileBase fileUploader)
         {
-            //MailMessage Msg = new MailMessage();
-            //Msg.From = new MailAddress("weddingplanners@sevenvows.co.in", "SevenVows");
-            //Msg.To.Add(txtto);
-            ////ExbDetails ex = new ExbDetails();
-            //if (fileUploader != null)
-            //{
-            //    string fileName = Path.GetFileName(fileUploader.FileName);
-            //    Msg.Attachments.Add(new Attachment(fileUploader.InputStream, fileName));
+            // MailMessage Msg = new MailMessage();
+            // Msg.From = new MailAddress("info@sevenvows.co.in", "SevenVows");
+            // Msg.To.Add(txtto);
+            // ExbDetails ex = new ExbDetails();
+            // if (fileUploader != null)
+            // {
+            //     string fileName = Path.GetFileName(fileUploader.FileName);
+            //     Msg.Attachments.Add(new Attachment(fileUploader.InputStream, fileName));
 
-            //}
-            //Msg.Body = txtmessage;
-            //Msg.Subject = subj;
-            //Msg.IsBodyHtml = true;
-            //// your remote SMTP server IP.
+            // }
+            // Msg.Body = txtmessage;
+            // Msg.Subject = subj;
+            // Msg.IsBodyHtml = true;
+            // your remote SMTP server IP.
             //SmtpClient smtp = new SmtpClient();
-            //smtp.Host = ("smtp.gmail.com").ToString();
-            //System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
-            //NetworkCred.UserName = ("weddingplanners@sevenvows.co.in").ToString();
-            //NetworkCred.Password = ("maaaahwanamtest").ToString();
-            //smtp.UseDefaultCredentials = true;
-            //smtp.Credentials = NetworkCred;
-            //smtp.Port = 587;
-            //smtp.EnableSsl = true;
-            //smtp.Send(Msg);
+            // smtp.Host = ("smtp.gmail.com").ToString();
+            // System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
+            // NetworkCred.UserName = ("info@sevenvows.co.in").ToString();
+            // NetworkCred.Password = ("Test@1234").ToString();
+            // smtp.UseDefaultCredentials = true;
+            // smtp.Credentials = NetworkCred;
+            // smtp.Port = 587;
+            // smtp.EnableSsl = true;
+            // smtp.Send(Msg);
 
             //Mail method for go daddy
             string HostAdd = "relay-hosting.secureserver.net";
-            //string FromEmailid = "info@ahwanam.com";
             string FromEmailid = "info@sevenvows.co.in";
             string Pass = "spreadinghappiness";
             string to = txtto.ToString();
@@ -112,7 +111,7 @@ namespace MaaAahwanam.Utility
         public void Wordpress_Email(string txtto, string txtmessage, string subj, HttpPostedFileBase fileUploader)
         {
             //MailMessage Msg = new MailMessage();
-            //Msg.From = new MailAddress("info@sevenvows.co.in", "SevenVows");
+            //Msg.From = new MailAddress("sevenvows@sevenvows.co.in", "SevenVows");
             //Msg.To.Add(txtto);
             ////ExbDetails ex = new ExbDetails();
             //if (fileUploader != null)
@@ -127,8 +126,8 @@ namespace MaaAahwanam.Utility
             //SmtpClient smtp = new SmtpClient();
             //smtp.Host = ("smtp.gmail.com").ToString();
             //System.Net.NetworkCredential NetworkCred = new System.Net.NetworkCredential();
-            //NetworkCred.UserName = ("info@sevenvows.co.in").ToString();
-            //NetworkCred.Password = ("Samsung@1234").ToString();
+            //NetworkCred.UserName = ("sevenvows@sevenvows.co.in").ToString();
+            //NetworkCred.Password = ("9=>WqAZ%").ToString();
             //smtp.UseDefaultCredentials = true;
             //smtp.Credentials = NetworkCred;
             //smtp.Port = 587;
