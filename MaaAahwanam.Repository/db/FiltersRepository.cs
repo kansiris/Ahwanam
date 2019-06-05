@@ -10,6 +10,7 @@ namespace MaaAahwanam.Repository.db
     public class FiltersRepository
     {
         readonly ApiContext _dbContext = new ApiContext();
+        MaaAahwanamEntities maaAahwanamEntities = new MaaAahwanamEntities();
         public List<Category> AllCategories()
         {
             return _dbContext.Category.ToList();
@@ -18,6 +19,10 @@ namespace MaaAahwanam.Repository.db
         public Category category(int categoryid)
         {
             return _dbContext.Category.Where(c => c.servicType_id == categoryid).FirstOrDefault();
+        }
+        public categoriesbycid_Result getcategory(int categoryid)
+        {
+            return maaAahwanamEntities.categoriesbycid(categoryid).FirstOrDefault();
         }
 
         public List<filter> AllFilters(int id)
@@ -33,6 +38,11 @@ namespace MaaAahwanam.Repository.db
         public List<newfilterresult> newFilterValues(int id)
         {
             return _dbContext.newfilterresult.Where(m => m.filter_id == id).ToList();
+        }
+
+        public newfilterresult newfiltervalue(int id)
+        {
+            return _dbContext.newfilterresult.Where(m => m.id == id).FirstOrDefault();
         }
 
         public filter_value ParticularFilterValue(int id)

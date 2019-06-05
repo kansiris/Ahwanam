@@ -24,6 +24,9 @@ namespace MaaAahwanam.Models
         public string default_category { get; set; }
         public int type { get; set; }
         public string location { get; set; }
+        public string MetatagTitle { get; set; }
+        public string MetatagDesicription { get; set; }
+        public string MetatagKeywords { get; set; }
 
     }
 }

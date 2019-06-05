@@ -147,5 +147,14 @@ namespace MaaAahwanam.Repository.db
         {
             return maaAahwanamEntities.wishlistitemavailable(userid).ToList();
         }
+        public List<Getwishlistdetails_user_Result> Getavailablevendors(string token)
+        {
+            return maaAahwanamEntities.Getwishlistdetails_user(token).ToList();
+        }
+
+        public List<Getwishlistdetails_token_categoryid_Result> Getallvendordetails(string token, int categoryid)
+        {
+            return maaAahwanamEntities.Getwishlistdetails_token_categoryid(token, categoryid).ToList();
+        }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MaaAahwanam.Repository.db;
 using MaaAahwanam.Models;
+using MaaAahwanam.Repository;
 
 namespace MaaAahwanam.Service
 {
@@ -20,6 +21,11 @@ namespace MaaAahwanam.Service
         {
             
             return filtersRepository.category(categoryid);
+        }
+
+        public categoriesbycid_Result getcategory(int categoryid)
+        {
+            return filtersRepository.getcategory(categoryid);
         }
 
 
@@ -42,6 +48,11 @@ namespace MaaAahwanam.Service
             return filtersRepository.ParticularFilterValue(id);
         }
 
-       
+        public newfilterresult newfiltervalue(int id)
+        {
+            return filtersRepository.newfiltervalue(id);
+        }
+
+
     }
 }

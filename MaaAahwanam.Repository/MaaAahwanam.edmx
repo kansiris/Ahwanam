@@ -19,6 +19,9 @@
         <Function Name="cartcount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="categoriesbycid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="cid" Type="int" Mode="In" />
+        </Function>
         <Function Name="Ceremonydetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ceremony" Type="nvarchar(max)" Mode="In" />
         </Function>
@@ -36,6 +39,7 @@
           <Parameter Name="f3" Type="varchar" Mode="In" />
         </Function>
         <Function Name="getallvendorevalue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getallwishlistdetailsofusers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetCartItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="VID" Type="int" Mode="In" />
         </Function>
@@ -83,6 +87,7 @@
         <Function Name="getservicetype" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ntype" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="getuserdetailsforadmin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="getuserlogindetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="email" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="password" Type="nvarchar(max)" Mode="In" />
@@ -108,6 +113,13 @@
         </Function>
         <Function Name="GetwishlistDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="wishlistid" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="Getwishlistdetails_token_categoryid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="token" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="categoryid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Getwishlistdetails_user" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="token" Type="nvarchar(max)" Mode="In" />
         </Function>
         <Function Name="Getwishlistdetails_userid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="bigint" Mode="In" />
@@ -521,14 +533,8 @@
             <Parameter Name="wishlistid" Mode="In" Type="Int64" />
             <Parameter Name="categoryid" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="Ceremonydetails_id" ReturnType="Collection(MaaAahwanamModel.Ceremonydetails_id_Result)">
-          <Parameter Name="ceremonyid" Mode="In" Type="Int64" />
-          </FunctionImport>
           <FunctionImport Name="Getmyprofile" ReturnType="Collection(MaaAahwanamModel.Getmyprofile_Result)">
           <Parameter Name="token" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="GetVendorsByCategoryId" ReturnType="Collection(MaaAahwanamModel.GetVendorsByCategoryId_Result)">
-          <Parameter Name="categoryId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SP_GetTestimonials" ReturnType="Collection(MaaAahwanamModel.SP_GetTestimonials_Result)" />
           <FunctionImport Name="sharedwishlist" ReturnType="Collection(MaaAahwanamModel.sharedwishlist_Result)">
@@ -553,6 +559,24 @@
             <Parameter Name="email" Mode="In" Type="String" />
             <Parameter Name="password" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="categoriesbycid" ReturnType="Collection(MaaAahwanamModel.categoriesbycid_Result)">
+          <Parameter Name="cid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Ceremonydetails_id" ReturnType="Collection(MaaAahwanamModel.Ceremonydetails_id_Result)">
+          <Parameter Name="ceremonyid" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="GetVendorsByCategoryId" ReturnType="Collection(MaaAahwanamModel.GetVendorsByCategoryId_Result)">
+          <Parameter Name="categoryId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getuserdetailsforadmin" ReturnType="Collection(MaaAahwanamModel.getuserdetailsforadmin_Result)" />
+          <FunctionImport Name="Getwishlistdetails_user" ReturnType="Collection(MaaAahwanamModel.Getwishlistdetails_user_Result)">
+          <Parameter Name="token" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Getwishlistdetails_token_categoryid" ReturnType="Collection(MaaAahwanamModel.Getwishlistdetails_token_categoryid_Result)">
+            <Parameter Name="token" Mode="In" Type="String" />
+            <Parameter Name="categoryid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="getallwishlistdetailsofusers" ReturnType="Collection(MaaAahwanamModel.getallwishlistdetailsofusers_Result)" />
         </EntityContainer>
         <ComplexType Name="MaaAahwanam_Others_AllRegisteredUsersDetails_Result">
           <Property Type="Int64" Name="UserLoginId" Nullable="false" />
@@ -2206,24 +2230,6 @@
           <Property Type="Int64" Name="UserId" Nullable="false" />
           <Property Type="Int64" Name="username" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="Ceremonydetails_id_Result">
-          <Property Type="Int64" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Title" Nullable="true" />
-          <Property Type="String" Name="Description" Nullable="true" />
-          <Property Type="String" Name="Image" Nullable="true" />
-          <Property Type="DateTime" Name="StartDate" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="EndDate" Nullable="false" Precision="23" />
-          <Property Type="String" Name="page_name1" Nullable="true" />
-          <Property Type="String" Name="name" Nullable="true" />
-          <Property Type="String" Name="ceremonyImage" Nullable="true" />
-          <Property Type="String" Name="default_category" Nullable="true" />
-          <Property Type="Int64" Name="detailId" Nullable="false" />
-          <Property Type="Int64" Name="CeremonyId" Nullable="false" />
-          <Property Type="String" Name="shortdescription" Nullable="true" />
-          <Property Type="String" Name="Category" Nullable="true" />
-          <Property Type="String" Name="page_name2" Nullable="true" />
-          <Property Type="Int64" Name="categoryId" Nullable="false" />
-        </ComplexType>
         <ComplexType Name="Getmyprofile_Result">
           <Property Type="Int64" Name="UserLoginId" Nullable="false" />
           <Property Type="String" Name="FirstName" Nullable="true" />
@@ -2232,29 +2238,6 @@
           <Property Type="String" Name="UserPhone" Nullable="true" />
           <Property Type="String" Name="name" Nullable="true" />
           <Property Type="String" Name="Token" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="GetVendorsByCategoryId_Result">
-          <Property Type="Int64" Name="VendorId" Nullable="false" />
-          <Property Type="String" Name="BusinessName" Nullable="true" />
-          <Property Type="String" Name="Address" Nullable="true" />
-          <Property Type="String" Name="City" Nullable="true" />
-          <Property Type="String" Name="Description" Nullable="true" />
-          <Property Type="String" Name="ServiceType" Nullable="true" />
-          <Property Type="String" Name="Type_of_price" Nullable="true" />
-          <Property Type="Decimal" Name="MinPrice" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="MaxPrice" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="VegPrice" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="NonvegPrice" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="Rating" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Int64" Name="ReviewsCount" Nullable="false" />
-          <Property Type="Decimal" Name="RentAmount" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="String" Name="Image" Nullable="true" />
-          <Property Type="Int32" Name="Category_TypeId" Nullable="false" />
-          <Property Type="Int32" Name="priority" Nullable="false" />
-          <Property Type="Int64" Name="Capacity" Nullable="false" />
-          <Property Type="String" Name="name" Nullable="true" />
-          <Property Type="String" Name="display_name" Nullable="true" />
-          <Property Type="String" Name="category_image" Nullable="true" />
         </ComplexType>
         <ComplexType Name="SP_GetTestimonials_Result">
           <Property Type="Int64" Name="Id" Nullable="false" />
@@ -2395,6 +2378,115 @@
           <Property Type="String" Name="Loginsession" Nullable="true" />
           <Property Type="String" Name="isreset" Nullable="true" />
           <Property Type="String" Name="resetemaillink" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="categoriesbycid_Result">
+          <Property Type="Int32" Name="servicType_id" Nullable="false" />
+          <Property Type="String" Name="name" Nullable="true" />
+          <Property Type="String" Name="display_name" Nullable="true" />
+          <Property Type="String" Name="image" Nullable="true" />
+          <Property Type="String" Name="status" Nullable="true" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="MetatagTitle" Nullable="false" />
+          <Property Type="String" Name="MetatagDesicription" Nullable="false" />
+          <Property Type="String" Name="MetatagKeywords" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="Ceremonydetails_id_Result">
+          <Property Type="Int64" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Title" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="Image" Nullable="true" />
+          <Property Type="DateTime" Name="StartDate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="EndDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="page_name1" Nullable="true" />
+          <Property Type="String" Name="name" Nullable="true" />
+          <Property Type="String" Name="ceremonyImage" Nullable="true" />
+          <Property Type="String" Name="default_category" Nullable="true" />
+          <Property Type="String" Name="MetatagTitle" Nullable="false" />
+          <Property Type="String" Name="MetatagDesicription" Nullable="false" />
+          <Property Type="String" Name="MetatagKeywords" Nullable="false" />
+          <Property Type="Int64" Name="detailId" Nullable="false" />
+          <Property Type="Int64" Name="CeremonyId" Nullable="false" />
+          <Property Type="String" Name="shortdescription" Nullable="true" />
+          <Property Type="String" Name="Category" Nullable="true" />
+          <Property Type="String" Name="page_name2" Nullable="true" />
+          <Property Type="Int64" Name="categoryId" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetVendorsByCategoryId_Result">
+          <Property Type="Int64" Name="VendorId" Nullable="false" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="String" Name="Address" Nullable="true" />
+          <Property Type="String" Name="City" Nullable="true" />
+          <Property Type="String" Name="Description" Nullable="true" />
+          <Property Type="String" Name="ServiceType" Nullable="true" />
+          <Property Type="String" Name="Type_of_price" Nullable="true" />
+          <Property Type="Decimal" Name="MinPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="MaxPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="VegPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="NonvegPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Rating" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int64" Name="ReviewsCount" Nullable="false" />
+          <Property Type="Decimal" Name="RentAmount" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="Image" Nullable="true" />
+          <Property Type="Int32" Name="Category_TypeId" Nullable="false" />
+          <Property Type="Int32" Name="priority" Nullable="false" />
+          <Property Type="Int64" Name="Capacity" Nullable="false" />
+          <Property Type="String" Name="name" Nullable="true" />
+          <Property Type="String" Name="display_name" Nullable="true" />
+          <Property Type="String" Name="category_image" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="getuserdetailsforadmin_Result">
+          <Property Type="Int64" Name="UserDetailId" Nullable="false" />
+          <Property Type="Int64" Name="UserLoginId" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="true" />
+          <Property Type="String" Name="AlternativeEmailID" Nullable="true" />
+          <Property Type="String" Name="UserPhone" Nullable="true" />
+          <Property Type="DateTime" Name="UpdatedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Status" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Getwishlistdetails_user_Result">
+          <Property Type="Int64" Name="UserLoginId" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="true" />
+          <Property Type="String" Name="LastName" Nullable="true" />
+          <Property Type="String" Name="AlternativeEmailID" Nullable="true" />
+          <Property Type="String" Name="UserPhone" Nullable="true" />
+          <Property Type="String" Name="name" Nullable="true" />
+          <Property Type="String" Name="Token" Nullable="true" />
+          <Property Type="Int64" Name="WishlistdetailId" Nullable="false" />
+          <Property Type="Int64" Name="UserId" Nullable="false" />
+          <Property Type="String" Name="wishlistname" Nullable="true" />
+          <Property Type="Int64" Name="wishlistserviceId" Nullable="false" />
+          <Property Type="Int64" Name="wishlistId" Nullable="false" />
+          <Property Type="Int64" Name="vendorId" Nullable="false" />
+          <Property Type="DateTime" Name="WhishListedDate" Nullable="false" Precision="23" />
+          <Property Type="Int64" Name="collabratorid" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Getwishlistdetails_token_categoryid_Result">
+          <Property Type="Int64" Name="VendorID" Nullable="false" />
+          <Property Type="String" Name="BusinessName" Nullable="true" />
+          <Property Type="String" Name="Address" Nullable="true" />
+          <Property Type="String" Name="City" Nullable="true" />
+          <Property Type="String" Name="ServiceType" Nullable="true" />
+          <Property Type="Int32" Name="priority" Nullable="false" />
+          <Property Type="Decimal" Name="MinPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="MaxPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="Type_of_price" Nullable="true" />
+          <Property Type="Decimal" Name="VegPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="NonvegPrice" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Rating" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="RentAmount" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="Image" Nullable="true" />
+          <Property Type="Int32" Name="Category_TypeId" Nullable="false" />
+          <Property Type="String" Name="name" Nullable="true" />
+          <Property Type="String" Name="display_name" Nullable="true" />
+          <Property Type="String" Name="is_in_ishlist" Nullable="false" MaxLength="5" />
+        </ComplexType>
+        <ComplexType Name="getallwishlistdetailsofusers_Result">
+          <Property Type="Int64" Name="WishlistdetailId" Nullable="false" />
+          <Property Type="Int64" Name="UserLoginId" Nullable="false" />
+          <Property Type="String" Name="wishlistName" Nullable="true" />
+          <Property Type="String" Name="FirstName" Nullable="true" />
+          <Property Type="String" Name="AlternativeEmailID" Nullable="true" />
+          <Property Type="String" Name="UserPhone" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -4367,28 +4459,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Ceremonydetails_id" FunctionName="MaaAahwanamModel.Store.Ceremonydetails_id">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.Ceremonydetails_id_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="page_name1" ColumnName="page_name1" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="ceremonyImage" ColumnName="ceremonyImage" />
-                <ScalarProperty Name="default_category" ColumnName="default_category" />
-                <ScalarProperty Name="detailId" ColumnName="detailId" />
-                <ScalarProperty Name="CeremonyId" ColumnName="CeremonyId" />
-                <ScalarProperty Name="shortdescription" ColumnName="shortdescription" />
-                <ScalarProperty Name="Category" ColumnName="Category" />
-                <ScalarProperty Name="page_name2" ColumnName="page_name2" />
-                <ScalarProperty Name="categoryId" ColumnName="categoryId" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="Getmyprofile" FunctionName="MaaAahwanamModel.Store.Getmyprofile">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MaaAahwanamModel.Getmyprofile_Result">
@@ -4399,33 +4469,6 @@
                 <ScalarProperty Name="UserPhone" ColumnName="UserPhone" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="Token" ColumnName="Token" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetVendorsByCategoryId" FunctionName="MaaAahwanamModel.Store.GetVendorsByCategoryId">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="MaaAahwanamModel.GetVendorsByCategoryId_Result">
-                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
-                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
-                <ScalarProperty Name="Type_of_price" ColumnName="Type_of_price" />
-                <ScalarProperty Name="MinPrice" ColumnName="MinPrice" />
-                <ScalarProperty Name="MaxPrice" ColumnName="MaxPrice" />
-                <ScalarProperty Name="VegPrice" ColumnName="VegPrice" />
-                <ScalarProperty Name="NonvegPrice" ColumnName="NonvegPrice" />
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
-                <ScalarProperty Name="ReviewsCount" ColumnName="ReviewsCount" />
-                <ScalarProperty Name="RentAmount" ColumnName="RentAmount" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="Category_TypeId" ColumnName="Category_TypeId" />
-                <ScalarProperty Name="priority" ColumnName="priority" />
-                <ScalarProperty Name="Capacity" ColumnName="Capacity" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="display_name" ColumnName="display_name" />
-                <ScalarProperty Name="category_image" ColumnName="category_image" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -4606,6 +4649,143 @@
                 <ScalarProperty Name="Loginsession" ColumnName="Loginsession" />
                 <ScalarProperty Name="isreset" ColumnName="isreset" />
                 <ScalarProperty Name="resetemaillink" ColumnName="resetemaillink" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="categoriesbycid" FunctionName="MaaAahwanamModel.Store.categoriesbycid">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.categoriesbycid_Result">
+                <ScalarProperty Name="servicType_id" ColumnName="servicType_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="display_name" ColumnName="display_name" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="MetatagTitle" ColumnName="MetatagTitle" />
+                <ScalarProperty Name="MetatagDesicription" ColumnName="MetatagDesicription" />
+                <ScalarProperty Name="MetatagKeywords" ColumnName="MetatagKeywords" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Ceremonydetails_id" FunctionName="MaaAahwanamModel.Store.Ceremonydetails_id">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.Ceremonydetails_id_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="page_name1" ColumnName="page_name1" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="ceremonyImage" ColumnName="ceremonyImage" />
+                <ScalarProperty Name="default_category" ColumnName="default_category" />
+                <ScalarProperty Name="MetatagTitle" ColumnName="MetatagTitle" />
+                <ScalarProperty Name="MetatagDesicription" ColumnName="MetatagDesicription" />
+                <ScalarProperty Name="MetatagKeywords" ColumnName="MetatagKeywords" />
+                <ScalarProperty Name="detailId" ColumnName="detailId" />
+                <ScalarProperty Name="CeremonyId" ColumnName="CeremonyId" />
+                <ScalarProperty Name="shortdescription" ColumnName="shortdescription" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="page_name2" ColumnName="page_name2" />
+                <ScalarProperty Name="categoryId" ColumnName="categoryId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetVendorsByCategoryId" FunctionName="MaaAahwanamModel.Store.GetVendorsByCategoryId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.GetVendorsByCategoryId_Result">
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
+                <ScalarProperty Name="Type_of_price" ColumnName="Type_of_price" />
+                <ScalarProperty Name="MinPrice" ColumnName="MinPrice" />
+                <ScalarProperty Name="MaxPrice" ColumnName="MaxPrice" />
+                <ScalarProperty Name="VegPrice" ColumnName="VegPrice" />
+                <ScalarProperty Name="NonvegPrice" ColumnName="NonvegPrice" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="ReviewsCount" ColumnName="ReviewsCount" />
+                <ScalarProperty Name="RentAmount" ColumnName="RentAmount" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Category_TypeId" ColumnName="Category_TypeId" />
+                <ScalarProperty Name="priority" ColumnName="priority" />
+                <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="display_name" ColumnName="display_name" />
+                <ScalarProperty Name="category_image" ColumnName="category_image" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getuserdetailsforadmin" FunctionName="MaaAahwanamModel.Store.getuserdetailsforadmin">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.getuserdetailsforadmin_Result">
+                <ScalarProperty Name="UserDetailId" ColumnName="UserDetailId" />
+                <ScalarProperty Name="UserLoginId" ColumnName="UserLoginId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="AlternativeEmailID" ColumnName="AlternativeEmailID" />
+                <ScalarProperty Name="UserPhone" ColumnName="UserPhone" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Getwishlistdetails_user" FunctionName="MaaAahwanamModel.Store.Getwishlistdetails_user">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.Getwishlistdetails_user_Result">
+                <ScalarProperty Name="UserLoginId" ColumnName="UserLoginId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="AlternativeEmailID" ColumnName="AlternativeEmailID" />
+                <ScalarProperty Name="UserPhone" ColumnName="UserPhone" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="WishlistdetailId" ColumnName="WishlistdetailId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="wishlistname" ColumnName="wishlistname" />
+                <ScalarProperty Name="wishlistserviceId" ColumnName="wishlistserviceId" />
+                <ScalarProperty Name="wishlistId" ColumnName="wishlistId" />
+                <ScalarProperty Name="vendorId" ColumnName="vendorId" />
+                <ScalarProperty Name="WhishListedDate" ColumnName="WhishListedDate" />
+                <ScalarProperty Name="collabratorid" ColumnName="collabratorid" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Getwishlistdetails_token_categoryid" FunctionName="MaaAahwanamModel.Store.Getwishlistdetails_token_categoryid">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.Getwishlistdetails_token_categoryid_Result">
+                <ScalarProperty Name="VendorID" ColumnName="VendorID" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="ServiceType" ColumnName="ServiceType" />
+                <ScalarProperty Name="priority" ColumnName="priority" />
+                <ScalarProperty Name="MinPrice" ColumnName="MinPrice" />
+                <ScalarProperty Name="MaxPrice" ColumnName="MaxPrice" />
+                <ScalarProperty Name="Type_of_price" ColumnName="Type_of_price" />
+                <ScalarProperty Name="VegPrice" ColumnName="VegPrice" />
+                <ScalarProperty Name="NonvegPrice" ColumnName="NonvegPrice" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="RentAmount" ColumnName="RentAmount" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Category_TypeId" ColumnName="Category_TypeId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="display_name" ColumnName="display_name" />
+                <ScalarProperty Name="is_in_ishlist" ColumnName="is_in_ishlist" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getallwishlistdetailsofusers" FunctionName="MaaAahwanamModel.Store.getallwishlistdetailsofusers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MaaAahwanamModel.getallwishlistdetailsofusers_Result">
+                <ScalarProperty Name="WishlistdetailId" ColumnName="WishlistdetailId" />
+                <ScalarProperty Name="UserLoginId" ColumnName="UserLoginId" />
+                <ScalarProperty Name="wishlistName" ColumnName="wishlistName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="AlternativeEmailID" ColumnName="AlternativeEmailID" />
+                <ScalarProperty Name="UserPhone" ColumnName="UserPhone" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

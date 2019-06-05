@@ -171,6 +171,25 @@ namespace MaaAahwanam.Service
             return userLoginRepository.updateprofile(userdetail, userloginid);
         }
 
+        public UserDetail socialupdateprofile(UserDetail userdetail, UserLogin userlogin, long userloginid)
+        {
+            UserLogin l1 = userLoginRepository.updatesocialpassword(userlogin, userloginid);
+            UserDetail l2 = userLoginRepository.updateprofile(userdetail, userloginid);
+            //string response;
+            //try
+            //{
+            //    UserLogin l1 = userLoginRepository.updatesocialpassword(userlogin, userloginid);
+            //    UserDetail l2 = userLoginRepository.updateprofile(userdetail, userloginid);
+            //    response = "sucess";
+            //}
+            //catch (Exception ex)
+            //{
+            //    response = "failure";
+            //}
+            //return response;
+            return l2;
+            
+        }
         public UserLogin Getlogindetails(string username)
         {
             return userLoginRepository.Getlogindetails(username);

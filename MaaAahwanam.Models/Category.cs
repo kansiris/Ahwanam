@@ -16,5 +16,8 @@ namespace MaaAahwanam.Models
         public string image { get; set; }
         public string status { get; set; }
         public DateTime UpdatedDate { get; set; }
+        public string MetatagTitle { get; set; }
+        public string MetatagDesicription { get; set; }
+        public string MetatagKeywords { get; set; }
     }
 }

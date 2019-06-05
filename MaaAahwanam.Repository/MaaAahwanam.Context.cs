@@ -815,15 +815,6 @@ namespace MaaAahwanam.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Getwishlistvendors_Result>("Getwishlistvendors", wishlistidParameter, categoryidParameter);
         }
     
-        public virtual ObjectResult<Ceremonydetails_id_Result> Ceremonydetails_id(Nullable<long> ceremonyid)
-        {
-            var ceremonyidParameter = ceremonyid.HasValue ?
-                new ObjectParameter("ceremonyid", ceremonyid) :
-                new ObjectParameter("ceremonyid", typeof(long));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Ceremonydetails_id_Result>("Ceremonydetails_id", ceremonyidParameter);
-        }
-    
         public virtual ObjectResult<Getmyprofile_Result> Getmyprofile(string token)
         {
             var tokenParameter = token != null ?
@@ -831,15 +822,6 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("token", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Getmyprofile_Result>("Getmyprofile", tokenParameter);
-        }
-    
-        public virtual ObjectResult<GetVendorsByCategoryId_Result> GetVendorsByCategoryId(Nullable<int> categoryId)
-        {
-            var categoryIdParameter = categoryId.HasValue ?
-                new ObjectParameter("categoryId", categoryId) :
-                new ObjectParameter("categoryId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetVendorsByCategoryId_Result>("GetVendorsByCategoryId", categoryIdParameter);
         }
     
         public virtual ObjectResult<SP_GetTestimonials_Result> SP_GetTestimonials()
@@ -918,6 +900,65 @@ namespace MaaAahwanam.Repository
                 new ObjectParameter("password", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getuserlogindetails_Result>("getuserlogindetails", emailParameter, passwordParameter);
+        }
+    
+        public virtual ObjectResult<categoriesbycid_Result> categoriesbycid(Nullable<int> cid)
+        {
+            var cidParameter = cid.HasValue ?
+                new ObjectParameter("cid", cid) :
+                new ObjectParameter("cid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<categoriesbycid_Result>("categoriesbycid", cidParameter);
+        }
+    
+        public virtual ObjectResult<Ceremonydetails_id_Result> Ceremonydetails_id(Nullable<long> ceremonyid)
+        {
+            var ceremonyidParameter = ceremonyid.HasValue ?
+                new ObjectParameter("ceremonyid", ceremonyid) :
+                new ObjectParameter("ceremonyid", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Ceremonydetails_id_Result>("Ceremonydetails_id", ceremonyidParameter);
+        }
+    
+        public virtual ObjectResult<GetVendorsByCategoryId_Result> GetVendorsByCategoryId(Nullable<int> categoryId)
+        {
+            var categoryIdParameter = categoryId.HasValue ?
+                new ObjectParameter("categoryId", categoryId) :
+                new ObjectParameter("categoryId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetVendorsByCategoryId_Result>("GetVendorsByCategoryId", categoryIdParameter);
+        }
+    
+        public virtual ObjectResult<getuserdetailsforadmin_Result> getuserdetailsforadmin()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getuserdetailsforadmin_Result>("getuserdetailsforadmin");
+        }
+    
+        public virtual ObjectResult<Getwishlistdetails_user_Result> Getwishlistdetails_user(string token)
+        {
+            var tokenParameter = token != null ?
+                new ObjectParameter("token", token) :
+                new ObjectParameter("token", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Getwishlistdetails_user_Result>("Getwishlistdetails_user", tokenParameter);
+        }
+    
+        public virtual ObjectResult<Getwishlistdetails_token_categoryid_Result> Getwishlistdetails_token_categoryid(string token, Nullable<int> categoryid)
+        {
+            var tokenParameter = token != null ?
+                new ObjectParameter("token", token) :
+                new ObjectParameter("token", typeof(string));
+    
+            var categoryidParameter = categoryid.HasValue ?
+                new ObjectParameter("categoryid", categoryid) :
+                new ObjectParameter("categoryid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Getwishlistdetails_token_categoryid_Result>("Getwishlistdetails_token_categoryid", tokenParameter, categoryidParameter);
+        }
+    
+        public virtual ObjectResult<getallwishlistdetailsofusers_Result> getallwishlistdetailsofusers()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getallwishlistdetailsofusers_Result>("getallwishlistdetailsofusers");
         }
     }
 }

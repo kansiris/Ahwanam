@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MaaAahwanam.Repository.db;
 using MaaAahwanam.Models;
+using MaaAahwanam.Repository;
 
 namespace MaaAahwanam.Service
 {
@@ -29,6 +30,24 @@ namespace MaaAahwanam.Service
         {
                 EnquiryRepository enquiryRepository = new EnquiryRepository();
             return enquiryRepository.SaveEnquiries(enquiry);
+        }
+
+        public List<Enquiry> getallenquires()
+        {
+            EnquiryRepository enquiryRepository = new EnquiryRepository();
+            return enquiryRepository.getallenquires();
+        }
+
+        public List<getallwishlistdetailsofusers_Result> Getwishlistdataforadmin()
+        {
+            EnquiryRepository enquiryRepository = new EnquiryRepository();
+            return enquiryRepository.Getwishlistdataforadmin();
+        }
+
+        public List<getuserdetailsforadmin_Result> Getuserdataforadmin()
+        {
+            EnquiryRepository enquiryRepository = new EnquiryRepository();
+            return enquiryRepository.Getuserdataforadmin();
         }
     }
 }

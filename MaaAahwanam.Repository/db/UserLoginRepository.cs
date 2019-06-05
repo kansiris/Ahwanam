@@ -230,6 +230,34 @@ namespace MaaAahwanam.Repository.db
             _dbContext.SaveChanges();
             return details;
         }
+
+        public UserLogin updatesocialpassword(UserLogin userLogin, long UserloginID)
+        {
+            var getdetails = _dbContext.UserLogin.SingleOrDefault(u => u.UserLoginId == UserloginID);
+            UserLogin details = new UserLogin();
+            details.UserLoginId = getdetails.UserLoginId;
+            details.UserName = getdetails.UserName;
+            details.Status = getdetails.Status;
+            details.UserType = getdetails.UserType;
+            details.RegDate = getdetails.RegDate;
+            details.ActivationCode = getdetails.ActivationCode;
+            details.Status = getdetails.Status;
+            details.isreset = getdetails.isreset;
+            details.resetemaillink = getdetails.resetemaillink;
+            details.UpdatedBy = getdetails.UpdatedBy;
+            details.UpdatedDate = userLogin.UpdatedDate;
+            if (!string.IsNullOrEmpty(userLogin.Password))
+            {
+                details.Password = userLogin.Password;
+            }
+            else
+            {
+                details.Password = getdetails.Password;
+            }
+            _dbContext.Entry(getdetails).CurrentValues.SetValues(details);
+            _dbContext.SaveChanges();
+            return details;
+        }
         public UserLogin Getlogindetails(string username)
         {
             var getdata = _dbContext.UserLogin.Where(u => u.UserName == username).FirstOrDefault();

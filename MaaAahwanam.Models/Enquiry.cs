@@ -27,5 +27,6 @@ namespace MaaAahwanam.Models
         public string Status { get; set; }
         public string originfromurl { get; set; }
          public string city { get; set; }
+        public string Services { get; set; }
     }
 }

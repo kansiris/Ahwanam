@@ -23,6 +23,9 @@ namespace MaaAahwanam.Repository
         public string name { get; set; }
         public string ceremonyImage { get; set; }
         public string default_category { get; set; }
+        public string MetatagTitle { get; set; }
+        public string MetatagDesicription { get; set; }
+        public string MetatagKeywords { get; set; }
         public long detailId { get; set; }
         public long CeremonyId { get; set; }
         public string shortdescription { get; set; }

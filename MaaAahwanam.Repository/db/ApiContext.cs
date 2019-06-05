@@ -96,10 +96,10 @@ namespace MaaAahwanam.Repository.db
         public DbSet<VendormasterImage> VendormasterImage { get; set; }
         public DbSet<VendorAvailableArea> VendorAvailableArea { get; set; }
         public DbSet<collabratornotes> collabratornotes { get; set; }
-        public DbSet<newresultfillter> newresultfillter { get; set; }
-        public DbSet<newfiltervalue> newfiltervalue { get; set; }
-        public DbSet<newfilter_value> newfilter_value { get; set; }
-        public DbSet<filternewvalue> filternewvalue { get; set; }
+        //public DbSet<newresultfillter> newresultfillter { get; set; }
+        //public DbSet<newfiltervalue> newfiltervalue { get; set; }
+        //public DbSet<newfilter_value> newfilter_value { get; set; }
+        //public DbSet<filternewvalue> filternewvalue { get; set; }
         public DbSet<newfilterresult> newfilterresult { get; set;}
 
     }

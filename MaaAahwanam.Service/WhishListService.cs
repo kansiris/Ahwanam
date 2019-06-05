@@ -178,5 +178,14 @@ namespace MaaAahwanam.Service
         {
             return whishListRepository.getwishlistitemdetail(userid);
         }
+        public List<Getwishlistdetails_user_Result> Getavailablevendors(string token)
+        {
+            return whishListRepository.Getavailablevendors(token);
+        }
+
+        public List<Getwishlistdetails_token_categoryid_Result> Getallvendordetails(string token, int categoryid)
+        {
+            return whishListRepository.Getallvendordetails(token, categoryid);
+        }
     }
 }
